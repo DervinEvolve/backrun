@@ -308,6 +308,50 @@ stroke 3.9 s. The reports are in `runs/eval/policy_v2_smoke_limit5_128x96_seed1`
 `runs/eval/blank_limit5_128x96_seed1`, `runs/eval/mean_smoke_limit5_128x96_seed1`
 and side by side in `runs/eval/compare_v2_limit5_128x96_seed1.md`.
 
+## Second GPU run: the discrete head at full scale
+
+The same pipeline on Modal with the discrete head: 1,000 ledgers (the 100
+from the first run plus 900 more, 256 x 192, 40 slots, 16 candidates), a
+cache of 36,541 strokes, 900 paintings for training and 100 for validation,
+20 epochs of the default config (5,252,619 parameters) on an A10G, 2,348 s.
+Validation loss fell from 7.34 to 6.89 at epoch 8 and then rose every epoch
+to 8.55 while training loss kept falling to 4.83, so the run overfit after
+epoch 8 and the saved weights are the EMA from epoch 8. At the last epoch
+the start-cell head was right 2.9% of the time (top-5 11.6%, chance 0.13%)
+and the bin heads were within one bin 74.0% of the time.
+
+Sealed set, first 5 targets x 3 seeds (7, 8, 9), 256 x 192, 40 stroke
+slots, scores on the fully dried sheet, all painters on the same 15
+paintings:
+
+| painter | total | std | lab_l2 | ssim | sim steps per painting | wall per painting | start spread x, y (px) | distinct strokes | gap closed |
+|---|---|---|---|---|---|---|---|---|---|
+| blank sheet | 24.02 | 2.13 | 2,293 | 0.729 | 2,000 | 0.1 s | 0, 0 | 0 | 0 |
+| first head (100 ledgers, 10 epochs) | 23.57 | 1.52 | 2,211 | 0.654 | 102 | 10.7 s | not measured | not measured | 0.02 |
+| discrete head, likeliest stroke | 8.85 | 1.36 | 716.6 | 0.600 | 112 | 6.5 s | 75.4, 36.0 | 19.0 | 0.81 |
+| discrete head, sampled strokes | 10.31 | 1.72 | 827.8 | 0.512 | 437 | 8.7 s | 81.6, 56.5 | 40.0 | 0.73 |
+| search, 16 candidates | 5.26 | 0.67 | 312.0 | 0.483 | 2,897 | 50.0 s | 78.7, 53.6 | 35.3 | 1 |
+
+"Gap closed" is how far a painter gets from the blank sheet (0) to the
+search painter (1) on `total`. The discrete head closes 81% of that gap
+with 26 times less simulation than the search painter, in an eighth of the
+wall time. This is the first learned painter that paints. It is one run
+and one seed of training on five sealed targets, so a direction rather
+than a result.
+
+What the numbers say about what to do next:
+
+* Picking the likeliest stroke beats sampling by 1.5 points of `total`,
+  so argmax is the default. Sampling spreads strokes more and never
+  repeats, but places them worse.
+* The likeliest-stroke painter repeats itself: 19 distinct strokes of 40.
+  When the sheet barely changes, the same observation gives the same
+  stroke. Stage B, which rewards the drop in score, is the direct fix; so
+  is a stroke-history channel in the observation.
+* The run overfit from epoch 8. More ledgers are cheap (900 cost about a
+  dollar of CPU time), and flips of target and sheet together would double
+  the data for free. Twenty epochs were twelve too many at this data size.
+
 ## Where it runs
 
 `train/modal_app.py` defines a Modal app named `backrun` with these
