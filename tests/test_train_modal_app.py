@@ -53,6 +53,8 @@ def test_painter_specs() -> None:
     assert m.painter_spec("mean") == ("mean:/data/ledgers", "mean")
     assert m.painter_spec("stage_a/best.pt") == ("policy:/checkpoints/stage_a/best.pt", "stage_a_best")
     assert m.painter_spec("policy:/x/y.pt") == ("policy:/x/y.pt", "x_y")
+    assert m.painter_spec("stage_a/best.pt@sample:0.8") == ("policy:/checkpoints/stage_a/best.pt@sample:0.8",
+                                                             "stage_a_best_sample0.8")
 
 
 def test_comparison_section(tmp_path: Path) -> None:

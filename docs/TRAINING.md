@@ -371,6 +371,7 @@ python -m train.data                    # sealed set (once) and training targets
 python -m train.ledgers runs/data/train runs/ledgers --workers 2
 python -m train.imitation runs/ledgers runs/ckpt/stage_a --cache runs/cache --device auto
 python -m train.evaluate policy:runs/ckpt/stage_a/best.pt runs/eval/stage_a
+python -m train.evaluate policy:runs/ckpt/stage_a/best.pt@sample runs/eval/stage_a_sample   # draw strokes instead of taking the likeliest
 ```
 
 Environment note: in the cloud container used so far, PyTorch came from

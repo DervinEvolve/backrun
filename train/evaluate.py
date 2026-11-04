@@ -260,20 +260,32 @@ class PolicyPainter:
     checkpoint: str | None = None
     policy_fn: Callable[[NDArray[np.float32]], Any] | None = None
     name: str = "policy"
+    #: ``argmax`` takes the most likely stroke each time; ``sample`` draws one
+    #: from the policy's distribution, seeded per painting so runs repeat.
+    mode: str = "argmax"
+    temperature: float = 1.0
 
-    def _policy(self) -> Callable[[NDArray[np.float32]], Any]:
-        if self.policy_fn is None:
-            from train import policy as pol
+    def _policy(self, seed: int = 0) -> Callable[[NDArray[np.float32]], Any]:
+        if self.policy_fn is not None:
+            return self.policy_fn
+        from train import policy as pol
 
-            if self.checkpoint is None:
-                raise ValueError("PolicyPainter needs a checkpoint or a policy_fn")
-            model = pol.load_checkpoint(self.checkpoint)
-            self.policy_fn = lambda o: pol.act(model, o)
-        return self.policy_fn
+        if self.checkpoint is None:
+            raise ValueError("PolicyPainter needs a checkpoint or a policy_fn")
+        if getattr(self, "_model", None) is None:
+            self._model = pol.load_checkpoint(self.checkpoint)
+        model = self._model
+        if self.mode == "sample":
+            import torch
+
+            gen = torch.Generator().manual_seed(int(seed))
+            return lambda o: pol.act(model, o, mode="sample", temperature=self.temperature, generator=gen)
+        return lambda o: pol.act(model, o)
 
     def __getstate__(self) -> dict[str, Any]:
         """Pickle the checkpoint path, not a loaded model."""
         state = dict(self.__dict__)
+        state.pop("_model", None)
         if state.get("checkpoint") is not None:
             state["policy_fn"] = None
         return state
@@ -285,7 +297,7 @@ class PolicyPainter:
         from train import policy as pol
 
         sim = factory()
-        ops = pol.rollout(self._policy(), target, sim, n_strokes)
+        ops = pol.rollout(self._policy(seed), target, sim, n_strokes)
         strokes = sum(op["op"] == "stroke" for op in ops)
         predicted = dict(score(sim.render(predict_dry=True), target, strokes=strokes))
         return PaintResult(ops, predicted)
@@ -377,11 +389,34 @@ def make_painter(spec: str, candidates: int = DEFAULT_CANDIDATES) -> Painter:
             raise FileNotFoundError(f"ledger root not found: {root}")
         return MeanPainter(mean_action([root]), name=f"mean:{root.name}")
     if spec.startswith("policy:"):
-        path = spec.split(":", 1)[1]
+        path, mode, temperature = parse_policy_spec(spec)
         if not Path(path).is_file():
             raise FileNotFoundError(f"checkpoint not found: {path}")
-        return PolicyPainter(checkpoint=path, name=f"policy:{Path(path).name}")
-    raise ValueError(f"unknown painter {spec!r}; use 'search', 'policy:PATH', 'blank' or 'mean:LEDGER_ROOT'")
+        suffix = "" if mode == "argmax" else f"@sample:{temperature:g}"
+        return PolicyPainter(checkpoint=path, name=f"policy:{Path(path).name}{suffix}", mode=mode,
+                             temperature=temperature)
+    raise ValueError(
+        f"unknown painter {spec!r}; use 'search', 'policy:PATH', 'policy:PATH@sample[:T]', 'blank' or 'mean:LEDGER_ROOT'"
+    )
+
+
+def parse_policy_spec(spec: str) -> tuple[str, str, float]:
+    """Split ``policy:PATH``, ``policy:PATH@sample`` or ``policy:PATH@sample:T`` into (path, mode, temperature).
+
+    ``@sample`` draws each stroke from the policy's distribution instead of
+    taking the most likely one; ``T`` is the softmax temperature (default 1).
+    """
+    rest = spec.split(":", 1)[1]
+    if "@" not in rest:
+        return rest, "argmax", 1.0
+    path, _, tail = rest.rpartition("@")
+    parts = tail.split(":")
+    if parts[0] != "sample" or len(parts) > 2:
+        raise ValueError(f"bad policy spec {spec!r}; the part after '@' must be 'sample' or 'sample:T'")
+    temperature = float(parts[1]) if len(parts) == 2 else 1.0
+    if temperature <= 0:
+        raise ValueError("temperature must be positive")
+    return path, "sample", temperature
 
 
 # ---------------------------------------------------------------------------

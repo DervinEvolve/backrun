@@ -263,7 +263,9 @@ def evaluate(
     ``painter`` is ``search``; ``blank`` (no strokes, one dry); ``mean``
     (the dataset-mean stroke of ``/data/ledgers`` in every slot); a
     checkpoint path relative to ``/checkpoints`` (``stage_a/best.pt``); or
-    ``policy:`` followed by an absolute path. When ``blank`` and ``search``
+    ``policy:`` followed by an absolute path; add ``@sample`` or ``@sample:T``
+    to draw strokes from the policy instead of taking the most likely one.
+    When ``blank`` and ``search``
     reports with the same canvas size and limit are already on the volume,
     a table placing this painter between them is appended.
     """
@@ -295,9 +297,16 @@ def painter_spec(painter: str) -> tuple[str, str]:
     if painter == "mean":
         return f"mean:{Path(DATA) / 'ledgers'}", "mean"
     if painter.startswith("policy:"):
-        path = painter.split(":", 1)[1]
-        return painter, path.strip("/").replace("/", "_").removesuffix(".pt")
-    return f"policy:{Path(CHECKPOINTS) / painter}", painter.strip("/").replace("/", "_").removesuffix(".pt")
+        painter = painter.split(":", 1)[1]
+    else:
+        painter = str(Path(CHECKPOINTS) / painter)
+    # ``NAME@sample`` or ``NAME@sample:T`` asks for sampled decoding (see train.evaluate.parse_policy_spec).
+    path, sep, tail = painter.partition("@")
+    rel = path[len(CHECKPOINTS):] if path.startswith(CHECKPOINTS + "/") else path
+    folder = rel.strip("/").replace("/", "_").removesuffix(".pt")
+    if sep:
+        folder += "_" + tail.replace(":", "")
+    return f"policy:{painter}", folder
 
 
 def comparison_section(eval_root: Path, name: str, suffix: str) -> str:

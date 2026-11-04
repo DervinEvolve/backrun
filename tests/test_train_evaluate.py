@@ -89,6 +89,31 @@ def test_policy_checkpoint_painter(sealed: Path, tmp_path: Path) -> None:
     _check_report(report, tmp_path / "c", "policy:p.pt")
 
 
+def test_policy_spec_parsing() -> None:
+    assert evaluate.parse_policy_spec("policy:a/b.pt") == ("a/b.pt", "argmax", 1.0)
+    assert evaluate.parse_policy_spec("policy:a/b.pt@sample") == ("a/b.pt", "sample", 1.0)
+    assert evaluate.parse_policy_spec("policy:/x/y.pt@sample:0.7") == ("/x/y.pt", "sample", 0.7)
+    with pytest.raises(ValueError):
+        evaluate.parse_policy_spec("policy:a.pt@argmax")
+    with pytest.raises(ValueError):
+        evaluate.parse_policy_spec("policy:a.pt@sample:0")
+
+
+def test_sampled_policy_painter_repeats_per_seed(sealed: Path, tmp_path: Path) -> None:
+    torch = pytest.importorskip("torch")
+    ckpt = policy.save_checkpoint(tmp_path / "p.pt", policy.make_policy(policy.PolicyConfig(widths=(8, 8, 8, 8), blocks=(1, 1, 1, 1), hidden=16, groups=4), seed=0))
+    painter = evaluate.make_painter(f"policy:{ckpt}@sample:1.5")
+    assert painter.mode == "sample" and painter.temperature == 1.5 and painter.name.endswith("@sample:1.5")
+    from backrun.sim import Watercolor
+    from backrun.targets import synthetic_target
+    target = synthetic_target("horizon", 32, 24, 1)
+    a = painter.paint(target, lambda: Watercolor(width=32, height=24, seed=1), 3, 5, tmp_path).ops
+    b = painter.paint(target, lambda: Watercolor(width=32, height=24, seed=1), 3, 5, tmp_path).ops
+    c = painter.paint(target, lambda: Watercolor(width=32, height=24, seed=1), 3, 6, tmp_path).ops
+    assert a == b  # the same painting seed draws the same strokes
+    assert a != c  # a different seed draws different ones
+
+
 def test_bad_inputs(sealed: Path, tmp_path: Path) -> None:
     with pytest.raises(ValueError):
         evaluate.make_painter("nonsense")
