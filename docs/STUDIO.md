@@ -395,3 +395,30 @@ card and the hidden layers. All are additions; existing fields stay as they are.
    generated targets the prompt, the image model's name, version, licence and seed.
 10. Optional: a recorder flag that writes all scores (per op and final) to `scores.jsonl` instead of the ledger, so
     the face-down sheet holds even for someone reading the raw files.
+
+## Pass 1 notes (assets and stage)
+
+What Pass 1 changed against the plan above, and what it could not do:
+
+- **SimReady props blocked.** Every SimReady file except the small cardboard boxes is stored in Hugging Face's Xet
+  storage and downloads from `us.aws.cdn.hf.co`, which this environment's network policy refuses. The glass jars,
+  tea cup, mug, bowl, lab bottles, open book and window blind are hand-built stand-ins in `blender/build_all.py`.
+  The two boxes (`box_cardboard_a01`, `box_cardboard_b01`) are imported and credited in `studio/CREDITS.md`; the
+  third, loose box on the floor was dropped since the plan wants one or two. Allowing that host would let a later
+  pass swap the stand-ins for the real props.
+- **Drying rack turned.** The rack is now 0.56 m wide along the bench, 0.30 m deep, 0.45 m tall, closed at its west
+  end and open toward the board, with three slots running along x, so the panel slides in edge-on along the brass
+  rail as it leaves the board. To fit it beside the board on the 1.80 m bench, the board, lamp and cork strip moved
+  0.10 m east (board centre x = 0.07), the rack sits at x = -0.60, and the score card moved to the front right of the
+  board. The rail's board end meets the board's left edge (x = -0.23).
+- **Overview cut.** The overview looks from the south-west, so the window wall and the south wall drop to their
+  stubs; the sill and the plant on it hide with the window wall. The cut walls still cast the window's shadow (they
+  stay in the shadow pass on layer 1) but are kept out of the ambient occlusion pass.
+- **Orbit.** The free orbit stays in front of the bench (azimuth -85 to 85 degrees), inside a box just inside the
+  walls, and within 3.2 m of its target.
+- **Seated figure.** The seated mannequin's thighs pointed backward; it now sits forward with its feet on the
+  stool's foot ring.
+- **Not done in Pass 1:** baked 1K lightmaps, CC0 scan textures and KTX2 (surfaces are procedural canvas textures),
+  the Sepia enamel pin as a separate 3D asset beyond the base-plate badge, and the reference sheets in
+  `studio/blender/refs/` (the folder is empty; the hero sizes follow the dimension tables above and were checked
+  against a 1.8 m block and a 1 m ruler in `?asset=` previews, not against reference photos).
