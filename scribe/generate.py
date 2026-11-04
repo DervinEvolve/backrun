@@ -124,8 +124,11 @@ class Generator:
     """Runs the generate, gate, retry, critique and revise loop for one pool."""
 
     def __init__(self, client: Any, pool_root: str | Path, temperature: float = 0.9,
-                 max_tokens: int = 4096, critic_client: Any | None = None) -> None:
+                 max_tokens: int = 4096, critic_client: Any | None = None,
+                 extra: dict[str, Any] | None = None) -> None:
         self.client = client
+        #: Extra request fields for generator calls, such as ``{"reasoning": {"enabled": False}}``.
+        self.extra = dict(extra or {})
         self.critic_client = critic_client or client
         self.root = Path(pool_root)
         self.temperature = temperature
@@ -136,7 +139,7 @@ class Generator:
     def _ask_and_gate(self, model: str, messages: list[dict[str, Any]], canvas: dict[str, Any],
                       usage: list[dict[str, Any]], tag: str) -> tuple[str, GateResult]:
         reply = self.client.chat(model, messages, temperature=self.temperature,
-                                 max_tokens=self.max_tokens, tag=tag)
+                                 max_tokens=self.max_tokens, tag=tag, **self.extra)
         usage.append(asdict(reply.usage))
         res = gate(reply.text, canvas)
         if res.ok:
@@ -237,7 +240,7 @@ class Generator:
 
 def run(client: Any, prompts_path: str | Path, pool_root: str | Path, models: list[str], per: int,
         critic: str | None = None, rounds: int = 0, temperature: float = 0.9, max_tokens: int = 4096,
-        log=sys.stderr, concurrency: int = 1) -> dict[str, int]:
+        log=sys.stderr, concurrency: int = 1, extra: dict[str, Any] | None = None) -> dict[str, int]:
     """Generate every missing candidate. Returns counts of ok, rejected, failed and skipped.
 
     ``concurrency`` candidates run at once in threads (the work is waiting on
@@ -252,7 +255,7 @@ def run(client: Any, prompts_path: str | Path, pool_root: str | Path, models: li
     if not pool_prompts.exists():
         shutil.copyfile(prompts_path, pool_prompts)
     done = {line["id"] for line in read_index(root)}
-    gen = Generator(client, root, temperature=temperature, max_tokens=max_tokens)
+    gen = Generator(client, root, temperature=temperature, max_tokens=max_tokens, extra=extra)
     counts = {"ok": 0, "rejected": 0, "failed": 0, "skipped": 0}
     jobs = []
     for prompt in prompts:
@@ -292,6 +295,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--temperature", type=float, default=0.9)
     ap.add_argument("--max-tokens", type=int, default=4096)
     ap.add_argument("--concurrency", type=int, default=1, help="candidates in flight at once")
+    ap.add_argument("--no-reasoning", action="store_true",
+                    help="ask the router to turn off hidden reasoning, so the token budget goes to the file")
     args = ap.parse_args(argv)
     root = Path(args.pool_root)
     root.mkdir(parents=True, exist_ok=True)
@@ -302,7 +307,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     models = [m.strip() for m in args.models.split(",") if m.strip()]
     counts = run(client, args.prompts, root, models, args.per, critic=args.critic, rounds=args.rounds,
-                 temperature=args.temperature, max_tokens=args.max_tokens, concurrency=args.concurrency)
+                 temperature=args.temperature, max_tokens=args.max_tokens, concurrency=args.concurrency,
+                 extra={"reasoning": {"enabled": False}} if args.no_reasoning else None)
     print(json.dumps(counts))
     return 0 if counts["failed"] == 0 else 2
 

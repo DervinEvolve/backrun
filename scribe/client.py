@@ -52,6 +52,8 @@ class Usage:
     attempts: int = 1
     status: str = "ok"
     tag: str | None = None
+    #: why the model stopped, as the API reports it (``stop``, ``length``...); None if not given
+    finish_reason: str | None = None
     at: float = field(default_factory=time.time)
 
 
@@ -199,7 +201,8 @@ class ChatClient:
         u = payload.get("usage") or {}
         usage = Usage(model=payload.get("model", model), prompt_tokens=int(u.get("prompt_tokens", 0) or 0),
                       completion_tokens=int(u.get("completion_tokens", 0) or 0),
-                      latency_s=round(time.monotonic() - start, 3), attempts=attempts, tag=tag)
+                      latency_s=round(time.monotonic() - start, 3), attempts=attempts, tag=tag,
+                      finish_reason=payload["choices"][0].get("finish_reason"))
         self.ledger.write(usage)
         return Reply(text=text, usage=usage)
 

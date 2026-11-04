@@ -77,7 +77,15 @@ def test_unknown_op() -> None:
 
 def test_path_too_short_and_too_long() -> None:
     _fails(_with(0, path=[[10, 10]]), "path needs")
-    _fails(_with(0, path=[[10, 10]] * 9), "path needs")
+    # nine or more points are thinned to eight, keeping both ends
+    res = gate(_with(0, path=[[10 + 20 * i, 10 + 5 * i] for i in range(12)]), CANVAS)
+    first = next(op for op in res.ops if op["op"] == "stroke")
+    assert len(first["path"]) == 8 and first["path"][0] == [10.0, 10.0] and first["path"][-1] == [230.0, 65.0]
+    assert res.stats["normalised"] == {"path_resampled": 1}
+    # a brush too wide is clamped, not refused
+    res = gate(_with(0, width=300), CANVAS)
+    assert next(op for op in res.ops if op["op"] == "stroke")["width"] == 76.8
+    assert res.stats["normalised"] == {"width_clamped": 1}
 
 
 def test_path_outside_canvas() -> None:
@@ -85,8 +93,10 @@ def test_path_outside_canvas() -> None:
 
 
 def test_width_limits() -> None:
-    _fails(_with(0, width=0.5), "width")
-    _fails(_with(0, width=0.41 * 192), "width")
+    # out-of-range widths are clamped into range and counted; a missing width still fails
+    assert next(op for op in gate(_with(0, width=0.5), CANVAS).ops if op["op"] == "stroke")["width"] == 1.0
+    assert next(op for op in gate(_with(0, width=0.41 * 192), CANVAS).ops if op["op"] == "stroke")["width"] == 76.8
+    _fails(_with(0, width="wide"), "width")
 
 
 def test_water_range() -> None:

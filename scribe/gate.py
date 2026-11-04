@@ -125,9 +125,14 @@ def _check_stroke(op: dict[str, Any], n: int, canvas: dict[str, Any], reasons: l
     bad = len(reasons)
     path = op.get("path")
     pts: list[list[float]] = []
-    if not isinstance(path, list) or not MIN_PATH_POINTS <= len(path) <= MAX_PATH_POINTS:
+    fixes: list[str] = []
+    if not isinstance(path, list) or len(path) < MIN_PATH_POINTS:
         reasons.append(f"line {n}: path needs {MIN_PATH_POINTS} to {MAX_PATH_POINTS} points")
     else:
+        if len(path) > MAX_PATH_POINTS:
+            # Models like to close shapes with 9 or more points; keep the shape, thin the points.
+            path = resample_path(path, MAX_PATH_POINTS)
+            fixes.append("path_resampled")
         for p in path:
             if not isinstance(p, list) or len(p) != 2 or _num(p[0]) is None or _num(p[1]) is None:
                 reasons.append(f"line {n}: each path point must be [x, y] numbers")
@@ -139,8 +144,11 @@ def _check_stroke(op: dict[str, Any], n: int, canvas: dict[str, Any], reasons: l
             pts.append([x, y])
     max_w = MAX_WIDTH_FRACTION * min(w, h)
     width = _num(op.get("width"))
-    if width is None or not MIN_WIDTH <= width <= max_w:
+    if width is None:
         reasons.append(f"line {n}: width must be a number from {MIN_WIDTH:g} to {max_w:g}")
+    elif not MIN_WIDTH <= width <= max_w:
+        width = round(min(max(width, MIN_WIDTH), max_w), 3)  # a brush too wide or too thin is clamped, not refused
+        fixes.append("width_clamped")
     water = _num(op.get("water"))
     if water is None or not 0.0 <= water <= 1.0:
         reasons.append(f"line {n}: water must be a number from 0 to 1")
@@ -162,7 +170,30 @@ def _check_stroke(op: dict[str, Any], n: int, canvas: dict[str, Any], reasons: l
             clean_pig[name] = c
     if len(reasons) > bad:
         return None
-    return {"op": "stroke", "path": pts, "width": width, "water": water, "pigments": clean_pig}
+    out = {"op": "stroke", "path": pts, "width": width, "water": water, "pigments": clean_pig}
+    if fixes:
+        out["_fixes"] = fixes
+    return out
+
+
+def resample_path(path: list[Any], n: int) -> list[list[float]]:
+    """Thin a path to ``n`` points evenly spaced along its length, keeping both ends.
+
+    Points that are not ``[x, y]`` numbers are passed through for the caller
+    to reject.
+    """
+    try:
+        pts = np.asarray([[float(p[0]), float(p[1])] for p in path], dtype=np.float64)
+    except (TypeError, ValueError, IndexError):
+        return list(path)
+    seg = np.sqrt(((pts[1:] - pts[:-1]) ** 2).sum(axis=1))
+    cum = np.concatenate([[0.0], np.cumsum(seg)])
+    if cum[-1] <= 0:
+        return [list(map(float, pts[0]))] * 2
+    want = np.linspace(0.0, cum[-1], n)
+    xs = np.interp(want, cum, pts[:, 0])
+    ys = np.interp(want, cum, pts[:, 1])
+    return [[round(float(x), 2), round(float(y), 2)] for x, y in zip(xs, ys)]
 
 
 def static_check(items: list[Any], canvas: dict[str, Any]) -> tuple[list[str], list[dict[str, Any]], dict[str, Any]]:
@@ -174,6 +205,7 @@ def static_check(items: list[Any], canvas: dict[str, Any]) -> tuple[list[str], l
     reasons: list[str] = []
     ops: list[dict[str, Any]] = []
     strokes = drys = dry_steps = 0
+    fixes: dict[str, int] = {}
     for n, item in enumerate(items, start=1):
         if isinstance(item, str):
             try:
@@ -193,6 +225,8 @@ def static_check(items: list[Any], canvas: dict[str, Any]) -> tuple[list[str], l
             strokes += 1
             clean = _check_stroke(op, n, canvas, reasons)
             if clean is not None:
+                for f in clean.pop("_fixes", []):
+                    fixes[f] = fixes.get(f, 0) + 1
                 ops.append(clean)
         elif kind == "dry":
             steps = op.get("steps")
@@ -213,6 +247,8 @@ def static_check(items: list[Any], canvas: dict[str, Any]) -> tuple[list[str], l
     if dry_steps > MAX_TOTAL_DRY_STEPS:
         reasons.append(f"{dry_steps} dry steps in total; at most {MAX_TOTAL_DRY_STEPS}")
     stats = {"strokes": strokes, "dry_ops": drys, "dry_steps": dry_steps}
+    if fixes:
+        stats["normalised"] = fixes  # strokes changed to fit the format, counted by kind
     if len(reasons) > MAX_REASONS:
         extra = len(reasons) - MAX_REASONS + 1
         reasons = reasons[:MAX_REASONS - 1] + [f"and {extra} more problems"]
