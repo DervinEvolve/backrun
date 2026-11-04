@@ -171,10 +171,16 @@ class Phase:
 
 
 PHASES: tuple[Phase, ...] = (
-    Phase("washes", 0.2, (0.18, 0.30), (0.5, 1.0), (0.75, 0.95), (3, 4), 2, max_conc=0.16),
-    Phase("medium", 0.4, (0.06, 0.12), (0.15, 0.4), (0.5, 0.75), (3, 4), 3, max_conc=0.4),
-    Phase("detail", 0.4, (0.015, 0.04), (0.04, 0.15), (0.3, 0.55), (2, 3), 3, max_conc=1.0),
+    Phase("washes", 0.2, (0.18, 0.30), (0.5, 1.0), (0.75, 0.95), (3, 4), 2),
+    Phase("medium", 0.4, (0.06, 0.12), (0.15, 0.4), (0.5, 0.75), (3, 4), 3),
+    Phase("detail", 0.4, (0.015, 0.04), (0.04, 0.15), (0.3, 0.55), (2, 3), 3),
 )
+# The per-phase concentration caps (pale washes first, darks last) are left
+# off by default. Measured on three synthetic targets with one seed each,
+# caps of 0.16, 0.4 and 1.0 made the horizon and sky paintings worse (the
+# painter could not build the dark sea in forty strokes) and the discs
+# painting better; without caps the average total was 7.8 against 9.2 with
+# them. Pass ``max_conc`` to a Phase to turn them back on.
 
 
 # ---------------------------------------------------------------------------
