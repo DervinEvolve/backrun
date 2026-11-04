@@ -25,7 +25,7 @@ Infrastructure failures: the reward function returns None for a rollout
 whose judge or aesthetic call failed. In TRL's main branch source (read on
 2026-11-04), a completion for which every reward function returns None is
 marked NaN, left out of the group baseline, and given zero advantage, so it
-is excluded rather than scored zero. Older TRL releases summed it to 0. On
+is excluded from the group. Older TRL releases summed it to 0. On
 startup ``check_trl_excludes_none`` looks for that handling in the installed
 GRPOTrainer and refuses to train without it; the alternative on an old TRL is
 to drop such rollouts in a custom ``_generate_and_score_completions``.
@@ -81,7 +81,7 @@ DEFAULT_MODEL = "Qwen/Qwen3.5-4B"
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     """Command line arguments with the defaults described in the module docstring."""
-    ap = argparse.ArgumentParser(description="GRPO training of a stroke-file writer (written, not run).")
+    ap = argparse.ArgumentParser(description="GRPO training of a stroke-file writer (written and parsed; never run).")
     ap.add_argument("--pool", required=True, help="pool root with prompts.jsonl and ratings.jsonl")
     ap.add_argument("--prompts", default=None, help="prompts JSONL; defaults to the pool's prompts.jsonl")
     ap.add_argument("--model", default=DEFAULT_MODEL, help="base model id on the Hugging Face Hub")

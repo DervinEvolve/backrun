@@ -38,7 +38,7 @@ RETRY_STATUS = {429, 500, 502, 503, 504}
 
 
 class ClientError(RuntimeError):
-    """A call failed after its retries: an infrastructure failure, not a bad answer."""
+    """A call failed after its retries. Callers treat this as an infrastructure failure."""
 
 
 @dataclass

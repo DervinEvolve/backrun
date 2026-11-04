@@ -4,7 +4,7 @@ Weights live in ``RewardWeights``. Each term is a number from 0 to 1 and the
 reward is their weighted sum. A file that fails the gate scores 0 and costs no
 judge calls. If any term is None because something outside the model failed
 (the judge, the aesthetic scorer), the whole reward is None, and a trainer
-must leave that rollout out of its group rather than score it zero.
+must leave that rollout out of its group.
 
 Before training, run ``reward_report`` on a batch: a term that barely varies
 gives no gradient, and two terms that move together are one signal counted

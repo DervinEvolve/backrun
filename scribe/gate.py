@@ -4,7 +4,7 @@
 fail. If the file is valid it is replayed from the canvas header, dried for
 ``SETTLE_STEPS`` more steps and rendered, and the render is checked for
 coverage, lightness and variety. Every threshold below is a design choice,
-picked by looking at renders, not derived from anything.
+picked by looking at renders.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from backrun.sim import Watercolor
 from scribe.colour import hue_chroma, painted_mask, srgb_to_lab
 
 # --- static limits (design choices) ---
-MIN_STROKES = 6  # fewer than this is not a painting
+MIN_STROKES = 6  # fewer than this is too little to call a painting
 MAX_STROKES = 200  # more than this is waste; long files were the main cost in the original recipe
 MIN_PATH_POINTS = 2  # the simulator's own limits
 MAX_PATH_POINTS = 8

@@ -9,7 +9,7 @@ rollout, and the score is the share the candidate won.
 A reply that is not A or B, or a call that fails, is a comparison failure.
 Failures are left out of the share. If more than half of the comparisons
 fail, the judge returns None: an infrastructure failure, which a trainer must
-leave out of its group rather than score as zero.
+leave out of its group. Scoring it zero would punish the model for an outage.
 """
 
 from __future__ import annotations
