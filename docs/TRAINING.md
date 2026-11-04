@@ -13,11 +13,11 @@ simulates 640 strokes to lay 40, and takes about 42 seconds on one CPU
 core. Its scores on three synthetic targets, one seed each, with the
 uncapped dry-preview painter, are the baseline (lower is better):
 
-| Target | total | lab_l2 | ssim |
-|---|---|---|---|
-| horizon | 5.61 | measured in the run folder | measured in the run folder |
-| discs | 13.53 | | |
-| sky | 4.31 | | |
+| Target | total | lab_l2 | ssim | strokes used |
+|---|---|---|---|---|
+| horizon | 5.61 | 331.3 | 0.445 | 39 |
+| discs | 13.53 | 1152.3 | 0.518 | 38 |
+| sky | 4.31 | 222.9 | 0.495 | 31 |
 
 A learned painter wins if it scores lower than this on held-out targets
 with the same 40 strokes and one simulator step per stroke, averaged over
