@@ -447,3 +447,26 @@ What Pass 2 changed against the plan above, and what it could not do:
   strip being painted, right-click menus, and the sketchbook and visitor cards. AO is now N8AO instead of GTAO.
 - **The demo's beat 18-24 s** plays the panel's ride to the rack at 1x after a 5x stretch, then 50x through the
   medium phase, instead of switching to a second gallery painting (there is only one).
+
+### Pass 2 review rounds (recording and self-review)
+
+- **Recording.** The interrupted take had reached frame 455 of 900; memory stayed near 1 GB through a full take, so
+  the stop was the container, not a leak. Takes are half scale (960 x 540, 30 fps, about 17 minutes each on this
+  box), encoded at the captured size under `nice -n 19`, with a 360 px GIF under 4 MB. A dev-server reload during a
+  take restarts the app on a fresh clock, so the recorder now stops the take if the page navigates.
+- **Round 1** found the panel swinging through open air on its way to the rack, the opening too close for the arm's
+  raised moves, a 45 degree roll on the flight to Search (the preset's up vector set at once), Follow snapping its
+  distance. **Round 2** found the camera sweeping through a post after too large a pull-back, and two KPIs reading
+  against the run files (624 candidates against 640 evaluations, 48.5 s "of 48.4 s"). **Round 3** left one guard
+  fault (brush above the frame for the first 0.7 s) and no camera frame inside a mesh box.
+- **Panel carry, changed from the plan.** Instead of lifting the panel and swinging it to the rail, it pivots upright
+  on its front edge on the board, slides back upright on the board to the rail's line, then west and down about 2 cm
+  onto the rail into the rack, seated from the carrier's own vertices (within 0.1 mm of the board plane or the rail).
+  It is still staging with no carrier in the scene; the dry and its length are recorded.
+- **KPIs.** Candidates tried counts the laid strokes' `candidates_considered` and says "of 640, 16 in the skipped
+  slot" from `painter_stats.evaluations`; recorded time is measured against the last ledger `t`.
+- **Measured** (software rendering, no GPU on the build box): 0.7 fps on the overview and 1.3 fps on the Stroke
+  camera at 1280 x 720; about 40,000 triangles in view (104,000 drawn with the two shadow maps), 885 and 618 draw
+  calls with shadow passes, 358 meshes; JS heap 11.9 MB. Draw calls are the next thing to cut.
+- **Still open:** the full-size take, a GPU frame rate, the plan's Water layer and second-painting beats (no data and
+  one run), and the Reveal camera leaving the brush at the frame's left edge.

@@ -108,7 +108,9 @@ Staging (choreography derived from the ledger, stated in the app's About panel):
 - the rinse rule (the main pigment changes) and the murk scale;
 - the brush change at the pot in the middle of each phase dry; the brush is swapped while the collet is over the pot
   rather than placed into its slot and picked up;
-- the panel's carry to the drying rack and back during the phase dries (the dry itself and its length are recorded);
+- the panel's carry to the drying rack and back during the phase dries (the dry itself and its length are recorded):
+  it pivots upright on its front edge on the board, slides back upright on the board, then west along the rail into
+  the rack, seated from its own vertices; nothing in the scene carries it;
 - on-screen durations (the minimum per stroke, the per-step dry rates);
 - the cake and jar level scales (proportional to the recorded amounts, scaled to look right);
 - the sun creeping and the lamp brightening while the brush is on the paper;
@@ -126,6 +128,8 @@ Staging (choreography derived from the ledger, stated in the app's About panel):
 - Textures are still procedural canvas textures (no CC0 scans: those hosts are not reachable from the build
   machine); no baked lightmaps.
 - Glassware, cup, mug, bowl, bottles, book and blind are the Pass 1 hand-built stand-ins (see `CREDITS.md`).
+- Not yet done: the full-size 1920 x 1080 take (only half-scale previews), a frame-rate measurement on a GPU, and
+  merging static meshes to bring the draw calls down.
 
 ## Look changes in Pass 2
 
@@ -144,16 +148,64 @@ node scripts/probe.mjs --contacts                     # brush tip against sheet,
 node scripts/probe.mjs --times 18,57 --view rinse,dry # stills into review/pass2/probe/
 node scripts/stills.mjs --out review/pass2/stills     # overview and the eight stage cameras
 node scripts/record-demo.mjs                          # 30 s demo, 1920 x 1080 30 fps, review/pass2/demo.mp4 and demo-preview.gif
-node scripts/record-demo.mjs --scale 0.5 --out review/pass2/round1 --keep   # fast 960 x 540 preview
+node scripts/record-demo.mjs --scale 0.5 --out review/pass2/round3 --keep   # 960 x 540 preview, about 17 min here
+node scripts/measure.mjs --w 1280 --h 720             # fps on the overview and Stroke during playback, triangles, heap
 ```
 
 `record-demo.mjs` replaces requestAnimationFrame, performance.now and Date.now with a virtual clock advanced 1/30 s
-per captured frame, drives the app only with real mouse moves, clicks, a drag and key presses (a drawn cursor and a
-click ring show them), logs progress to `record.log`, runs the frame guard (`src/frame-guard.js`) on the brush, the
-sheet and the score card every frame into `guard.json`, then encodes H.264 yuv420p crf 18 with faststart and a
-480 px GIF preview. `review/` is gitignored.
+per captured frame, drives the app only with real mouse moves, clicks, a drag, three wheel steps and key presses (a
+drawn cursor and a click ring show them), logs progress and the pick under every canvas click to `record.log`, runs
+the frame guard (`src/frame-guard.js`) on the brush, the sheet and the score card every frame and the camera's
+distance to the nearest visible mesh box into `guard.json`, and stops the take if the page reloads (a dev-server
+reload restarts the app on a fresh clock: do not edit `src/` or `index.html` while a take runs). It then encodes
+H.264 yuv420p crf 18 with faststart at the captured size and a 360 px, 8 fps, 64-colour GIF (under 4 MB) under
+`nice -n 19`. `review/` is gitignored. On this build box (4 cores, SwiftShader, no GPU) a half-scale take takes about
+17 minutes and Chromium holds about 1 GB.
 
-BUDGET_PLACEHOLDER
+## Measured in the browser
+
+`node scripts/measure.mjs --w 1280 --h 720` with the dev server, playback at 1x from replay 40 s, AO on. This build
+box has no GPU, so Chromium renders with SwiftShader (ANGLE on Vulkan, software): the frame rates are a floor for
+the CPU rasteriser, not what a desktop GPU gives, and the 60 fps target is unmeasured.
+
+| | Overview (orthographic, cut room) | Stroke camera |
+|---|---|---|
+| Frames per second, 1280 x 720, software | 0.7 (p95 frame 2.0 s) | 1.3 (p95 frame 1.5 s) |
+| Triangles in visible meshes | 40,100 | 40,024 |
+| Triangles drawn incl. the two shadow maps | 104,150 | 75,922 |
+| Draw calls incl. shadow passes (one plain render, no post) | 885 | 618 |
+| Visible meshes | 358 | 357 |
+| Textures | 63 | 86 |
+
+JS heap after both views: 11.9 MB used of 12.7 MB. Draw calls are well over a 100-call budget: the room is 358
+separate meshes, each drawn in the main pass and again in the sun and lamp shadow maps; merging the static room and
+bench props by material is the obvious next step and was not done in Pass 2.
+
+At the end of the replay the dashboard reads 39 strokes "of 39, 1 slot skipped", 948 of 948 steps, 48.5 s "of 48.5 s
+in the ledger", 624 candidates "of 640, 16 in the skipped slot", wet area 0, total 5.61 (lab_l2 331.3, ssim 0.445),
+and per pigment the strokes and amounts summed from `ledger.jsonl` (ultramarine 15 and 22.0k, cerulean 16 and
+7.93k, yellow 14 and 2.57k, rose 13 and 1.92k, green 6 and 4.12k, Payne's grey 5 and 9.70k, umber 4 and 13.4k, red 3
+and 1.18k).
+
+## The demo and its last review
+
+Pass 2 recordings are half scale (960 x 540, 30 fps): `review/pass2/round3/demo.mp4` and `demo-preview.gif`, contact
+sheets at 2 fps in `review/pass2/round3/sheets/`, each round's notes in `review/pass2/round<n>/review.md`. The full
+1920 x 1080 take has not been run.
+
+After round 3:
+- contacts over the whole run (`probe.mjs --contacts`): tip within 0.03 mm of the sheet on every lay sample, 0.2 mm
+  of its path, 0.55 mm of the cake in a well, IK error never over 1 mm, every stroke's first dip at its main
+  pigment's well;
+- the panel's carry to the rack: its lowest vertex on the board plane or the rail within 0.1 mm every 0.05 s;
+- ghosts end before the brush reaches the sheet; the score sheet turns 1 s after the last op;
+- camera: no frame inside a mesh box, closest 1 mm to a rope-rail post's box just off frame at 7.3 s;
+- frame guard: the brush is above the frame top for the first 0.7 s (left as is); every other span where a subject
+  leaves the frame is a planned beat (Follow riding to the slant, the rinse and well close-up, Search from above,
+  the ride to the rack, the flights to Dry, Stroke and Reveal);
+- left as is: the Reveal camera keeps the brush and part of the sheet at the left edge; the 18-24 s beat cannot
+  switch paintings (one gallery run); the Water layer the plan's 5-12 s beat turns on does not exist.
+
 
 ## Files
 
@@ -165,5 +217,5 @@ BUDGET_PLACEHOLDER
 - `src/ik.js`: damped least squares IK for the arm.
 - `src/dashboard.js`, `src/dashboard.css`: the panels.
 - `src/frame-guard.js`: copied from the skill's frame guard.
-- `scripts/pack-run.mjs`, `scripts/record-demo.mjs`, `scripts/probe.mjs`, `scripts/stills.mjs`, `scripts/count.mjs`,
+- `scripts/pack-run.mjs`, `scripts/record-demo.mjs`, `scripts/probe.mjs`, `scripts/measure.mjs`, `scripts/stills.mjs`, `scripts/count.mjs`,
   `scripts/compress.mjs`; `blender/` as in Pass 1.
