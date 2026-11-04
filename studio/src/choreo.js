@@ -30,6 +30,13 @@ export function buildChoreo(replay, A) {
             const p = new THREE.Vector3(r.centre.x + Math.cos(ang) * rad, r.surface - depth + 0.012 * (1 - Math.sin(Math.PI * clamp01(u))), r.centre.z + Math.sin(ang) * rad);
             return { p, want: A.lean(p, 0.12), contact: depth > 0.004 ? 'rinse' : null };
           } });
+        } else if (st.at === 'pot') {
+          push({ kind: 'pot', a: st.a, b: st.b, inn: 0, out: 0, above: 0.04, seg: s, pose: (t) => {
+            const p = A.pot().clone();
+            const u = (t - st.a) / (st.b - st.a);
+            p.y += 0.02 * (1 - Math.sin(Math.PI * clamp01(u)));
+            return { p, want: A.lean(p, 0.05), contact: null };
+          } });
         } else if (st.at === 'blot') {
           push({ kind: 'blot', a: st.a, b: st.b, inn: 0, out: 0, above: 0.02, seg: s, pose: (t) => {
             const u = (t - st.a) / (st.b - st.a);

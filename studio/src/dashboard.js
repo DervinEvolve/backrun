@@ -16,13 +16,39 @@ const ICON = {
 const fmtAmount = (v) => (v >= 10000 ? `${(v / 1000).toFixed(1)}k` : v >= 1000 ? `${(v / 1000).toFixed(2)}k` : v.toFixed(0));
 const fmtInt = (v) => Math.round(v).toLocaleString('en-US');
 
-export function createDashboard(replay, stages, h) {
+// plain names for the painters a run folder can name
+export const painterLabel = (p) => (p === 'policy' ? 'Learned painter' : p?.startsWith('search') ? 'Search painter' : `Painter ${p ?? 'unknown'}`);
+const targetLabel = (spec, fallback) => {
+  if (spec?.startsWith('synthetic:')) { const k = spec.split(':')[1]; return k.charAt(0).toUpperCase() + k.slice(1); }
+  if (spec?.startsWith('sealed:')) return `Sealed target ${Number(spec.split('_').pop())}`;
+  return fallback;
+};
+
+export function createDashboard(replay, stages, h, gallery = { runs: [] }) {
   const r = replay;
   const idx = r.index;
   const run = idx.run;
-  const name = run.target_path?.startsWith('synthetic:') ? run.target_path.split(':')[1] : idx.name;
-  $('p-name').textContent = name.charAt(0).toUpperCase() + name.slice(1);
-  $('p-sub').textContent = `Painter ${run.painter ?? 'unknown'} · seed ${run.seed} · ${run.canvas.width} x ${run.canvas.height} px`;
+  // the learned painter looks once per slot and lays that stroke: no candidates, nothing rejected
+  const learned = run.painter === 'policy';
+  $('p-name').textContent = targetLabel(run.target_path, idx.name);
+  $('p-sub').textContent = `${painterLabel(run.painter)} · seed ${run.seed} · ${run.canvas.width} x ${run.canvas.height} px`;
+  // gallery: switching runs reloads the page on ?run=
+  const pick = $('p-run');
+  for (const g of gallery.runs) {
+    const o = document.createElement('option');
+    o.value = g.name; o.textContent = g.label ?? `${painterLabel(g.painter)}, ${g.name}`; o.selected = g.name === idx.name;
+    pick.appendChild(o);
+  }
+  pick.hidden = gallery.runs.length < 2;
+  pick.addEventListener('change', () => { const u = new URL(location.href); u.searchParams.set('run', pick.value); u.searchParams.delete('t'); location.href = u.href; });
+  if (learned) {
+    $('k-evals-k').textContent = 'Looks';
+    $('ghosts').disabled = true; $('ghosts').title = 'The learned painter tries no candidates, so there are none to show';
+    $('about-painter').textContent = 'This run is the learned painter: a network that looks at the target and the sheet once per stroke slot '
+      + 'and lays the one stroke it picks, with no candidates and nothing rejected, so no ghost strokes appear. Its own wait '
+      + 'after each stroke is the short dry that follows it; there is no dry between phases, so the brush is swapped at the pot '
+      + 'when a phase starts.';
+  }
   $('p-target').src = `${r.base}/target.png`;
   $('k-stepsof').textContent = `of ${fmtInt(idx.sim_steps)}`;
   // the ledger's own clock: the last op's t (run.timings.paint_s is measured a moment earlier and reads 48.4 against 48.5)
@@ -31,7 +57,8 @@ export function createDashboard(replay, stages, h) {
   // evaluations in the run include the skipped slot's candidates, which have no ledger line
   const runEvals = run.painter_stats?.evaluations;
   const laidEvals = r.strokeSegs.reduce((n, s) => n + (s.o.candidates_considered ?? 0), 0);
-  $('k-evalsof').textContent = runEvals && runEvals !== laidEvals ? `of ${fmtInt(runEvals)}, ${fmtInt(runEvals - laidEvals)} in the skipped slot` : 'compute cost';
+  $('k-evalsof').textContent = learned ? '1 per stroke, no candidates'
+    : runEvals && runEvals !== laidEvals ? `of ${fmtInt(runEvals)}, ${fmtInt(runEvals - laidEvals)} in the skipped slot` : 'compute cost';
   const skipped = run.painter_stats?.slots_skipped ?? 0;
   $('k-skipped').textContent = `of ${r.totals.strokes}${skipped ? `, ${skipped} slot skipped in the run` : ''}`;
 
@@ -133,11 +160,15 @@ export function createDashboard(replay, stages, h) {
     const ended = t >= r.endOps;
     const st = ended ? 'healthy' : onPaper ? 'working' : inRack || seg?.kind === 'final' ? 'stable' : 'working';
     const what = ended ? 'finished' : onPaper ? 'brush on paper' : inRack ? 'drying in the rack' : seg?.kind === 'final' ? 'final dry'
-      : seg?.kind === 'stroke' ? (t < seg.search[1] ? 'searching and loading' : 'moving to the sheet') : 'settling';
+      : seg?.kind === 'stroke' && seg.brushChange && t < seg.brushChange.b ? 'changing brushes'
+      : seg?.kind === 'stroke' ? (t < seg.search[1] ? (learned ? 'looking and loading' : 'searching and loading') : 'moving to the sheet')
+      : learned ? 'waiting' : 'settling';
     $('p-phase').innerHTML = `${ICON[st]}<span>${ph.label}, phase ${ph.index + 1} of ${ph.count} · ${what}</span>`;
     const cur = seg?.kind === 'stroke' ? seg : seg?.nextStroke ?? null;
     $('p-stroke').textContent = ended ? `${r.totals.strokes} strokes laid` : `Stroke ${cur ? cur.strokeNo : r.totals.strokes} of ${r.totals.strokes}`;
-    $('p-slot').textContent = seg?.kind === 'stroke' ? `${seg.o.candidates_considered ?? '?'} candidates tried, ${seg.rejected.length} best rejected shown` : `op ${seg ? seg.i + 1 : 0} of ${idx.op_count}`;
+    $('p-slot').textContent = seg?.kind !== 'stroke' ? `op ${seg ? seg.i + 1 : 0} of ${idx.op_count}`
+      : learned ? 'one look, one stroke, no candidates'
+      : `${seg.o.candidates_considered ?? '?'} candidates tried, ${seg.rejected.length} best rejected shown`;
     $('k-strokes').textContent = String(am.strokes);
     $('k-wet').textContent = `${(rec.wet / cells * sheetCm2).toFixed(0)} cm²`;
     $('k-wetpct').textContent = `${((rec.wet / cells) * 100).toFixed(1)} % of the sheet`;

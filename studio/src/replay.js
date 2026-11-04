@@ -33,6 +33,7 @@ export const T = {
   settlePerStep: 0.14, settleMin: 0.28,
   phaseOut: 2.4, phaseBack: 2.4, phasePerStep: 0.012, phaseHoldMin: 2.4,
   finalPerStep: 0.03, finalMin: 2.2,
+  pot: 1.4,            // swap brushes at the pot when a phase starts without a dry between (the learned painter)
   outro: 4.0,          // after the last op: the score sheet turns over at outro start + revealDelay
   revealDelay: 1.0, revealTurn: 1.3,
 };
@@ -109,7 +110,7 @@ export class Replay {
   build() {
     const segs = [];
     let t = T.intro;
-    let prevMain = null, prevT = 0, prevSteps = 0;
+    let prevMain = null, prevT = 0, prevSteps = 0, prevBrush = null;
     let strokeNo = 0, rinses = 0;
     const cumPig = new Array(PIGMENTS.length).fill(0);
     let cumWater = 0;
@@ -129,6 +130,12 @@ export class Replay {
         const lay = Math.min(T.layMax, Math.max(T.layMin, (rs.length * this.pxMm) / T.layMmPerS));
         const stops = [];
         let c = t + T.toSheet; // travel from the rest above the last stroke
+        // a new phase with no phase dry before it: the brush is swapped at the pot before loading
+        if (prevBrush !== null && prevBrush !== s.brush) {
+          stops.push({ at: 'pot', a: c, b: c + T.pot });
+          s.brushChange = { from: prevBrush, to: s.brush, a: c, b: c + T.pot };
+          c += T.pot + T.hop;
+        }
         if (rinse) {
           stops.push({ at: 'rinse', a: c, b: c + T.rinse }); c += T.rinse + T.hop * 0.6;
           stops.push({ at: 'blot', a: c, b: c + T.blot }); c += T.blot + T.hop;
@@ -156,7 +163,9 @@ export class Replay {
         for (const [k, v] of Object.entries(o.pigment_added ?? {})) cumPig[PIGMENT_INDEX[k]] += v ?? 0;
         cumWater += o.op.water ?? 0;
         prevMain = main;
+        prevBrush = s.brush;
       } else if (kind === 'phase') {
+        prevBrush = null; // the phase dry's own brush change covers the swap
         const hold = Math.max(T.phaseHoldMin, o.op.steps * T.phasePerStep);
         s.dur = T.phaseOut + hold + T.phaseBack;
         s.carry = [t, t + T.phaseOut, t + T.phaseOut + hold, t + s.dur];

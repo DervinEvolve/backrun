@@ -19,7 +19,7 @@ import { loadRun, PIGMENTS, PIGMENT_INDEX, T } from './replay.js';
 import { SheetPainter } from './sheet.js';
 import { makeArmIK } from './ik.js';
 import { buildChoreo } from './choreo.js';
-import { createDashboard, SPEEDS } from './dashboard.js';
+import { createDashboard, painterLabel, SPEEDS } from './dashboard.js';
 import { measureSubjects } from './frame-guard.js';
 
 const params = new URLSearchParams(location.search);
@@ -176,7 +176,7 @@ async function main() {
   const cards = {
     Target_Print: targetTex,
     Prompt_Card: TX.cardTexture(promptLines, { w: 512, h: 352 }),
-    Credit_Slip: TX.cardTexture([[`run ${replay.index.name}, painter ${run.painter}, seed ${run.seed}`, 26, 'system-ui, sans-serif']], { w: 512, h: 84, top: 54 }),
+    Credit_Slip: TX.cardTexture([[`run ${replay.index.name}, ${painterLabel(run.painter).toLowerCase()}, seed ${run.seed}`, 26, 'system-ui, sans-serif']], { w: 512, h: 84, top: 54 }),
     ScoreCard_Back: TX.cardTexture([], {
       w: 256, h: 176, bg: '#5E4B3C', draw: (g, w, h) => {
         g.strokeStyle = '#B5A642'; g.lineWidth = 3; g.strokeRect(10, 10, w - 20, h - 20);
@@ -648,7 +648,7 @@ async function main() {
     onTour: () => (tour ? stopTour() : startTour()),
     onFollow: () => { follow = !follow; if (follow && active !== persp) setView('stroke'); if (follow) { follow = true; fly = null; } },
     onGhosts: () => { ui.ghosts = !ui.ghosts; },
-  });
+  }, gallery);
 
   function lookAtWell(i) {
     const w = wellTops[i];

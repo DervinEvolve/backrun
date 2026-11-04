@@ -1,5 +1,5 @@
 // Pack a recorded Backrun run folder for the studio gallery.
-// Usage: node scripts/pack-run.mjs <run folder> <name>
+// Usage: node scripts/pack-run.mjs <run folder> <name> [--label "Search painter, horizon target"]
 //
 // Copies ledger.jsonl, run.json, strokes.jsonl, target.png, final.png and frames/ into public/runs/<name>/ as they
 // were recorded, and writes three derived files the app reads:
@@ -10,7 +10,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const [src, name] = process.argv.slice(2);
+const argv = process.argv.slice(2);
+const li = argv.indexOf('--label');
+const label = li >= 0 ? argv.splice(li, 2)[1] : null;
+const [src, name] = argv;
 if (!src || !name || !/^[a-z0-9_-]+$/i.test(name)) {
   console.error('usage: node scripts/pack-run.mjs <run folder> <name>   (name: letters, digits, _ or -)');
   process.exit(1);
@@ -113,8 +116,9 @@ fs.writeFileSync(path.join(out, 'scores.json'), JSON.stringify(scores));
 // gallery list
 const galleryPath = path.join(root, 'public', 'runs', 'gallery.json');
 const gallery = fs.existsSync(galleryPath) ? JSON.parse(fs.readFileSync(galleryPath, 'utf8')) : { runs: [] };
-gallery.runs = gallery.runs.filter((r) => r.name !== name);
-gallery.runs.push({ name, painter: run.painter ?? null, target: run.target_path ?? null, strokes: index.stroke_count });
+const before = gallery.runs.find((r) => r.name === name);
+const entry = { name, label: label ?? before?.label ?? null, painter: run.painter ?? null, target: run.target_path ?? null, strokes: index.stroke_count };
+if (before) Object.assign(before, entry); else gallery.runs.push(entry); // a repack keeps its place and its label
 fs.writeFileSync(galleryPath, JSON.stringify(gallery, null, 1));
 
 const bytes = fs.readdirSync(out, { recursive: true }).map((f) => path.join(out, f)).filter((f) => fs.statSync(f).isFile())

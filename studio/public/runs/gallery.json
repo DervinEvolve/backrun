@@ -2,12 +2,14 @@
  "runs": [
   {
    "name": "horizon_v1",
+   "label": "Search painter, horizon target",
    "painter": "search_v0",
    "target": "synthetic:horizon:1",
    "strokes": 39
   },
   {
    "name": "policy_v2_sealed_003",
+   "label": "Learned painter, sealed target 3",
    "painter": "policy",
    "target": "sealed:sealed_003",
    "strokes": 40
