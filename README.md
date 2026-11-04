@@ -18,6 +18,14 @@ Early. The simulator works and is tested. The first painter is a search with no 
 
 Forty stroke slots, sixteen candidates each, seed 7, about fifty seconds on one CPU core. Score `total` 5.61, lower is better; the first painter scored 6.48 on the same target. One seed on one target, so a direction rather than a result.
 
+The learned painter, after one run of imitation training on 1,000 of the search painter's paintings, on a sealed target it never saw:
+
+| Sealed target on the left, the learned painter on the right |
+|---|
+| ![A synthetic horizon target with a lavender sky, orange sun and dark sea, next to the learned painter's version: a cerulean band of sky, bare paper where the gradient should be, a small yellow mark for the sun, and a dark ultramarine sea with a ragged top edge](docs/assets/learned-sealed-003.png) |
+
+One simulator step per stroke, no search, about six seconds. It has learned the layout: sky above, sea below, the sun about where it belongs. It has not learned the pale gradient, which it leaves as bare paper, nor the sun as a disc. Score `total` 8.85 averaged over five sealed targets and three paper seeds, between a blank sheet at 24.02 and the search painter at 5.26.
+
 | Part | State |
 |---|---|
 | Simulator: water flow, pigment movement, evaporation, settling, granulation, edge darkening | Done, 71 tests, about 5 ms per step at 256 x 192 on one CPU core |
