@@ -530,6 +530,7 @@ def load_report(report_dir: str | Path) -> dict[str, Any]:
                 run = Path(report_dir) / "paintings" / run.name
             r.update(collapse_stats_of_run(run))
         report["summary"] = summarise(rows)
+    report["report_dir"] = str(report_dir)
     return report
 
 
@@ -539,7 +540,8 @@ def compare_markdown(reports: Sequence[dict[str, Any]]) -> str:
     When a ``blank`` and a ``search`` report are both present, each row
     also gets ``gap closed``: how far its mean ``total`` has moved from the
     blank sheet's toward the search painter's (0 is no better than blank,
-    1 is as good as search, negative is worse than blank).
+    1 is as good as search, negative is worse than blank). Rows whose
+    painter names repeat are told apart by their report folder's name.
     """
     by_name = {r["painter"]: r for r in reports}
     blank = by_name.get("blank", {}).get("summary", {}).get("total", {}).get("mean")
@@ -549,10 +551,14 @@ def compare_markdown(reports: Sequence[dict[str, Any]]) -> str:
         + (" | gap closed |" if blank is not None and search is not None else " |"),
         "|---" * (9 + (blank is not None and search is not None)) + "|",
     ]
+    names = [r["painter"] for r in reports]
     for r in reports:
         m = r["summary"]
+        label = r["painter"]
+        if names.count(label) > 1 and r.get("report_dir"):
+            label += f" ({Path(r['report_dir']).name})"
         g = lambda k: m.get(k, {}).get("mean", math.nan)  # noqa: E731
-        row = (f"| {r['painter']} | {r['n_paintings']} | {_fmt(g('total'))} | {_fmt(m['total']['std'])} | "
+        row = (f"| {label} | {r['n_paintings']} | {_fmt(g('total'))} | {_fmt(m['total']['std'])} | "
                f"{_fmt(g('lab_l2'))} | {_fmt(g('ssim'))} | {_fmt(g('strokes'))} | "
                f"{_fmt(g('start_std_x_px'))}, {_fmt(g('start_std_y_px'))} | {_fmt(g('distinct_strokes'))} |")
         if blank is not None and search is not None:

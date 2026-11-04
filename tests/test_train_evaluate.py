@@ -167,6 +167,8 @@ def test_baseline_painters(sealed: Path, tmp_path: Path) -> None:
     assert "gap closed" in md and md.count("\n") == 5
     code = evaluate.main(["compare", str(tmp_path / "cmp.md"), str(tmp_path / "blank"), str(tmp_path / "mean")])
     assert code == 0 and "distinct strokes" in (tmp_path / "cmp.md").read_text()
+    twice = evaluate.compare_markdown([blank_report, dict(blank_report, report_dir=str(tmp_path / "other"))])
+    assert "| blank (blank) |" in twice and "| blank (other) |" in twice
 
 
 def test_load_report_fills_in_the_collapse_detector(sealed: Path, tmp_path: Path) -> None:
