@@ -56,6 +56,8 @@ class Usage:
     finish_reason: str | None = None
     #: the router's own cost for the call in dollars, when it reports one; None otherwise
     cost: float | None = None
+    #: the first 200 characters of the failure, for a call that ended in an error
+    error: str | None = None
     at: float = field(default_factory=time.time)
 
 
@@ -186,7 +188,7 @@ class ChatClient:
                     break
                 self._wait(attempt, None)
         self.ledger.write(Usage(model=model, latency_s=round(time.monotonic() - start, 3),
-                                attempts=attempt + 1, status="error", tag=tag))
+                                attempts=attempt + 1, status="error", tag=tag, error=str(last)[:200]))
         raise ClientError(f"{model}: {last}")
 
     def _finish(self, model: str, payload: dict[str, Any], start: float, attempts: int,

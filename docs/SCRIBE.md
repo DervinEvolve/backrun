@@ -367,11 +367,15 @@ modal run scribe/modal_app.py --stage sample
 ```
 
 ```bash
-modal run scribe/modal_app.py --stage train --run-name grpo_v1 --max-steps 30
+modal run scribe/modal_app.py --stage warmup --run-name warm_v1
 ```
 
 ```bash
-modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1
+modal run scribe/modal_app.py --stage train --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged --max-steps 30
+```
+
+```bash
+modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged
 ```
 
 The judge defaults to Claude Opus 5.5 at low reasoning effort with a
@@ -390,18 +394,28 @@ group whose rollouts score differently, so a batch of flat groups means a
 short warm-up on the keeps comes first, and the report says so in one
 sentence.
 
+The first base sample, on 4 November 2026, settled the go or no-go: 288
+files from Qwen3-4B-Instruct, 15% through the gate, none cut off. The
+rejections were near misses: 171 files had four or five strokes where six is
+the minimum, 34 misspelt a pigment or asked for white, 7 put a point off the
+paper. So the model knows the language and has never seen a finished file,
+which is what `warmup` is for: `scribe/sft.py` fine-tunes LoRA adapters on
+the 269 keeps for three epochs, prompt in and fenced stroke file out, with
+the loss on the completion only, then merges the adapter into the base model
+on the checkpoint volume and samples it the same way as `sample`, with the
+base numbers in the next column of the report.
+
 `train` runs the trainer with vLLM colocated on the same GPU, LoRA on all
 linear layers, four gradient accumulation steps so one optimizer step sees
-four prompts, and the reference pack as the pool. Output goes to
-`/checkpoints/scribe/<run>/`. `evaluate` merges the run's adapter into the
+four prompts, and the reference pack as the pool; `--model-path` starts it
+from the warm-up's merged model. Output goes to `/checkpoints/scribe/<run>/`. `evaluate` merges the run's adapter into the
 base model, samples it exactly as `sample` did, and writes a report whose
 table has the base sample's numbers in the next column.
 
-Status: written and tested where a test is possible without a GPU (the
-batch writer, the scoring, the reports, the argument plumbing, and that the
-module imports without Modal). It has not been run on Modal; the image's
-version pins for vLLM and TRL are a first guess and the first run is a
-debugging run.
+Status: `sample` has run on Modal (the image builds, the model loads from
+the volume in ten seconds, vLLM writes 288 files in half a minute). The
+warm-up and the trainer have not run yet; their first runs are debugging
+runs.
 
 ## Showing it in the studio
 

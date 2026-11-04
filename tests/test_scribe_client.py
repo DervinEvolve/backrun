@@ -106,3 +106,13 @@ def test_fake_client_scripts_and_raises(tmp_path: Path) -> None:
     assert fake.chat("b", [user_message("y")], tag="t").text == "two"
     assert [c[0] for c in fake.calls] == ["a", "a", "b"]
     assert len((tmp_path / "f.jsonl").read_text().splitlines()) == 3
+
+
+def test_failed_call_keeps_its_error_text_in_the_ledger(server: str, tmp_path: Path) -> None:
+    _Handler.plan = [401]
+    with pytest.raises(ClientError):
+        _client(server, tmp_path / "u.jsonl").chat("m", [user_message("hi")])
+    import json
+
+    rec = json.loads((tmp_path / "u.jsonl").read_text().splitlines()[-1])
+    assert rec["status"] == "error" and "401" in rec["error"]

@@ -4,9 +4,14 @@ From a machine that can reach Modal (``modal setup`` done) and holds this
 repo with ``shared/pool_v1/keeps`` in it::
 
     modal secret create openrouter SCRIBE_API_KEY=...   # the API base is set in the image
-    modal run scribe/modal_app.py --stage sample --judge-model anthropic/claude-opus-5.5 --judge-reasoning-effort low --judge-max-tokens 400
-    modal run scribe/modal_app.py --stage train --run-name grpo_v1 --judge-model anthropic/claude-opus-5.5 --judge-reasoning-effort low --judge-max-tokens 400 --max-steps 30
-    modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1 --judge-model anthropic/claude-opus-5.5 --judge-reasoning-effort low --judge-max-tokens 400
+    modal run scribe/modal_app.py --stage sample
+    modal run scribe/modal_app.py --stage warmup --run-name warm_v1
+    modal run scribe/modal_app.py --stage train --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged --max-steps 30
+    modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged
+
+The judge defaults to Claude Opus 5.5 at low reasoning effort with a 400-token
+budget; ``--judge-model``, ``--judge-no-reasoning``, ``--judge-reasoning-effort``
+and ``--judge-max-tokens`` change it.
 
 ``sample`` is the go or no-go before any training: the base model writes
 ``--per`` stroke files for every prompt, the gate and the judge score them,
@@ -15,8 +20,13 @@ token limit, and how many prompt groups have any reward spread. GRPO only
 learns from groups whose rollouts score differently, so a batch of flat
 groups means warm the model up first rather than train.
 
-``train`` runs ``scribe.train_grpo`` with vLLM colocated on the GPU and the
-reference pack as the pool. ``evaluate`` merges a run's LoRA adapter into the
+``warmup`` runs ``scribe.sft`` on the keeps (three epochs of LoRA, then the
+adapter merged into the base model on the checkpoint volume) and samples the
+merged model the same way, with the base sample's numbers in the next column.
+The first base sample passed the gate 15% of the time, which is the case for
+a warm-up. ``train`` runs ``scribe.train_grpo`` with vLLM colocated on the GPU
+and the reference pack as the pool; ``--model-path`` starts it from the
+warm-up's merged model. ``evaluate`` merges a run's LoRA adapter into the
 base model, samples the same way ``sample`` does, and reports the same
 numbers next to the base sample's, so the two reports read side by side.
 
@@ -58,7 +68,7 @@ CHECKPOINTS = "/checkpoints"
 POOL = f"{REMOTE_REPO}/pool"
 DEFAULT_GPU = "A100-40GB"
 DEFAULT_MODEL = "Qwen/Qwen3-4B-Instruct-2507"
-STAGES = ("sample", "train", "evaluate")
+STAGES = ("sample", "warmup", "train", "evaluate")
 
 
 class _Absent:
@@ -187,7 +197,9 @@ def score_and_report(batch_root: Path, pool_root: str, judge_model: str, extra: 
     usage_path = batch_root / "usage.jsonl"
     usage = [json.loads(x) for x in usage_path.read_text().splitlines() if x.strip()] if usage_path.is_file() else []
     stats = batch_stats(batch_root, lines)
+    failed = [u for u in usage if u.get("status") != "ok"]
     stats.update({"model": model, "judge_model": judge_model, "judge_calls": len(usage),
+                  "judge_failed_calls": len(failed), "judge_first_error": failed[0].get("error") if failed else None,
                   "judge_cost_usd": round(sum(u.get("cost") or 0 for u in usage), 4),
                   "scoring_s": round(time.time() - t0, 1), "pool_manifest": pool.manifest()["sha256"]})
     stats["verdict"] = verdict(stats)
@@ -207,7 +219,8 @@ def render_report(title: str, stats: dict[str, Any], reward_text: str, compare_t
             ("pairwise_mean", "mean pairwise win share"), ("reward_mean", "mean reward"),
             ("groups_with_spread", "prompt groups with reward spread"), ("groups", "prompt groups"),
             ("mean_group_sd", "mean within-group reward sd"), ("excluded", "rollouts excluded (judge failures)"),
-            ("judge_calls", "judge calls"), ("judge_cost_usd", "judge cost, $")]
+            ("judge_calls", "judge calls"), ("judge_failed_calls", "judge calls that failed"),
+            ("judge_cost_usd", "judge cost, $")]
     other = None
     if compare_to is not None and (compare_to / "stats.json").is_file():
         other = json.loads((compare_to / "stats.json").read_text())
@@ -216,6 +229,8 @@ def render_report(title: str, stats: dict[str, Any], reward_text: str, compare_t
     for k, label in keys:
         rows.append(f"| {label} | {fmt(stats.get(k))} |" + (f" {fmt(other.get(k))} |" if other else ""))
     rej = "\n".join(f"- {n}: {r}" for r, n in stats.get("top_rejections", [])) or "- none"
+    if stats.get("judge_first_error"):
+        rej += f"\n\nFirst judge error: `{stats['judge_first_error']}`"
     return (f"# {title}\n\nModel `{stats.get('model', '?')}`, judge `{stats.get('judge_model')}`, pool manifest "
             f"`{str(stats.get('pool_manifest', ''))[:12]}`.\n\n{head}\n" + "\n".join(rows)
             + f"\n\n**{stats.get('verdict', '')}**\n\nTop gate rejections:\n{rej}\n\n## Reward terms\n\n```\n{reward_text}```\n")
@@ -268,6 +283,21 @@ def sample(name: str, model: str, per: int, max_tokens: int, temperature: float,
     (batch_root / "stats.json").write_text(json.dumps(stats, indent=1) + "\n")
     _commit(data_volume)
     return (batch_root / "report.md").read_text()
+
+
+@app.function(image=image, volumes=VOLUMES, secrets=SECRETS, gpu=DEFAULT_GPU, cpu=8, memory=65536,
+              timeout=6 * 3600)
+def warmup(run_name: str, argv: list[str]) -> str:
+    """Supervised warm-up on the keeps; returns the merged model's path on the checkpoint volume."""
+    from scribe.sft import main as sft_main
+
+    out = Path(CHECKPOINTS) / "scribe" / run_name
+    out.mkdir(parents=True, exist_ok=True)
+    code = sft_main(["--pool", POOL, "--output-dir", str(out), *argv])
+    _commit(checkpoint_volume)
+    if code != 0:
+        raise RuntimeError(f"warm-up exited with {code}; see {out}")
+    return str(out / "merged")
 
 
 @app.function(image=image, volumes=VOLUMES, secrets=SECRETS, gpu=DEFAULT_GPU, cpu=8, memory=65536,
@@ -332,22 +362,42 @@ def main(
     workers: int = 8,
     max_steps: int = 30,
     grad_accum: int = 4,
+    epochs: float = 3.0,
+    learning_rate: float = 0.0,
+    model_path: str = "",
+    compare_to: str = "base",
     save_steps: int = 10,
     gpu: str = DEFAULT_GPU,
     checkpoint: str = "final",
     extra: str = "",
 ) -> None:
-    """Run one stage. ``--extra`` passes further arguments to the trainer, space separated."""
+    """Run one stage.
+
+    ``--model-path`` points ``sample`` or ``train`` at a folder on the
+    checkpoint volume, such as a warm-up's ``merged`` model; ``--model``
+    stays the base id the folder was made from. ``--extra`` passes further
+    arguments to the trainer or the warm-up, space separated.
+    """
     if stage not in STAGES:
         raise SystemExit(f"--stage must be one of {', '.join(STAGES)}")
     effort = judge_reasoning_effort or None
     pick = lambda fn: fn if gpu == DEFAULT_GPU else fn.with_options(gpu=gpu)  # noqa: E731
     if stage == "sample":
-        print(pick(sample).remote(name or "base", model, per, max_tokens, temperature, top_p, top_k, seed,
-                                  judge_model, judge_no_reasoning, effort, judge_max_tokens, refs, mix, limit,
-                                  workers))
+        print(pick(sample).remote(name or ("base" if not model_path else Path(model_path).parent.name), model, per,
+                                  max_tokens, temperature, top_p, top_k, seed, judge_model, judge_no_reasoning,
+                                  effort, judge_max_tokens, refs, mix, limit, workers,
+                                  model_path=model_path or None, compare_to=compare_to if model_path else None))
+    elif stage == "warmup":
+        argv = ["--model", model, "--epochs", str(epochs), "--seed", str(seed), *extra.split()]
+        if learning_rate:
+            argv += ["--learning-rate", str(learning_rate)]
+        merged = pick(warmup).remote(run_name, argv)
+        print(f"warm-up done: {merged}")
+        print(pick(sample).remote(name or f"{run_name}_sample", model, per, max_tokens, temperature, top_p, top_k,
+                                  seed, judge_model, judge_no_reasoning, effort, judge_max_tokens, refs, mix, limit,
+                                  workers, model_path=merged, compare_to=compare_to))
     elif stage == "train":
-        argv = ["--model", model, "--max-steps", str(max_steps), "--grad-accum", str(grad_accum),
+        argv = ["--model", model_path or model, "--max-steps", str(max_steps), "--grad-accum", str(grad_accum),
                 "--save-steps", str(save_steps), "--num-generations", str(per), "--max-completion-length",
                 str(max_tokens), "--temperature", str(temperature), "--top-p", str(top_p), "--top-k", str(top_k),
                 "--refs", str(refs), "--mix", str(mix), "--seed", str(seed), "--reward-workers", str(workers),
