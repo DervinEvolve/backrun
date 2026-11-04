@@ -326,7 +326,7 @@ def draw_sealed_specs(
 
     The pool is ``n`` synthetic scenes per kind with seeds from the reserved
     range, plus the owner's photos. The same arguments always give the same
-    list.
+    list, in the order drawn.
     """
     pool = [
         TargetSpec("synthetic", kind=k, seed=SEALED_SEED_BASE + i)
@@ -337,7 +337,8 @@ def draw_sealed_specs(
         raise ValueError(f"cannot draw {n} sealed targets from a pool of {len(pool)}")
     rng = np.random.default_rng(seed)
     picks = rng.choice(len(pool), size=n, replace=False)
-    return [pool[i] for i in sorted(int(i) for i in picks)]
+    # Kept in drawn order, so any prefix (``--limit``) mixes the kinds.
+    return [pool[int(i)] for i in picks]
 
 
 def _save_png(image: NDArray[np.uint8], path: Path) -> None:
@@ -458,7 +459,7 @@ def load_sealed_set(folder: str | Path | None = None, verify: bool = True) -> li
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Command line: ``python -m train.data [--root runs/data] [--seeds-per-kind N] [--photos DIR]``."""
+    """Command line: ``python -m train.data [--root runs/data] [--seeds-per-kind N] [--photos DIR] [--sealed-only]``."""
     import argparse
 
     ap = argparse.ArgumentParser(prog="python -m train.data", description="Write the training targets and the sealed set.")
@@ -466,6 +467,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--seeds-per-kind", type=int, default=400, help="synthetic seeds per scene kind")
     ap.add_argument("--photos", default=None, help="folder of the owner's images to include")
     ap.add_argument("--redraw-sealed", action="store_true", help="redraw the sealed set even if it exists")
+    ap.add_argument("--sealed-only", action="store_true", help="write (or check) the sealed set and stop")
     args = ap.parse_args(argv)
     root = Path(args.root)
     sealed = root / "sealed"
@@ -475,6 +477,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     else:
         problems = verify_manifest(sealed)
         print(f"sealed set exists at {sealed}: {'ok' if not problems else problems}")
+    if args.sealed_only:
+        return 0
     rows = write_training_set(root / "train", args.seeds_per_kind, args.photos, sealed)
     print(f"training targets: {len(rows)} in {root / 'train'}")
     return 0
