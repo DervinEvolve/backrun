@@ -1,0 +1,447 @@
+{
+ "name": "scribe_hibiscus",
+ "source": "scribe_hibiscus",
+ "packed_at": "2026-11-04T18:14:16.767Z",
+ "run": {
+  "canvas": {
+   "width": 256,
+   "height": 192,
+   "paper": "cold_press"
+  },
+  "seed": 445,
+  "target_path": "prompt:hibiscus",
+  "strokes_requested": 42,
+  "candidates_per_stroke": 1,
+  "painter": "scribe",
+  "model": "qwen/qwen3-coder-next",
+  "subject": "a peach hibiscus flower, close up",
+  "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+  "candidate": "hibiscus__qwen-qwen3-coder-next__02",
+  "rating": "love",
+  "judge": null,
+  "gate_stats": {
+   "strokes": 42,
+   "dry_ops": 3,
+   "dry_steps": 3800,
+   "coverage": 0.0696,
+   "mean_lightness": 93.74,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.6602,
+    0.1787,
+    0.0503,
+    0.0211,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0.0766
+   ],
+   "lightness_hist": [
+    0,
+    0,
+    0.0006,
+    0.0099,
+    0.0497,
+    0.1421,
+    0.1731,
+    0.2056,
+    0.3816,
+    0.0374
+   ]
+  },
+  "painter_stats": {
+   "strokes_accepted": 42,
+   "slots_skipped": 0,
+   "evaluations": 0,
+   "looks": 0,
+   "final_dry_steps": 25,
+   "total_s": 2.681199916999958
+  },
+  "status": "finished",
+  "frames_every": 60,
+  "frames": 67,
+  "ops": 46,
+  "sim_steps": 3867,
+  "timings": {
+   "started_unix": 1793816053.849,
+   "elapsed_s": 2.793,
+   "paint_s": 2.681
+  }
+ },
+ "op_count": 46,
+ "stroke_count": 42,
+ "sim_steps": 3867,
+ "frames_every": 60,
+ "frames": [
+  {
+   "step": 0,
+   "op": -1,
+   "file": "frames/frame_00000.png"
+  },
+  {
+   "step": 1,
+   "op": 0,
+   "file": "frames/frame_00001.png"
+  },
+  {
+   "step": 65,
+   "op": 5,
+   "file": "frames/frame_00002.png"
+  },
+  {
+   "step": 125,
+   "op": 5,
+   "file": "frames/frame_00003.png"
+  },
+  {
+   "step": 185,
+   "op": 5,
+   "file": "frames/frame_00004.png"
+  },
+  {
+   "step": 245,
+   "op": 5,
+   "file": "frames/frame_00005.png"
+  },
+  {
+   "step": 305,
+   "op": 5,
+   "file": "frames/frame_00006.png"
+  },
+  {
+   "step": 365,
+   "op": 5,
+   "file": "frames/frame_00007.png"
+  },
+  {
+   "step": 425,
+   "op": 5,
+   "file": "frames/frame_00008.png"
+  },
+  {
+   "step": 485,
+   "op": 5,
+   "file": "frames/frame_00009.png"
+  },
+  {
+   "step": 545,
+   "op": 5,
+   "file": "frames/frame_00010.png"
+  },
+  {
+   "step": 605,
+   "op": 5,
+   "file": "frames/frame_00011.png"
+  },
+  {
+   "step": 665,
+   "op": 5,
+   "file": "frames/frame_00012.png"
+  },
+  {
+   "step": 725,
+   "op": 5,
+   "file": "frames/frame_00013.png"
+  },
+  {
+   "step": 785,
+   "op": 5,
+   "file": "frames/frame_00014.png"
+  },
+  {
+   "step": 845,
+   "op": 5,
+   "file": "frames/frame_00015.png"
+  },
+  {
+   "step": 905,
+   "op": 5,
+   "file": "frames/frame_00016.png"
+  },
+  {
+   "step": 965,
+   "op": 5,
+   "file": "frames/frame_00017.png"
+  },
+  {
+   "step": 1025,
+   "op": 5,
+   "file": "frames/frame_00018.png"
+  },
+  {
+   "step": 1085,
+   "op": 5,
+   "file": "frames/frame_00019.png"
+  },
+  {
+   "step": 1145,
+   "op": 5,
+   "file": "frames/frame_00020.png"
+  },
+  {
+   "step": 1205,
+   "op": 5,
+   "file": "frames/frame_00021.png"
+  },
+  {
+   "step": 1265,
+   "op": 5,
+   "file": "frames/frame_00022.png"
+  },
+  {
+   "step": 1325,
+   "op": 5,
+   "file": "frames/frame_00023.png"
+  },
+  {
+   "step": 1385,
+   "op": 5,
+   "file": "frames/frame_00024.png"
+  },
+  {
+   "step": 1445,
+   "op": 5,
+   "file": "frames/frame_00025.png"
+  },
+  {
+   "step": 1505,
+   "op": 5,
+   "file": "frames/frame_00026.png"
+  },
+  {
+   "step": 1565,
+   "op": 5,
+   "file": "frames/frame_00027.png"
+  },
+  {
+   "step": 1625,
+   "op": 5,
+   "file": "frames/frame_00028.png"
+  },
+  {
+   "step": 1685,
+   "op": 5,
+   "file": "frames/frame_00029.png"
+  },
+  {
+   "step": 1745,
+   "op": 5,
+   "file": "frames/frame_00030.png"
+  },
+  {
+   "step": 1805,
+   "op": 5,
+   "file": "frames/frame_00031.png"
+  },
+  {
+   "step": 1873,
+   "op": 14,
+   "file": "frames/frame_00032.png"
+  },
+  {
+   "step": 1933,
+   "op": 14,
+   "file": "frames/frame_00033.png"
+  },
+  {
+   "step": 1993,
+   "op": 14,
+   "file": "frames/frame_00034.png"
+  },
+  {
+   "step": 2053,
+   "op": 14,
+   "file": "frames/frame_00035.png"
+  },
+  {
+   "step": 2113,
+   "op": 14,
+   "file": "frames/frame_00036.png"
+  },
+  {
+   "step": 2173,
+   "op": 14,
+   "file": "frames/frame_00037.png"
+  },
+  {
+   "step": 2233,
+   "op": 14,
+   "file": "frames/frame_00038.png"
+  },
+  {
+   "step": 2293,
+   "op": 14,
+   "file": "frames/frame_00039.png"
+  },
+  {
+   "step": 2353,
+   "op": 14,
+   "file": "frames/frame_00040.png"
+  },
+  {
+   "step": 2413,
+   "op": 14,
+   "file": "frames/frame_00041.png"
+  },
+  {
+   "step": 2473,
+   "op": 14,
+   "file": "frames/frame_00042.png"
+  },
+  {
+   "step": 2533,
+   "op": 14,
+   "file": "frames/frame_00043.png"
+  },
+  {
+   "step": 2593,
+   "op": 14,
+   "file": "frames/frame_00044.png"
+  },
+  {
+   "step": 2653,
+   "op": 14,
+   "file": "frames/frame_00045.png"
+  },
+  {
+   "step": 2713,
+   "op": 14,
+   "file": "frames/frame_00046.png"
+  },
+  {
+   "step": 2773,
+   "op": 14,
+   "file": "frames/frame_00047.png"
+  },
+  {
+   "step": 2833,
+   "op": 14,
+   "file": "frames/frame_00048.png"
+  },
+  {
+   "step": 2893,
+   "op": 14,
+   "file": "frames/frame_00049.png"
+  },
+  {
+   "step": 2953,
+   "op": 14,
+   "file": "frames/frame_00050.png"
+  },
+  {
+   "step": 3013,
+   "op": 14,
+   "file": "frames/frame_00051.png"
+  },
+  {
+   "step": 3096,
+   "op": 38,
+   "file": "frames/frame_00052.png"
+  },
+  {
+   "step": 3156,
+   "op": 38,
+   "file": "frames/frame_00053.png"
+  },
+  {
+   "step": 3216,
+   "op": 38,
+   "file": "frames/frame_00054.png"
+  },
+  {
+   "step": 3276,
+   "op": 38,
+   "file": "frames/frame_00055.png"
+  },
+  {
+   "step": 3336,
+   "op": 38,
+   "file": "frames/frame_00056.png"
+  },
+  {
+   "step": 3396,
+   "op": 38,
+   "file": "frames/frame_00057.png"
+  },
+  {
+   "step": 3456,
+   "op": 38,
+   "file": "frames/frame_00058.png"
+  },
+  {
+   "step": 3516,
+   "op": 38,
+   "file": "frames/frame_00059.png"
+  },
+  {
+   "step": 3576,
+   "op": 38,
+   "file": "frames/frame_00060.png"
+  },
+  {
+   "step": 3636,
+   "op": 38,
+   "file": "frames/frame_00061.png"
+  },
+  {
+   "step": 3696,
+   "op": 38,
+   "file": "frames/frame_00062.png"
+  },
+  {
+   "step": 3756,
+   "op": 38,
+   "file": "frames/frame_00063.png"
+  },
+  {
+   "step": 3816,
+   "op": 38,
+   "file": "frames/frame_00064.png"
+  },
+  {
+   "step": 3840,
+   "op": 42,
+   "file": "frames/frame_00065.png"
+  },
+  {
+   "step": 3867,
+   "op": 45,
+   "final": true,
+   "file": "frames/frame_00066.png"
+  }
+ ],
+ "phases": [
+  {
+   "name": "scribe",
+   "index": 0,
+   "first_op": 0,
+   "last_op": 45
+  }
+ ],
+ "pigments_used": [
+  "quinacridone_rose",
+  "cadmium_yellow",
+  "paynes_grey",
+  "burnt_umber",
+  "french_ultramarine"
+ ],
+ "timings": {
+  "started_unix": 1793816053.849,
+  "elapsed_s": 2.793,
+  "paint_s": 2.681
+ },
+ "files": {
+  "ops": "ops.json",
+  "scores": "scores.json",
+  "target": "target.png",
+  "final": "final.png",
+  "ledger": "ledger.jsonl",
+  "strokes": "strokes.jsonl",
+  "run": "run.json"
+ }
+}

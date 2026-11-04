@@ -401,6 +401,18 @@ module imports without Modal). It has not been run on Modal; the image's
 version pins for vLLM and TRL are a first guess and the first run is a
 debugging run.
 
+## Showing it in the studio
+
+A scribe painting is a stroke file, so the studio can replay it like any
+other run. `python -m scribe.record CANDIDATE OUT` replays one pool or batch
+candidate through the recorder, writes the prompt on a blank sheet as the
+target card, and `studio/scripts/pack-run.mjs` packs it into the gallery.
+The dashboard names the painter "Scribe", shows the prompt instead of a
+target, and at the reveal shows the rating and the judge's numbers instead
+of a score sheet. The first one in the gallery is the hibiscus I rated love.
+After a GRPO run, the same two commands put a checkpoint's painting next to
+the base model's for the same prompt.
+
 ## Costs
 
 Round-number estimates, except the first pool and the judge calibration, which were billed.

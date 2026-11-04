@@ -17,10 +17,11 @@ const fmtAmount = (v) => (v >= 10000 ? `${(v / 1000).toFixed(1)}k` : v >= 1000 ?
 const fmtInt = (v) => Math.round(v).toLocaleString('en-US');
 
 // plain names for the painters a run folder can name
-export const painterLabel = (p) => (p === 'policy' ? 'Learned painter' : p?.startsWith('search') ? 'Search painter' : `Painter ${p ?? 'unknown'}`);
-const targetLabel = (spec, fallback) => {
+export const painterLabel = (p) => (p === 'policy' ? 'Learned painter' : p === 'scribe' ? 'Scribe' : p?.startsWith('search') ? 'Search painter' : `Painter ${p ?? 'unknown'}`);
+const targetLabel = (spec, fallback, run) => {
   if (spec?.startsWith('synthetic:')) { const k = spec.split(':')[1]; return k.charAt(0).toUpperCase() + k.slice(1); }
   if (spec?.startsWith('sealed:')) return `Sealed target ${Number(spec.split('_').pop())}`;
+  if (spec?.startsWith('prompt:')) return run?.subject ? run.subject.charAt(0).toUpperCase() + run.subject.slice(1) : 'Prompt';
   return fallback;
 };
 
@@ -30,7 +31,9 @@ export function createDashboard(replay, stages, h, gallery = { runs: [] }) {
   const run = idx.run;
   // the learned painter looks once per slot and lays that stroke: no candidates, nothing rejected
   const learned = run.painter === 'policy';
-  $('p-name').textContent = targetLabel(run.target_path, idx.name);
+  // the scribe wrote the whole file from a text prompt before any paint touched the paper
+  const scribe = run.painter === 'scribe';
+  $('p-name').textContent = targetLabel(run.target_path, idx.name, run);
   $('p-sub').textContent = `${painterLabel(run.painter)} · seed ${run.seed} · ${run.canvas.width} x ${run.canvas.height} px`;
   // gallery: switching runs reloads the page on ?run=
   const pick = $('p-run');
@@ -49,6 +52,17 @@ export function createDashboard(replay, stages, h, gallery = { runs: [] }) {
       + 'after each stroke is the short dry that follows it; there is no dry between phases, so the brush is swapped at the pot '
       + 'when a phase starts.';
   }
+  if (scribe) {
+    $('k-evals-k').textContent = 'Looks';
+    // no total to guess: the sheet is face down only in the sense that the rating waits for the reveal
+    $('score-down').querySelector('.muted').textContent = 'A scribe painting has no target and no total. The sheet turns over at the end to show how the painting was rated.';
+    for (const el of $('score-down').querySelectorAll('label, button, #guess-kept')) el.hidden = true;
+    $('ghosts').disabled = true; $('ghosts').title = 'The scribe tries no candidates, so there are none to show';
+    $('about-painter').textContent = `This run is the scribe: a language model (${run.model ?? 'unknown'}) that was given the words `
+      + `"${run.prompt ?? run.subject}" and wrote the whole stroke file in one go, without seeing the paper. The simulator then painted `
+      + `it exactly as written, waits included. There is no target image, so the card on the left is the prompt, and no score sheet: `
+      + `the reveal shows how the painting was rated instead.`;
+  }
   $('p-target').src = `${r.base}/target.png`;
   $('k-stepsof').textContent = `of ${fmtInt(idx.sim_steps)}`;
   // the ledger's own clock: the last op's t (run.timings.paint_s is measured a moment earlier and reads 48.4 against 48.5)
@@ -57,7 +71,7 @@ export function createDashboard(replay, stages, h, gallery = { runs: [] }) {
   // evaluations in the run include the skipped slot's candidates, which have no ledger line
   const runEvals = run.painter_stats?.evaluations;
   const laidEvals = r.strokeSegs.reduce((n, s) => n + (s.o.candidates_considered ?? 0), 0);
-  $('k-evalsof').textContent = learned ? '1 per stroke, no candidates'
+  $('k-evalsof').textContent = scribe ? 'none, the file was written blind' : learned ? '1 per stroke, no candidates'
     : runEvals && runEvals !== laidEvals ? `of ${fmtInt(runEvals)}, ${fmtInt(runEvals - laidEvals)} in the skipped slot` : 'compute cost';
   const skipped = run.painter_stats?.slots_skipped ?? 0;
   $('k-skipped').textContent = `of ${r.totals.strokes}${skipped ? `, ${skipped} slot skipped in the run` : ''}`;
@@ -132,7 +146,22 @@ export function createDashboard(replay, stages, h, gallery = { runs: [] }) {
 
   let scoresShown = false;
   function showScores(scores) {
-    if (scoresShown || !scores?.final) return;
+    if (scoresShown) return;
+    if (scribe) {
+      scoresShown = true;
+      $('score-down').hidden = true; $('score-up').hidden = false;
+      const tier = run.rating ? { love: 'rated love', okay: 'rated okay', nope: 'rated nope' }[run.rating] ?? run.rating : 'not rated';
+      $('s-total').textContent = tier;
+      const j = run.judge;
+      $('s-parts').textContent = j?.score != null ? `judge win share ${Number(j.score).toFixed(2)} over ${j.valid ?? '?'} comparisons`
+        : `${r.totals.strokes} strokes, no scorer: a scribe painting has no target to match`;
+      $('s-chart').innerHTML = '';
+      $('s-guess').textContent = run.model ? `Written by ${run.model}` : '';
+      const formula = $('s-guess').nextElementSibling;
+      if (formula) formula.hidden = true;
+      return;
+    }
+    if (!scores?.final) return;
     scoresShown = true;
     const f = scores.final;
     $('score-down').hidden = true; $('score-up').hidden = false;
@@ -176,7 +205,7 @@ export function createDashboard(replay, stages, h, gallery = { runs: [] }) {
     $('k-wall').textContent = `${rec.wall.toFixed(1)} s`;
     let evals = 0;
     for (const s of r.strokeSegs) { if (s.lay[0] <= t) evals += s.o.candidates_considered ?? 0; else break; }
-    $('k-evals').textContent = fmtInt(evals);
+    $('k-evals').textContent = scribe ? '0' : fmtInt(evals);
     PIGMENTS.forEach((_, i) => {
       const R = rows[i];
       R.c.textContent = String(strokeCounts[i].filter((x) => x <= t).length);

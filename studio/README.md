@@ -42,7 +42,15 @@ the stage cameras widen their field of view on a narrow screen.
 
 ## Record and pack a run
 
-The search painter records with `cli_paint`, the learned painter with `train.record_policy` (from the repository
+The search painter records with `cli_paint`, the learned painter with `train.record_policy`, and a scribe painting
+(a stroke file a language model wrote from a text prompt) with `scribe.record`, which replays one pool or batch
+candidate and draws its prompt on a blank sheet as the target card:
+
+```bash
+python -m scribe.record runs/pool_v1/hibiscus__qwen-qwen3-coder-next__02 runs/scribe_hibiscus --frames-every 60
+```
+
+(all from the repository
 root; `TARGET` also takes `sealed:NAME`, and `--decode sample --temperature T` draws strokes instead of taking the
 likeliest):
 
@@ -57,6 +65,7 @@ already in `gallery.json`):
 ```
 node scripts/pack-run.mjs ../runs/horizon_v1 horizon_v1 --label "Search painter, horizon target"
 node scripts/pack-run.mjs ../runs/policy_v2_sealed_003 policy_v2_sealed_003 --label "Learned painter, sealed target 3"
+node scripts/pack-run.mjs ../runs/scribe_hibiscus scribe_hibiscus --label "Scribe, peach hibiscus, Qwen3 Coder Next"
 ```
 
 The policy run folder has the same files: a ledger line per op with `score`, `predicted_score`, `phase`,

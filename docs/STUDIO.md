@@ -491,3 +491,18 @@ band and the yellow ring the policy makes of the sun, and the score sheet turns 
 ledger's final total, and the kept guess compared against it. The learned painter's replay is short (2 min 56 s at
 1x against 4 min 35 s), since a stroke takes only its choreography: the policy's recorded time to look and act is under
 a third of a second per stroke. Its waits of 2 or 3 steps show as "waiting" between strokes, and the last dry is 575 steps.
+
+## Pass 4 notes (the scribe in the gallery)
+
+- A third run in the gallery: the peach hibiscus Qwen3 Coder Next wrote from a text prompt, the one painting in
+  the first pool I rated love. `python -m scribe.record` replays the stroke file through the recorder, so the
+  studio paints it exactly as the simulator did, waits included; 42 strokes, 3,867 simulator steps, 67 frames at
+  one every 60 steps (one every 20 gave 196 frames and 11 MB, too much for the repo).
+- There is no target image for a scribe painting, so `target.png` is a prompt card: the subject written on blank
+  paper of the same size. The dashboard reads the subject from `run.json` for the title.
+- No score sheet either, because there is nothing to match. At the reveal the sheet shows the painting's rating
+  (love, okay, nope, or not rated), the judge's win share when the candidate carries one, and the model that
+  wrote the file. The "candidates tried" tile reads "none, the file was written blind".
+- Checked in a headless browser: title, painter line, about text and the reveal all read from the run; no page
+  errors. The replay itself is unchanged, since the ledger has the same shape as the learned painter's (one
+  phase, no candidates, settle dries between strokes).

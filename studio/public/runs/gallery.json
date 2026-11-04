@@ -13,6 +13,13 @@
    "painter": "policy",
    "target": "sealed:sealed_003",
    "strokes": 40
+  },
+  {
+   "name": "scribe_hibiscus",
+   "label": "Scribe, peach hibiscus, Qwen3 Coder Next",
+   "painter": "scribe",
+   "target": "prompt:hibiscus",
+   "strokes": 42
   }
  ]
 }
