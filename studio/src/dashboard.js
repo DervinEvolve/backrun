@@ -25,7 +25,13 @@ export function createDashboard(replay, stages, h) {
   $('p-sub').textContent = `Painter ${run.painter ?? 'unknown'} · seed ${run.seed} · ${run.canvas.width} x ${run.canvas.height} px`;
   $('p-target').src = `${r.base}/target.png`;
   $('k-stepsof').textContent = `of ${fmtInt(idx.sim_steps)}`;
-  $('k-wallof').textContent = `of ${(run.timings?.paint_s ?? 0).toFixed(1)} s painting`;
+  // the ledger's own clock: the last op's t (run.timings.paint_s is measured a moment earlier and reads 48.4 against 48.5)
+  const lastT = r.ops?.length ? r.ops[r.ops.length - 1].t : run.timings?.paint_s ?? 0;
+  $('k-wallof').textContent = `of ${lastT.toFixed(1)} s in the ledger`;
+  // evaluations in the run include the skipped slot's candidates, which have no ledger line
+  const runEvals = run.painter_stats?.evaluations;
+  const laidEvals = r.strokeSegs.reduce((n, s) => n + (s.o.candidates_considered ?? 0), 0);
+  $('k-evalsof').textContent = runEvals && runEvals !== laidEvals ? `of ${fmtInt(runEvals)}, ${fmtInt(runEvals - laidEvals)} in the skipped slot` : 'compute cost';
   const skipped = run.painter_stats?.slots_skipped ?? 0;
   $('k-skipped').textContent = `of ${r.totals.strokes}${skipped ? `, ${skipped} slot skipped in the run` : ''}`;
 

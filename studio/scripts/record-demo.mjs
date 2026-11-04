@@ -73,6 +73,9 @@ page.on('pageerror', (e) => errors.push(String(e)));
 await page.goto(`http://127.0.0.1:5426/?view=stroke&t=${T0}`);
 await page.waitForSelector('body[data-ready="1"]', { timeout: 300000 });
 log('app ready');
+// a dev-server reload mid-take restarts the app on a fresh clock: stop instead of recording a broken film
+let reloaded = false;
+page.on('framenavigated', (fr) => { if (fr === page.mainFrame()) reloaded = true; });
 
 // ------------------------------------------------------------------ the beats (film seconds)
 const box = async (sel) => {
@@ -88,7 +91,7 @@ const scrubAt = async (t) => {
 };
 // each action: { at, kind, ... }; move actions glide the cursor from where it is to the target over `dur` seconds
 const plan = [
-  { at: 0.0, kind: 'wheel', dy: 100, n: 7 }, // pull back a little so the raised arm and the trips to the palette stay in frame
+  { at: 0.0, kind: 'wheel', dy: 100, n: 3 }, // pull back a little so the raised arm and the trips to the palette stay in frame
   { at: 0.3, kind: 'move', to: async () => ({ x: 760, y: 470 }), dur: 0.2 },
   { at: 0.5, kind: 'down' },
   { at: 0.5, kind: 'drag', dx: 250, dy: -14, dur: 4.0 },
@@ -123,12 +126,13 @@ const plan = [
 ];
 
 let cur = { x: 960, y: 540 }, glide = null, drag = null, typing = null, wheel = null;
-const guardLog = [];
+const guardLog = [], clearLog = [];
 const ease = (u) => (u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
 const done = new Set();
 const t0 = Date.now();
 await page.mouse.move(cur.x, cur.y);
 for (let f = 0; f < to; f++) {
+  if (reloaded) { log(`page reloaded before frame ${f}: take stopped`); await browser.close(); process.exit(3); }
   const ft = f / FPS;
   for (const [i, a] of plan.entries()) {
     if (done.has(i) || ft + 1e-6 < a.at) continue;
@@ -162,6 +166,18 @@ for (let f = 0; f < to; f++) {
   }
   await page.evaluate((ms) => window.__tick(ms), 1000 / FPS);
   guardLog.push({ time: ft, report: await page.evaluate(() => window.__app.guard()) });
+  // camera clearance: distance from the camera to the nearest visible mesh's world box (0 means inside one)
+  clearLog.push({ time: ft, ...(await page.evaluate(() => {
+    const cam = window.__app.camObj(), p = cam.position;
+    let best = Infinity, name = '';
+    window.__app.scene.traverseVisible((o) => {
+      if (!o.isMesh || o.material?.colorWrite === false) return;
+      if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+      const d = o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld).distanceToPoint(p);
+      if (d < best) { best = d; name = o.name; }
+    });
+    return { d: +best.toFixed(3), name, ortho: !!cam.isOrthographicCamera };
+  })) });
   if (f >= from) {
     await page.screenshot({ path: path.join(framesDir, `${String(f).padStart(5, '0')}.jpg`), type: 'jpeg', quality: 92 });
   }
@@ -174,16 +190,21 @@ if (errors.length) log(`page errors: ${errors.join(' | ')}`);
 // frame guard: the brush must stay in frame and uncovered except where the beat is about something else
 const { findFaults } = await import('../src/frame-guard.js');
 const allowed = [
-  { name: 'brush', from: 11.6, to: 13.7 }, // well close-up: the brush arrives from off frame
-  { name: 'brush', from: 18.3, to: 30 },   // the panel's ride to the rack, then the reveal
-  { name: 'sheet', from: 11.6, to: 13.9 }, // the well close-up
-  { name: 'sheet', from: 18.3, to: 22.6 }, // carried off the board, framed by the dry camera
+  { name: 'sheet', from: 7.0, to: 7.8 },   // Follow on: the camera rides with the brush to the slant and back
+  { name: 'sheet', from: 10.2, to: 14.4 }, // Follow on the rinse at the jars, then the well close-up and the flight to Search
+  { name: 'brush', from: 11.5, to: 15.1 }, // well close-up (the brush arrives from off frame), Search from above until it returns
+  { name: 'brush', from: 17.6, to: 30 },   // the brush leaves to load, the panel's ride to the rack, 50x, then the reveal
+  { name: 'sheet', from: 18.3, to: 23.4 }, // carried off the board, framed by the Dry camera, the flight back to Stroke
   { name: 'sheet', from: 24.0, to: 30 },
-  { name: 'scorecard', from: 0, to: 24.3 },
+  { name: 'scorecard', from: 0, to: 24.8 },
 ];
 const faults = findFaults(guardLog, { minHeightPixels: 40, minVisibleShare: 0.6, graceSeconds: 0.3, allowed });
-fs.writeFileSync(path.join(out, 'guard.json'), JSON.stringify({ faults, frames: guardLog.filter((_, i) => i % 15 === 0) }, null, 1));
+const near = clearLog.filter((c) => !c.ortho && c.d < 0.04);
+const clearance = { min: clearLog.reduce((m, c) => (c.ortho || c.d >= m.d ? m : c), { d: Infinity }), framesUnder4cm: near.length,
+  inside: near.filter((c) => c.d === 0).map((c) => `${c.time.toFixed(2)} ${c.name}`) };
+fs.writeFileSync(path.join(out, 'guard.json'), JSON.stringify({ faults, clearance, frames: guardLog.filter((_, i) => i % 15 === 0) }, null, 1));
 log(`frame guard faults: ${JSON.stringify(faults)}`);
+log(`camera clearance: ${JSON.stringify(clearance)}`);
 await browser.close();
 
 if (from === 0 && to === N) {
