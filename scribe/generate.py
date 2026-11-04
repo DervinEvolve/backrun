@@ -129,6 +129,8 @@ class Generator:
         self.client = client
         #: Extra request fields for generator calls, such as ``{"reasoning": {"enabled": False}}``.
         self.extra = dict(extra or {})
+        #: Models that refused an extra field (some endpoints say reasoning is mandatory); they get plain calls.
+        self._plain_models: set[str] = set()
         self.critic_client = critic_client or client
         self.root = Path(pool_root)
         self.temperature = temperature
@@ -136,10 +138,22 @@ class Generator:
         #: Candidates may run in threads; the index file takes one line at a time.
         self._index_lock = threading.Lock()
 
+    def _chat(self, model: str, messages: list[dict[str, Any]], tag: str) -> Any:
+        """One generator call; if the model rejects the extra fields with a 400, call again without them."""
+        extra = {} if model in self._plain_models else self.extra
+        try:
+            return self.client.chat(model, messages, temperature=self.temperature,
+                                    max_tokens=self.max_tokens, tag=tag, **extra)
+        except ClientError as exc:
+            if extra and "HTTP 400" in str(exc):
+                self._plain_models.add(model)
+                return self.client.chat(model, messages, temperature=self.temperature,
+                                        max_tokens=self.max_tokens, tag=tag)
+            raise
+
     def _ask_and_gate(self, model: str, messages: list[dict[str, Any]], canvas: dict[str, Any],
                       usage: list[dict[str, Any]], tag: str) -> tuple[str, GateResult]:
-        reply = self.client.chat(model, messages, temperature=self.temperature,
-                                 max_tokens=self.max_tokens, tag=tag, **self.extra)
+        reply = self._chat(model, messages, tag)
         usage.append(asdict(reply.usage))
         res = gate(reply.text, canvas)
         if res.ok:

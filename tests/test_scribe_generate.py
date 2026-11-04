@@ -111,3 +111,27 @@ def test_concurrent_candidates_write_one_index_line_each(tmp_path: Path) -> None
     ids = [line["id"] for line in read_index(pool)]
     assert len(ids) == 12 and len(set(ids)) == 12
     assert all((pool / cid / "final.png").is_file() for cid in ids)
+
+
+def test_model_that_rejects_extra_fields_gets_plain_calls(tmp_path: Path) -> None:
+    from scribe.generate import Generator
+
+    calls: list[dict] = []
+
+    class Picky:
+        """Refuses any call carrying extra fields, like an endpoint whose reasoning cannot be turned off."""
+
+        def chat(self, model, messages, temperature=0.8, max_tokens=4096, tag=None, **extra):
+            calls.append(extra)
+            if extra:
+                raise ClientError(f"{model}: HTTP 400: reasoning is mandatory for this endpoint")
+            return FakeClient([as_reply(valid_painting())]).chat(model, messages, tag=tag)
+
+    gen = Generator(Picky(), tmp_path / "pool", extra={"reasoning": {"enabled": False}})
+    prompt = {"id": "sea", "subject": "a calm sea", "prompt": "Paint a calm sea."}
+    line = gen.candidate(prompt, "picky/model", 0)
+    assert line["status"] == "ok"
+    assert calls[0] == {"reasoning": {"enabled": False}} and calls[1] == {}
+    # the second candidate skips the refused field from the start
+    gen.candidate(prompt, "picky/model", 1)
+    assert calls[2] == {}
