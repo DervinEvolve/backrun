@@ -258,6 +258,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--owner-lines", type=int, default=108, help="leading ratings lines made by the owner")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--concurrency", type=int, default=8)
+    ap.add_argument("--no-reasoning", action="store_true",
+                    help="ask the judge not to think first; models that reason by default otherwise answer with nothing")
+    ap.add_argument("--reasoning-effort", default=None,
+                    help="for models that refuse to switch reasoning off: minimal, low, medium or high")
+    ap.add_argument("--max-tokens", type=int, default=8, help="reply budget per comparison")
     args = ap.parse_args(argv)
     from scribe.client import ChatClient
 
@@ -268,7 +273,13 @@ def main(argv: list[str] | None = None) -> int:
     except ValueError as exc:
         print(exc, file=sys.stderr)
         return 1
-    summary = run(Pool(args.pool), PairwiseJudge(client, args.judge_model), out, n=args.n, pairs_n=args.pairs,
+    extra = None
+    if args.reasoning_effort:
+        extra = {"reasoning": {"effort": args.reasoning_effort}}
+    elif args.no_reasoning:
+        extra = {"reasoning": {"enabled": False}}
+    judge = PairwiseJudge(client, args.judge_model, max_tokens=args.max_tokens, extra=extra)
+    summary = run(Pool(args.pool), judge, out, n=args.n, pairs_n=args.pairs,
                   refs=args.refs, owner_lines=args.owner_lines, seed=args.seed, concurrency=args.concurrency)
     print((out / "report.md").read_text())
     s = summary["all"]

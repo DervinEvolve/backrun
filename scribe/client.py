@@ -54,6 +54,8 @@ class Usage:
     tag: str | None = None
     #: why the model stopped, as the API reports it (``stop``, ``length``...); None if not given
     finish_reason: str | None = None
+    #: the router's own cost for the call in dollars, when it reports one; None otherwise
+    cost: float | None = None
     at: float = field(default_factory=time.time)
 
 
@@ -202,7 +204,8 @@ class ChatClient:
         usage = Usage(model=payload.get("model", model), prompt_tokens=int(u.get("prompt_tokens", 0) or 0),
                       completion_tokens=int(u.get("completion_tokens", 0) or 0),
                       latency_s=round(time.monotonic() - start, 3), attempts=attempts, tag=tag,
-                      finish_reason=payload["choices"][0].get("finish_reason"))
+                      finish_reason=payload["choices"][0].get("finish_reason"),
+                      cost=float(u["cost"]) if isinstance(u.get("cost"), (int, float)) else None)
         self.ledger.write(usage)
         return Reply(text=text, usage=usage)
 

@@ -79,20 +79,28 @@ class PairwiseJudge:
     """Ask a vision model to compare a candidate with references in both orders."""
 
     def __init__(self, client: Any, model: str, temperature: float = 0.0, max_tokens: int = 8,
-                 max_fail_share: float = MAX_FAIL_SHARE) -> None:
+                 max_fail_share: float = MAX_FAIL_SHARE, extra: dict[str, Any] | None = None) -> None:
         self.client = client
         self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.max_fail_share = max_fail_share
+        #: Extra request fields, such as ``{"reasoning": {"enabled": False}}`` for models that
+        #: would otherwise spend the whole reply budget thinking and answer with nothing.
+        self.extra = dict(extra or {})
+        self._plain = False  # set once the model rejects the extra fields with a 400
 
     def compare(self, first: Any, second: Any, subject: str, tag: str | None = None) -> str | None:
         """One comparison: returns 'A', 'B' or None on a failed or unreadable reply."""
         msg = user_message(judge_prompt(subject), images=[first, second])
+        extra = {} if self._plain else self.extra
         try:
             reply = self.client.chat(self.model, [msg], temperature=self.temperature,
-                                     max_tokens=self.max_tokens, tag=tag)
-        except ClientError:
+                                     max_tokens=self.max_tokens, tag=tag, **extra)
+        except ClientError as exc:
+            if extra and "HTTP 400" in str(exc):
+                self._plain = True
+                return self.compare(first, second, subject, tag)
             return None
         return parse_ab(reply.text)
 
