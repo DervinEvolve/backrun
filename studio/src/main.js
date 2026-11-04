@@ -276,6 +276,7 @@ async function main() {
       for (const m of w.meshes) {
         if (m.name === 'Window_Glass') { m.visible = !cut; continue; }
         m.material = cut ? shadowOnly : m.userData.mat;
+        m.layers.set(cut ? 1 : 0); // layer 1: still casts shadows, but the AO pass never sees it
       }
     }
   }
@@ -310,20 +311,27 @@ async function main() {
   ortho.position.copy(ovTarget).addScaledVector(ovDir, 20);
   ortho.lookAt(ovTarget);
 
+  // cameras see layer 1 (cut walls, drawn invisible) so those walls keep casting the window's shadow;
+  // the AO pass renders through copies that see layer 0 only, or the cut walls ghost into the AO
+  persp.layers.enable(1); ortho.layers.enable(1);
+  const aoCams = { persp: new THREE.PerspectiveCamera(), ortho: new THREE.OrthographicCamera() };
   let active = persp;
   const controls = new OrbitControls(persp, renderer.domElement);
   const ob = cameras.orbit;
   Object.assign(controls, { enableDamping: !STILL, dampingFactor: 0.08, minDistance: ob.min_distance,
-    maxDistance: ob.max_distance, maxPolarAngle: ob.max_polar_deg * D2R, screenSpacePanning: true });
+    maxDistance: ob.max_distance, maxPolarAngle: ob.max_polar_deg * D2R, screenSpacePanning: true,
+    minAzimuthAngle: ob.min_azimuth_deg * D2R, maxAzimuthAngle: ob.max_azimuth_deg * D2R });
   const orthoControls = new OrbitControls(ortho, renderer.domElement);
   Object.assign(orthoControls, { enableRotate: false, minZoom: 0.6, maxZoom: 4, enabled: false, screenSpacePanning: true });
   orthoControls.target.copy(ovTarget);
   const tb = ob.target_box.map((a) => new THREE.Vector3().fromArray(a));
+  const cb = ob.camera_box.map((a) => new THREE.Vector3().fromArray(a));
   let presetHolds = false; // a preset may sit below the free camera's minimum height until the user drags
   controls.addEventListener('start', () => { presetHolds = false; });
   controls.addEventListener('change', () => {
     controls.target.clamp(tb[0], tb[1]);
     if (!presetHolds && persp.position.y < ob.min_height) persp.position.y = ob.min_height;
+    persp.position.clamp(cb[0], cb[1]);
   });
 
   const label = document.getElementById('view-name');
@@ -348,11 +356,11 @@ async function main() {
   let current = 'stroke';
 
   // ------------------------------------------------------------------ post: AO, bloom on lamp and window only, output
-  function makeComposer(cam) {
+  function makeComposer(cam, aoCam) {
     const c = new EffectComposer(renderer);
     c.addPass(new RenderPass(scene, cam));
     if (AO) {
-      const ao = new GTAOPass(scene, cam, innerWidth, innerHeight);
+      const ao = new GTAOPass(scene, aoCam, innerWidth, innerHeight);
       ao.updateGtaoMaterial({ radius: cam.isOrthographicCamera ? 0.5 : 0.25, distanceExponent: 1.5, thickness: 1.5, scale: 1.0 });
       ao.blendIntensity = 0.85;
       c.addPass(ao);
@@ -361,7 +369,7 @@ async function main() {
     c.addPass(new OutputPass());
     return c;
   }
-  const composers = { persp: makeComposer(persp), ortho: makeComposer(ortho) };
+  const composers = { persp: makeComposer(persp, aoCams.persp), ortho: makeComposer(ortho, aoCams.ortho) };
 
   addEventListener('resize', () => {
     renderer.setSize(innerWidth, innerHeight);
@@ -379,7 +387,9 @@ async function main() {
   function frame() {
     (active === persp ? controls : orthoControls).update();
     updateCut(active);
-    composers[active === persp ? 'persp' : 'ortho'].render();
+    const k = active === persp ? 'persp' : 'ortho';
+    aoCams[k].copy(active); aoCams[k].layers.set(0);
+    composers[k].render();
   }
   setView(params.get('view') ?? 'stroke');
 
@@ -407,6 +417,7 @@ async function main() {
     setView, views: ['overview', ...cameras.stages.map((s) => s.id)],
     renderOnce: () => { frame(); return true; },
     stats, poseOnSheet, scene,
+    camera: () => ({ position: active.position.toArray().map((v) => +v.toFixed(3)), target: controls.target.toArray().map((v) => +v.toFixed(3)), distance: +active.position.distanceTo(controls.target).toFixed(3) }),
   };
   document.body.dataset.ready = '1';
   if (!STILL) renderer.setAnimationLoop(frame);
