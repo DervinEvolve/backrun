@@ -4,27 +4,95 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Backrun studio</title>
-  <style>
-    :root { --walnut: rgba(43, 34, 25, 0.88); --paper: #F4F0E6; --brass: #B5A642; }
-    html, body { margin: 0; height: 100%; background: #2A231C; overflow: hidden; }
-    #stage { position: fixed; inset: 0; }
-    .panel { position: fixed; background: var(--walnut); color: var(--paper); border-radius: 8px; padding: 10px 14px;
-      font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
-    .panel h1 { font: 600 17px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 4px; }
-    #hud { left: 16px; bottom: 16px; max-width: 360px; }
-    #hud .keys { opacity: 0.72; font-size: 12px; }
-    #note { right: 16px; bottom: 16px; font-size: 12px; opacity: 0.85; }
-    #preview-label { left: 16px; top: 16px; }
-  </style>
+  <link rel="stylesheet" href="/src/dashboard.css" />
 </head>
 <body>
   <div id="stage"></div>
-  <div id="hud" class="panel">
-    <h1>Backrun studio</h1>
-    <div id="view-name">loading the room</div>
-    <div class="keys">1 to 8 stage cameras, 0 overview, drag to orbit</div>
+  <div id="dash">
+    <section id="painting" class="panel">
+      <img class="sepia" src="brand/sepia.svg" alt="Sepia, the Backrun cuttlefish" />
+      <div class="head">
+        <h1 id="p-name">Backrun studio</h1>
+        <div id="p-sub" class="muted">loading the room</div>
+      </div>
+      <div class="row">
+        <img id="p-target" alt="target" />
+        <div>
+          <div id="p-phase" class="phase"></div>
+          <div id="p-stroke" class="big"></div>
+          <div id="p-slot" class="muted"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kpis" class="panel" aria-label="Run numbers">
+      <div class="kpi"><span class="k">Strokes laid</span><span class="v" id="k-strokes">0</span><span class="u" id="k-skipped"></span></div>
+      <div class="kpi"><span class="k">Wet area</span><span class="v" id="k-wet">0</span><span class="u" id="k-wetpct"></span></div>
+      <div class="kpi"><span class="k">Simulator steps</span><span class="v" id="k-steps">0</span><span class="u" id="k-stepsof"></span></div>
+      <div class="kpi"><span class="k">Recorded time</span><span class="v" id="k-wall">0.0 s</span><span class="u" id="k-wallof"></span></div>
+      <div class="kpi"><span class="k">Candidates tried</span><span class="v" id="k-evals">0</span><span class="u">compute cost</span></div>
+    </section>
+
+    <section id="legend" class="panel" aria-label="Pigments">
+      <div class="title">Pigment added to the sheet <span class="muted">(simulator units)</span></div>
+      <div id="legend-rows"></div>
+    </section>
+
+    <section id="detail" class="panel" hidden>
+      <div id="detail-body"></div>
+      <div class="muted small">Esc or a click on the floor closes this card</div>
+    </section>
+
+    <section id="score" class="panel" aria-label="Score sheet">
+      <div class="title">Score sheet</div>
+      <div id="score-down">
+        <div class="muted small">Face down until the run ends. Lower <b>total</b> is better.</div>
+        <label class="guess">Your guess for the final total
+          <input id="guess" type="number" min="0" max="30" step="0.1" inputmode="decimal" placeholder="e.g. 6.0" />
+        </label>
+        <button id="guess-keep" class="btn">Keep my guess</button>
+        <div id="guess-kept" class="muted small"></div>
+      </div>
+      <div id="score-up" hidden>
+        <div class="big" id="s-total"></div>
+        <div id="s-parts" class="muted small"></div>
+        <svg id="s-chart" viewBox="0 0 200 48" preserveAspectRatio="none" aria-label="total after every op"></svg>
+        <div id="s-guess" class="small"></div>
+        <div class="muted small">total = 0.01 lab_l2 + 4 (1 - ssim) + 0.002 strokes</div>
+      </div>
+    </section>
+
+    <section id="timeline" class="panel" aria-label="Playback">
+      <div class="controls">
+        <button id="play" class="btn icon" aria-label="Play or pause (Space)">&#9208;</button>
+        <button id="step" class="btn" aria-label="Step one frame while paused">Step</button>
+        <div id="speeds" class="seg" role="group" aria-label="Speed"></div>
+        <span id="clock" class="muted"></span>
+      </div>
+      <div id="scrub" aria-label="Scrub the replay">
+        <div id="bands"></div>
+        <div id="ticks"></div>
+        <div id="head"></div>
+      </div>
+      <div class="controls">
+        <div id="stages" class="seg" role="group" aria-label="Stage cameras"></div>
+        <button id="tour" class="btn">Tour</button>
+        <button id="follow" class="btn" aria-pressed="false">Follow brush</button>
+        <button id="ghosts" class="btn" aria-pressed="true">Candidates</button>
+        <button id="help" class="btn">About</button>
+      </div>
+    </section>
+    <section id="about" class="panel" hidden>
+      <div class="title">What is recorded and what is staging</div>
+      <p class="small">Recorded in the run folder: every stroke's path, width, water and pigments, the pigment each stroke
+        added, the wet area after each op, the candidates the painter rejected, the order of ops, the dries, the
+        recorded time and the sheet frames.</p>
+      <p class="small">Staging: the dips, rinses, brush changes, the panel's ride to the drying rack and how long each op
+        lasts on screen are choreography derived from the ledger. Frames were saved every 20 simulator steps, so between
+        two frames the sheet blends toward the next frame under a mask that follows the brush.</p>
+    </section>
   </div>
-  <div id="note" class="panel">Staging pass: the sheet shows an example painting, not a run</div>
+  <div id="loading">Backrun studio<br /><span class="muted">loading the room and the run</span></div>
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

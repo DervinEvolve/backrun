@@ -95,6 +95,11 @@ export function woodTexture(seed = 1, size = 512, stain = false) {
       const s = fbm(n3, u * 6, v * 6, 3);
       if (s > 0.62) t *= 1 - (s - 0.62) * 0.9;
       rr = 0.85 + 0.15 * fine;
+      // wear: rubbed-pale patches where hands and jars sit, and fine cross scratches
+      const rub = fbm(n3, u * 2 + 9, v * 2 + 4, 2);
+      if (rub > 0.55) { t = Math.min(1, t * (1 + (rub - 0.55) * 0.5)); rr *= 1 - (rub - 0.55) * 0.6; }
+      const sc = Math.abs(Math.sin((u * 37 + v * 11) * Math.PI * 7 + n2(u * 9, v * 9) * 6));
+      if (sc < 0.02) t *= 0.93;
     }
     return [t * 1.0, t * 0.97, t * 0.93, ring * 0.4 + fine * 0.6, rr];
   });
@@ -221,4 +226,16 @@ export function cardTexture(lines, opts = {}) {
   t.flipY = false;
   t.anisotropy = 8;
   return t;
+}
+
+// Brushed metal: fine streaks along U for the roughness and a faint normal ripple, so brass reads as worked by hand.
+export function brushedMetal(seed = 23, size = 256) {
+  const r = rng(seed), n = makeNoise(seed, 32);
+  const rows = new Float32Array(size).map(() => r());
+  const { rough, h } = pack(size, (u, v, x, y) => {
+    const streak = 0.65 * rows[y] + 0.35 * rows[(y * 7 + 3) % size];
+    const blot = n(u * 32, v * 32);
+    return [1, 1, 1, streak * 0.6 + blot * 0.2, 0.78 + 0.22 * streak * (0.7 + 0.3 * blot)];
+  });
+  return { roughnessMap: toTexture(size, rough, false), normalMap: normalFromHeight(h, size, 0.8) };
 }

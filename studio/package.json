@@ -11,6 +11,7 @@
     "stills": "node scripts/stills.mjs"
   },
   "dependencies": {
+    "n8ao": "1.10.1",
     "three": "0.170.0"
   },
   "devDependencies": {
