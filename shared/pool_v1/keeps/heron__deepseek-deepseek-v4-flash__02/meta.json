@@ -1,0 +1,178 @@
+{
+ "id": "heron__deepseek-deepseek-v4-flash__02",
+ "prompt_id": "heron",
+ "subject": "a grey heron standing in shallow water",
+ "prompt": "Paint a grey heron standing in shallow water in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 1264,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 35,
+     "dry_ops": 11,
+     "dry_steps": 4650,
+     "coverage": 0.4851,
+     "mean_lightness": 86.43,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0107,
+      0.1418,
+      0.2475,
+      0.2814,
+      0.0546,
+      0.0004,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0004,
+      0.0051,
+      0.0197,
+      0.0241,
+      0.0401,
+      0.0638,
+      0.3525,
+      0.4054,
+      0.0889
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 37,
+     "dry_ops": 12,
+     "dry_steps": 5050,
+     "coverage": 0.5143,
+     "mean_lightness": 84.41,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0003,
+      0.0004,
+      0.0695,
+      0.1956,
+      0.4288,
+      0.0884,
+      0.0014,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0015,
+      0.0073,
+      0.0273,
+      0.0351,
+      0.0449,
+      0.1305,
+      0.4432,
+      0.202,
+      0.1082
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the heron slightly off-center, closer to the left third of the composition, to create a more balanced and natural focal point.  \n2. Darken the heron\u2019s body and legs using deeper grey and blue-grey values to increase contrast and make it stand out from the water.  \n3. Use more defined, cooler blue tones for the water and add subtle, darker reflections beneath the heron to suggest depth and wetness."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 37,
+   "dry_ops": 12,
+   "dry_steps": 5050,
+   "coverage": 0.5143,
+   "mean_lightness": 84.41,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0003,
+    0.0004,
+    0.0695,
+    0.1956,
+    0.4288,
+    0.0884,
+    0.0014,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0015,
+    0.0073,
+    0.0273,
+    0.0351,
+    0.0449,
+    0.1305,
+    0.4432,
+    0.202,
+    0.1082
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 411,
+   "completion_tokens": 2383,
+   "latency_s": 33.159,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "heron__deepseek-deepseek-v4-flash__02:r0",
+   "finish_reason": "stop",
+   "at": 1793799392.0473733
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 91,
+   "latency_s": 2.854,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "heron__deepseek-deepseek-v4-flash__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793799405.036378
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2914,
+   "completion_tokens": 2571,
+   "latency_s": 26.771,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "heron__deepseek-deepseek-v4-flash__02:r1",
+   "finish_reason": "stop",
+   "at": 1793799431.8079567
+  }
+ ],
+ "started_at": 1793799358.8879886,
+ "seconds": 75.61
+}

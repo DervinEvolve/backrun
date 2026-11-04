@@ -17,7 +17,7 @@ from scribe.reward import Reward, reward_report
 def test_defaults_match_the_reference_configuration() -> None:
     args = T.parse_args(["--pool", "p", "--judge-model", "j"])
     cfg = T.grpo_config_kwargs(args)
-    assert args.model == "Qwen/Qwen3.5-4B"
+    assert args.model == "Qwen/Qwen3-4B-Instruct-2507"
     assert cfg["learning_rate"] == 5e-5 and cfg["lr_scheduler_type"] == "constant_with_warmup"
     assert cfg["warmup_steps"] == 5 and cfg["scale_rewards"] == "none"
     assert cfg["num_generations"] == 8 and cfg["max_completion_length"] == 4096

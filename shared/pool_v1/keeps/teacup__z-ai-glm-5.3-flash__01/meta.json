@@ -1,0 +1,190 @@
+{
+ "id": "teacup__z-ai-glm-5.3-flash__01",
+ "prompt_id": "teacup",
+ "subject": "a blue and white teacup on a saucer",
+ "prompt": "Paint a blue and white teacup on a saucer in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2376,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 37,
+     "dry_ops": 2,
+     "dry_steps": 3100,
+     "coverage": 0.31,
+     "mean_lightness": 90.77,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0098,
+      0.1133,
+      0.0621,
+      0.2031,
+      0.0049,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0012,
+      0.0087,
+      0.0177,
+      0.0266,
+      0.041,
+      0.076,
+      0.1403,
+      0.2309,
+      0.4577
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 37,
+     "dry_ops": 2,
+     "dry_steps": 3100,
+     "coverage": 0.3432,
+     "mean_lightness": 90.17,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0061,
+      0.0855,
+      0.0533,
+      0.1889,
+      0.006,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0022,
+      0.0103,
+      0.0243,
+      0.0414,
+      0.0474,
+      0.0873,
+      0.109,
+      0.1912,
+      0.4869
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the teacup and saucer more centrally in the frame, avoiding the top-heavy composition that pushes the cup toward the top edge.  \n2. Use darker, more defined values for the cup\u2019s rim and handle to create contrast and make the form stand out from the background.  \n3. Reduce the amount of water in the paint to control bleeding and keep edges sharper, especially around the cup and saucer."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 37,
+   "dry_ops": 2,
+   "dry_steps": 3100,
+   "coverage": 0.3432,
+   "mean_lightness": 90.17,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0061,
+    0.0855,
+    0.0533,
+    0.1889,
+    0.006,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0022,
+    0.0103,
+    0.0243,
+    0.0414,
+    0.0474,
+    0.0873,
+    0.109,
+    0.1912,
+    0.4869
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 420,
+   "completion_tokens": 4096,
+   "latency_s": 28.961,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__01:r0",
+   "finish_reason": "length",
+   "at": 1793798518.278192
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2493,
+   "completion_tokens": 2217,
+   "latency_s": 11.03,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__01:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793798529.3094025
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 147,
+   "completion_tokens": 87,
+   "latency_s": 3.313,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793798547.9638739
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 4804,
+   "completion_tokens": 2460,
+   "latency_s": 14.29,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__01:r1",
+   "finish_reason": "stop",
+   "at": 1793798562.2540858
+  }
+ ],
+ "started_at": 1793798489.3173363,
+ "seconds": 80.84
+}

@@ -1,0 +1,178 @@
+{
+ "id": "harbour__deepseek-deepseek-v4-flash__00",
+ "prompt_id": "harbour",
+ "subject": "a harbour at dusk, two boats, low tide",
+ "prompt": "Paint a harbour at dusk, two boats, low tide in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 1062,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 14,
+     "dry_ops": 11,
+     "dry_steps": 7000,
+     "coverage": 0.7492,
+     "mean_lightness": 77.68,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0267,
+      0.1324,
+      0.1795,
+      0.0103,
+      0.0046,
+      0.001,
+      0.0,
+      0.0,
+      0.0278,
+      0.1215,
+      0.0474,
+      0.0437
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0095,
+      0.0158,
+      0.0169,
+      0.0345,
+      0.0566,
+      0.2877,
+      0.2297,
+      0.3227,
+      0.0266
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 18,
+     "dry_ops": 11,
+     "dry_steps": 7300,
+     "coverage": 0.6797,
+     "mean_lightness": 71.27,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0316,
+      0.0773,
+      0.0088,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0919,
+      0.3458,
+      0.1907,
+      0.0393
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0327,
+      0.0377,
+      0.0893,
+      0.1427,
+      0.1566,
+      0.1758,
+      0.1836,
+      0.1782,
+      0.0034
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the two boats lower in the frame, closer to the bottom edge, to emphasize the low tide and create a stronger sense of the shoreline.  \n2. Darken the shadows under the boats and along the waterline to establish deeper values and suggest the boats are resting on exposed mud or sand.  \n3. Use cooler, more saturated blues in the water areas and add subtle reflections of the sky and boats to enhance the impression of still, shallow water."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 18,
+   "dry_ops": 11,
+   "dry_steps": 7300,
+   "coverage": 0.6797,
+   "mean_lightness": 71.27,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0316,
+    0.0773,
+    0.0088,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0919,
+    0.3458,
+    0.1907,
+    0.0393
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0327,
+    0.0377,
+    0.0893,
+    0.1427,
+    0.1566,
+    0.1758,
+    0.1836,
+    0.1782,
+    0.0034
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 412,
+   "completion_tokens": 1137,
+   "latency_s": 33.794,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "harbour__deepseek-deepseek-v4-flash__00:r0",
+   "finish_reason": "stop",
+   "at": 1793796094.1798136
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 95,
+   "latency_s": 11.569,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "harbour__deepseek-deepseek-v4-flash__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793796114.382417
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1671,
+   "completion_tokens": 1530,
+   "latency_s": 33.944,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "harbour__deepseek-deepseek-v4-flash__00:r1",
+   "finish_reason": "stop",
+   "at": 1793796148.3267238
+  }
+ ],
+ "started_at": 1793796060.3857753,
+ "seconds": 101.85
+}

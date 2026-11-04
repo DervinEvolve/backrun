@@ -1,0 +1,178 @@
+{
+ "id": "market__deepseek-deepseek-v4-flash__00",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 38,
+     "dry_ops": 7,
+     "dry_steps": 3750,
+     "coverage": 0.7534,
+     "mean_lightness": 80.65,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0167,
+      0.072,
+      0.1609,
+      0.2325,
+      0.0106,
+      0.0,
+      0.0,
+      0.0,
+      0.0021,
+      0.0188,
+      0.0217,
+      0.0272
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0035,
+      0.0078,
+      0.0152,
+      0.0327,
+      0.1263,
+      0.1615,
+      0.08,
+      0.4917,
+      0.0813
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 44,
+     "dry_ops": 7,
+     "dry_steps": 3750,
+     "coverage": 0.8023,
+     "mean_lightness": 74.56,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0146,
+      0.0752,
+      0.2362,
+      0.2232,
+      0.0034,
+      0.0,
+      0.0,
+      0.0,
+      0.0008,
+      0.0242,
+      0.006,
+      0.0061
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0075,
+      0.0257,
+      0.0498,
+      0.1237,
+      0.1488,
+      0.1061,
+      0.0685,
+      0.4138,
+      0.0561
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning slightly so it clearly covers the stall, making the structure feel more functional and grounded.  \n2. Darken the shadow under the awning and the area behind the stall to create stronger contrast and depth.  \n3. Use more distinct, saturated stripes in the awning\u2014like red, yellow, and blue\u2014with clear edges to make the pattern pop and read as fabric."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 44,
+   "dry_ops": 7,
+   "dry_steps": 3750,
+   "coverage": 0.8023,
+   "mean_lightness": 74.56,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0146,
+    0.0752,
+    0.2362,
+    0.2232,
+    0.0034,
+    0.0,
+    0.0,
+    0.0,
+    0.0008,
+    0.0242,
+    0.006,
+    0.0061
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0075,
+    0.0257,
+    0.0498,
+    0.1237,
+    0.1488,
+    0.1061,
+    0.0685,
+    0.4138,
+    0.0561
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 2480,
+   "latency_s": 28.965,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__00:r0",
+   "finish_reason": "stop",
+   "at": 1793800627.807009
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 82,
+   "latency_s": 4.401,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793800637.6488605
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 3000,
+   "completion_tokens": 2878,
+   "latency_s": 26.319,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__00:r1",
+   "finish_reason": "stop",
+   "at": 1793800663.9680145
+  }
+ ],
+ "started_at": 1793800598.8420115,
+ "seconds": 69.35
+}

@@ -1,0 +1,203 @@
+{
+ "id": "storm__z-ai-glm-5.3-flash__04",
+ "prompt_id": "storm",
+ "subject": "a storm cloud over a wheat field",
+ "prompt": "Paint a storm cloud over a wheat field in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6727,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 36,
+     "dry_ops": 3,
+     "dry_steps": 4800,
+     "coverage": 0.9555,
+     "mean_lightness": 65.88,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.1611,
+      0.3323,
+      0.0008,
+      0.0,
+      0.0003,
+      0.0096,
+      0.0773,
+      0.3672,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0006,
+      0.0162,
+      0.0255,
+      0.1374,
+      0.0905,
+      0.1275,
+      0.0887,
+      0.1616,
+      0.315,
+      0.0369
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 40,
+     "dry_ops": 6,
+     "dry_steps": 9300,
+     "coverage": 0.9614,
+     "mean_lightness": 59.94,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0733,
+      0.4136,
+      0.0,
+      0.0,
+      0.0,
+      0.0023,
+      0.006,
+      0.4824,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0063,
+      0.0368,
+      0.0632,
+      0.1459,
+      0.2069,
+      0.0599,
+      0.0207,
+      0.1265,
+      0.3335,
+      0.0003
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the storm cloud lower in the composition so it dominates the top half, making it feel heavier and more threatening over the field.  \n2. Use darker, more saturated blues and grays in the cloud, with sharp edges where it meets the sky, to create contrast and depth.  \n3. Add subtle shadows beneath the cloud using a diluted dark wash to suggest it\u2019s casting light over the wheat, and use a warmer, more varied yellow in the field to show light and texture."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 40,
+   "dry_ops": 6,
+   "dry_steps": 9300,
+   "coverage": 0.9614,
+   "mean_lightness": 59.94,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0733,
+    0.4136,
+    0.0,
+    0.0,
+    0.0,
+    0.0023,
+    0.006,
+    0.4824,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0063,
+    0.0368,
+    0.0632,
+    0.1459,
+    0.2069,
+    0.0599,
+    0.0207,
+    0.1265,
+    0.3335,
+    0.0003
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 416,
+   "completion_tokens": 4096,
+   "latency_s": 19.127,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__z-ai-glm-5.3-flash__04:r0",
+   "finish_reason": "length",
+   "at": 1793797776.098016
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 1646,
+   "completion_tokens": 3573,
+   "latency_s": 13.993,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__z-ai-glm-5.3-flash__04:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793797790.0923693
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 101,
+   "latency_s": 4.059,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__z-ai-glm-5.3-flash__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793797851.9439297
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3925,
+   "completion_tokens": 4096,
+   "latency_s": 18.364,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__z-ai-glm-5.3-flash__04:r1",
+   "finish_reason": "length",
+   "at": 1793797870.3106706
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 5950,
+   "completion_tokens": 2532,
+   "latency_s": 8.328,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__z-ai-glm-5.3-flash__04:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793797878.6422653
+  }
+ ],
+ "started_at": 1793797756.9710004,
+ "seconds": 153.94
+}

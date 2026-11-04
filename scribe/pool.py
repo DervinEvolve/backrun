@@ -253,6 +253,36 @@ class Pool:
                         "path": str(self.root / c.get("dir", c["id"]) / "final.png")})
         return out
 
+    def export(self, dst: str | Path, tiers: tuple[str, ...] = ("love", "okay")) -> dict[str, Any]:
+        """Copy the rated candidates in ``tiers`` to ``dst`` as a small pool of their own.
+
+        Each candidate keeps its ``meta.json``, ``strokes.jsonl`` and
+        ``final.png``; the index, the prompts and the ratings are rewritten to
+        cover only those candidates. The result is the reference pack a
+        training run mounts, and ``Pool(dst).manifest()`` describes it.
+        """
+        import shutil
+
+        dst = Path(dst)
+        dst.mkdir(parents=True, exist_ok=True)
+        rated = self.ratings()
+        chosen = [c for c in self.candidates() if rated.get(c["id"]) in tiers]
+        with (dst / "index.jsonl").open("w") as fh:
+            for c in chosen:
+                folder = dst / c["id"]
+                folder.mkdir(exist_ok=True)
+                for name in ("meta.json", "strokes.jsonl", "final.png"):
+                    shutil.copyfile(self.folder(c["id"]) / name, folder / name)
+                fh.write(json.dumps({**c, "dir": c["id"]}) + "\n")
+        with (dst / "ratings.jsonl").open("w") as fh:
+            for c in chosen:
+                fh.write(json.dumps({"id": c["id"], "tier": rated[c["id"]], "at": 0.0}) + "\n")
+        src_prompts = self.root / "prompts.jsonl"
+        if src_prompts.is_file():
+            shutil.copyfile(src_prompts, dst / "prompts.jsonl")
+        return {"exported": len(chosen), "tiers": tiers, "source_manifest": self.manifest()["sha256"],
+                "manifest": Pool(dst).manifest()["sha256"]}
+
     def manifest(self) -> dict[str, Any]:
         """A hash of the rated pool: every rated id, its tier and the hashes of its files.
 

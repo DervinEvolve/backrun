@@ -1,0 +1,201 @@
+{
+ "id": "dawn__qwen-qwen3-coder-next__01",
+ "prompt_id": "dawn",
+ "subject": "dawn over hills, pale pink and grey",
+ "prompt": "Paint dawn over hills, pale pink and grey in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 5168,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 2,
+     "dry_steps": 3400,
+     "normalised": {
+      "width_clamped": 3
+     },
+     "coverage": 0.5299,
+     "mean_lightness": 73.1,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.472,
+      0.0038,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0062,
+      0.0556,
+      0.0869,
+      0.0204,
+      0.1167
+     ],
+     "lightness_hist": [
+      0.002,
+      0.02,
+      0.0315,
+      0.0425,
+      0.3122,
+      0.3124,
+      0.1162,
+      0.1632,
+      0.0,
+      0.0001
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "paint covers 99% of the paper; leave some paper showing"
+    ],
+    "stats": {
+     "strokes": 14,
+     "dry_ops": 3,
+     "dry_steps": 5600,
+     "normalised": {
+      "width_clamped": 6
+     },
+     "coverage": 0.9935,
+     "mean_lightness": 83.63,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0276,
+      0.1774,
+      0.0012,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0008,
+      0.0012,
+      0.007,
+      0.0128
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0006,
+      0.0035,
+      0.0097,
+      0.012,
+      0.0285,
+      0.2197,
+      0.5686,
+      0.1574
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the horizon line to give more space to the sky, making the hills feel smaller and the dawn more expansive.  \n2. Use lighter, more transparent washes in the upper half to suggest pale pink and grey dawn light, avoiding dark, muddy layers.  \n3. Let the paper show through in the lower sky and hill edges to create soft, natural transitions and a sense of atmospheric distance."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 12,
+   "dry_ops": 2,
+   "dry_steps": 3400,
+   "normalised": {
+    "width_clamped": 3
+   },
+   "coverage": 0.5299,
+   "mean_lightness": 73.1,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.472,
+    0.0038,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0062,
+    0.0556,
+    0.0869,
+    0.0204,
+    0.1167
+   ],
+   "lightness_hist": [
+    0.002,
+    0.02,
+    0.0315,
+    0.0425,
+    0.3122,
+    0.3124,
+    0.1162,
+    0.1632,
+    0.0,
+    0.0001
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1099,
+   "latency_s": 21.482,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__01:r0",
+   "finish_reason": "stop",
+   "at": 1793801709.8887846
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 83,
+   "latency_s": 3.22,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793801770.8536863
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 1648,
+   "completion_tokens": 1466,
+   "latency_s": 19.153,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__01:r1",
+   "finish_reason": "stop",
+   "at": 1793801790.00819
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 3158,
+   "completion_tokens": 1456,
+   "latency_s": 18.512,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__01:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793801844.2777603
+  }
+ ],
+ "started_at": 1793801688.407077,
+ "seconds": 219.42
+}

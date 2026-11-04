@@ -1,0 +1,197 @@
+{
+ "id": "sunflower__google-gemini-3.1-flash-lite__05",
+ "prompt_id": "sunflower",
+ "subject": "a single sunflower against a pale sky",
+ "prompt": "Paint a single sunflower against a pale sky in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 5,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6376,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 7,
+     "dry_ops": 3,
+     "dry_steps": 2500,
+     "coverage": 0.4181,
+     "mean_lightness": 91.47,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0298,
+      0.2328,
+      0.0297,
+      0.0001,
+      0.0145,
+      0.0206,
+      0.0162,
+      0.0001,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0008,
+      0.0009,
+      0.0008,
+      0.0021,
+      0.0055,
+      0.031,
+      0.0877,
+      0.6998,
+      0.1714
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 8,
+     "dry_ops": 3,
+     "dry_steps": 3500,
+     "normalised": {
+      "width_clamped": 1
+     },
+     "coverage": 0.7077,
+     "mean_lightness": 85.97,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0195,
+      0.6989,
+      0.053,
+      0.0016,
+      0.0076,
+      0.009,
+      0.0087,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0011,
+      0.0026,
+      0.0048,
+      0.014,
+      0.0267,
+      0.023,
+      0.1828,
+      0.6918,
+      0.0532
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the sunflower higher in the frame, placing it near the top third to emphasize its isolation against the sky.  \n2. Darken the center of the flower and the stem to create stronger contrast with the pale background, making the subject stand out.  \n3. Use more water to blend the yellow and green areas smoothly, avoiding harsh edges and giving the petals a softer, more natural look."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 8,
+   "dry_ops": 3,
+   "dry_steps": 3500,
+   "normalised": {
+    "width_clamped": 1
+   },
+   "coverage": 0.7077,
+   "mean_lightness": 85.97,
+   "two_hues": true,
+   "two_levels": false,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0195,
+    0.6989,
+    0.053,
+    0.0016,
+    0.0076,
+    0.009,
+    0.0087,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0011,
+    0.0026,
+    0.0048,
+    0.014,
+    0.0267,
+    0.023,
+    0.1828,
+    0.6918,
+    0.0532
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 584,
+   "latency_s": 2.269,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunflower__google-gemini-3.1-flash-lite__05:r0",
+   "finish_reason": "stop",
+   "at": 1793795492.2567666
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 83,
+   "latency_s": 3.187,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunflower__google-gemini-3.1-flash-lite__05:critic1",
+   "finish_reason": "stop",
+   "at": 1793795496.3533213
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1127,
+   "completion_tokens": 726,
+   "latency_s": 2.668,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunflower__google-gemini-3.1-flash-lite__05:r1",
+   "finish_reason": "stop",
+   "at": 1793795499.022349
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1890,
+   "completion_tokens": 668,
+   "latency_s": 2.34,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunflower__google-gemini-3.1-flash-lite__05:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793795503.5942216
+  }
+ ],
+ "started_at": 1793795489.9872382,
+ "seconds": 17.09
+}

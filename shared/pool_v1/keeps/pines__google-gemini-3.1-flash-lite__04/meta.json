@@ -1,0 +1,197 @@
+{
+ "id": "pines__google-gemini-3.1-flash-lite__04",
+ "prompt_id": "pines",
+ "subject": "pine trees on a ridge in mist",
+ "prompt": "Paint pine trees on a ridge in mist in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 1223,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.3763,
+     "mean_lightness": 88.83,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.192,
+      0.7769,
+      0.0019,
+      0.0001,
+      0.0,
+      0.0002,
+      0.0017,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0031,
+      0.0088,
+      0.013,
+      0.0165,
+      0.0317,
+      0.1412,
+      0.1885,
+      0.5841,
+      0.0129
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 2,
+     "dry_steps": 2000,
+     "normalised": {
+      "width_clamped": 2
+     },
+     "coverage": 0.7963,
+     "mean_lightness": 88.42,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.1493,
+      0.0141,
+      0.1095,
+      0.0009,
+      0.0004,
+      0.005,
+      0.0059,
+      0.0016,
+      0.0003,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0003,
+      0.0009,
+      0.0035,
+      0.0092,
+      0.0183,
+      0.0234,
+      0.043,
+      0.5065,
+      0.3948
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the pine trees higher on the ridge line so they clearly sit atop the peaks, not buried in the middle of the slopes.  \n2. Use darker, more saturated green values for the trees to make them stand out from the lighter mist and ridge.  \n3. Let the water flow more freely in the background to create soft, blended mist with lighter washes, avoiding hard edges and flat areas."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 9,
+   "dry_ops": 2,
+   "dry_steps": 2000,
+   "normalised": {
+    "width_clamped": 2
+   },
+   "coverage": 0.7963,
+   "mean_lightness": 88.42,
+   "two_hues": true,
+   "two_levels": false,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.1493,
+    0.0141,
+    0.1095,
+    0.0009,
+    0.0004,
+    0.005,
+    0.0059,
+    0.0016,
+    0.0003,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0003,
+    0.0009,
+    0.0035,
+    0.0092,
+    0.0183,
+    0.0234,
+    0.043,
+    0.5065,
+    0.3948
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 794,
+   "latency_s": 2.472,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pines__google-gemini-3.1-flash-lite__04:r0",
+   "finish_reason": "stop",
+   "at": 1793796563.0909753
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 84,
+   "latency_s": 3.354,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pines__google-gemini-3.1-flash-lite__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793796571.5891075
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1338,
+   "completion_tokens": 753,
+   "latency_s": 2.592,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pines__google-gemini-3.1-flash-lite__04:r1",
+   "finish_reason": "stop",
+   "at": 1793796574.182078
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 2128,
+   "completion_tokens": 724,
+   "latency_s": 2.782,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pines__google-gemini-3.1-flash-lite__04:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793796593.5073447
+  }
+ ],
+ "started_at": 1793796560.6184154,
+ "seconds": 47.54
+}

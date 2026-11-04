@@ -1,0 +1,178 @@
+{
+ "id": "market__google-gemini-3.1-flash-lite__07",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 7,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 15,
+     "dry_ops": 4,
+     "dry_steps": 5000,
+     "coverage": 0.3135,
+     "mean_lightness": 88.31,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0585,
+      0.0314,
+      0.1247,
+      0.0192,
+      0.0192,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0683,
+      0.4826,
+      0.1868
+     ],
+     "lightness_hist": [
+      0.0005,
+      0.0089,
+      0.018,
+      0.0207,
+      0.0304,
+      0.0565,
+      0.1015,
+      0.4126,
+      0.3422,
+      0.0088
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 14,
+     "dry_ops": 4,
+     "dry_steps": 4500,
+     "coverage": 0.4252,
+     "mean_lightness": 79.56,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0674,
+      0.0568,
+      0.1359,
+      0.0293,
+      0.0262,
+      0.0004,
+      0.0005,
+      0.0003,
+      0.0,
+      0.0967,
+      0.4924,
+      0.0853
+     ],
+     "lightness_hist": [
+      0.0023,
+      0.0262,
+      0.0413,
+      0.0433,
+      0.0761,
+      0.3045,
+      0.3532,
+      0.1148,
+      0.0263,
+      0.012
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning\u2019s placement so it clearly covers the stall structure, not floating above it.  \n2. Use darker, more saturated values for the awning and poles to make them stand out from the background.  \n3. Apply more water to the striped poles to blend the colours slightly and create a wet, painted look."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 14,
+   "dry_ops": 4,
+   "dry_steps": 4500,
+   "coverage": 0.4252,
+   "mean_lightness": 79.56,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0674,
+    0.0568,
+    0.1359,
+    0.0293,
+    0.0262,
+    0.0004,
+    0.0005,
+    0.0003,
+    0.0,
+    0.0967,
+    0.4924,
+    0.0853
+   ],
+   "lightness_hist": [
+    0.0023,
+    0.0262,
+    0.0413,
+    0.0433,
+    0.0761,
+    0.3045,
+    0.3532,
+    0.1148,
+    0.0263,
+    0.012
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 1049,
+   "latency_s": 3.66,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__google-gemini-3.1-flash-lite__07:r0",
+   "finish_reason": "stop",
+   "at": 1793800775.1038036
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 69,
+   "latency_s": 3.206,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__google-gemini-3.1-flash-lite__07:critic1",
+   "finish_reason": "stop",
+   "at": 1793800779.3042667
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1577,
+   "completion_tokens": 994,
+   "latency_s": 3.311,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__google-gemini-3.1-flash-lite__07:r1",
+   "finish_reason": "stop",
+   "at": 1793800782.6162865
+  }
+ ],
+ "started_at": 1793800771.4439616,
+ "seconds": 12.16
+}

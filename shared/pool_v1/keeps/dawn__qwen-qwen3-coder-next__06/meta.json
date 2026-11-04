@@ -1,0 +1,201 @@
+{
+ "id": "dawn__qwen-qwen3-coder-next__06",
+ "prompt_id": "dawn",
+ "subject": "dawn over hills, pale pink and grey",
+ "prompt": "Paint dawn over hills, pale pink and grey in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 6,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 5168,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 14,
+     "dry_ops": 14,
+     "dry_steps": 13900,
+     "normalised": {
+      "width_clamped": 3,
+      "path_resampled": 4
+     },
+     "coverage": 0.9004,
+     "mean_lightness": 69.16,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0309,
+      0.0081,
+      0.0544,
+      0.1318,
+      0.0015,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0056,
+      0.1883,
+      0.2515
+     ],
+     "lightness_hist": [
+      0.0001,
+      0.0079,
+      0.0154,
+      0.0301,
+      0.0317,
+      0.1348,
+      0.4159,
+      0.2335,
+      0.1302,
+      0.0004
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 13,
+     "dry_ops": 13,
+     "dry_steps": 13500,
+     "normalised": {
+      "width_clamped": 3
+     },
+     "coverage": 0.9423,
+     "mean_lightness": 71.76,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.2372,
+      0.0153,
+      0.0088,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.2717,
+      0.0636,
+      0.0916
+     ],
+     "lightness_hist": [
+      0.0002,
+      0.0055,
+      0.0102,
+      0.0092,
+      0.014,
+      0.057,
+      0.3238,
+      0.5232,
+      0.0535,
+      0.0034
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Shift the pale pink higher in the composition to suggest the sky above the hills, placing it near the top edge to imply dawn light rising.  \n2. Use lighter, more transparent washes in the upper layers and darker, more saturated values in the lower layers to create depth and show the hills receding into shadow.  \n3. Let the water flow more naturally between layers\u2014allow edges to bleed softly where hills meet the sky, and keep the lower areas more controlled to suggest solid ground."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 13,
+   "dry_ops": 13,
+   "dry_steps": 13500,
+   "normalised": {
+    "width_clamped": 3
+   },
+   "coverage": 0.9423,
+   "mean_lightness": 71.76,
+   "two_hues": true,
+   "two_levels": false,
+   "hue_hist": [
+    0.2372,
+    0.0153,
+    0.0088,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.2717,
+    0.0636,
+    0.0916
+   ],
+   "lightness_hist": [
+    0.0002,
+    0.0055,
+    0.0102,
+    0.0092,
+    0.014,
+    0.057,
+    0.3238,
+    0.5232,
+    0.0535,
+    0.0034
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1709,
+   "latency_s": 21.864,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__06:r0",
+   "finish_reason": "stop",
+   "at": 1793801808.5625556
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 102,
+   "latency_s": 3.891,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__06:critic1",
+   "finish_reason": "stop",
+   "at": 1793801833.9406607
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2277,
+   "completion_tokens": 1642,
+   "latency_s": 24.012,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__06:r1",
+   "finish_reason": "stop",
+   "at": 1793801857.9535122
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 3963,
+   "completion_tokens": 1479,
+   "latency_s": 16.394,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__06:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793801932.0391672
+  }
+ ],
+ "started_at": 1793801786.6983,
+ "seconds": 205.87
+}

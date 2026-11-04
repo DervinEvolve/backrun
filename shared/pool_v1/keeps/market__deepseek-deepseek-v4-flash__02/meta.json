@@ -1,0 +1,178 @@
+{
+ "id": "market__deepseek-deepseek-v4-flash__02",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 45,
+     "dry_ops": 11,
+     "dry_steps": 5800,
+     "coverage": 0.821,
+     "mean_lightness": 77.87,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0119,
+      0.4094,
+      0.0976,
+      0.2781,
+      0.0812,
+      0.0225,
+      0.0337,
+      0.0053,
+      0.0054,
+      0.0005,
+      0.0001,
+      0.0009
+     ],
+     "lightness_hist": [
+      0.0002,
+      0.0044,
+      0.0151,
+      0.0273,
+      0.0344,
+      0.0633,
+      0.2326,
+      0.1243,
+      0.4457,
+      0.0527
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 46,
+     "dry_ops": 18,
+     "dry_steps": 7650,
+     "coverage": 0.7802,
+     "mean_lightness": 75.81,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0089,
+      0.3683,
+      0.0698,
+      0.2245,
+      0.1111,
+      0.0304,
+      0.0152,
+      0.013,
+      0.0111,
+      0.1017,
+      0.023,
+      0.0028
+     ],
+     "lightness_hist": [
+      0.0015,
+      0.0116,
+      0.0253,
+      0.0499,
+      0.0701,
+      0.1195,
+      0.1813,
+      0.0596,
+      0.4187,
+      0.0625
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning\u2019s position slightly to sit more naturally above the stall, creating a clearer roofline and stronger sense of shelter.  \n2. Darken the shadow under the awning and the stall base using deeper, cooler tones to establish contrast and ground the structure.  \n3. Use more controlled water flow to keep the striped pattern sharp and distinct\u2014limit bleeding and allow clear separation between the stripes."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 46,
+   "dry_ops": 18,
+   "dry_steps": 7650,
+   "coverage": 0.7802,
+   "mean_lightness": 75.81,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0089,
+    0.3683,
+    0.0698,
+    0.2245,
+    0.1111,
+    0.0304,
+    0.0152,
+    0.013,
+    0.0111,
+    0.1017,
+    0.023,
+    0.0028
+   ],
+   "lightness_hist": [
+    0.0015,
+    0.0116,
+    0.0253,
+    0.0499,
+    0.0701,
+    0.1195,
+    0.1813,
+    0.0596,
+    0.4187,
+    0.0625
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 2778,
+   "latency_s": 18.18,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__02:r0",
+   "finish_reason": "stop",
+   "at": 1793800627.3488734
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 84,
+   "latency_s": 10.942,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793800644.4962006
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 3301,
+   "completion_tokens": 2996,
+   "latency_s": 28.542,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__02:r1",
+   "finish_reason": "stop",
+   "at": 1793800673.0393567
+  }
+ ],
+ "started_at": 1793800609.1689444,
+ "seconds": 74.41
+}

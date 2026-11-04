@@ -1,0 +1,195 @@
+{
+ "id": "fog__google-gemini-3.1-flash-lite__03",
+ "prompt_id": "fog",
+ "subject": "a fishing boat in fog",
+ "prompt": "Paint a fishing boat in fog in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 1254,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.3284,
+     "mean_lightness": 88.53,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0044,
+      0.1378,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0038,
+      0.0476,
+      0.0087,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0001,
+      0.0087,
+      0.0201,
+      0.021,
+      0.0271,
+      0.1021,
+      0.0209,
+      0.1246,
+      0.6751,
+      0.0003
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "only one flat colour; use at least two hues or two clearly different values"
+    ],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 3,
+     "dry_steps": 3200,
+     "normalised": {
+      "width_clamped": 1
+     },
+     "coverage": 0.3879,
+     "mean_lightness": 90.82,
+     "two_hues": false,
+     "two_levels": false,
+     "hue_hist": [
+      0.0092,
+      0.0047,
+      0.1079,
+      0.0006,
+      0.0,
+      0.0,
+      0.0014,
+      0.014,
+      0.0305,
+      0.0203,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.004,
+      0.0099,
+      0.0156,
+      0.025,
+      0.0679,
+      0.0229,
+      0.0217,
+      0.42,
+      0.413
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the boat lower in the frame, closer to the bottom edge, to emphasize its smallness in the vast fog and create a stronger sense of depth.  \n2. Darken the boat\u2019s hull and flag to make them stand out against the light fog, using deeper values to improve contrast and visibility.  \n3. Use more transparent, layered washes in the fog area to show gradual fading, with lighter edges and slightly cooler tones to suggest distance and moisture."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 12,
+   "dry_ops": 3,
+   "dry_steps": 3000,
+   "coverage": 0.3284,
+   "mean_lightness": 88.53,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0044,
+    0.1378,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0038,
+    0.0476,
+    0.0087,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0001,
+    0.0087,
+    0.0201,
+    0.021,
+    0.0271,
+    0.1021,
+    0.0209,
+    0.1246,
+    0.6751,
+    0.0003
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 432,
+   "completion_tokens": 812,
+   "latency_s": 2.781,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fog__google-gemini-3.1-flash-lite__03:r0",
+   "finish_reason": "stop",
+   "at": 1793802357.8458939
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 141,
+   "completion_tokens": 96,
+   "latency_s": 4.704,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fog__google-gemini-3.1-flash-lite__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793802386.540781
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1367,
+   "completion_tokens": 776,
+   "latency_s": 2.763,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fog__google-gemini-3.1-flash-lite__03:r1",
+   "finish_reason": "stop",
+   "at": 1793802389.3053203
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 2180,
+   "completion_tokens": 743,
+   "latency_s": 2.66,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fog__google-gemini-3.1-flash-lite__03:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793802434.4975812
+  }
+ ],
+ "started_at": 1793802355.0652137,
+ "seconds": 97.71
+}

@@ -1,0 +1,178 @@
+{
+ "id": "mushrooms__deepseek-deepseek-v4-flash__04",
+ "prompt_id": "mushrooms",
+ "subject": "brown mushrooms on a mossy log",
+ "prompt": "Paint brown mushrooms on a mossy log in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6432,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 17,
+     "dry_ops": 7,
+     "dry_steps": 1850,
+     "coverage": 0.4543,
+     "mean_lightness": 82.54,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0663,
+      0.1921,
+      0.5708,
+      0.1691,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0065,
+      0.0166,
+      0.0381,
+      0.0464,
+      0.0905,
+      0.2866,
+      0.466,
+      0.0485,
+      0.0008
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 17,
+     "dry_ops": 7,
+     "dry_steps": 1950,
+     "coverage": 0.398,
+     "mean_lightness": 80.79,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0358,
+      0.2719,
+      0.4561,
+      0.2343,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0005,
+      0.0206,
+      0.0469,
+      0.0517,
+      0.0966,
+      0.2392,
+      0.2523,
+      0.2887,
+      0.0022,
+      0.0014
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the mushrooms more centrally on the log, ensuring they are clearly the focus and not partially cut off or floating above it.  \n2. Use darker, more varied brown values for the mushroom caps and stems to create depth and contrast against the lighter log.  \n3. Apply water more evenly to the moss area to blend the green tones smoothly and avoid harsh edges, making it look naturally damp and textured."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 17,
+   "dry_ops": 7,
+   "dry_steps": 1950,
+   "coverage": 0.398,
+   "mean_lightness": 80.79,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0358,
+    0.2719,
+    0.4561,
+    0.2343,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0005,
+    0.0206,
+    0.0469,
+    0.0517,
+    0.0966,
+    0.2392,
+    0.2523,
+    0.2887,
+    0.0022,
+    0.0014
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 409,
+   "completion_tokens": 1537,
+   "latency_s": 8.994,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__deepseek-deepseek-v4-flash__04:r0",
+   "finish_reason": "stop",
+   "at": 1793803162.7979546
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 84,
+   "latency_s": 3.864,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__deepseek-deepseek-v4-flash__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793803175.1551514
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2057,
+   "completion_tokens": 1546,
+   "latency_s": 8.119,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__deepseek-deepseek-v4-flash__04:r1",
+   "finish_reason": "stop",
+   "at": 1793803183.2745004
+  }
+ ],
+ "started_at": 1793803153.8043416,
+ "seconds": 30.61
+}

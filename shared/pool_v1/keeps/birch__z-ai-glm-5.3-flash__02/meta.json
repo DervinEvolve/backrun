@@ -1,0 +1,191 @@
+{
+ "id": "birch__z-ai-glm-5.3-flash__02",
+ "prompt_id": "birch",
+ "subject": "white birch trunks in autumn",
+ "prompt": "Paint white birch trunks in autumn in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 418,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 36,
+     "dry_ops": 7,
+     "dry_steps": 2500,
+     "coverage": 0.6624,
+     "mean_lightness": 85.33,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0343,
+      0.4691,
+      0.424,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0005,
+      0.0063,
+      0.0159,
+      0.038,
+      0.1011,
+      0.2553,
+      0.3097,
+      0.2733
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 45,
+     "dry_ops": 7,
+     "dry_steps": 2750,
+     "coverage": 0.605,
+     "mean_lightness": 84.04,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0015,
+      0.5837,
+      0.183,
+      0.0,
+      0.0,
+      0.0005,
+      0.0092,
+      0.0023,
+      0.0018,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0043,
+      0.0114,
+      0.0255,
+      0.0274,
+      0.0752,
+      0.4453,
+      0.3155,
+      0.0953
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the birch trunks more centrally and vertically, ensuring they stand clearly above the ground line and are evenly spaced to suggest a natural grove.  \n2. Use darker, more defined values for the trunks\u2014especially the bark\u2014to contrast with the lighter background and make them pop.  \n3. Limit the yellow and brown washes to the canopy area, keeping the trunks and ground more neutral and avoid letting the colours bleed into the trunks."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 45,
+   "dry_ops": 7,
+   "dry_steps": 2750,
+   "coverage": 0.605,
+   "mean_lightness": 84.04,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0015,
+    0.5837,
+    0.183,
+    0.0,
+    0.0,
+    0.0005,
+    0.0092,
+    0.0023,
+    0.0018,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0001,
+    0.0043,
+    0.0114,
+    0.0255,
+    0.0274,
+    0.0752,
+    0.4453,
+    0.3155,
+    0.0953
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 415,
+   "completion_tokens": 3925,
+   "latency_s": 21.241,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "birch__z-ai-glm-5.3-flash__02:r0",
+   "finish_reason": "stop",
+   "at": 1793797620.5329971
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 95,
+   "latency_s": 3.121,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "birch__z-ai-glm-5.3-flash__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793797628.3708086
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2719,
+   "completion_tokens": 2974,
+   "latency_s": 9.164,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "birch__z-ai-glm-5.3-flash__02:r1",
+   "finish_reason": "stop",
+   "at": 1793797637.5352926
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 5520,
+   "completion_tokens": 2735,
+   "latency_s": 6.341,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "birch__z-ai-glm-5.3-flash__02:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793797643.8769186
+  }
+ ],
+ "started_at": 1793797599.2919354,
+ "seconds": 56.34
+}

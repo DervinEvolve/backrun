@@ -1,0 +1,184 @@
+{
+ "id": "pears__google-gemini-3.1-flash-lite__06",
+ "prompt_id": "pears",
+ "subject": "two green pears on a wooden table",
+ "prompt": "Paint two green pears on a wooden table in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 6,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 4186,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.5076,
+     "mean_lightness": 87.82,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0001,
+      0.4271,
+      0.5425,
+      0.0303,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0004,
+      0.0052,
+      0.0123,
+      0.0205,
+      0.0327,
+      0.1361,
+      0.7905,
+      0.0023
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 3,
+     "dry_steps": 3800,
+     "normalised": {
+      "width_clamped": 1
+     },
+     "coverage": 0.5047,
+     "mean_lightness": 84.21,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0025,
+      0.3777,
+      0.6063,
+      0.0135,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0009,
+      0.0123,
+      0.0147,
+      0.0268,
+      0.0906,
+      0.0962,
+      0.3367,
+      0.42,
+      0.0017
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the pears more clearly on the wooden table, with a defined edge where the table surface meets the background, so the table is visible beneath them.  \n2. Use darker, richer green values for the pears\u2019 shadows and a lighter green for highlights to create depth and roundness.  \n3. Apply water more evenly to blend the green tones smoothly and avoid harsh edges, making the pears look more natural and wet."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 11,
+   "dry_ops": 3,
+   "dry_steps": 3800,
+   "normalised": {
+    "width_clamped": 1
+   },
+   "coverage": 0.5047,
+   "mean_lightness": 84.21,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0025,
+    0.3777,
+    0.6063,
+    0.0135,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0009,
+    0.0123,
+    0.0147,
+    0.0268,
+    0.0906,
+    0.0962,
+    0.3367,
+    0.42,
+    0.0017
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 675,
+   "latency_s": 2.391,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__google-gemini-3.1-flash-lite__06:r0",
+   "finish_reason": "stop",
+   "at": 1793795630.399721
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 90,
+   "latency_s": 2.908,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__google-gemini-3.1-flash-lite__06:critic1",
+   "finish_reason": "stop",
+   "at": 1793795642.8422408
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1223,
+   "completion_tokens": 830,
+   "latency_s": 2.612,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__google-gemini-3.1-flash-lite__06:r1",
+   "finish_reason": "stop",
+   "at": 1793795645.4557054
+  }
+ ],
+ "started_at": 1793795628.0089471,
+ "seconds": 46.95
+}

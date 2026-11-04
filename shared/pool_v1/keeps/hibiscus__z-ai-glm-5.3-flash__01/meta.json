@@ -1,0 +1,158 @@
+{
+ "id": "hibiscus__z-ai-glm-5.3-flash__01",
+ "prompt_id": "hibiscus",
+ "subject": "a peach hibiscus flower, close up",
+ "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 445,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 30,
+     "dry_ops": 4,
+     "dry_steps": 6200,
+     "coverage": 0.5506,
+     "mean_lightness": 84.41,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0003,
+      0.187,
+      0.5034,
+      0.1535,
+      0.1557,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0007,
+      0.0081,
+      0.0345,
+      0.0476,
+      0.1942,
+      0.2745,
+      0.421,
+      0.0195
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "line 21: not valid JSON"
+    ],
+    "stats": {
+     "strokes": 19,
+     "dry_ops": 1,
+     "dry_steps": 1600,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Place the flower more centrally in the frame, shifting it slightly upward to avoid the top edge being cut off and to give it a more balanced, focused composition.  \n2. Use darker, more saturated values in the center of the flower and along the petal edges to create contrast and define the form, making the hibiscus stand out from the background.  \n3. Apply water more evenly to control pigment spread\u2014use less water in the center and more on the outer edges to keep the petals distinct and prevent muddy blending."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 30,
+   "dry_ops": 4,
+   "dry_steps": 6200,
+   "coverage": 0.5506,
+   "mean_lightness": 84.41,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0003,
+    0.187,
+    0.5034,
+    0.1535,
+    0.1557,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0007,
+    0.0081,
+    0.0345,
+    0.0476,
+    0.1942,
+    0.2745,
+    0.421,
+    0.0195
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 419,
+   "completion_tokens": 3175,
+   "latency_s": 30.136,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__01:r0",
+   "at": 1793794071.7921278
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 110,
+   "latency_s": 3.905,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__01:critic1",
+   "at": 1793794078.8291953
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2722,
+   "completion_tokens": 4096,
+   "latency_s": 14.767,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__01:r1",
+   "at": 1793794093.5968597
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2930,
+   "completion_tokens": 4096,
+   "latency_s": 13.758,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__01:r1:retry",
+   "at": 1793794107.3555577
+  }
+ ],
+ "started_at": 1793794041.6556582,
+ "seconds": 65.79
+}

@@ -1,0 +1,198 @@
+{
+ "id": "hibiscus__qwen-qwen3-coder-next__00",
+ "prompt_id": "hibiscus",
+ "subject": "a peach hibiscus flower, close up",
+ "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 445,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 32,
+     "dry_ops": 30,
+     "dry_steps": 17300,
+     "coverage": 0.1783,
+     "mean_lightness": 89.62,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.6597,
+      0.319,
+      0.0038,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0065
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0011,
+      0.0108,
+      0.0678,
+      0.1517,
+      0.1486,
+      0.2272,
+      0.253,
+      0.1283,
+      0.0115
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 30,
+     "dry_ops": 28,
+     "dry_steps": 16950,
+     "coverage": 0.2104,
+     "mean_lightness": 89.02,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.6208,
+      0.3324,
+      0.0027,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0059
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0029,
+      0.0086,
+      0.0458,
+      0.1439,
+      0.1782,
+      0.1668,
+      0.2131,
+      0.2143,
+      0.0263
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the flower more centrally in the frame, with the bloom clearly facing forward to emphasize its form and details.  \n2. Use darker, more saturated values in the center of the flower and along the petal edges to create contrast and define shape.  \n3. Control water flow to keep edges sharper and avoid bleeding, especially on the outer petals, to maintain clarity and structure."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 30,
+   "dry_ops": 28,
+   "dry_steps": 16950,
+   "coverage": 0.2104,
+   "mean_lightness": 89.02,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.6208,
+    0.3324,
+    0.0027,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0059
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0029,
+    0.0086,
+    0.0458,
+    0.1439,
+    0.1782,
+    0.1668,
+    0.2131,
+    0.2143,
+    0.0263
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 435,
+   "completion_tokens": 4096,
+   "latency_s": 47.234,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__qwen-qwen3-coder-next__00:r0",
+   "at": 1793785752.9025416
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 4591,
+   "completion_tokens": 3641,
+   "latency_s": 50.904,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__qwen-qwen3-coder-next__00:r0:retry",
+   "at": 1793785803.8087971
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 79,
+   "latency_s": 2.555,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__qwen-qwen3-coder-next__00:critic1",
+   "at": 1793785807.5506773
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 8343,
+   "completion_tokens": 3544,
+   "latency_s": 48.08,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__qwen-qwen3-coder-next__00:r1",
+   "at": 1793785855.631093
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 11943,
+   "completion_tokens": 4032,
+   "latency_s": 54.176,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__qwen-qwen3-coder-next__00:r1:retry",
+   "at": 1793785909.8078952
+  }
+ ],
+ "started_at": 1793785705.6686435,
+ "seconds": 206.79
+}

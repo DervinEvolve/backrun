@@ -1,0 +1,160 @@
+{
+ "id": "poppies__moonshotai-kimi-k2.6__03",
+ "prompt_id": "poppies",
+ "subject": "red poppies in a green field",
+ "prompt": "Paint red poppies in a green field in watercolour.",
+ "model": "moonshotai/kimi-k2.6",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7144,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 43,
+     "dry_ops": 2,
+     "dry_steps": 2700,
+     "coverage": 0.5802,
+     "mean_lightness": 78.77,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.1014,
+      0.0611,
+      0.0115,
+      0.0715,
+      0.7513,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0031
+     ],
+     "lightness_hist": [
+      0.0008,
+      0.0211,
+      0.017,
+      0.0194,
+      0.0364,
+      0.1314,
+      0.1971,
+      0.5666,
+      0.01,
+      0.0001
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "no stroke lines found",
+     "0 strokes; need 6 to 200",
+     "no dry op; add at least one"
+    ],
+    "stats": {
+     "strokes": 0,
+     "dry_ops": 0,
+     "dry_steps": 0,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Place the poppies higher in the frame, closer to the top third, to emphasize them as the focal point and avoid crowding the bottom edge.  \n2. Use darker, more saturated reds for the poppies and lighter, more muted greens for the field to increase contrast and make the flowers stand out.  \n3. Let the water flow more freely in the background to create soft, blended greens and avoid hard, muddy edges around the stems and leaves."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 43,
+   "dry_ops": 2,
+   "dry_steps": 2700,
+   "coverage": 0.5802,
+   "mean_lightness": 78.77,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.1014,
+    0.0611,
+    0.0115,
+    0.0715,
+    0.7513,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0031
+   ],
+   "lightness_hist": [
+    0.0008,
+    0.0211,
+    0.017,
+    0.0194,
+    0.0364,
+    0.1314,
+    0.1971,
+    0.5666,
+    0.01,
+    0.0001
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 413,
+   "completion_tokens": 3601,
+   "latency_s": 15.603,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__moonshotai-kimi-k2.6__03:r0",
+   "at": 1793794320.1022909
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 96,
+   "latency_s": 2.915,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__moonshotai-kimi-k2.6__03:critic1",
+   "at": 1793794326.8634186
+  },
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 3136,
+   "completion_tokens": 4096,
+   "latency_s": 74.943,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__moonshotai-kimi-k2.6__03:r1",
+   "at": 1793794401.8065631
+  },
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 3193,
+   "completion_tokens": 4096,
+   "latency_s": 51.98,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__moonshotai-kimi-k2.6__03:r1:retry",
+   "at": 1793794453.7866628
+  }
+ ],
+ "started_at": 1793794304.499677,
+ "seconds": 149.37
+}

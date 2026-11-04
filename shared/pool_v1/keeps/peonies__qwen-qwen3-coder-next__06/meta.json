@@ -1,0 +1,178 @@
+{
+ "id": "peonies__qwen-qwen3-coder-next__06",
+ "prompt_id": "peonies",
+ "subject": "pink peonies, loose and wet",
+ "prompt": "Paint pink peonies, loose and wet in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 6,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3839,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 25,
+     "dry_ops": 7,
+     "dry_steps": 7200,
+     "coverage": 0.1903,
+     "mean_lightness": 89.91,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.5234,
+      0.2107,
+      0.17,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0954
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0002,
+      0.0065,
+      0.029,
+      0.0729,
+      0.1346,
+      0.2858,
+      0.3584,
+      0.1097,
+      0.0029
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 25,
+     "dry_ops": 7,
+     "dry_steps": 6600,
+     "coverage": 0.2206,
+     "mean_lightness": 86.91,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.6113,
+      0.2134,
+      0.1752,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0099,
+      0.0392,
+      0.0979,
+      0.1693,
+      0.2538,
+      0.168,
+      0.1681,
+      0.0936,
+      0.0003
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the peonies higher on the page to create more negative space above, giving them room to feel loose and natural.  \n2. Use darker, more saturated pink and red values in the center of the blooms to suggest depth and shadow, then let them fade to lighter washes at the edges.  \n3. Apply more water to the edges of the petals to create soft, bleeding edges and a wet-on-wet effect that enhances the loose, fluid feel."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 25,
+   "dry_ops": 7,
+   "dry_steps": 6600,
+   "coverage": 0.2206,
+   "mean_lightness": 86.91,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.6113,
+    0.2134,
+    0.1752,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0099,
+    0.0392,
+    0.0979,
+    0.1693,
+    0.2538,
+    0.168,
+    0.1681,
+    0.0936,
+    0.0003
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 2238,
+   "latency_s": 38.036,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__06:r0",
+   "finish_reason": "stop",
+   "at": 1793802840.2933908
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 97,
+   "latency_s": 4.135,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__06:critic1",
+   "finish_reason": "stop",
+   "at": 1793802854.8167274
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2801,
+   "completion_tokens": 2442,
+   "latency_s": 46.674,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__06:r1",
+   "finish_reason": "stop",
+   "at": 1793802901.4911575
+  }
+ ],
+ "started_at": 1793802802.2573195,
+ "seconds": 137.68
+}

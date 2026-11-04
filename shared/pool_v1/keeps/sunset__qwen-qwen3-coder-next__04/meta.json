@@ -1,0 +1,201 @@
+{
+ "id": "sunset__qwen-qwen3-coder-next__04",
+ "prompt_id": "sunset",
+ "subject": "a sunset over a calm sea",
+ "prompt": "Paint a sunset over a calm sea in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 4800,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 17,
+     "dry_ops": 3,
+     "dry_steps": 4200,
+     "normalised": {
+      "width_clamped": 3
+     },
+     "coverage": 0.8164,
+     "mean_lightness": 66.27,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0069,
+      0.0098,
+      0.3382,
+      0.0274,
+      0.0103,
+      0.0009,
+      0.0009,
+      0.0332,
+      0.159,
+      0.2688,
+      0.0233,
+      0.0079
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0042,
+      0.0243,
+      0.0558,
+      0.118,
+      0.2385,
+      0.3812,
+      0.1161,
+      0.0614,
+      0.0003
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "paint covers 100% of the paper; leave some paper showing"
+    ],
+    "stats": {
+     "strokes": 19,
+     "dry_ops": 4,
+     "dry_steps": 6000,
+     "normalised": {
+      "width_clamped": 7
+     },
+     "coverage": 0.9977,
+     "mean_lightness": 38.57,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0007,
+      0.0361,
+      0.2083,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.4946,
+      0.2327,
+      0.0017
+     ],
+     "lightness_hist": [
+      0.0206,
+      0.2149,
+      0.2611,
+      0.0914,
+      0.0209,
+      0.1103,
+      0.2583,
+      0.0223,
+      0.0,
+      0.0002
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the horizon line lower in the composition to give more space to the sea, making it feel more expansive and emphasizing the calm water.  \n2. Use darker, more saturated blues in the lower half of the painting to create a clear contrast with the lighter sky, reinforcing the water\u2019s depth and stillness.  \n3. Let the watercolour bleed more at the edges of the sea and sky to soften transitions and suggest a wet, reflective surface, avoiding hard lines."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 17,
+   "dry_ops": 3,
+   "dry_steps": 4200,
+   "normalised": {
+    "width_clamped": 3
+   },
+   "coverage": 0.8164,
+   "mean_lightness": 66.27,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0069,
+    0.0098,
+    0.3382,
+    0.0274,
+    0.0103,
+    0.0009,
+    0.0009,
+    0.0332,
+    0.159,
+    0.2688,
+    0.0233,
+    0.0079
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0042,
+    0.0243,
+    0.0558,
+    0.118,
+    0.2385,
+    0.3812,
+    0.1161,
+    0.0614,
+    0.0003
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 432,
+   "completion_tokens": 1556,
+   "latency_s": 17.628,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunset__qwen-qwen3-coder-next__04:r0",
+   "finish_reason": "stop",
+   "at": 1793801122.5887063
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 97,
+   "latency_s": 5.402,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunset__qwen-qwen3-coder-next__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793801171.431615
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2117,
+   "completion_tokens": 1921,
+   "latency_s": 21.918,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunset__qwen-qwen3-coder-next__04:r1",
+   "finish_reason": "stop",
+   "at": 1793801193.3518152
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 4103,
+   "completion_tokens": 2024,
+   "latency_s": 26.748,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "sunset__qwen-qwen3-coder-next__04:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793801278.3216333
+  }
+ ],
+ "started_at": 1793801104.9601345,
+ "seconds": 270.6
+}

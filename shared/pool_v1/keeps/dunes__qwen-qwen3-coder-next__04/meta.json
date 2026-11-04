@@ -1,0 +1,204 @@
+{
+ "id": "dunes__qwen-qwen3-coder-next__04",
+ "prompt_id": "dunes",
+ "subject": "sand dunes under a hot noon sky",
+ "prompt": "Paint sand dunes under a hot noon sky in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6713,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 16,
+     "dry_ops": 15,
+     "dry_steps": 9300,
+     "normalised": {
+      "width_clamped": 3,
+      "path_resampled": 1
+     },
+     "coverage": 0.856,
+     "mean_lightness": 73.12,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0048,
+      0.5642,
+      0.431,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0022,
+      0.0054,
+      0.0154,
+      0.0411,
+      0.1014,
+      0.2704,
+      0.41,
+      0.1523,
+      0.0018
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "paint covers 100% of the paper; leave some paper showing"
+    ],
+    "stats": {
+     "strokes": 24,
+     "dry_ops": 24,
+     "dry_steps": 17320,
+     "normalised": {
+      "width_clamped": 6,
+      "path_resampled": 6
+     },
+     "coverage": 0.9998,
+     "mean_lightness": 60.02,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0388,
+      0.9434,
+      0.0177,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0069,
+      0.0467,
+      0.0482,
+      0.087,
+      0.1767,
+      0.4268,
+      0.2066,
+      0.001,
+      0.0001
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Shift the darkest dune shapes to the lower third of the image to ground them and create a stronger sense of depth, making the dunes feel more substantial and layered.\n\n2. Use lighter, more transparent washes in the upper half of the painting to represent the distant dunes, reducing contrast and value differences to suggest heat haze and atmospheric distance.\n\n3. Add subtle, warm orange and ochre tones to the sky area above the dunes, blending them softly into the yellow washes to reinforce the hot noon light and unify the scene\u2019s color temperature."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 16,
+   "dry_ops": 15,
+   "dry_steps": 9300,
+   "normalised": {
+    "width_clamped": 3,
+    "path_resampled": 1
+   },
+   "coverage": 0.856,
+   "mean_lightness": 73.12,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0048,
+    0.5642,
+    0.431,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0022,
+    0.0054,
+    0.0154,
+    0.0411,
+    0.1014,
+    0.2704,
+    0.41,
+    0.1523,
+    0.0018
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1563,
+   "latency_s": 19.003,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__04:r0",
+   "finish_reason": "stop",
+   "at": 1793796336.576865
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 115,
+   "latency_s": 2.921,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793796360.663285
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2144,
+   "completion_tokens": 3013,
+   "latency_s": 35.309,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__04:r1",
+   "finish_reason": "stop",
+   "at": 1793796395.9743378
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 5202,
+   "completion_tokens": 3012,
+   "latency_s": 37.37,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__04:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793796498.3863125
+  }
+ ],
+ "started_at": 1793796317.5738673,
+ "seconds": 212.23
+}

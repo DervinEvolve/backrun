@@ -1,0 +1,187 @@
+{
+ "id": "poppies__z-ai-glm-5.3-flash__00",
+ "prompt_id": "poppies",
+ "subject": "red poppies in a green field",
+ "prompt": "Paint red poppies in a green field in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7144,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 52,
+     "dry_ops": 5,
+     "dry_steps": 5400,
+     "coverage": 0.9681,
+     "mean_lightness": 71.74,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0088,
+      0.0743,
+      0.0375,
+      0.2531,
+      0.3406,
+      0.0,
+      0.0,
+      0.0014,
+      0.0058,
+      0.001,
+      0.0048,
+      0.0005
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0009,
+      0.0185,
+      0.0481,
+      0.0611,
+      0.1016,
+      0.2117,
+      0.1489,
+      0.3756,
+      0.0335
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 43,
+     "dry_ops": 5,
+     "dry_steps": 5400,
+     "coverage": 0.7567,
+     "mean_lightness": 82.32,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0853,
+      0.072,
+      0.0099,
+      0.4764,
+      0.238,
+      0.0044,
+      0.0,
+      0.0051,
+      0.0007,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.001,
+      0.0173,
+      0.046,
+      0.0452,
+      0.0628,
+      0.0385,
+      0.1259,
+      0.3901,
+      0.2733
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the poppies more deliberately in the foreground and mid-ground, avoiding the top edge and center, to create a natural, scattered field effect.  \n2. Use darker, more saturated reds for the poppies and lighter, more transparent greens for the field to increase contrast and depth.  \n3. Let the white of the paper show through in the highlights of the petals and field, using less water in those areas to preserve brightness and form."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 43,
+   "dry_ops": 5,
+   "dry_steps": 5400,
+   "coverage": 0.7567,
+   "mean_lightness": 82.32,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0853,
+    0.072,
+    0.0099,
+    0.4764,
+    0.238,
+    0.0044,
+    0.0,
+    0.0051,
+    0.0007,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.001,
+    0.0173,
+    0.046,
+    0.0452,
+    0.0628,
+    0.0385,
+    0.1259,
+    0.3901,
+    0.2733
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 434,
+   "completion_tokens": 3910,
+   "latency_s": 40.122,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__00:r0",
+   "at": 1793785963.1137168
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 93,
+   "latency_s": 3.971,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__00:critic1",
+   "at": 1793785972.1406279
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 4212,
+   "completion_tokens": 3278,
+   "latency_s": 43.412,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__00:r1",
+   "at": 1793786015.5530515
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 7501,
+   "completion_tokens": 3053,
+   "latency_s": 35.074,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__00:r1:retry",
+   "at": 1793786058.632796
+  }
+ ],
+ "started_at": 1793785922.991105,
+ "seconds": 141.72
+}

@@ -1,0 +1,177 @@
+{
+ "id": "dunes__deepseek-deepseek-v4-flash__04",
+ "prompt_id": "dunes",
+ "subject": "sand dunes under a hot noon sky",
+ "prompt": "Paint sand dunes under a hot noon sky in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6713,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 6,
+     "dry_steps": 4100,
+     "coverage": 0.8006,
+     "mean_lightness": 74.68,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0047,
+      0.5297,
+      0.4656,
+      0.0001,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0018,
+      0.0047,
+      0.0108,
+      0.0215,
+      0.1503,
+      0.3387,
+      0.2751,
+      0.1966,
+      0.0003
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "no stroke lines found",
+     "0 strokes; need 6 to 200",
+     "no dry op; add at least one"
+    ],
+    "stats": {
+     "strokes": 0,
+     "dry_ops": 0,
+     "dry_steps": 0,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Darken the shadow areas of the dunes to create stronger contrast and define their form, making them stand out from the bright sky.  \n2. Use a warmer, more saturated yellow-orange for the sky near the top to suggest intense heat and a harsh noon sun.  \n3. Add subtle, lighter highlights along the crests of the dunes using a dry brush or by lifting pigment, to show where sunlight hits the sand."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 6,
+   "dry_steps": 4100,
+   "coverage": 0.8006,
+   "mean_lightness": 74.68,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0047,
+    0.5297,
+    0.4656,
+    0.0001,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0018,
+    0.0047,
+    0.0108,
+    0.0215,
+    0.1503,
+    0.3387,
+    0.2751,
+    0.1966,
+    0.0003
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 409,
+   "completion_tokens": 1202,
+   "latency_s": 6.927,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__deepseek-deepseek-v4-flash__04:r0",
+   "finish_reason": "stop",
+   "at": 1793796263.8987432
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1722,
+   "completion_tokens": 2943,
+   "latency_s": 19.543,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__deepseek-deepseek-v4-flash__04:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793796283.4473581
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 90,
+   "latency_s": 2.597,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__deepseek-deepseek-v4-flash__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793796304.2229855
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2416,
+   "completion_tokens": 991,
+   "latency_s": 6.824,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__deepseek-deepseek-v4-flash__04:r1",
+   "finish_reason": "stop",
+   "at": 1793796311.0512679
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 3524,
+   "completion_tokens": 4096,
+   "latency_s": 36.001,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__deepseek-deepseek-v4-flash__04:r1:retry",
+   "finish_reason": "length",
+   "at": 1793796357.7703907
+  }
+ ],
+ "started_at": 1793796256.9717321,
+ "seconds": 100.99
+}

@@ -1,0 +1,199 @@
+{
+ "id": "snow__qwen-qwen3-coder-next__01",
+ "prompt_id": "snow",
+ "subject": "a snowy lane with a grey fence",
+ "prompt": "Paint a snowy lane with a grey fence in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2466,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 40,
+     "dry_ops": 12,
+     "dry_steps": 15100,
+     "normalised": {
+      "width_clamped": 2
+     },
+     "coverage": 0.8912,
+     "mean_lightness": 83.19,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0333,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.001,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0005,
+      0.0021,
+      0.0037,
+      0.0079,
+      0.0182,
+      0.0792,
+      0.1943,
+      0.6076,
+      0.0864
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 40,
+     "dry_ops": 12,
+     "dry_steps": 14700,
+     "normalised": {
+      "width_clamped": 2
+     },
+     "coverage": 0.9353,
+     "mean_lightness": 85.39,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0018,
+      0.0445,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0001,
+      0.0012,
+      0.0049,
+      0.0136,
+      0.033,
+      0.1425,
+      0.5364,
+      0.2684
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the grey fence so it sits closer to the bottom third of the painting, making it feel more grounded and natural in the snowy lane scene.  \n2. Darken the fence\u2019s value slightly and use a cooler grey to make it stand out from the snow without overpowering it.  \n3. Use more controlled water to keep the snow areas lighter and more uniform, avoiding heavy washes that muddy the ground and reduce the sense of depth."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 40,
+   "dry_ops": 12,
+   "dry_steps": 14700,
+   "normalised": {
+    "width_clamped": 2
+   },
+   "coverage": 0.9353,
+   "mean_lightness": 85.39,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0018,
+    0.0445,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0001,
+    0.0012,
+    0.0049,
+    0.0136,
+    0.033,
+    0.1425,
+    0.5364,
+    0.2684
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 433,
+   "completion_tokens": 2982,
+   "latency_s": 34.461,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__01:r0",
+   "finish_reason": "stop",
+   "at": 1793797952.826685
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 3546,
+   "completion_tokens": 2975,
+   "latency_s": 31.945,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__01:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793797984.7721193
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 92,
+   "latency_s": 3.728,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793797991.9925096
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 6645,
+   "completion_tokens": 3462,
+   "latency_s": 38.718,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__01:r1",
+   "finish_reason": "stop",
+   "at": 1793798030.7119129
+  }
+ ],
+ "started_at": 1793797918.3652294,
+ "seconds": 115.25
+}

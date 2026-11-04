@@ -1,0 +1,32 @@
+{"op": "canvas", "width": 256, "height": 192, "seed": 6842, "paper": "cold_press"}
+{"op": "stroke", "path": [[70.0, 80.0], [64.0, 108.0], [72.0, 140.0]], "width": 20.0, "water": 0.8, "pigments": {"cerulean_blue": 0.18}}
+{"op": "stroke", "path": [[186.0, 80.0], [192.0, 108.0], [184.0, 140.0]], "width": 20.0, "water": 0.8, "pigments": {"cerulean_blue": 0.18}}
+{"op": "stroke", "path": [[80.0, 62.0], [128.0, 54.0], [176.0, 62.0]], "width": 14.0, "water": 0.8, "pigments": {"cerulean_blue": 0.15}}
+{"op": "stroke", "path": [[86.0, 150.0], [128.0, 162.0], [170.0, 150.0]], "width": 22.0, "water": 0.8, "pigments": {"cerulean_blue": 0.15}}
+{"op": "dry", "steps": 1600}
+{"op": "stroke", "path": [[92.0, 100.0], [128.0, 96.0], [164.0, 100.0]], "width": 30.0, "water": 0.9, "pigments": {"cerulean_blue": 0.05}}
+{"op": "stroke", "path": [[96.0, 132.0], [128.0, 128.0], [160.0, 132.0]], "width": 30.0, "water": 0.9, "pigments": {"cerulean_blue": 0.06}}
+{"op": "dry", "steps": 1200}
+{"op": "stroke", "path": [[104.0, 96.0], [118.0, 92.0], [132.0, 96.0], [138.0, 104.0]], "width": 24.0, "water": 0.5, "pigments": {"cadmium_yellow": 0.55, "quinacridone_rose": 0.35}}
+{"op": "stroke", "path": [[110.0, 94.0], [120.0, 92.0], [130.0, 96.0]], "width": 18.0, "water": 0.45, "pigments": {"quinacridone_rose": 0.5, "indian_red": 0.25}}
+{"op": "stroke", "path": [[108.0, 106.0], [120.0, 108.0], [130.0, 106.0]], "width": 8.0, "water": 0.7, "pigments": {"cadmium_yellow": 0.2}}
+{"op": "stroke", "path": [[138.0, 100.0], [150.0, 94.0], [154.0, 102.0], [148.0, 112.0], [138.0, 108.0]], "width": 12.0, "water": 0.55, "pigments": {"quinacridone_rose": 0.45, "cadmium_yellow": 0.3}}
+{"op": "stroke", "path": [[112.0, 88.0], [122.0, 84.0], [130.0, 88.0]], "width": 8.0, "water": 0.55, "pigments": {"quinacridone_rose": 0.35, "cadmium_yellow": 0.25}}
+{"op": "dry", "steps": 900}
+{"op": "stroke", "path": [[128.0, 124.0], [142.0, 120.0], [156.0, 124.0], [162.0, 132.0]], "width": 24.0, "water": 0.5, "pigments": {"cadmium_yellow": 0.55, "quinacridone_rose": 0.35}}
+{"op": "stroke", "path": [[134.0, 122.0], [144.0, 120.0], [154.0, 124.0]], "width": 18.0, "water": 0.45, "pigments": {"quinacridone_rose": 0.5, "indian_red": 0.25}}
+{"op": "stroke", "path": [[128.0, 128.0], [116.0, 122.0], [112.0, 130.0], [118.0, 140.0], [128.0, 136.0]], "width": 12.0, "water": 0.55, "pigments": {"quinacridone_rose": 0.45, "cadmium_yellow": 0.3}}
+{"op": "stroke", "path": [[136.0, 116.0], [146.0, 112.0], [154.0, 116.0]], "width": 8.0, "water": 0.55, "pigments": {"quinacridone_rose": 0.35, "cadmium_yellow": 0.25}}
+{"op": "dry", "steps": 900}
+{"op": "stroke", "path": [[127.0, 97.0], [128.0, 97.0]], "width": 4.0, "water": 0.15, "pigments": {"paynes_grey": 0.7}}
+{"op": "stroke", "path": [[152.0, 125.0], [153.0, 125.0]], "width": 4.0, "water": 0.15, "pigments": {"paynes_grey": 0.7}}
+{"op": "stroke", "path": [[141.0, 97.0], [149.0, 101.0]], "width": 3.0, "water": 0.4, "pigments": {"quinacridone_rose": 0.4}}
+{"op": "stroke", "path": [[119.0, 125.0], [111.0, 129.0]], "width": 3.0, "water": 0.4, "pigments": {"quinacridone_rose": 0.4}}
+{"op": "stroke", "path": [[136.0, 120.0], [130.0, 114.0]], "width": 3.0, "water": 0.4, "pigments": {"quinacridone_rose": 0.35}}
+{"op": "stroke", "path": [[76.0, 58.0], [128.0, 50.0], [180.0, 58.0]], "width": 6.0, "water": 0.4, "pigments": {"cerulean_blue": 0.3}}
+{"op": "stroke", "path": [[68.0, 74.0], [62.0, 110.0], [72.0, 150.0]], "width": 6.0, "water": 0.4, "pigments": {"cerulean_blue": 0.25}}
+{"op": "stroke", "path": [[188.0, 74.0], [194.0, 110.0], [184.0, 150.0]], "width": 6.0, "water": 0.4, "pigments": {"cerulean_blue": 0.25}}
+{"op": "stroke", "path": [[100.0, 176.0], [128.0, 180.0], [156.0, 176.0]], "width": 8.0, "water": 0.4, "pigments": {"paynes_grey": 0.2}}
+{"op": "dry", "steps": 800}
+{"op": "stroke", "path": [[92.0, 186.0], [128.0, 190.0], [164.0, 186.0]], "width": 10.0, "water": 0.8, "pigments": {"cerulean_blue": 0.12, "paynes_grey": 0.08}}
+{"op": "stroke", "path": [[108.0, 189.0], [140.0, 190.0]], "width": 6.0, "water": 0.8, "pigments": {"paynes_grey": 0.1}}

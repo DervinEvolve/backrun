@@ -1,0 +1,192 @@
+{
+ "id": "snow__qwen-qwen3-coder-next__02",
+ "prompt_id": "snow",
+ "subject": "a snowy lane with a grey fence",
+ "prompt": "Paint a snowy lane with a grey fence in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2466,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 39,
+     "dry_ops": 3,
+     "dry_steps": 3800,
+     "coverage": 0.9353,
+     "mean_lightness": 84.51,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0235,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0003,
+      0.001,
+      0.0017,
+      0.006,
+      0.009,
+      0.0213,
+      0.0346,
+      0.1306,
+      0.7009,
+      0.0946
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "paint covers 99% of the paper; leave some paper showing"
+    ],
+    "stats": {
+     "strokes": 44,
+     "dry_ops": 4,
+     "dry_steps": 4800,
+     "coverage": 0.9921,
+     "mean_lightness": 83.03,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0035,
+      0.0193,
+      0.0067,
+      0.003
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0014,
+      0.0034,
+      0.0051,
+      0.005,
+      0.0151,
+      0.0798,
+      0.1842,
+      0.501,
+      0.205
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the fence line slightly so it sits more naturally in the middle of the lane, not too high or too low, to better suggest depth and placement in the scene.  \n2. Use darker, more saturated grey values for the fence to make it stand out from the snow, avoiding flat, light tones that blend in.  \n3. Add subtle water washes to the snow to create soft edges and texture, avoiding hard lines and ensuring the snow looks wet and layered."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 39,
+   "dry_ops": 3,
+   "dry_steps": 3800,
+   "coverage": 0.9353,
+   "mean_lightness": 84.51,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0235,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0003,
+    0.001,
+    0.0017,
+    0.006,
+    0.009,
+    0.0213,
+    0.0346,
+    0.1306,
+    0.7009,
+    0.0946
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 433,
+   "completion_tokens": 2619,
+   "latency_s": 28.102,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__02:r0",
+   "finish_reason": "stop",
+   "at": 1793797983.5271635
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 98,
+   "latency_s": 3.339,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793797988.5136085
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 3182,
+   "completion_tokens": 3036,
+   "latency_s": 33.677,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__02:r1",
+   "finish_reason": "stop",
+   "at": 1793798022.1915967
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 6338,
+   "completion_tokens": 3036,
+   "latency_s": 34.96,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__qwen-qwen3-coder-next__02:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793798057.1521008
+  }
+ ],
+ "started_at": 1793797955.424989,
+ "seconds": 105.57
+}

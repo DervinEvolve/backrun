@@ -1,0 +1,184 @@
+{
+ "id": "iris__google-gemini-3.1-flash-lite__02",
+ "prompt_id": "iris",
+ "subject": "purple irises by a pond",
+ "prompt": "Paint purple irises by a pond in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7931,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.3751,
+     "mean_lightness": 83.55,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0001,
+      0.0003,
+      0.0002,
+      0.0006,
+      0.0022,
+      0.0004,
+      0.0,
+      0.0,
+      0.0001,
+      0.0002,
+      0.9666,
+      0.0268
+     ],
+     "lightness_hist": [
+      0.0011,
+      0.0341,
+      0.0314,
+      0.035,
+      0.0725,
+      0.144,
+      0.101,
+      0.5726,
+      0.0059,
+      0.0025
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 4,
+     "dry_steps": 4000,
+     "normalised": {
+      "width_clamped": 1
+     },
+     "coverage": 0.513,
+     "mean_lightness": 82.36,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0002,
+      0.016,
+      0.003,
+      0.0005,
+      0.0003,
+      0.1622,
+      0.0463,
+      0.2922,
+      0.0003
+     ],
+     "lightness_hist": [
+      0.0036,
+      0.0101,
+      0.05,
+      0.1526,
+      0.0587,
+      0.019,
+      0.0301,
+      0.0375,
+      0.6315,
+      0.0069
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the irises so their stems emerge from the lower third of the painting, with the blooms rising above the pond\u2019s edge to suggest natural growth.  \n2. Use darker, more saturated purple for the petals and lighter, muted tones for the background to create contrast and depth.  \n3. Add subtle reflections of the irises in the water below, using soft, blended strokes to show the pond\u2019s surface."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 4,
+   "dry_steps": 4000,
+   "normalised": {
+    "width_clamped": 1
+   },
+   "coverage": 0.513,
+   "mean_lightness": 82.36,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0002,
+    0.016,
+    0.003,
+    0.0005,
+    0.0003,
+    0.1622,
+    0.0463,
+    0.2922,
+    0.0003
+   ],
+   "lightness_hist": [
+    0.0036,
+    0.0101,
+    0.05,
+    0.1526,
+    0.0587,
+    0.019,
+    0.0301,
+    0.0375,
+    0.6315,
+    0.0069
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 884,
+   "latency_s": 2.713,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "iris__google-gemini-3.1-flash-lite__02:r0",
+   "finish_reason": "stop",
+   "at": 1793795902.0012598
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 86,
+   "latency_s": 3.275,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "iris__google-gemini-3.1-flash-lite__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793795907.0427954
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1432,
+   "completion_tokens": 848,
+   "latency_s": 2.462,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "iris__google-gemini-3.1-flash-lite__02:r1",
+   "finish_reason": "stop",
+   "at": 1793795909.509065
+  }
+ ],
+ "started_at": 1793795899.2880878,
+ "seconds": 28.47
+}

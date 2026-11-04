@@ -1,0 +1,187 @@
+{
+ "id": "dawn__deepseek-deepseek-v4-flash__00",
+ "prompt_id": "dawn",
+ "subject": "dawn over hills, pale pink and grey",
+ "prompt": "Paint dawn over hills, pale pink and grey in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 5168,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 4,
+     "dry_steps": 1800,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.8272,
+     "mean_lightness": 75.81,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.3908,
+      0.1799,
+      0.0045,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0037,
+      0.005,
+      0.0046
+     ],
+     "lightness_hist": [
+      0.0007,
+      0.0074,
+      0.0107,
+      0.0092,
+      0.0185,
+      0.1442,
+      0.1865,
+      0.3488,
+      0.2708,
+      0.0032
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 4,
+     "dry_steps": 1550,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.8753,
+     "mean_lightness": 72.24,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0979,
+      0.2742,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.009,
+      0.0017,
+      0.0215
+     ],
+     "lightness_hist": [
+      0.0024,
+      0.0146,
+      0.0133,
+      0.0123,
+      0.1166,
+      0.1608,
+      0.176,
+      0.1401,
+      0.3239,
+      0.0399
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the pale pink wash higher on the page to suggest the sun rising above the hills, leaving more space below for darker, cooler tones to represent the shadowed land.  \n2. Use lighter, more transparent values in the upper layers and darker, more saturated values in the lower layers to create contrast between the dawn sky and the hills.  \n3. Apply water more evenly in the sky area to avoid heavy pooling and allow the pink to blend softly into the grey, mimicking the natural diffusion of early light."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 4,
+   "dry_steps": 1550,
+   "normalised": {
+    "path_resampled": 1
+   },
+   "coverage": 0.8753,
+   "mean_lightness": 72.24,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0979,
+    0.2742,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.009,
+    0.0017,
+    0.0215
+   ],
+   "lightness_hist": [
+    0.0024,
+    0.0146,
+    0.0133,
+    0.0123,
+    0.1166,
+    0.1608,
+    0.176,
+    0.1401,
+    0.3239,
+    0.0399
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 823,
+   "latency_s": 6.239,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__deepseek-deepseek-v4-flash__00:r0",
+   "finish_reason": "stop",
+   "at": 1793801623.9074743
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 106,
+   "latency_s": 4.496,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__deepseek-deepseek-v4-flash__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793801668.7322137
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1365,
+   "completion_tokens": 887,
+   "latency_s": 5.652,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__deepseek-deepseek-v4-flash__00:r1",
+   "finish_reason": "stop",
+   "at": 1793801674.3864625
+  }
+ ],
+ "started_at": 1793801617.6680708,
+ "seconds": 98.28
+}

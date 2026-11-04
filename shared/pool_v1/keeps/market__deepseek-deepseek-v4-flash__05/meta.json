@@ -1,0 +1,178 @@
+{
+ "id": "market__deepseek-deepseek-v4-flash__05",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 5,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 27,
+     "dry_ops": 5,
+     "dry_steps": 2400,
+     "coverage": 0.7764,
+     "mean_lightness": 78.18,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.1435,
+      0.2583,
+      0.2987,
+      0.0293,
+      0.0345,
+      0.0003,
+      0.0001,
+      0.0001,
+      0.1547,
+      0.0072,
+      0.0001,
+      0.0004
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0009,
+      0.0057,
+      0.0153,
+      0.0279,
+      0.0491,
+      0.3427,
+      0.1406,
+      0.3978,
+      0.0202
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 31,
+     "dry_ops": 6,
+     "dry_steps": 3200,
+     "coverage": 0.7636,
+     "mean_lightness": 73.51,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.2637,
+      0.1288,
+      0.262,
+      0.0191,
+      0.0266,
+      0.0006,
+      0.0002,
+      0.0002,
+      0.1212,
+      0.0688,
+      0.0087,
+      0.0398
+     ],
+     "lightness_hist": [
+      0.0002,
+      0.0084,
+      0.0171,
+      0.0333,
+      0.0574,
+      0.259,
+      0.2151,
+      0.0636,
+      0.3433,
+      0.0026
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning so it clearly covers the stall structure, placing it just above the frame to show it\u2019s a shelter.  \n2. Darken the shadow under the awning and the stall legs using deeper, cooler values to create depth and ground the structure.  \n3. Use more controlled water to keep the striped pattern distinct\u2014let the colours separate with clean edges and avoid bleeding into the background."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 31,
+   "dry_ops": 6,
+   "dry_steps": 3200,
+   "coverage": 0.7636,
+   "mean_lightness": 73.51,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.2637,
+    0.1288,
+    0.262,
+    0.0191,
+    0.0266,
+    0.0006,
+    0.0002,
+    0.0002,
+    0.1212,
+    0.0688,
+    0.0087,
+    0.0398
+   ],
+   "lightness_hist": [
+    0.0002,
+    0.0084,
+    0.0171,
+    0.0333,
+    0.0574,
+    0.259,
+    0.2151,
+    0.0636,
+    0.3433,
+    0.0026
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 1778,
+   "latency_s": 23.571,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__05:r0",
+   "finish_reason": "stop",
+   "at": 1793800645.932556
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 84,
+   "latency_s": 16.902,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__05:critic1",
+   "finish_reason": "stop",
+   "at": 1793800669.7151737
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2300,
+   "completion_tokens": 2101,
+   "latency_s": 22.011,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__05:r1",
+   "finish_reason": "stop",
+   "at": 1793800691.726523
+  }
+ ],
+ "started_at": 1793800622.361478,
+ "seconds": 72.82
+}

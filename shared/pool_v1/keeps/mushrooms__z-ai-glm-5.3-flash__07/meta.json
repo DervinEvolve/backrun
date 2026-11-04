@@ -1,0 +1,191 @@
+{
+ "id": "mushrooms__z-ai-glm-5.3-flash__07",
+ "prompt_id": "mushrooms",
+ "subject": "brown mushrooms on a mossy log",
+ "prompt": "Paint brown mushrooms on a mossy log in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 7,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6432,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 37,
+     "dry_ops": 7,
+     "dry_steps": 9200,
+     "coverage": 0.7565,
+     "mean_lightness": 76.75,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.1563,
+      0.2632,
+      0.0446,
+      0.0142,
+      0.0,
+      0.0002,
+      0.0067,
+      0.0059,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0122,
+      0.031,
+      0.0476,
+      0.1014,
+      0.1436,
+      0.1167,
+      0.0293,
+      0.3502,
+      0.168
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 40,
+     "dry_ops": 7,
+     "dry_steps": 9200,
+     "coverage": 0.7341,
+     "mean_lightness": 80.43,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.1452,
+      0.2459,
+      0.0467,
+      0.0163,
+      0.0,
+      0.0001,
+      0.0068,
+      0.0048,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0088,
+      0.026,
+      0.0443,
+      0.0815,
+      0.08,
+      0.0621,
+      0.1267,
+      0.3222,
+      0.2485
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the mushrooms more clearly on the log, ensuring they sit on top and are not partially submerged in the log\u2019s texture, so they read as distinct objects growing from it.  \n2. Use darker, more saturated brown values for the mushroom caps and lighter, more transparent washes for the log to create contrast and make the mushrooms stand out.  \n3. Apply more controlled water to keep the moss areas green and fresh, avoiding muddy blending that obscures the texture and makes the scene look flat."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 40,
+   "dry_ops": 7,
+   "dry_steps": 9200,
+   "coverage": 0.7341,
+   "mean_lightness": 80.43,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.1452,
+    0.2459,
+    0.0467,
+    0.0163,
+    0.0,
+    0.0001,
+    0.0068,
+    0.0048,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0088,
+    0.026,
+    0.0443,
+    0.0815,
+    0.08,
+    0.0621,
+    0.1267,
+    0.3222,
+    0.2485
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 434,
+   "completion_tokens": 2647,
+   "latency_s": 31.57,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__z-ai-glm-5.3-flash__07:r0",
+   "finish_reason": "stop",
+   "at": 1793803354.8157806
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 103,
+   "latency_s": 3.154,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__z-ai-glm-5.3-flash__07:critic1",
+   "finish_reason": "stop",
+   "at": 1793803394.6193392
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3003,
+   "completion_tokens": 4096,
+   "latency_s": 69.31,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__z-ai-glm-5.3-flash__07:r1",
+   "finish_reason": "length",
+   "at": 1793803463.931316
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3089,
+   "completion_tokens": 2754,
+   "latency_s": 28.16,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__z-ai-glm-5.3-flash__07:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793803492.0918882
+  }
+ ],
+ "started_at": 1793803323.2451966,
+ "seconds": 171.15
+}

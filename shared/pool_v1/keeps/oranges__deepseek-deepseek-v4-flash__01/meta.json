@@ -1,0 +1,187 @@
+{
+ "id": "oranges__deepseek-deepseek-v4-flash__01",
+ "prompt_id": "oranges",
+ "subject": "oranges in a paper bag",
+ "prompt": "Paint oranges in a paper bag in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7838,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 27,
+     "dry_ops": 5,
+     "dry_steps": 5600,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.4561,
+     "mean_lightness": 86.23,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.004,
+      0.6996,
+      0.2942,
+      0.0022,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0003,
+      0.0023,
+      0.0098,
+      0.03,
+      0.0757,
+      0.144,
+      0.2797,
+      0.4567,
+      0.0015
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 27,
+     "dry_ops": 5,
+     "dry_steps": 5600,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.4884,
+     "mean_lightness": 85.2,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0117,
+      0.6905,
+      0.2965,
+      0.0014,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.001,
+      0.005,
+      0.0378,
+      0.0937,
+      0.2451,
+      0.1581,
+      0.457,
+      0.0022
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the oranges more centrally within the bag, slightly overlapping the top edge to suggest they are spilling out, making the subject clearer.  \n2. Use darker, more saturated yellow and orange values for the fruit to contrast with the lighter bag, enhancing their form and presence.  \n3. Apply more controlled water to blend the bag\u2019s edges smoothly, reducing the muddy texture and creating a defined, paper-like boundary around the oranges."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 27,
+   "dry_ops": 5,
+   "dry_steps": 5600,
+   "normalised": {
+    "path_resampled": 1
+   },
+   "coverage": 0.4884,
+   "mean_lightness": 85.2,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0117,
+    0.6905,
+    0.2965,
+    0.0014,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0001,
+    0.001,
+    0.005,
+    0.0378,
+    0.0937,
+    0.2451,
+    0.1581,
+    0.457,
+    0.0022
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 408,
+   "completion_tokens": 1973,
+   "latency_s": 16.652,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "oranges__deepseek-deepseek-v4-flash__01:r0",
+   "finish_reason": "stop",
+   "at": 1793799149.7938244
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 141,
+   "completion_tokens": 89,
+   "latency_s": 2.259,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "oranges__deepseek-deepseek-v4-flash__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793799154.0709918
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2498,
+   "completion_tokens": 1984,
+   "latency_s": 18.201,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "oranges__deepseek-deepseek-v4-flash__01:r1",
+   "finish_reason": "stop",
+   "at": 1793799172.2721663
+  }
+ ],
+ "started_at": 1793799133.1412683,
+ "seconds": 48.32
+}

@@ -1,0 +1,190 @@
+{
+ "id": "teacup__z-ai-glm-5.3-flash__04",
+ "prompt_id": "teacup",
+ "subject": "a blue and white teacup on a saucer",
+ "prompt": "Paint a blue and white teacup on a saucer in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2376,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 31,
+     "dry_ops": 3,
+     "dry_steps": 4300,
+     "coverage": 0.7031,
+     "mean_lightness": 89.23,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0089,
+      0.0,
+      0.0,
+      0.3857,
+      0.0307,
+      0.002,
+      0.0098,
+      0.038,
+      0.0524,
+      0.0487,
+      0.0032,
+      0.0184
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0018,
+      0.0048,
+      0.0119,
+      0.0175,
+      0.0342,
+      0.0686,
+      0.3725,
+      0.4888
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 30,
+     "dry_ops": 3,
+     "dry_steps": 4400,
+     "coverage": 0.6133,
+     "mean_lightness": 89.24,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0042,
+      0.0029,
+      0.0813,
+      0.2867,
+      0.0473,
+      0.0031,
+      0.0033,
+      0.0615,
+      0.0686,
+      0.0804,
+      0.0089,
+      0.0154
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0009,
+      0.0041,
+      0.0092,
+      0.0138,
+      0.0202,
+      0.0558,
+      0.1032,
+      0.2,
+      0.5928
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the teacup and saucer more centrally in the frame, avoiding the edges, to clearly establish them as the main subject.  \n2. Use darker, more defined values for the cup\u2019s rim and handle to create contrast and make the form stand out from the background.  \n3. Apply more controlled water and pigment to keep the blue of the cup distinct and avoid it bleeding into the white areas, ensuring the white of the cup remains crisp."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 30,
+   "dry_ops": 3,
+   "dry_steps": 4400,
+   "coverage": 0.6133,
+   "mean_lightness": 89.24,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0042,
+    0.0029,
+    0.0813,
+    0.2867,
+    0.0473,
+    0.0031,
+    0.0033,
+    0.0615,
+    0.0686,
+    0.0804,
+    0.0089,
+    0.0154
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0009,
+    0.0041,
+    0.0092,
+    0.0138,
+    0.0202,
+    0.0558,
+    0.1032,
+    0.2,
+    0.5928
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 420,
+   "completion_tokens": 2668,
+   "latency_s": 19.675,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__04:r0",
+   "finish_reason": "stop",
+   "at": 1793798551.9111273
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2147,
+   "completion_tokens": 2209,
+   "latency_s": 8.878,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__04:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793798562.4772441
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 147,
+   "completion_tokens": 94,
+   "latency_s": 2.564,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793798574.8365812
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 4443,
+   "completion_tokens": 2309,
+   "latency_s": 7.818,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__04:r1",
+   "finish_reason": "stop",
+   "at": 1793798582.6577454
+  }
+ ],
+ "started_at": 1793798532.2361271,
+ "seconds": 70.36
+}

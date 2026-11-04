@@ -1,0 +1,164 @@
+{
+ "id": "hibiscus__moonshotai-kimi-k2.6__01",
+ "prompt_id": "hibiscus",
+ "subject": "a peach hibiscus flower, close up",
+ "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+ "model": "moonshotai/kimi-k2.6",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 445,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 52,
+     "dry_ops": 5,
+     "dry_steps": 7100,
+     "coverage": 0.1999,
+     "mean_lightness": 91.91,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.017,
+      0.1477,
+      0.7483,
+      0.0725,
+      0.0146,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0005,
+      0.0132,
+      0.0764,
+      0.1021,
+      0.2083,
+      0.5707,
+      0.0287
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "no stroke lines found",
+     "0 strokes; need 6 to 200",
+     "no dry op; add at least one"
+    ],
+    "stats": {
+     "strokes": 0,
+     "dry_ops": 0,
+     "dry_steps": 0,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Place the flower slightly off-center to create a more dynamic composition and avoid a static, centered look.  \n2. Use darker, more saturated values in the center and along the petal edges to define the flower\u2019s form and add depth.  \n3. Let the water flow more freely in the petals to blend the peach tones smoothly, avoiding harsh outlines and creating a natural, wet-on-wet effect."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 52,
+   "dry_ops": 5,
+   "dry_steps": 7100,
+   "coverage": 0.1999,
+   "mean_lightness": 91.91,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.017,
+    0.1477,
+    0.7483,
+    0.0725,
+    0.0146,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0005,
+    0.0132,
+    0.0764,
+    0.1021,
+    0.2083,
+    0.5707,
+    0.0287
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 415,
+   "completion_tokens": 3649,
+   "latency_s": 63.545,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__moonshotai-kimi-k2.6__01:r0",
+   "finish_reason": "stop",
+   "at": 1793795092.687615
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 84,
+   "latency_s": 3.215,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__moonshotai-kimi-k2.6__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793795097.272932
+  },
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 4180,
+   "completion_tokens": 4096,
+   "latency_s": 76.304,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__moonshotai-kimi-k2.6__01:r1",
+   "finish_reason": "length",
+   "at": 1793795173.577896
+  },
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 8313,
+   "completion_tokens": 4096,
+   "latency_s": 59.388,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__moonshotai-kimi-k2.6__01:r1:retry",
+   "finish_reason": "length",
+   "at": 1793795232.9673145
+  }
+ ],
+ "started_at": 1793795029.142164,
+ "seconds": 203.92
+}

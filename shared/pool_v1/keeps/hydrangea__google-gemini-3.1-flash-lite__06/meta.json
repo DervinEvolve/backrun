@@ -1,0 +1,178 @@
+{
+ "id": "hydrangea__google-gemini-3.1-flash-lite__06",
+ "prompt_id": "hydrangea",
+ "subject": "a blue hydrangea head",
+ "prompt": "Paint a blue hydrangea head in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 6,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 8210,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 15,
+     "dry_ops": 3,
+     "dry_steps": 3500,
+     "coverage": 0.2657,
+     "mean_lightness": 88.59,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.004,
+      0.0231,
+      0.0137,
+      0.0003,
+      0.0005,
+      0.5489,
+      0.3947,
+      0.0102,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0011,
+      0.0201,
+      0.0228,
+      0.0337,
+      0.1393,
+      0.0814,
+      0.5932,
+      0.1079,
+      0.0005
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 16,
+     "dry_ops": 3,
+     "dry_steps": 2500,
+     "coverage": 0.3767,
+     "mean_lightness": 85.71,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0091,
+      0.0378,
+      0.001,
+      0.0003,
+      0.0001,
+      0.6369,
+      0.2599,
+      0.0163,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0125,
+      0.0128,
+      0.05,
+      0.155,
+      0.0599,
+      0.0258,
+      0.1622,
+      0.5217,
+      0.0002
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the hydrangea cluster to the center of the composition to make it the clear focal point.  \n2. Use darker blue values for the individual florets to create contrast and define their shapes against the lighter background.  \n3. Let the water flow more freely in the wash to blend the blue tones smoothly, avoiding hard edges and flat patches."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 16,
+   "dry_ops": 3,
+   "dry_steps": 2500,
+   "coverage": 0.3767,
+   "mean_lightness": 85.71,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0091,
+    0.0378,
+    0.001,
+    0.0003,
+    0.0001,
+    0.6369,
+    0.2599,
+    0.0163,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0125,
+    0.0128,
+    0.05,
+    0.155,
+    0.0599,
+    0.0258,
+    0.1622,
+    0.5217,
+    0.0002
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 431,
+   "completion_tokens": 1030,
+   "latency_s": 3.146,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__06:r0",
+   "finish_reason": "stop",
+   "at": 1793795786.7025838
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 73,
+   "latency_s": 4.817,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__06:critic1",
+   "finish_reason": "stop",
+   "at": 1793795792.7433007
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1559,
+   "completion_tokens": 1118,
+   "latency_s": 3.399,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__06:r1",
+   "finish_reason": "stop",
+   "at": 1793795796.1430657
+  }
+ ],
+ "started_at": 1793795783.5569859,
+ "seconds": 21.25
+}

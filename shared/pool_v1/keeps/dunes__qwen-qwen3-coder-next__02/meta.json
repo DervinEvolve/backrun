@@ -1,0 +1,186 @@
+{
+ "id": "dunes__qwen-qwen3-coder-next__02",
+ "prompt_id": "dunes",
+ "subject": "sand dunes under a hot noon sky",
+ "prompt": "Paint sand dunes under a hot noon sky in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6713,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 16,
+     "dry_ops": 7,
+     "dry_steps": 8900,
+     "coverage": 0.8966,
+     "mean_lightness": 80.66,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0001,
+      0.2429,
+      0.7569,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0021,
+      0.0022,
+      0.0077,
+      0.0331,
+      0.0923,
+      0.248,
+      0.6085,
+      0.0061
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 19,
+     "dry_ops": 10,
+     "dry_steps": 12500,
+     "normalised": {
+      "width_clamped": 1,
+      "path_resampled": 1
+     },
+     "coverage": 0.9596,
+     "mean_lightness": 69.11,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0001,
+      0.0019,
+      0.1261,
+      0.745,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0007,
+      0.0031
+     ],
+     "lightness_hist": [
+      0.0004,
+      0.0112,
+      0.0182,
+      0.0451,
+      0.0942,
+      0.1532,
+      0.1041,
+      0.2745,
+      0.2959,
+      0.0032
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Shift the darkest values (deep browns and muted greens) to the lower half of the painting to suggest shadows in the dune hollows, reinforcing the hot noon light coming from above.  \n2. Use lighter, more transparent washes in the upper half and along the crests to simulate the bright, sun-bleached sand under a harsh sky.  \n3. Apply water more evenly to blend the layers, reducing hard edges and creating smoother transitions between dunes to mimic the soft, shifting forms of sand."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 19,
+   "dry_ops": 10,
+   "dry_steps": 12500,
+   "normalised": {
+    "width_clamped": 1,
+    "path_resampled": 1
+   },
+   "coverage": 0.9596,
+   "mean_lightness": 69.11,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0001,
+    0.0019,
+    0.1261,
+    0.745,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0007,
+    0.0031
+   ],
+   "lightness_hist": [
+    0.0004,
+    0.0112,
+    0.0182,
+    0.0451,
+    0.0942,
+    0.1532,
+    0.1041,
+    0.2745,
+    0.2959,
+    0.0032
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1500,
+   "latency_s": 19.132,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__02:r0",
+   "finish_reason": "stop",
+   "at": 1793796325.3794518
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 107,
+   "latency_s": 4.73,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793796332.52263
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2073,
+   "completion_tokens": 2039,
+   "latency_s": 23.492,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__02:r1",
+   "finish_reason": "stop",
+   "at": 1793796356.0151832
+  }
+ ],
+ "started_at": 1793796306.2474816,
+ "seconds": 90.52
+}

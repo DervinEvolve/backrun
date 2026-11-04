@@ -1,0 +1,178 @@
+{
+ "id": "market__deepseek-deepseek-v4-flash__06",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 6,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 32,
+     "dry_ops": 9,
+     "dry_steps": 5600,
+     "coverage": 0.6952,
+     "mean_lightness": 79.06,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0812,
+      0.1768,
+      0.316,
+      0.358,
+      0.0545,
+      0.0053,
+      0.0004,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0031
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0038,
+      0.013,
+      0.0191,
+      0.058,
+      0.0793,
+      0.2145,
+      0.2652,
+      0.3433,
+      0.0037
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 33,
+     "dry_ops": 10,
+     "dry_steps": 6100,
+     "coverage": 0.676,
+     "mean_lightness": 76.6,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0791,
+      0.1643,
+      0.1925,
+      0.4365,
+      0.0806,
+      0.0019,
+      0.0001,
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0038
+     ],
+     "lightness_hist": [
+      0.0003,
+      0.0058,
+      0.0249,
+      0.0223,
+      0.0557,
+      0.1265,
+      0.331,
+      0.1903,
+      0.2423,
+      0.0008
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning\u2019s placement slightly to sit more naturally above the stall structure, making it clearly a covering rather than floating above.  \n2. Darken the shadow under the awning and along the stall\u2019s base to create stronger contrast and define the space beneath.  \n3. Use more saturated, varied greens and yellows for the produce, and let the water flow more clearly to show wetness and texture."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 33,
+   "dry_ops": 10,
+   "dry_steps": 6100,
+   "coverage": 0.676,
+   "mean_lightness": 76.6,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0791,
+    0.1643,
+    0.1925,
+    0.4365,
+    0.0806,
+    0.0019,
+    0.0001,
+    0.0,
+    0.0,
+    0.0,
+    0.0001,
+    0.0038
+   ],
+   "lightness_hist": [
+    0.0003,
+    0.0058,
+    0.0249,
+    0.0223,
+    0.0557,
+    0.1265,
+    0.331,
+    0.1903,
+    0.2423,
+    0.0008
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 2118,
+   "latency_s": 21.72,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__06:r0",
+   "finish_reason": "stop",
+   "at": 1793800644.4105642
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 86,
+   "latency_s": 3.931,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__06:critic1",
+   "finish_reason": "stop",
+   "at": 1793800656.1401663
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2643,
+   "completion_tokens": 2230,
+   "latency_s": 19.564,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__06:r1",
+   "finish_reason": "stop",
+   "at": 1793800675.7044306
+  }
+ ],
+ "started_at": 1793800622.6908672,
+ "seconds": 67.82
+}

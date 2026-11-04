@@ -1,0 +1,162 @@
+{
+ "id": "market__z-ai-glm-5.3-flash__03",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 34,
+     "dry_ops": 6,
+     "dry_steps": 5400,
+     "coverage": 0.9241,
+     "mean_lightness": 83.26,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.117,
+      0.0183,
+      0.1927,
+      0.2766,
+      0.0035,
+      0.0,
+      0.0003,
+      0.0103,
+      0.0029,
+      0.0086,
+      0.006,
+      0.0123
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0021,
+      0.0095,
+      0.0167,
+      0.031,
+      0.0644,
+      0.2597,
+      0.2203,
+      0.3962
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "line 20: not valid JSON"
+    ],
+    "stats": {
+     "strokes": 15,
+     "dry_ops": 4,
+     "dry_steps": 3400,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Lower the awning\u2019s position so it clearly covers the stall\u2019s front edge, making the structure feel grounded and functional.  \n2. Darken the red stripes and add a shadow beneath the awning to create contrast and depth, making the awning pop from the background.  \n3. Use more saturated, varied colours for the goods on the stall (e.g., bright yellow, deep green, rich red) and let the water flow to blend them slightly, making them look like distinct, fresh items."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 34,
+   "dry_ops": 6,
+   "dry_steps": 5400,
+   "coverage": 0.9241,
+   "mean_lightness": 83.26,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.117,
+    0.0183,
+    0.1927,
+    0.2766,
+    0.0035,
+    0.0,
+    0.0003,
+    0.0103,
+    0.0029,
+    0.0086,
+    0.006,
+    0.0123
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0001,
+    0.0021,
+    0.0095,
+    0.0167,
+    0.031,
+    0.0644,
+    0.2597,
+    0.2203,
+    0.3962
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 416,
+   "completion_tokens": 4040,
+   "latency_s": 17.976,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__z-ai-glm-5.3-flash__03:r0",
+   "finish_reason": "stop",
+   "at": 1793800716.127507
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 105,
+   "latency_s": 5.945,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__z-ai-glm-5.3-flash__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793800724.7428792
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2694,
+   "completion_tokens": 4096,
+   "latency_s": 21.732,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__z-ai-glm-5.3-flash__03:r1",
+   "finish_reason": "length",
+   "at": 1793800746.4756901
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2745,
+   "completion_tokens": 4096,
+   "latency_s": 21.525,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__z-ai-glm-5.3-flash__03:r1:retry",
+   "finish_reason": "length",
+   "at": 1793800768.0010774
+  }
+ ],
+ "started_at": 1793800698.1512728,
+ "seconds": 69.94
+}

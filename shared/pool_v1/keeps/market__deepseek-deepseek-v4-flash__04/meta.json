@@ -1,0 +1,178 @@
+{
+ "id": "market__deepseek-deepseek-v4-flash__04",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 34,
+     "dry_ops": 7,
+     "dry_steps": 1750,
+     "coverage": 0.8132,
+     "mean_lightness": 80.17,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0811,
+      0.0393,
+      0.1088,
+      0.1008,
+      0.2154,
+      0.0005,
+      0.0005,
+      0.0001,
+      0.0002,
+      0.0467,
+      0.0906,
+      0.104
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0025,
+      0.0089,
+      0.0135,
+      0.0214,
+      0.0998,
+      0.1291,
+      0.1084,
+      0.6094,
+      0.0071
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 34,
+     "dry_ops": 7,
+     "dry_steps": 1750,
+     "coverage": 0.7792,
+     "mean_lightness": 76.81,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0554,
+      0.0243,
+      0.0756,
+      0.0668,
+      0.1649,
+      0.0005,
+      0.0004,
+      0.0005,
+      0.0002,
+      0.0418,
+      0.1967,
+      0.1179
+     ],
+     "lightness_hist": [
+      0.0009,
+      0.0117,
+      0.0126,
+      0.0414,
+      0.1585,
+      0.0575,
+      0.0437,
+      0.0557,
+      0.6157,
+      0.0024
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning so it clearly covers the stall, placing it just above the goods to establish a realistic shelter.  \n2. Darken the awning\u2019s stripes with deeper purples and blues to create contrast and define the pattern.  \n3. Use more saturated, varied colours for the goods and reduce the water wash on the stall base to make objects stand out."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 34,
+   "dry_ops": 7,
+   "dry_steps": 1750,
+   "coverage": 0.7792,
+   "mean_lightness": 76.81,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0554,
+    0.0243,
+    0.0756,
+    0.0668,
+    0.1649,
+    0.0005,
+    0.0004,
+    0.0005,
+    0.0002,
+    0.0418,
+    0.1967,
+    0.1179
+   ],
+   "lightness_hist": [
+    0.0009,
+    0.0117,
+    0.0126,
+    0.0414,
+    0.1585,
+    0.0575,
+    0.0437,
+    0.0557,
+    0.6157,
+    0.0024
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 2134,
+   "latency_s": 13.588,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__04:r0",
+   "finish_reason": "stop",
+   "at": 1793800626.1590555
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 78,
+   "latency_s": 2.44,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793800632.3393328
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2649,
+   "completion_tokens": 2196,
+   "latency_s": 21.174,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__04:r1",
+   "finish_reason": "stop",
+   "at": 1793800653.5143733
+  }
+ ],
+ "started_at": 1793800612.5708451,
+ "seconds": 43.4
+}

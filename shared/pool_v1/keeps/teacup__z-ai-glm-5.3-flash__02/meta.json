@@ -1,0 +1,205 @@
+{
+ "id": "teacup__z-ai-glm-5.3-flash__02",
+ "prompt_id": "teacup",
+ "subject": "a blue and white teacup on a saucer",
+ "prompt": "Paint a blue and white teacup on a saucer in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2376,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 23,
+     "dry_ops": 3,
+     "dry_steps": 4800,
+     "coverage": 0.4128,
+     "mean_lightness": 92.8,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0061,
+      0.0806,
+      0.0063,
+      0.0683,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0005,
+      0.0026,
+      0.0127,
+      0.0246,
+      0.048,
+      0.1428,
+      0.7689
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "only one flat colour; use at least two hues or two clearly different values"
+    ],
+    "stats": {
+     "strokes": 22,
+     "dry_ops": 3,
+     "dry_steps": 4800,
+     "coverage": 0.3212,
+     "mean_lightness": 92.91,
+     "two_hues": false,
+     "two_levels": false,
+     "hue_hist": [
+      0.0038,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0005,
+      0.0161,
+      0.0013,
+      0.0447,
+      0.0098,
+      0.0056
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0011,
+      0.0059,
+      0.0101,
+      0.0154,
+      0.0225,
+      0.0361,
+      0.2503,
+      0.6585
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the teacup and saucer slightly off-center, closer to the middle of the frame, to avoid the top and bottom edges feeling too crowded and to create a more balanced composition.  \n2. Use darker, more saturated blue for the cup\u2019s outline and handle, and add a subtle shadow beneath the saucer to ground it and improve contrast with the background.  \n3. Reduce the amount of water used in the background wash to create a more uniform, lighter tone, and let the cup and saucer stand out with clearer edges and less bleeding."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 23,
+   "dry_ops": 3,
+   "dry_steps": 4800,
+   "coverage": 0.4128,
+   "mean_lightness": 92.8,
+   "two_hues": true,
+   "two_levels": false,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0061,
+    0.0806,
+    0.0063,
+    0.0683,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0005,
+    0.0026,
+    0.0127,
+    0.0246,
+    0.048,
+    0.1428,
+    0.7689
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 420,
+   "completion_tokens": 4096,
+   "latency_s": 34.177,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__02:r0",
+   "finish_reason": "length",
+   "at": 1793798536.5283065
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 1610,
+   "completion_tokens": 1471,
+   "latency_s": 6.348,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__02:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793798542.8796184
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 147,
+   "completion_tokens": 115,
+   "latency_s": 4.581,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793798549.8620899
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3191,
+   "completion_tokens": 1911,
+   "latency_s": 13.343,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__02:r1",
+   "finish_reason": "stop",
+   "at": 1793798563.2054029
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 4616,
+   "completion_tokens": 1571,
+   "latency_s": 7.99,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__02:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793798574.6532764
+  }
+ ],
+ "started_at": 1793798502.3507774,
+ "seconds": 79.9
+}

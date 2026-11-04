@@ -1,0 +1,18 @@
+{"op": "canvas", "width": 256, "height": 192, "seed": 6727, "paper": "cold_press"}
+{"op": "stroke", "path": [[20.0, 0.0], [60.0, 5.0], [100.0, 0.0], [140.0, 10.0], [180.0, 5.0], [220.0, 15.0], [256.0, 10.0]], "width": 40.0, "water": 0.85, "pigments": {"cerulean_blue": 0.08}}
+{"op": "dry", "steps": 150}
+{"op": "stroke", "path": [[30.0, 15.0], [80.0, 35.0], [130.0, 40.0], [190.0, 30.0], [240.0, 45.0]], "width": 50.0, "water": 0.7, "pigments": {"paynes_grey": 0.55, "french_ultramarine": 0.35}}
+{"op": "stroke", "path": [[50.0, 30.0], [110.0, 55.0], [170.0, 60.0], [220.0, 50.0], [256.0, 65.0]], "width": 45.0, "water": 0.6, "pigments": {"paynes_grey": 0.75, "french_ultramarine": 0.2}}
+{"op": "dry", "steps": 200}
+{"op": "stroke", "path": [[10.0, 50.0], [80.0, 75.0], [150.0, 80.0], [210.0, 70.0], [256.0, 85.0]], "width": 35.0, "water": 0.45, "pigments": {"paynes_grey": 0.85, "french_ultramarine": 0.15}}
+{"op": "stroke", "path": [[70.0, 40.0], [120.0, 60.0], [180.0, 65.0], [230.0, 55.0]], "width": 25.0, "water": 0.35, "pigments": {"paynes_grey": 0.9}}
+{"op": "dry", "steps": 250}
+{"op": "stroke", "path": [[0.0, 90.0], [50.0, 100.0], [110.0, 95.0], [170.0, 105.0], [220.0, 98.0], [256.0, 102.0]], "width": 45.0, "water": 0.7, "pigments": {"hookers_green": 0.18, "cadmium_yellow": 0.08}}
+{"op": "dry", "steps": 100}
+{"op": "stroke", "path": [[20.0, 115.0], [80.0, 120.0], [140.0, 112.0], [200.0, 125.0], [256.0, 118.0]], "width": 40.0, "water": 0.6, "pigments": {"hookers_green": 0.28, "cadmium_yellow": 0.12}}
+{"op": "dry", "steps": 150}
+{"op": "stroke", "path": [[0.0, 140.0], [60.0, 145.0], [120.0, 138.0], [180.0, 150.0], [240.0, 142.0]], "width": 35.0, "water": 0.55, "pigments": {"hookers_green": 0.35, "burnt_umber": 0.18}}
+{"op": "stroke", "path": [[30.0, 160.0], [100.0, 165.0], [160.0, 155.0], [220.0, 170.0], [256.0, 162.0]], "width": 30.0, "water": 0.45, "pigments": {"burnt_umber": 0.3, "hookers_green": 0.2}}
+{"op": "dry", "steps": 200}
+{"op": "stroke", "path": [[10.0, 180.0], [70.0, 186.0], [130.0, 178.0], [190.0, 190.0], [256.0, 184.0]], "width": 20.0, "water": 0.35, "pigments": {"burnt_umber": 0.5, "indian_red": 0.12}}
+{"op": "dry", "steps": 250}

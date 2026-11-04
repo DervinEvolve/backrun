@@ -1,0 +1,178 @@
+{
+ "id": "hydrangea__google-gemini-3.1-flash-lite__04",
+ "prompt_id": "hydrangea",
+ "subject": "a blue hydrangea head",
+ "prompt": "Paint a blue hydrangea head in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 8210,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.2244,
+     "mean_lightness": 88.29,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0003,
+      0.0295,
+      0.003,
+      0.0001,
+      0.0002,
+      0.3879,
+      0.5617,
+      0.016,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0091,
+      0.0292,
+      0.0346,
+      0.1252,
+      0.2097,
+      0.0742,
+      0.4286,
+      0.0891,
+      0.0004
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 4,
+     "dry_steps": 3500,
+     "coverage": 0.1021,
+     "mean_lightness": 91.54,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0006,
+      0.014,
+      0.0,
+      0.001,
+      0.0002,
+      0.1445,
+      0.7126,
+      0.0508,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0355,
+      0.0323,
+      0.0305,
+      0.1019,
+      0.458,
+      0.121,
+      0.0169,
+      0.2019,
+      0.002
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the hydrangea head more centrally in the frame, avoiding the top-right corner, to give it stronger visual focus.  \n2. Use darker blue values in the center of the flower and lighter blues at the edges to create depth and show the clustered petal structure.  \n3. Let the water flow more naturally by allowing the blue paint to bleed slightly at the edges, but keep the green stem sharp and distinct with less water to avoid bleeding into the flower."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 9,
+   "dry_ops": 4,
+   "dry_steps": 3500,
+   "coverage": 0.1021,
+   "mean_lightness": 91.54,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0006,
+    0.014,
+    0.0,
+    0.001,
+    0.0002,
+    0.1445,
+    0.7126,
+    0.0508,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0355,
+    0.0323,
+    0.0305,
+    0.1019,
+    0.458,
+    0.121,
+    0.0169,
+    0.2019,
+    0.002
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 431,
+   "completion_tokens": 926,
+   "latency_s": 2.617,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__04:r0",
+   "finish_reason": "stop",
+   "at": 1793795775.7920747
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 97,
+   "latency_s": 3.356,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793795779.9002082
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1479,
+   "completion_tokens": 729,
+   "latency_s": 2.967,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__04:r1",
+   "finish_reason": "stop",
+   "at": 1793795782.8674662
+  }
+ ],
+ "started_at": 1793795773.174865,
+ "seconds": 10.38
+}

@@ -1,0 +1,184 @@
+{
+ "id": "dunes__qwen-qwen3-coder-next__00",
+ "prompt_id": "dunes",
+ "subject": "sand dunes under a hot noon sky",
+ "prompt": "Paint sand dunes under a hot noon sky in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6713,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 17,
+     "dry_ops": 17,
+     "dry_steps": 12400,
+     "normalised": {
+      "width_clamped": 2
+     },
+     "coverage": 0.7481,
+     "mean_lightness": 67.94,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0035,
+      0.2155,
+      0.6437,
+      0.1372,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0055,
+      0.0153,
+      0.0644,
+      0.2169,
+      0.2756,
+      0.1819,
+      0.1037,
+      0.1351,
+      0.0017
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "31250 dry steps in total; at most 20000"
+    ],
+    "stats": {
+     "strokes": 26,
+     "dry_ops": 26,
+     "dry_steps": 31250,
+     "normalised": {
+      "width_clamped": 5
+     },
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Push the dark values in the foreground dunes lower, making them deeper and more saturated to create a stronger contrast with the bright sky and suggest shadowed areas under the dunes.  \n2. Use a lighter, more yellowish ochre for the top layer of the dunes and gradually shift to warmer browns and reds in the lower layers to show the sun\u2019s heat and depth.  \n3. Apply water more evenly to blend the layers smoothly, avoiding hard edges and allowing the colours to bleed softly into one another to mimic the haze of a hot, dry landscape."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 17,
+   "dry_ops": 17,
+   "dry_steps": 12400,
+   "normalised": {
+    "width_clamped": 2
+   },
+   "coverage": 0.7481,
+   "mean_lightness": 67.94,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0035,
+    0.2155,
+    0.6437,
+    0.1372,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0055,
+    0.0153,
+    0.0644,
+    0.2169,
+    0.2756,
+    0.1819,
+    0.1037,
+    0.1351,
+    0.0017
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1799,
+   "latency_s": 25.306,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__00:r0",
+   "finish_reason": "stop",
+   "at": 1793796317.9433265
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2276,
+   "completion_tokens": 1692,
+   "latency_s": 20.313,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__00:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793796338.2597334
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 119,
+   "latency_s": 3.804,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793796371.7917593
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 4119,
+   "completion_tokens": 2707,
+   "latency_s": 32.459,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__00:r1",
+   "finish_reason": "stop",
+   "at": 1793796404.2649472
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 6906,
+   "completion_tokens": 2848,
+   "latency_s": 33.847,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__qwen-qwen3-coder-next__00:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793796438.1145725
+  }
+ ],
+ "started_at": 1793796292.6376066,
+ "seconds": 145.62
+}

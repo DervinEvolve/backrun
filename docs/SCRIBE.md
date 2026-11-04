@@ -228,8 +228,9 @@ configuration: LoRA on all linear layers, bf16, gradient checkpointing,
 learning rate 5e-5 with a constant schedule after 5 warmup steps,
 `scale_rewards="none"`, 8 generations per prompt, top-p 0.95, top-k 20. Max
 completion length is 4,096 tokens because stroke files are short. The default
-base model is `Qwen/Qwen3.5-4B`; the id was checked on the Hub API, loading it
-was not.
+base model is `Qwen/Qwen3-4B-Instruct-2507`, text only and without a thinking
+step, so the reply budget goes on the file; `Qwen/Qwen3.5-4B` is tagged
+image-text-to-text and stays an untried option.
 
 The reward function returns None for an excluded rollout. TRL's current
 source marks a completion NaN when every reward function returns None, leaves
@@ -346,6 +347,60 @@ What I take from it:
   rather than quality. More of my own ratings, especially keeps, would
   sharpen all of this; the 813 reviewer ratings are not used as truth here.
 
+## The GPU route
+
+`scribe/modal_app.py` runs the scribe line on Modal, mirroring the painter's
+app. The container gets `backrun/`, `scribe/` and the reference pack
+`shared/pool_v1/keeps/`, which is the 269 love and okay paintings exported
+as a small pool of their own (`Pool.export`), so nothing has to be uploaded
+to a volume first. The OpenRouter key comes from a Modal secret. From the
+Mac:
+
+```bash
+modal secret create openrouter SCRIBE_API_KEY=... SCRIBE_API_BASE=https://openrouter.ai/api/v1
+```
+
+```bash
+modal run scribe/modal_app.py --stage sample
+```
+
+```bash
+modal run scribe/modal_app.py --stage train --run-name grpo_v1 --max-steps 30
+```
+
+```bash
+modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1
+```
+
+The judge defaults to Claude Opus 5.5 at low reasoning effort with a
+400-token budget, the setting the calibration found; `--judge-model`,
+`--judge-no-reasoning`, `--judge-reasoning-effort` and `--judge-max-tokens`
+change it. The base model defaults to `Qwen/Qwen3-4B-Instruct-2507`, a
+text-only model that does not think first.
+
+`sample` is the go or no-go that both reviewers asked for before any
+training. The base model writes eight stroke files for each of the 36
+prompts with vLLM, the gate and the judge score them the way the reward
+will, and the report in `/data/scribe/samples/base/report.md` says what
+share passed the gate, what share was cut off at the token limit, and how
+many of the 36 prompt groups have any reward spread. GRPO only learns from a
+group whose rollouts score differently, so a batch of flat groups means a
+short warm-up on the keeps comes first, and the report says so in one
+sentence.
+
+`train` runs the trainer with vLLM colocated on the same GPU, LoRA on all
+linear layers, four gradient accumulation steps so one optimizer step sees
+four prompts, and the reference pack as the pool. Output goes to
+`/checkpoints/scribe/<run>/`. `evaluate` merges the run's adapter into the
+base model, samples it exactly as `sample` did, and writes a report whose
+table has the base sample's numbers in the next column.
+
+Status: written and tested where a test is possible without a GPU (the
+batch writer, the scoring, the reports, the argument plumbing, and that the
+module imports without Modal). It has not been run on Modal; the image's
+version pins for vLLM and TRL are a first guess and the first run is a
+debugging run.
+
 ## Costs
 
 Round-number estimates, except the first pool and the judge calibration, which were billed.
@@ -373,9 +428,8 @@ artist are used, as references, as training data or as targets.
 - Generation, the critic and the judge have run against real models (pool
   v1 and the calibration above). The reward as a whole has run only with
   the scripted fake client.
-- The trainer has never run. The `hf jobs` and `modal run` commands in its
-  docstring are unverified, and the Modal wrapper app it mentions is not
-  written.
+- The trainer has never run. The Modal wrapper is written but has not been
+  run; its image pins are a first guess.
 - The aesthetic scorer's server is not part of this repo, and its score range
   has to be set from real scores before use.
 - The rating page has been used for one pool on a Mac and in a headless

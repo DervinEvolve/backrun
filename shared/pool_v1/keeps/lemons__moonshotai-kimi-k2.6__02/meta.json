@@ -1,0 +1,187 @@
+{
+ "id": "lemons__moonshotai-kimi-k2.6__02",
+ "prompt_id": "lemons",
+ "subject": "three lemons on a white plate",
+ "prompt": "Paint three lemons on a white plate in watercolour.",
+ "model": "moonshotai/kimi-k2.6",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7013,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 29,
+     "dry_ops": 9,
+     "dry_steps": 10600,
+     "normalised": {
+      "path_resampled": 6
+     },
+     "coverage": 0.4819,
+     "mean_lightness": 89.54,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0584,
+      0.8353,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0068,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0002,
+      0.0023,
+      0.0027,
+      0.0027,
+      0.0042,
+      0.0097,
+      0.0543,
+      0.1683,
+      0.5078,
+      0.248
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 29,
+     "dry_ops": 9,
+     "dry_steps": 12000,
+     "normalised": {
+      "path_resampled": 4
+     },
+     "coverage": 0.3143,
+     "mean_lightness": 90.95,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0741,
+      0.9136,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0003,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0001,
+      0.0001,
+      0.0032,
+      0.0264,
+      0.0552,
+      0.1874,
+      0.7027,
+      0.0249
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the lemons so they sit clearly on the plate, with the plate visible beneath them\u2014avoid overlapping the lemons too much with the plate\u2019s edge to show separation.  \n2. Use darker, more saturated yellow for the lemon rind and lighter, almost white highlights to create contrast and show their round shape.  \n3. Let the water flow more smoothly in the washes\u2014avoid pooling and uneven edges\u2014so the lemon shapes are clean and the plate\u2019s white background stays bright."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 29,
+   "dry_ops": 9,
+   "dry_steps": 12000,
+   "normalised": {
+    "path_resampled": 4
+   },
+   "coverage": 0.3143,
+   "mean_lightness": 90.95,
+   "two_hues": true,
+   "two_levels": false,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0741,
+    0.9136,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0003,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0001,
+    0.0001,
+    0.0032,
+    0.0264,
+    0.0552,
+    0.1874,
+    0.7027,
+    0.0249
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 413,
+   "completion_tokens": 2249,
+   "latency_s": 7.775,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lemons__moonshotai-kimi-k2.6__02:r0",
+   "finish_reason": "stop",
+   "at": 1793795177.952275
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 102,
+   "latency_s": 2.915,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lemons__moonshotai-kimi-k2.6__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793795186.4318936
+  },
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 2793,
+   "completion_tokens": 2098,
+   "latency_s": 4.465,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lemons__moonshotai-kimi-k2.6__02:r1",
+   "finish_reason": "stop",
+   "at": 1793795190.8978798
+  }
+ ],
+ "started_at": 1793795170.177395,
+ "seconds": 25.67
+}

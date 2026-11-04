@@ -1,0 +1,187 @@
+{
+ "id": "pears__deepseek-deepseek-v4-flash__02",
+ "prompt_id": "pears",
+ "subject": "two green pears on a wooden table",
+ "prompt": "Paint two green pears on a wooden table in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 4186,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 23,
+     "dry_ops": 6,
+     "dry_steps": 3500,
+     "normalised": {
+      "path_resampled": 2
+     },
+     "coverage": 0.4078,
+     "mean_lightness": 87.13,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0034,
+      0.5911,
+      0.2069,
+      0.1987,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0017,
+      0.0124,
+      0.0187,
+      0.0229,
+      0.0431,
+      0.1131,
+      0.3105,
+      0.4776,
+      0.0
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 27,
+     "dry_ops": 7,
+     "dry_steps": 4000,
+     "normalised": {
+      "path_resampled": 2
+     },
+     "coverage": 0.3938,
+     "mean_lightness": 86.41,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0049,
+      0.5674,
+      0.3122,
+      0.1156,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0046,
+      0.0199,
+      0.0283,
+      0.0395,
+      0.0573,
+      0.1364,
+      0.3269,
+      0.3871,
+      0.0
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the pears slightly apart and lower on the table to create more natural spacing and avoid crowding the center.  \n2. Darken the shadow under the pears and around their base to ground them on the table and add depth.  \n3. Use a more varied green\u2014darker in the shadows and lighter where light hits\u2014to show form and volume."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 27,
+   "dry_ops": 7,
+   "dry_steps": 4000,
+   "normalised": {
+    "path_resampled": 2
+   },
+   "coverage": 0.3938,
+   "mean_lightness": 86.41,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0049,
+    0.5674,
+    0.3122,
+    0.1156,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0046,
+    0.0199,
+    0.0283,
+    0.0395,
+    0.0573,
+    0.1364,
+    0.3269,
+    0.3871,
+    0.0
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 411,
+   "completion_tokens": 1730,
+   "latency_s": 14.12,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__deepseek-deepseek-v4-flash__02:r0",
+   "finish_reason": "stop",
+   "at": 1793795521.194994
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 76,
+   "latency_s": 3.659,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__deepseek-deepseek-v4-flash__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793795526.8391688
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2244,
+   "completion_tokens": 2035,
+   "latency_s": 23.356,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__deepseek-deepseek-v4-flash__02:r1",
+   "finish_reason": "stop",
+   "at": 1793795550.1959572
+  }
+ ],
+ "started_at": 1793795507.0753984,
+ "seconds": 49.09
+}

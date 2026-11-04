@@ -1,0 +1,178 @@
+{
+ "id": "bridge__google-gemini-3.1-flash-lite__07",
+ "prompt_id": "bridge",
+ "subject": "a stone bridge over a slow river",
+ "prompt": "Paint a stone bridge over a slow river in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 7,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 9435,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.4575,
+     "mean_lightness": 82.24,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0012,
+      0.0606,
+      0.4087,
+      0.0,
+      0.0354,
+      0.0011,
+      0.0004,
+      0.0,
+      0.0,
+      0.1118,
+      0.1039,
+      0.0011
+     ],
+     "lightness_hist": [
+      0.0013,
+      0.0107,
+      0.0128,
+      0.028,
+      0.0576,
+      0.1421,
+      0.2828,
+      0.3505,
+      0.1131,
+      0.001
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 3,
+     "dry_steps": 2500,
+     "coverage": 0.4052,
+     "mean_lightness": 85.7,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0061,
+      0.2974,
+      0.0308,
+      0.0274,
+      0.0,
+      0.0,
+      0.0081,
+      0.5756,
+      0.0243,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0005,
+      0.0058,
+      0.013,
+      0.0203,
+      0.0419,
+      0.0881,
+      0.2141,
+      0.1687,
+      0.4419,
+      0.0057
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the bridge slightly higher in the frame to avoid crowding the bottom edge and give the river more space to flow beneath it.  \n2. Use darker, more varied values in the bridge\u2019s shadowed underside and base to show depth and weight, making it feel solid.  \n3. Add subtle ripples and lighter reflections in the water to suggest slow movement, and use cooler, more transparent blues to distinguish the water from the land."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 12,
+   "dry_ops": 3,
+   "dry_steps": 2500,
+   "coverage": 0.4052,
+   "mean_lightness": 85.7,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0061,
+    0.2974,
+    0.0308,
+    0.0274,
+    0.0,
+    0.0,
+    0.0081,
+    0.5756,
+    0.0243,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0005,
+    0.0058,
+    0.013,
+    0.0203,
+    0.0419,
+    0.0881,
+    0.2141,
+    0.1687,
+    0.4419,
+    0.0057
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 739,
+   "latency_s": 2.696,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bridge__google-gemini-3.1-flash-lite__07:r0",
+   "finish_reason": "stop",
+   "at": 1793800993.635437
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 91,
+   "latency_s": 3.948,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bridge__google-gemini-3.1-flash-lite__07:critic1",
+   "finish_reason": "stop",
+   "at": 1793801005.8250887
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1289,
+   "completion_tokens": 855,
+   "latency_s": 3.525,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bridge__google-gemini-3.1-flash-lite__07:r1",
+   "finish_reason": "stop",
+   "at": 1793801009.3509371
+  }
+ ],
+ "started_at": 1793800990.9389198,
+ "seconds": 25.09
+}

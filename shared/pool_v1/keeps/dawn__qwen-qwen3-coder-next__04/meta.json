@@ -1,0 +1,215 @@
+{
+ "id": "dawn__qwen-qwen3-coder-next__04",
+ "prompt_id": "dawn",
+ "subject": "dawn over hills, pale pink and grey",
+ "prompt": "Paint dawn over hills, pale pink and grey in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 5168,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 21,
+     "dry_ops": 12,
+     "dry_steps": 15800,
+     "normalised": {
+      "width_clamped": 2
+     },
+     "coverage": 0.8408,
+     "mean_lightness": 68.98,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0921,
+      0.0042,
+      0.0,
+      0.0019,
+      0.1172,
+      0.0139,
+      0.0012,
+      0.0001,
+      0.0108,
+      0.0949,
+      0.1049,
+      0.2203
+     ],
+     "lightness_hist": [
+      0.0002,
+      0.0114,
+      0.0189,
+      0.0284,
+      0.0892,
+      0.241,
+      0.2674,
+      0.1511,
+      0.1922,
+      0.0001
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "paint covers 98% of the paper; leave some paper showing"
+    ],
+    "stats": {
+     "strokes": 38,
+     "dry_ops": 22,
+     "dry_steps": 17700,
+     "normalised": {
+      "width_clamped": 3,
+      "path_resampled": 3
+     },
+     "coverage": 0.9842,
+     "mean_lightness": 65.82,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.027,
+      0.1049,
+      0.2505,
+      0.1967,
+      0.0018,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0517,
+      0.1176,
+      0.1278
+     ],
+     "lightness_hist": [
+      0.0001,
+      0.008,
+      0.0158,
+      0.0307,
+      0.0599,
+      0.1434,
+      0.3352,
+      0.3369,
+      0.07,
+      0.0
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Shift the pale pink and grey washes higher on the page to suggest the sky above the hills, leaving the lower area for darker, more defined landforms.  \n2. Use lighter, more transparent washes for the upper layers and gradually increase saturation and value in the lower layers to create depth and ground the scene.  \n3. Let the paper\u2019s white show through in the foreground and along the hill edges to suggest early light and mist, using less water in those areas for sharper edges."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 21,
+   "dry_ops": 12,
+   "dry_steps": 15800,
+   "normalised": {
+    "width_clamped": 2
+   },
+   "coverage": 0.8408,
+   "mean_lightness": 68.98,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0921,
+    0.0042,
+    0.0,
+    0.0019,
+    0.1172,
+    0.0139,
+    0.0012,
+    0.0001,
+    0.0108,
+    0.0949,
+    0.1049,
+    0.2203
+   ],
+   "lightness_hist": [
+    0.0002,
+    0.0114,
+    0.0189,
+    0.0284,
+    0.0892,
+    0.241,
+    0.2674,
+    0.1511,
+    0.1922,
+    0.0001
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1912,
+   "latency_s": 40.425,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__04:r0",
+   "finish_reason": "stop",
+   "at": 1793801808.983251
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2386,
+   "completion_tokens": 1913,
+   "latency_s": 27.292,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__04:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793801836.276896
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 102,
+   "latency_s": 4.084,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793801868.243702
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 4433,
+   "completion_tokens": 3567,
+   "latency_s": 45.643,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__04:r1",
+   "finish_reason": "stop",
+   "at": 1793801913.8894455
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 8045,
+   "completion_tokens": 3705,
+   "latency_s": 52.83,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__04:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793802084.673072
+  }
+ ],
+ "started_at": 1793801768.5584948,
+ "seconds": 381.32
+}

@@ -1,0 +1,190 @@
+{
+ "id": "teacup__google-gemini-3.1-flash-lite__00",
+ "prompt_id": "teacup",
+ "subject": "a blue and white teacup on a saucer",
+ "prompt": "Paint a blue and white teacup on a saucer in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2376,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 8,
+     "dry_ops": 3,
+     "dry_steps": 3500,
+     "coverage": 0.31,
+     "mean_lightness": 91.15,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0015,
+      0.0,
+      0.0,
+      0.0,
+      0.0148,
+      0.05,
+      0.1599,
+      0.101,
+      0.0012,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0039,
+      0.0152,
+      0.0211,
+      0.0282,
+      0.0401,
+      0.1282,
+      0.6898,
+      0.0735
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 8,
+     "dry_ops": 3,
+     "dry_steps": 4500,
+     "coverage": 0.2273,
+     "mean_lightness": 91.64,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0004,
+      0.0016,
+      0.0,
+      0.0,
+      0.0,
+      0.0125,
+      0.0844,
+      0.0595,
+      0.4547,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0004,
+      0.0064,
+      0.0147,
+      0.0262,
+      0.0312,
+      0.0445,
+      0.3553,
+      0.4064,
+      0.1149
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the teacup and saucer more centrally in the composition, avoiding the top-heavy placement that makes the image feel unbalanced.  \n2. Use darker, more defined values for the teacup\u2019s rim and handle to create contrast and make the form stand out from the background.  \n3. Reduce the amount of water used in the background wash to prevent it from bleeding into the cup and saucer, keeping edges clearer and more distinct."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 8,
+   "dry_ops": 3,
+   "dry_steps": 4500,
+   "coverage": 0.2273,
+   "mean_lightness": 91.64,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0004,
+    0.0016,
+    0.0,
+    0.0,
+    0.0,
+    0.0125,
+    0.0844,
+    0.0595,
+    0.4547,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0004,
+    0.0064,
+    0.0147,
+    0.0262,
+    0.0312,
+    0.0445,
+    0.3553,
+    0.4064,
+    0.1149
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 436,
+   "completion_tokens": 659,
+   "latency_s": 2.331,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__google-gemini-3.1-flash-lite__00:r0",
+   "finish_reason": "stop",
+   "at": 1793798559.5086002
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1132,
+   "completion_tokens": 600,
+   "latency_s": 4.544,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__google-gemini-3.1-flash-lite__00:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793798565.4434934
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 147,
+   "completion_tokens": 93,
+   "latency_s": 2.927,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__google-gemini-3.1-flash-lite__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793798575.9685454
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1849,
+   "completion_tokens": 625,
+   "latency_s": 2.523,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__google-gemini-3.1-flash-lite__00:r1",
+   "finish_reason": "stop",
+   "at": 1793798578.493021
+  }
+ ],
+ "started_at": 1793798557.1773648,
+ "seconds": 26.53
+}

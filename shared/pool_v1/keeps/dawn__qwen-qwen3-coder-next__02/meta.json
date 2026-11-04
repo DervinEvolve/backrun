@@ -1,0 +1,203 @@
+{
+ "id": "dawn__qwen-qwen3-coder-next__02",
+ "prompt_id": "dawn",
+ "subject": "dawn over hills, pale pink and grey",
+ "prompt": "Paint dawn over hills, pale pink and grey in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 5168,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 13,
+     "dry_ops": 12,
+     "dry_steps": 16200,
+     "coverage": 0.7091,
+     "mean_lightness": 70.82,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.773,
+      0.0322,
+      0.0607,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0009,
+      0.0899
+     ],
+     "lightness_hist": [
+      0.0002,
+      0.011,
+      0.0196,
+      0.0565,
+      0.1235,
+      0.1578,
+      0.4327,
+      0.1681,
+      0.0304,
+      0.0002
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 16,
+     "dry_ops": 15,
+     "dry_steps": 19500,
+     "coverage": 0.9306,
+     "mean_lightness": 66.45,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.3512,
+      0.1662,
+      0.4148,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0003
+     ],
+     "lightness_hist": [
+      0.0004,
+      0.0157,
+      0.0287,
+      0.048,
+      0.0748,
+      0.117,
+      0.319,
+      0.2565,
+      0.1399,
+      0.0
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Shift the pale pink and grey layers higher on the page to suggest the sky above the hills, leaving the lower half darker and more grounded.  \n2. Use lighter, more transparent washes for the upper layers and darker, more saturated tones for the lower hills to create a clear contrast between sky and land.  \n3. Let the water flow more naturally in the washes\u2014allow edges to bleed slightly and avoid overworking\u2014to give the hills a soft, misty appearance at dawn."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 16,
+   "dry_ops": 15,
+   "dry_steps": 19500,
+   "coverage": 0.9306,
+   "mean_lightness": 66.45,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.3512,
+    0.1662,
+    0.4148,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0003
+   ],
+   "lightness_hist": [
+    0.0004,
+    0.0157,
+    0.0287,
+    0.048,
+    0.0748,
+    0.117,
+    0.319,
+    0.2565,
+    0.1399,
+    0.0
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1824,
+   "latency_s": 22.646,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__02:r0",
+   "finish_reason": "stop",
+   "at": 1793801738.5998077
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2332,
+   "completion_tokens": 1385,
+   "latency_s": 29.219,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__02:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793801767.821498
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 101,
+   "latency_s": 4.402,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793801807.001863
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 3850,
+   "completion_tokens": 1781,
+   "latency_s": 31.805,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__02:r1",
+   "finish_reason": "stop",
+   "at": 1793801838.8077111
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 5670,
+   "completion_tokens": 1771,
+   "latency_s": 28.426,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__02:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793801867.2351696
+  }
+ ],
+ "started_at": 1793801715.9533718,
+ "seconds": 254.42
+}

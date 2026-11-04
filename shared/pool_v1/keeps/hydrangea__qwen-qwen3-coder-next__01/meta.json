@@ -1,0 +1,192 @@
+{
+ "id": "hydrangea__qwen-qwen3-coder-next__01",
+ "prompt_id": "hydrangea",
+ "subject": "a blue hydrangea head",
+ "prompt": "Paint a blue hydrangea head in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 8210,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 15,
+     "dry_ops": 4,
+     "dry_steps": 6300,
+     "coverage": 0.0902,
+     "mean_lightness": 90.99,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0311,
+      0.9668,
+      0.0009,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0011,
+      0.1412,
+      0.1175,
+      0.2666,
+      0.3209,
+      0.1001,
+      0.044,
+      0.0074,
+      0.0011
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "only one flat colour; use at least two hues or two clearly different values"
+    ],
+    "stats": {
+     "strokes": 19,
+     "dry_ops": 6,
+     "dry_steps": 8700,
+     "coverage": 0.4468,
+     "mean_lightness": 65.98,
+     "two_hues": false,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0061,
+      0.972,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.8089,
+      0.0896,
+      0.031,
+      0.0062,
+      0.0311,
+      0.0067,
+      0.0238,
+      0.0026
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the hydrangea to the center of the composition to make it the clear focal point.  \n2. Use darker blue in the center and lighter blue toward the edges to create depth and show the flower\u2019s layered structure.  \n3. Let the white of the paper show through in the outer petals to suggest light and keep the edges soft."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 15,
+   "dry_ops": 4,
+   "dry_steps": 6300,
+   "coverage": 0.0902,
+   "mean_lightness": 90.99,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0311,
+    0.9668,
+    0.0009,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0011,
+    0.1412,
+    0.1175,
+    0.2666,
+    0.3209,
+    0.1001,
+    0.044,
+    0.0074,
+    0.0011
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 432,
+   "completion_tokens": 1450,
+   "latency_s": 19.75,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__qwen-qwen3-coder-next__01:r0",
+   "finish_reason": "stop",
+   "at": 1793795730.6656213
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 72,
+   "latency_s": 11.01,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__qwen-qwen3-coder-next__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793795742.413006
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 1986,
+   "completion_tokens": 1975,
+   "latency_s": 28.83,
+   "attempts": 2,
+   "status": "ok",
+   "tag": "hydrangea__qwen-qwen3-coder-next__01:r1",
+   "finish_reason": "stop",
+   "at": 1793795771.2432451
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 4047,
+   "completion_tokens": 1975,
+   "latency_s": 23.881,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__qwen-qwen3-coder-next__01:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793795795.1246278
+  }
+ ],
+ "started_at": 1793795710.915922,
+ "seconds": 99.73
+}

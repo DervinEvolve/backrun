@@ -1,0 +1,187 @@
+{
+ "id": "teacup__qwen-qwen3-coder-next__02",
+ "prompt_id": "teacup",
+ "subject": "a blue and white teacup on a saucer",
+ "prompt": "Paint a blue and white teacup on a saucer in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2376,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 11,
+     "dry_steps": 15300,
+     "normalised": {
+      "path_resampled": 9
+     },
+     "coverage": 0.4524,
+     "mean_lightness": 83.23,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.6516,
+      0.0076,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0098,
+      0.0298,
+      0.0494,
+      0.0717,
+      0.1237,
+      0.1566,
+      0.2032,
+      0.3531,
+      0.0027
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 9,
+     "dry_steps": 13000,
+     "normalised": {
+      "path_resampled": 10
+     },
+     "coverage": 0.3257,
+     "mean_lightness": 88.95,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.591,
+      0.0026,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0002,
+      0.0062,
+      0.0232,
+      0.0489,
+      0.0811,
+      0.1173,
+      0.1785,
+      0.5362,
+      0.0084
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the teacup and saucer more centrally and clearly, avoiding overlapping layers that obscure their shapes.  \n2. Use darker, more defined blue values for the cup\u2019s rim and handle to distinguish it from the background.  \n3. Reduce water flow in the washes to prevent bleeding and keep edges sharper, especially around the saucer\u2019s edge."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 9,
+   "dry_steps": 13000,
+   "normalised": {
+    "path_resampled": 10
+   },
+   "coverage": 0.3257,
+   "mean_lightness": 88.95,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.591,
+    0.0026,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0002,
+    0.0062,
+    0.0232,
+    0.0489,
+    0.0811,
+    0.1173,
+    0.1785,
+    0.5362,
+    0.0084
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 437,
+   "completion_tokens": 2612,
+   "latency_s": 44.337,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__qwen-qwen3-coder-next__02:r0",
+   "finish_reason": "stop",
+   "at": 1793798499.1694045
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 147,
+   "completion_tokens": 74,
+   "latency_s": 2.376,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__qwen-qwen3-coder-next__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793798504.6706517
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 3155,
+   "completion_tokens": 3176,
+   "latency_s": 41.117,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__qwen-qwen3-coder-next__02:r1",
+   "finish_reason": "stop",
+   "at": 1793798545.7882626
+  }
+ ],
+ "started_at": 1793798454.8324063,
+ "seconds": 91.79
+}

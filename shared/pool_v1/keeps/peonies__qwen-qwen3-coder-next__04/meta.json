@@ -1,0 +1,178 @@
+{
+ "id": "peonies__qwen-qwen3-coder-next__04",
+ "prompt_id": "peonies",
+ "subject": "pink peonies, loose and wet",
+ "prompt": "Paint pink peonies, loose and wet in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3839,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 31,
+     "dry_ops": 5,
+     "dry_steps": 660,
+     "coverage": 0.1476,
+     "mean_lightness": 92.64,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.5381,
+      0.1986,
+      0.2054,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0361
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0044,
+      0.0409,
+      0.0725,
+      0.1046,
+      0.254,
+      0.483,
+      0.0405
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 22,
+     "dry_ops": 4,
+     "dry_steps": 510,
+     "coverage": 0.064,
+     "mean_lightness": 93.19,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.8232,
+      0.1094,
+      0.0665,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0121,
+      0.0763,
+      0.133,
+      0.1753,
+      0.2249,
+      0.2475,
+      0.1295,
+      0.0016
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the peonies more centrally and cluster them slightly to create a stronger focal point, avoiding scattered, isolated shapes.  \n2. Use deeper pink and red values in the centers of the blooms and lighter washes at the edges to show form and depth.  \n3. Control water flow to keep edges of petals more defined and avoid excessive bleeding, especially in the darker areas."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 22,
+   "dry_ops": 4,
+   "dry_steps": 510,
+   "coverage": 0.064,
+   "mean_lightness": 93.19,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.8232,
+    0.1094,
+    0.0665,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0121,
+    0.0763,
+    0.133,
+    0.1753,
+    0.2249,
+    0.2475,
+    0.1295,
+    0.0016
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 2449,
+   "latency_s": 27.045,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__04:r0",
+   "finish_reason": "stop",
+   "at": 1793802824.9407747
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 79,
+   "latency_s": 3.388,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793802829.418011
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2994,
+   "completion_tokens": 1851,
+   "latency_s": 29.86,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__04:r1",
+   "finish_reason": "stop",
+   "at": 1793802859.2787476
+  }
+ ],
+ "started_at": 1793802797.895797,
+ "seconds": 62.46
+}

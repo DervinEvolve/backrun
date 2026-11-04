@@ -1,0 +1,178 @@
+{
+ "id": "peonies__qwen-qwen3-coder-next__01",
+ "prompt_id": "peonies",
+ "subject": "pink peonies, loose and wet",
+ "prompt": "Paint pink peonies, loose and wet in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3839,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 18,
+     "dry_ops": 2,
+     "dry_steps": 3300,
+     "coverage": 0.2862,
+     "mean_lightness": 89.76,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.5008,
+      0.222,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.2772
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0018,
+      0.0093,
+      0.0341,
+      0.0459,
+      0.1139,
+      0.3063,
+      0.4888,
+      0.0
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 19,
+     "dry_ops": 2,
+     "dry_steps": 3200,
+     "coverage": 0.2221,
+     "mean_lightness": 89.51,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.5209,
+      0.1189,
+      0.0128,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.3473
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0029,
+      0.0167,
+      0.023,
+      0.041,
+      0.1233,
+      0.2672,
+      0.1817,
+      0.3441,
+      0.0
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the peonies more centrally and group them into a natural cluster, with overlapping blooms and visible stems to suggest a bouquet rather than a random shape.  \n2. Use darker pink and magenta values in the centers of the petals and lighter pinks at the edges to create depth and form, avoiding flat, uniform color.  \n3. Control the water flow to keep edges soft but defined\u2014allow some blooms to bleed slightly for a wet look, but keep others more contained to show individual petals and structure."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 19,
+   "dry_ops": 2,
+   "dry_steps": 3200,
+   "coverage": 0.2221,
+   "mean_lightness": 89.51,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.5209,
+    0.1189,
+    0.0128,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.3473
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0029,
+    0.0167,
+    0.023,
+    0.041,
+    0.1233,
+    0.2672,
+    0.1817,
+    0.3441,
+    0.0
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1487,
+   "latency_s": 18.519,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__01:r0",
+   "finish_reason": "stop",
+   "at": 1793802812.1192575
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 106,
+   "latency_s": 5.592,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793802818.7909644
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2059,
+   "completion_tokens": 1796,
+   "latency_s": 29.211,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__qwen-qwen3-coder-next__01:r1",
+   "finish_reason": "stop",
+   "at": 1793802848.002412
+  }
+ ],
+ "started_at": 1793802793.5999472,
+ "seconds": 58.62
+}

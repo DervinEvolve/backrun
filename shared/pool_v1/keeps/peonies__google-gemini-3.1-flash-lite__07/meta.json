@@ -1,0 +1,178 @@
+{
+ "id": "peonies__google-gemini-3.1-flash-lite__07",
+ "prompt_id": "peonies",
+ "subject": "pink peonies, loose and wet",
+ "prompt": "Paint pink peonies, loose and wet in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 7,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3839,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 3,
+     "dry_steps": 2000,
+     "coverage": 0.3006,
+     "mean_lightness": 89.34,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.8826,
+      0.0011,
+      0.004,
+      0.0104,
+      0.0214,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0805
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0012,
+      0.0098,
+      0.0322,
+      0.0541,
+      0.1893,
+      0.1172,
+      0.5952,
+      0.0008
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 3,
+     "dry_steps": 2000,
+     "coverage": 0.3531,
+     "mean_lightness": 88.58,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.876,
+      0.0025,
+      0.0108,
+      0.0202,
+      0.0472,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0433
+     ],
+     "lightness_hist": [
+      0.0001,
+      0.0007,
+      0.0041,
+      0.0145,
+      0.0287,
+      0.1109,
+      0.148,
+      0.0453,
+      0.6472,
+      0.0005
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the peony higher on the page, leaving more negative space above to suggest natural growth and balance.  \n2. Use darker pink and deeper red tones in the center of the flower to create contrast and depth, making the form more defined.  \n3. Let the water flow more freely at the edges to create soft, irregular blooms that look wet and loose, avoiding hard, uniform shapes."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 9,
+   "dry_ops": 3,
+   "dry_steps": 2000,
+   "coverage": 0.3531,
+   "mean_lightness": 88.58,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.876,
+    0.0025,
+    0.0108,
+    0.0202,
+    0.0472,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0433
+   ],
+   "lightness_hist": [
+    0.0001,
+    0.0007,
+    0.0041,
+    0.0145,
+    0.0287,
+    0.1109,
+    0.148,
+    0.0453,
+    0.6472,
+    0.0005
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 731,
+   "latency_s": 6.651,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__google-gemini-3.1-flash-lite__07:r0",
+   "finish_reason": "stop",
+   "at": 1793802971.0730152
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 82,
+   "latency_s": 4.595,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__google-gemini-3.1-flash-lite__07:critic1",
+   "finish_reason": "stop",
+   "at": 1793802988.0082026
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1272,
+   "completion_tokens": 752,
+   "latency_s": 2.644,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__google-gemini-3.1-flash-lite__07:r1",
+   "finish_reason": "stop",
+   "at": 1793802990.6544461
+  }
+ ],
+ "started_at": 1793802964.4222536,
+ "seconds": 44.48
+}

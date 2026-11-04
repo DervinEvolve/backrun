@@ -1,0 +1,190 @@
+{
+ "id": "lighthouse__z-ai-glm-5.3-flash__03",
+ "prompt_id": "lighthouse",
+ "subject": "a white lighthouse on dark rocks",
+ "prompt": "Paint a white lighthouse on dark rocks in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 9838,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 34,
+     "dry_ops": 5,
+     "dry_steps": 5300,
+     "coverage": 0.9406,
+     "mean_lightness": 74.97,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0024,
+      0.075,
+      0.1569,
+      0.0595,
+      0.02,
+      0.0065,
+      0.0219,
+      0.0829,
+      0.1668,
+      0.0656,
+      0.0002,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0007,
+      0.0055,
+      0.0142,
+      0.0246,
+      0.0881,
+      0.0875,
+      0.0744,
+      0.1979,
+      0.4831,
+      0.0242
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 36,
+     "dry_ops": 4,
+     "dry_steps": 4600,
+     "coverage": 0.7069,
+     "mean_lightness": 79.03,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0002,
+      0.0298,
+      0.2992,
+      0.1325,
+      0.0001,
+      0.0001,
+      0.0025,
+      0.0246,
+      0.0159,
+      0.0436,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0017,
+      0.0123,
+      0.0204,
+      0.0349,
+      0.0986,
+      0.1857,
+      0.1006,
+      0.0358,
+      0.1091,
+      0.4009
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the lighthouse to the right side of the composition to avoid centering it, creating more visual space and emphasizing the dark rocks on the left.  \n2. Darken the rocks with deeper, more saturated browns and grays to increase contrast and make them feel solid and imposing.  \n3. Use more controlled water flow to keep the sky\u2019s light blue and yellow gradient clean and separate from the darker rock base, avoiding muddy blending."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 36,
+   "dry_ops": 4,
+   "dry_steps": 4600,
+   "coverage": 0.7069,
+   "mean_lightness": 79.03,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0002,
+    0.0298,
+    0.2992,
+    0.1325,
+    0.0001,
+    0.0001,
+    0.0025,
+    0.0246,
+    0.0159,
+    0.0436,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0017,
+    0.0123,
+    0.0204,
+    0.0349,
+    0.0986,
+    0.1857,
+    0.1006,
+    0.0358,
+    0.1091,
+    0.4009
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 416,
+   "completion_tokens": 4096,
+   "latency_s": 53.954,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lighthouse__z-ai-glm-5.3-flash__03:r0",
+   "finish_reason": "length",
+   "at": 1793800549.975304
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 987,
+   "completion_tokens": 3978,
+   "latency_s": 44.248,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lighthouse__z-ai-glm-5.3-flash__03:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793800594.223337
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 92,
+   "latency_s": 4.224,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lighthouse__z-ai-glm-5.3-flash__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793800603.2559664
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3219,
+   "completion_tokens": 3822,
+   "latency_s": 38.507,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lighthouse__z-ai-glm-5.3-flash__03:r1",
+   "finish_reason": "stop",
+   "at": 1793800641.7634203
+  }
+ ],
+ "started_at": 1793800496.0211554,
+ "seconds": 147.93
+}

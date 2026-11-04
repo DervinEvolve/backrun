@@ -1,0 +1,170 @@
+{
+ "id": "poppies__z-ai-glm-5.3-flash__05",
+ "prompt_id": "poppies",
+ "subject": "red poppies in a green field",
+ "prompt": "Paint red poppies in a green field in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 5,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7144,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 50,
+     "dry_ops": 4,
+     "dry_steps": 4300,
+     "coverage": 0.7327,
+     "mean_lightness": 82.12,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0842,
+      0.1262,
+      0.0181,
+      0.4967,
+      0.2747,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0033,
+      0.0105,
+      0.0157,
+      0.0351,
+      0.143,
+      0.0673,
+      0.1389,
+      0.4136,
+      0.1727
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "line 66: not valid JSON"
+    ],
+    "stats": {
+     "strokes": 62,
+     "dry_ops": 3,
+     "dry_steps": 3800,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Place the poppies more evenly across the lower half of the painting, avoiding clustering on the left, to suggest a natural field spread.  \n2. Use darker, more saturated reds for the poppies and lighter, muted greens for the field to increase contrast and make the flowers stand out.  \n3. Let the water flow more freely in the background to create soft, blended green washes, and keep the poppies with sharper edges to define them clearly."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 50,
+   "dry_ops": 4,
+   "dry_steps": 4300,
+   "coverage": 0.7327,
+   "mean_lightness": 82.12,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0842,
+    0.1262,
+    0.0181,
+    0.4967,
+    0.2747,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0033,
+    0.0105,
+    0.0157,
+    0.0351,
+    0.143,
+    0.0673,
+    0.1389,
+    0.4136,
+    0.1727
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 434,
+   "completion_tokens": 3688,
+   "latency_s": 44.162,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__05:r0",
+   "at": 1793785995.9479713
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3838,
+   "completion_tokens": 3427,
+   "latency_s": 43.799,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__05:r0:retry",
+   "at": 1793786045.6475768
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 96,
+   "latency_s": 3.887,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__05:critic1",
+   "at": 1793786052.128737
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 7240,
+   "completion_tokens": 4096,
+   "latency_s": 44.342,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__05:r1",
+   "at": 1793786096.4712186
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 11335,
+   "completion_tokens": 4096,
+   "latency_s": 40.731,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "poppies__z-ai-glm-5.3-flash__05:r1:retry",
+   "at": 1793786137.2035131
+  }
+ ],
+ "started_at": 1793785951.785659,
+ "seconds": 185.5
+}

@@ -1,0 +1,203 @@
+{
+ "id": "goldfish__z-ai-glm-5.3-flash__01",
+ "prompt_id": "goldfish",
+ "subject": "two goldfish in a clear bowl",
+ "prompt": "Paint two goldfish in a clear bowl in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6842,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 30,
+     "dry_ops": 3,
+     "dry_steps": 3800,
+     "coverage": 0.2763,
+     "mean_lightness": 92.51,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0001,
+      0.0157,
+      0.1567,
+      0.0328,
+      0.043,
+      0.001,
+      0.0048,
+      0.0585,
+      0.0286,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0071,
+      0.0243,
+      0.0521,
+      0.1609,
+      0.1986,
+      0.557
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 38,
+     "dry_ops": 5,
+     "dry_steps": 5100,
+     "coverage": 0.3073,
+     "mean_lightness": 92.76,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0001,
+      0.0083,
+      0.0977,
+      0.006,
+      0.0002,
+      0.0001,
+      0.0038,
+      0.0583,
+      0.0217,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0001,
+      0.0012,
+      0.0068,
+      0.0152,
+      0.0388,
+      0.0988,
+      0.1854,
+      0.6538
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the goldfish more centrally in the bowl, with one slightly above the other, to create a clearer sense of depth and avoid crowding the top edge.  \n2. Use darker, more saturated orange and yellow tones for the fish, with subtle gradations, to make them stand out from the pale water and appear more vivid.  \n3. Add faint, soft reflections on the inside of the bowl\u2019s glass and a subtle shadow beneath it to suggest transparency and the presence of water."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 38,
+   "dry_ops": 5,
+   "dry_steps": 5100,
+   "coverage": 0.3073,
+   "mean_lightness": 92.76,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0001,
+    0.0083,
+    0.0977,
+    0.006,
+    0.0002,
+    0.0001,
+    0.0038,
+    0.0583,
+    0.0217,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0001,
+    0.0012,
+    0.0068,
+    0.0152,
+    0.0388,
+    0.0988,
+    0.1854,
+    0.6538
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 416,
+   "completion_tokens": 4096,
+   "latency_s": 45.145,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__z-ai-glm-5.3-flash__01:r0",
+   "finish_reason": "length",
+   "at": 1793799853.7228897
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 1958,
+   "completion_tokens": 2002,
+   "latency_s": 7.793,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__z-ai-glm-5.3-flash__01:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793799861.5166452
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 101,
+   "latency_s": 2.985,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__z-ai-glm-5.3-flash__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793799867.1239974
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3929,
+   "completion_tokens": 4096,
+   "latency_s": 17.292,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__z-ai-glm-5.3-flash__01:r1",
+   "finish_reason": "length",
+   "at": 1793799884.4164298
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 5016,
+   "completion_tokens": 2536,
+   "latency_s": 9.247,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__z-ai-glm-5.3-flash__01:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793799893.663682
+  }
+ ],
+ "started_at": 1793799808.578141,
+ "seconds": 86.41
+}

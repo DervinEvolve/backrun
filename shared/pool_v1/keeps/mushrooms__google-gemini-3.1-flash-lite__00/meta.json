@@ -1,0 +1,178 @@
+{
+ "id": "mushrooms__google-gemini-3.1-flash-lite__00",
+ "prompt_id": "mushrooms",
+ "subject": "brown mushrooms on a mossy log",
+ "prompt": "Paint brown mushrooms on a mossy log in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6432,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.2697,
+     "mean_lightness": 87.91,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.008,
+      0.2466,
+      0.5628,
+      0.1825,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0126,
+      0.0289,
+      0.0354,
+      0.0376,
+      0.1147,
+      0.0907,
+      0.6657,
+      0.0136,
+      0.0008
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 3,
+     "dry_steps": 3500,
+     "coverage": 0.3961,
+     "mean_lightness": 81.17,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0104,
+      0.1986,
+      0.042,
+      0.749,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0025,
+      0.038,
+      0.022,
+      0.0359,
+      0.1211,
+      0.1993,
+      0.3289,
+      0.2416,
+      0.01,
+      0.0008
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the mushrooms more centrally on the log, overlapping it slightly to show they are growing from it, rather than floating above.  \n2. Use darker, richer brown values for the mushroom caps and stems to contrast with the lighter moss and make them stand out.  \n3. Apply more water to the moss area to create a softer, wetter edge and blend the green tones, making it look damp and textured like real moss."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 11,
+   "dry_ops": 3,
+   "dry_steps": 3500,
+   "coverage": 0.3961,
+   "mean_lightness": 81.17,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0104,
+    0.1986,
+    0.042,
+    0.749,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0025,
+    0.038,
+    0.022,
+    0.0359,
+    0.1211,
+    0.1993,
+    0.3289,
+    0.2416,
+    0.01,
+    0.0008
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 702,
+   "latency_s": 2.691,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__google-gemini-3.1-flash-lite__00:r0",
+   "finish_reason": "stop",
+   "at": 1793803327.2101948
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 89,
+   "latency_s": 3.268,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__google-gemini-3.1-flash-lite__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793803338.914406
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1251,
+   "completion_tokens": 775,
+   "latency_s": 3.409,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__google-gemini-3.1-flash-lite__00:r1",
+   "finish_reason": "stop",
+   "at": 1793803342.323586
+  }
+ ],
+ "started_at": 1793803324.5188012,
+ "seconds": 32.31
+}

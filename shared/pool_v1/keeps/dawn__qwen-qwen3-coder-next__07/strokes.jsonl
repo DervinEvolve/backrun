@@ -1,0 +1,18 @@
+{"op": "canvas", "width": 256, "height": 192, "seed": 5168, "paper": "cold_press"}
+{"op": "stroke", "path": [[0.0, 20.0], [64.0, 22.0], [128.0, 21.0], [192.0, 23.0], [256.0, 21.0]], "width": 76.8, "water": 0.98, "pigments": {"quinacridone_rose": 0.08, "paynes_grey": 0.06}}
+{"op": "stroke", "path": [[0.0, 40.0], [64.0, 38.0], [128.0, 41.0], [192.0, 37.0], [256.0, 39.0]], "width": 72.0, "water": 0.96, "pigments": {"quinacridone_rose": 0.1, "paynes_grey": 0.08}}
+{"op": "stroke", "path": [[0.0, 60.0], [64.0, 56.0], [128.0, 60.0], [192.0, 54.0], [256.0, 58.0]], "width": 68.0, "water": 0.94, "pigments": {"quinacridone_rose": 0.12, "paynes_grey": 0.1}}
+{"op": "dry", "steps": 1600}
+{"op": "stroke", "path": [[0.0, 100.0], [48.0, 96.0], [96.0, 98.0], [144.0, 94.0], [192.0, 100.0], [240.0, 96.0], [256.0, 98.0]], "width": 76.8, "water": 0.9, "pigments": {"paynes_grey": 0.12, "quinacridone_rose": 0.08, "burnt_umber": 0.02}}
+{"op": "stroke", "path": [[0.0, 140.0], [48.0, 136.0], [96.0, 138.0], [144.0, 134.0], [192.0, 140.0], [240.0, 136.0], [256.0, 138.0]], "width": 76.8, "water": 0.92, "pigments": {"paynes_grey": 0.18, "burnt_umber": 0.04}}
+{"op": "dry", "steps": 1400}
+{"op": "stroke", "path": [[0.0, 64.0], [36.59, 60.29], [73.31, 60.84], [109.74, 60.58], [146.13, 61.73], [182.82, 61.43], [219.44, 58.57], [256.0, 62.0]], "width": 22.0, "water": 0.65, "pigments": {"quinacridone_rose": 0.2, "paynes_grey": 0.12}}
+{"op": "stroke", "path": [[16.0, 130.0], [50.4, 126.87], [84.84, 124.53], [118.73, 128.88], [153.2, 127.43], [187.51, 124.88], [221.46, 127.76], [256.0, 128.0]], "width": 26.0, "water": 0.7, "pigments": {"paynes_grey": 0.24, "burnt_umber": 0.06}}
+{"op": "dry", "steps": 1000}
+{"op": "stroke", "path": [[48.0, 62.0], [61.86, 58.31], [76.04, 58.65], [89.5, 58.75], [102.9, 59.7], [117.03, 59.51], [130.94, 56.35], [144.0, 62.0]], "width": 10.0, "water": 0.55, "pigments": {"quinacridone_rose": 0.28, "paynes_grey": 0.08}}
+{"op": "stroke", "path": [[100.0, 134.0], [108.0, 130.0], [116.0, 132.0], [124.0, 128.0], [132.0, 134.0]], "width": 8.0, "water": 0.5, "pigments": {"paynes_grey": 0.32, "burnt_umber": 0.08}}
+{"op": "stroke", "path": [[32.0, 18.0], [40.0, 16.0], [48.0, 17.0], [56.0, 15.0], [64.0, 18.0]], "width": 6.0, "water": 0.45, "pigments": {"quinacridone_rose": 0.35}}
+{"op": "stroke", "path": [[160.0, 132.0], [168.0, 128.0], [176.0, 130.0], [184.0, 126.0], [192.0, 132.0]], "width": 5.5, "water": 0.48, "pigments": {"paynes_grey": 0.36, "burnt_umber": 0.06}}
+{"op": "dry", "steps": 800}
+{"op": "stroke", "path": [[224.0, 60.0], [232.0, 56.0], [240.0, 58.0]], "width": 5.0, "water": 0.52, "pigments": {"quinacridone_rose": 0.32, "paynes_grey": 0.1}}
+{"op": "stroke", "path": [[64.0, 136.0], [68.0, 132.0], [72.0, 134.0]], "width": 4.5, "water": 0.46, "pigments": {"paynes_grey": 0.4, "burnt_umber": 0.1}}

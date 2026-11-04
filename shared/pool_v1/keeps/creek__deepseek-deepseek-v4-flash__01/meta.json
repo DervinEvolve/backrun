@@ -1,0 +1,169 @@
+{
+ "id": "creek__deepseek-deepseek-v4-flash__01",
+ "prompt_id": "creek",
+ "subject": "a shallow creek over brown stones",
+ "prompt": "Paint a shallow creek over brown stones in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 5796,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 16,
+     "dry_ops": 5,
+     "dry_steps": 1000,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.6363,
+     "mean_lightness": 81.3,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0006,
+      0.0163,
+      0.2567,
+      0.2186,
+      0.0529,
+      0.2036,
+      0.1411,
+      0.0248,
+      0.0062,
+      0.0002,
+      0.0004,
+      0.0002
+     ],
+     "lightness_hist": [
+      0.0001,
+      0.0071,
+      0.0141,
+      0.0184,
+      0.0548,
+      0.0963,
+      0.1144,
+      0.2541,
+      0.4296,
+      0.0111
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "line 8: not valid JSON",
+     "5 strokes; need 6 to 200"
+    ],
+    "stats": {
+     "strokes": 5,
+     "dry_ops": 2,
+     "dry_steps": 350,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Lower the waterline so it sits more naturally in the middle third of the painting, making the creek feel deeper and more contained.  \n2. Use darker, more saturated blues and greens in the water area, with sharper edges where the water meets the stones, to show clarity and flow.  \n3. Add a thin, light wash of white or pale yellow along the top edge of the water to suggest surface reflection and highlight the water\u2019s edge."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 16,
+   "dry_ops": 5,
+   "dry_steps": 1000,
+   "normalised": {
+    "path_resampled": 1
+   },
+   "coverage": 0.6363,
+   "mean_lightness": 81.3,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0006,
+    0.0163,
+    0.2567,
+    0.2186,
+    0.0529,
+    0.2036,
+    0.1411,
+    0.0248,
+    0.0062,
+    0.0002,
+    0.0004,
+    0.0002
+   ],
+   "lightness_hist": [
+    0.0001,
+    0.0071,
+    0.0141,
+    0.0184,
+    0.0548,
+    0.0963,
+    0.1144,
+    0.2541,
+    0.4296,
+    0.0111
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 408,
+   "completion_tokens": 1250,
+   "latency_s": 30.466,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "creek__deepseek-deepseek-v4-flash__01:r0",
+   "finish_reason": "stop",
+   "at": 1793798171.5262706
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 93,
+   "latency_s": 3.846,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "creek__deepseek-deepseek-v4-flash__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793798177.1198204
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1779,
+   "completion_tokens": 1359,
+   "latency_s": 7.895,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "creek__deepseek-deepseek-v4-flash__01:r1",
+   "finish_reason": "stop",
+   "at": 1793798185.015402
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 3288,
+   "completion_tokens": 4096,
+   "latency_s": 27.559,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "creek__deepseek-deepseek-v4-flash__01:r1:retry",
+   "finish_reason": "length",
+   "at": 1793798212.5749996
+  }
+ ],
+ "started_at": 1793798141.060158,
+ "seconds": 71.6
+}

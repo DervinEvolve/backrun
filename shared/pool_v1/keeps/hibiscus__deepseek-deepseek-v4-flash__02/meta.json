@@ -1,0 +1,187 @@
+{
+ "id": "hibiscus__deepseek-deepseek-v4-flash__02",
+ "prompt_id": "hibiscus",
+ "subject": "a peach hibiscus flower, close up",
+ "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 445,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 2,
+     "dry_steps": 3000,
+     "coverage": 0.4237,
+     "mean_lightness": 85.56,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.5488,
+      0.4512,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0016,
+      0.0202,
+      0.0549,
+      0.1035,
+      0.2425,
+      0.1112,
+      0.4639,
+      0.0022
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 24,
+     "dry_ops": 3,
+     "dry_steps": 4500,
+     "coverage": 0.3597,
+     "mean_lightness": 88.98,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.1497,
+      0.505,
+      0.3453,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0008,
+      0.0133,
+      0.0331,
+      0.0632,
+      0.0928,
+      0.1765,
+      0.6181,
+      0.002
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the flower slightly off-center to create a more natural, balanced composition, avoiding the center of the page.  \n2. Use darker, more saturated values in the stamen and petal edges to define structure and depth, making the flower stand out from the background.  \n3. Control water flow to keep the outer petals lighter and more translucent, while allowing the center to be more concentrated and defined."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 24,
+   "dry_ops": 3,
+   "dry_steps": 4500,
+   "coverage": 0.3597,
+   "mean_lightness": 88.98,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.1497,
+    0.505,
+    0.3453,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0008,
+    0.0133,
+    0.0331,
+    0.0632,
+    0.0928,
+    0.1765,
+    0.6181,
+    0.002
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 409,
+   "completion_tokens": 2122,
+   "latency_s": 53.497,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__deepseek-deepseek-v4-flash__02:r0",
+   "at": 1793785759.151997
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 84,
+   "latency_s": 3.193,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__deepseek-deepseek-v4-flash__02:critic1",
+   "at": 1793785764.4342122
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1379,
+   "completion_tokens": 4096,
+   "latency_s": 135.974,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__deepseek-deepseek-v4-flash__02:r1",
+   "at": 1793785900.4083366
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2640,
+   "completion_tokens": 1635,
+   "latency_s": 49.61,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__deepseek-deepseek-v4-flash__02:r1:retry",
+   "at": 1793785950.0189412
+  }
+ ],
+ "started_at": 1793785705.6551306,
+ "seconds": 246.13
+}

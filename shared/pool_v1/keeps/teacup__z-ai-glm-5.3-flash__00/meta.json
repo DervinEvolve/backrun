@@ -1,0 +1,191 @@
+{
+ "id": "teacup__z-ai-glm-5.3-flash__00",
+ "prompt_id": "teacup",
+ "subject": "a blue and white teacup on a saucer",
+ "prompt": "Paint a blue and white teacup on a saucer in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2376,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 20,
+     "dry_ops": 3,
+     "dry_steps": 4500,
+     "coverage": 0.2551,
+     "mean_lightness": 91.7,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0096,
+      0.1997,
+      0.1806,
+      0.1415,
+      0.0001,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0026,
+      0.0079,
+      0.0183,
+      0.0398,
+      0.0897,
+      0.2099,
+      0.2873,
+      0.3445
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 33,
+     "dry_ops": 4,
+     "dry_steps": 5900,
+     "coverage": 0.7231,
+     "mean_lightness": 84.1,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0109,
+      0.1007,
+      0.0011,
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0062,
+      0.0226,
+      0.1802,
+      0.0244,
+      0.0048
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0087,
+      0.0205,
+      0.0259,
+      0.0336,
+      0.0526,
+      0.0566,
+      0.0637,
+      0.5204,
+      0.218
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the teacup and saucer slightly off-center to create a more balanced and natural composition, avoiding the center of the page.  \n2. Use darker, more saturated blue for the rim and handle of the cup and the edge of the saucer to define their shapes and create contrast with the lighter areas.  \n3. Apply more water to the background and edges of the cup to create soft, diffused edges and a sense of light reflection, making the cup appear more three-dimensional."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 33,
+   "dry_ops": 4,
+   "dry_steps": 5900,
+   "coverage": 0.7231,
+   "mean_lightness": 84.1,
+   "two_hues": true,
+   "two_levels": false,
+   "hue_hist": [
+    0.0109,
+    0.1007,
+    0.0011,
+    0.0,
+    0.0,
+    0.0,
+    0.0001,
+    0.0062,
+    0.0226,
+    0.1802,
+    0.0244,
+    0.0048
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0087,
+    0.0205,
+    0.0259,
+    0.0336,
+    0.0526,
+    0.0566,
+    0.0637,
+    0.5204,
+    0.218
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 420,
+   "completion_tokens": 2490,
+   "latency_s": 24.861,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__00:r0",
+   "finish_reason": "stop",
+   "at": 1793798500.7180724
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 147,
+   "completion_tokens": 102,
+   "latency_s": 3.959,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793798506.6590054
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 1766,
+   "completion_tokens": 1887,
+   "latency_s": 11.913,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__00:r1",
+   "finish_reason": "stop",
+   "at": 1793798518.5746884
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3642,
+   "completion_tokens": 2242,
+   "latency_s": 10.269,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "teacup__z-ai-glm-5.3-flash__00:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793798553.3359475
+  }
+ ],
+ "started_at": 1793798475.8572412,
+ "seconds": 81.32
+}

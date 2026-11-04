@@ -1,0 +1,178 @@
+{
+ "id": "hibiscus__google-gemini-3.1-flash-lite__00",
+ "prompt_id": "hibiscus",
+ "subject": "a peach hibiscus flower, close up",
+ "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 445,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 4,
+     "dry_steps": 3500,
+     "coverage": 0.3916,
+     "mean_lightness": 86.94,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0048,
+      0.3754,
+      0.6161,
+      0.0037,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0002,
+      0.0023,
+      0.0225,
+      0.0593,
+      0.3136,
+      0.1525,
+      0.4464,
+      0.0031
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 4,
+     "dry_steps": 3500,
+     "coverage": 0.4999,
+     "mean_lightness": 84.8,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0049,
+      0.9805,
+      0.014,
+      0.0004,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0002
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0012,
+      0.0046,
+      0.027,
+      0.0729,
+      0.3035,
+      0.0659,
+      0.5194,
+      0.0055
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the flower more centrally in the frame to emphasize it as the main subject.  \n2. Use darker, more saturated values in the center and stamen area to create contrast and draw attention to the core.  \n3. Apply more controlled water to keep the edges of the petals defined and avoid bleeding into the background."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 4,
+   "dry_steps": 3500,
+   "coverage": 0.4999,
+   "mean_lightness": 84.8,
+   "two_hues": false,
+   "two_levels": true,
+   "hue_hist": [
+    0.0049,
+    0.9805,
+    0.014,
+    0.0004,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0002
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0012,
+    0.0046,
+    0.027,
+    0.0729,
+    0.3035,
+    0.0659,
+    0.5194,
+    0.0055
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 735,
+   "latency_s": 2.726,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__google-gemini-3.1-flash-lite__00:r0",
+   "finish_reason": "stop",
+   "at": 1793795272.372948
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 67,
+   "latency_s": 3.059,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__google-gemini-3.1-flash-lite__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793795293.9171624
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1262,
+   "completion_tokens": 872,
+   "latency_s": 2.369,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__google-gemini-3.1-flash-lite__00:r1",
+   "finish_reason": "stop",
+   "at": 1793795296.2867157
+  }
+ ],
+ "started_at": 1793795269.646643,
+ "seconds": 36.58
+}

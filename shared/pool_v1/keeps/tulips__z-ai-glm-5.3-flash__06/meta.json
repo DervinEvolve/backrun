@@ -1,0 +1,190 @@
+{
+ "id": "tulips__z-ai-glm-5.3-flash__06",
+ "prompt_id": "tulips",
+ "subject": "yellow tulips in a jam jar",
+ "prompt": "Paint yellow tulips in a jam jar in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 6,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 9952,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 40,
+     "dry_ops": 4,
+     "dry_steps": 4800,
+     "coverage": 0.6535,
+     "mean_lightness": 89.7,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0002,
+      0.203,
+      0.3669,
+      0.0643,
+      0.0033,
+      0.0016,
+      0.0123,
+      0.0007,
+      0.0001,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0008,
+      0.0041,
+      0.0092,
+      0.0199,
+      0.033,
+      0.0638,
+      0.3559,
+      0.5131
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 40,
+     "dry_ops": 4,
+     "dry_steps": 4800,
+     "coverage": 0.6191,
+     "mean_lightness": 89.18,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0006,
+      0.2416,
+      0.3496,
+      0.0695,
+      0.0056,
+      0.0028,
+      0.0163,
+      0.002,
+      0.0003,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0002,
+      0.0015,
+      0.0069,
+      0.0121,
+      0.0267,
+      0.0428,
+      0.0841,
+      0.3465,
+      0.4792
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the jam jar higher in the frame so the tulips are centered and the jar doesn\u2019t sit too low, improving composition.  \n2. Use darker, more saturated yellow for the tulips and add a deeper green for the stems to increase contrast and make the flowers stand out.  \n3. Reduce the amount of water in the paint to create sharper edges and more defined shapes, especially around the jar and petals."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 40,
+   "dry_ops": 4,
+   "dry_steps": 4800,
+   "coverage": 0.6191,
+   "mean_lightness": 89.18,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0006,
+    0.2416,
+    0.3496,
+    0.0695,
+    0.0056,
+    0.0028,
+    0.0163,
+    0.002,
+    0.0003,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0002,
+    0.0015,
+    0.0069,
+    0.0121,
+    0.0267,
+    0.0428,
+    0.0841,
+    0.3465,
+    0.4792
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 434,
+   "completion_tokens": 4096,
+   "latency_s": 63.985,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__z-ai-glm-5.3-flash__06:r0",
+   "finish_reason": "length",
+   "at": 1793802709.1476977
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 1795,
+   "completion_tokens": 2502,
+   "latency_s": 29.814,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__z-ai-glm-5.3-flash__06:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793802738.9624677
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 87,
+   "latency_s": 5.165,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__z-ai-glm-5.3-flash__06:critic1",
+   "finish_reason": "stop",
+   "at": 1793802770.0471969
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 4297,
+   "completion_tokens": 2671,
+   "latency_s": 30.058,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__z-ai-glm-5.3-flash__06:r1",
+   "finish_reason": "stop",
+   "at": 1793802800.1055949
+  }
+ ],
+ "started_at": 1793802645.1627424,
+ "seconds": 157.09
+}

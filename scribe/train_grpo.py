@@ -16,10 +16,16 @@ layers, bf16, gradient checkpointing, learning rate 5e-5 with
 generations per prompt, top-p 0.95, top-k 20. Max completion length is 4096
 tokens because stroke files are short.
 
-Base model: ``Qwen/Qwen3.5-4B``. The id was checked on the Hugging Face Hub
-API on 2026-11-04 (it exists, ungated, tagged image-text-to-text with
-architecture Qwen3_5ForConditionalGeneration). Whether GRPOTrainer loads it
-for text-only prompts without extra arguments has not been tried.
+Base model: ``Qwen/Qwen3-4B-Instruct-2507``, a text-only instruct model that
+does not think before answering, so the whole reply budget goes on the
+stroke file. ``Qwen/Qwen3.5-4B`` was the earlier default; it is tagged
+image-text-to-text (Qwen3_5ForConditionalGeneration) and whether GRPOTrainer
+loads it for text-only prompts has not been tried, so it stays an option.
+
+The judge takes the settings the calibration found necessary: ``--judge-reasoning-effort low --judge-max-tokens 400``
+for Claude, Grok and Qwen3.5 endpoints, ``--judge-no-reasoning`` for the rest.
+``--vllm colocate`` runs generation with vLLM on the same GPU, which is the
+difference between minutes and seconds per step.
 
 Infrastructure failures: the reward function returns None for a rollout
 whose judge or aesthetic call failed. In TRL's main branch source (read on
@@ -42,20 +48,13 @@ Logs, in ``--output-dir``:
 ``usage.jsonl``
     Judge API usage, one line per call.
 
-Commands, UNVERIFIED (neither has been run; flags are from memory of the
-``hf`` CLI and Modal and may need adjusting):
+Commands: ``scribe/modal_app.py`` wraps this module for Modal (sample the
+base model first, then train, then evaluate); its docstring has the three
+commands. Running this module directly needs a GPU, TRL, PEFT, datasets and
+vLLM installed, the pool on disk and ``SCRIBE_API_KEY``::
 
-    # Hugging Face Jobs. The repo and pool must be reachable from the job,
-    # for example as a private dataset repo downloaded at the start.
-    hf jobs uv run --flavor a100-large --timeout 8h \\
-        --secrets HF_TOKEN --secrets SCRIBE_API_KEY \\
-        --env SCRIBE_API_BASE=https://openrouter.ai/api/v1 \\
-        --with trl --with peft --with datasets --with numpy --with scipy --with pillow \\
-        scribe/train_grpo.py --pool pool --judge-model JUDGE_MODEL --output-dir out
-
-    # Modal, through a small wrapper app (not written) that mounts the repo
-    # and pool, requests one A100 and calls scribe.train_grpo.main(argv):
-    modal run scribe/modal_grpo.py --pool pool --judge-model JUDGE_MODEL
+    python -m scribe.train_grpo --pool shared/pool_v1/keeps --judge-model anthropic/claude-opus-5.5 \\
+        --judge-reasoning-effort low --judge-max-tokens 400 --vllm colocate --max-steps 30 --output-dir runs/grpo
 """
 
 from __future__ import annotations
@@ -77,7 +76,7 @@ from scribe.generate import prompt_seed
 from scribe.pool import Pool
 from scribe.reward import Reward
 
-DEFAULT_MODEL = "Qwen/Qwen3.5-4B"
+DEFAULT_MODEL = "Qwen/Qwen3-4B-Instruct-2507"
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -107,6 +106,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     ap.add_argument("--reward-workers", type=int, default=8, help="rollouts scored in parallel")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--report-to", default="none", help="trackio, wandb, tensorboard or none")
+    ap.add_argument("--vllm", default="none", choices=["none", "colocate"],
+                    help="colocate runs generation with vLLM on the training GPU")
+    ap.add_argument("--vllm-gpu-memory", type=float, default=0.3, help="share of GPU memory vLLM may take")
+    ap.add_argument("--judge-no-reasoning", action="store_true", help="ask the judge not to think first")
+    ap.add_argument("--judge-reasoning-effort", default=None, help="minimal, low, medium or high")
+    ap.add_argument("--judge-max-tokens", type=int, default=8, help="reply budget per comparison")
     return ap.parse_args(argv)
 
 
@@ -133,6 +138,8 @@ def grpo_config_kwargs(args: argparse.Namespace) -> dict[str, Any]:
         "log_completions": True,
         "seed": args.seed,
         "report_to": args.report_to,
+        **({"use_vllm": True, "vllm_mode": "colocate", "vllm_gpu_memory_utilization": args.vllm_gpu_memory}
+           if args.vllm == "colocate" else {}),
     }
 
 
@@ -140,6 +147,15 @@ def lora_kwargs(args: argparse.Namespace) -> dict[str, Any]:
     """Keyword arguments for ``peft.LoraConfig``."""
     return {"r": args.lora_r, "lora_alpha": args.lora_alpha, "lora_dropout": 0.05,
             "target_modules": "all-linear", "task_type": "CAUSAL_LM"}
+
+
+def judge_extra(args: argparse.Namespace) -> dict[str, Any] | None:
+    """Extra request fields for the judge from the ``--judge-*`` flags."""
+    if args.judge_reasoning_effort:
+        return {"reasoning": {"effort": args.judge_reasoning_effort}}
+    if args.judge_no_reasoning:
+        return {"reasoning": {"enabled": False}}
+    return None
 
 
 def dataset_rows(prompts: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -274,7 +290,7 @@ def main(argv: list[str] | None = None) -> int:
          "prompts": len(prompts), "started_at": time.time()}, indent=1))
 
     client = ChatClient(ledger=out / "usage.jsonl")
-    judge = PairwiseJudge(client, args.judge_model)
+    judge = PairwiseJudge(client, args.judge_model, max_tokens=args.judge_max_tokens, extra=judge_extra(args))
 
     def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
         return [r["path"] for r in pool.sample_references(rng, k=args.refs, mix=args.mix, prompt_id=prompt_id)]

@@ -1,0 +1,197 @@
+{
+ "id": "snow__google-gemini-3.1-flash-lite__00",
+ "prompt_id": "snow",
+ "subject": "a snowy lane with a grey fence",
+ "prompt": "Paint a snowy lane with a grey fence in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 2466,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.2737,
+     "mean_lightness": 92.39,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0016,
+      0.0233,
+      0.0187,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0011,
+      0.0016,
+      0.0103,
+      0.0397,
+      0.053,
+      0.0923,
+      0.3805,
+      0.4213
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 3,
+     "dry_steps": 3500,
+     "normalised": {
+      "width_clamped": 1
+     },
+     "coverage": 0.5125,
+     "mean_lightness": 85.7,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0004,
+      0.1974,
+      0.4585,
+      0.159,
+      0.0016,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0015,
+      0.0079,
+      0.028,
+      0.0329,
+      0.021,
+      0.0202,
+      0.3931,
+      0.4943,
+      0.001
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the fence line slightly so it sits more naturally in the middle of the lane, not floating above the snow.  \n2. Darken the fence posts and rails with deeper grey values to make them stand out from the snow and ground.  \n3. Use wet-on-wet technique to blend the sky and snow edge softly, avoiding hard lines and creating a more cohesive, snowy atmosphere."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 11,
+   "dry_ops": 3,
+   "dry_steps": 3500,
+   "normalised": {
+    "width_clamped": 1
+   },
+   "coverage": 0.5125,
+   "mean_lightness": 85.7,
+   "two_hues": true,
+   "two_levels": false,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0004,
+    0.1974,
+    0.4585,
+    0.159,
+    0.0016,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0015,
+    0.0079,
+    0.028,
+    0.0329,
+    0.021,
+    0.0202,
+    0.3931,
+    0.4943,
+    0.001
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 812,
+   "latency_s": 2.929,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__google-gemini-3.1-flash-lite__00:r0",
+   "finish_reason": "stop",
+   "at": 1793798065.7458944
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 81,
+   "latency_s": 2.607,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__google-gemini-3.1-flash-lite__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793798068.9559515
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1355,
+   "completion_tokens": 734,
+   "latency_s": 3.728,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__google-gemini-3.1-flash-lite__00:r1",
+   "finish_reason": "stop",
+   "at": 1793798072.6844153
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 2126,
+   "completion_tokens": 772,
+   "latency_s": 2.865,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "snow__google-gemini-3.1-flash-lite__00:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793798077.6831398
+  }
+ ],
+ "started_at": 1793798062.8164234,
+ "seconds": 16.87
+}

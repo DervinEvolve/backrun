@@ -182,3 +182,17 @@ def test_sample_references_never_returns_the_excluded_painting(pool: Pool) -> No
         refs = pool.sample_references(np.random.default_rng(_), k=2, prompt_id="p0", exclude=ids[0])
         assert ids[0] not in {r["id"] for r in refs}
         assert all(r["prompt_id"] == "p0" for r in refs)
+
+
+def test_export_writes_a_pool_of_the_kept_candidates(pool: Pool, tmp_path: Path) -> None:
+    ids = [c["id"] for c in pool.candidates()]
+    pool.rate(ids[0], "love")
+    pool.rate(ids[1], "okay")
+    pool.rate(ids[2], "nope")
+    info = pool.export(tmp_path / "keeps")
+    small = Pool(tmp_path / "keeps")
+    assert info["exported"] == 2 and info["manifest"] == small.manifest()["sha256"]
+    assert {c["id"] for c in small.candidates()} == {ids[0], ids[1]}
+    assert small.ratings() == {ids[0]: "love", ids[1]: "okay"}
+    assert (tmp_path / "keeps" / ids[0] / "final.png").is_file()
+    assert small.sample_references(0, k=2, mix=0.0) and len(small.summary()["models"]) >= 1

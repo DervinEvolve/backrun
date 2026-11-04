@@ -1,0 +1,178 @@
+{
+ "id": "market__deepseek-deepseek-v4-flash__03",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 34,
+     "dry_ops": 8,
+     "dry_steps": 2250,
+     "coverage": 0.6723,
+     "mean_lightness": 76.13,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0259,
+      0.1014,
+      0.5548,
+      0.1622,
+      0.0258,
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0467,
+      0.0289,
+      0.0064
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0015,
+      0.0095,
+      0.0281,
+      0.0497,
+      0.1497,
+      0.4064,
+      0.1336,
+      0.221,
+      0.0005
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 34,
+     "dry_ops": 8,
+     "dry_steps": 2250,
+     "coverage": 0.6367,
+     "mean_lightness": 74.42,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0252,
+      0.1581,
+      0.4946,
+      0.1149,
+      0.0217,
+      0.0,
+      0.0,
+      0.0,
+      0.0005,
+      0.0694,
+      0.0311,
+      0.0076
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0057,
+      0.0225,
+      0.0523,
+      0.1704,
+      0.2183,
+      0.1837,
+      0.0861,
+      0.2608,
+      0.0004
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning\u2019s placement so it clearly covers the stall\u2019s front, not floating above it.  \n2. Darken the awning\u2019s stripes with deeper values\u2014use stronger browns and blues\u2014so they stand out from the background.  \n3. Use less water in the awning\u2019s paint to keep edges sharp and avoid bleeding into the stall below."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 34,
+   "dry_ops": 8,
+   "dry_steps": 2250,
+   "coverage": 0.6367,
+   "mean_lightness": 74.42,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0252,
+    0.1581,
+    0.4946,
+    0.1149,
+    0.0217,
+    0.0,
+    0.0,
+    0.0,
+    0.0005,
+    0.0694,
+    0.0311,
+    0.0076
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0057,
+    0.0225,
+    0.0523,
+    0.1704,
+    0.2183,
+    0.1837,
+    0.0861,
+    0.2608,
+    0.0004
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 2243,
+   "latency_s": 32.183,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__03:r0",
+   "finish_reason": "stop",
+   "at": 1793800643.524345
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 76,
+   "latency_s": 2.689,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793800654.079431
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2760,
+   "completion_tokens": 2276,
+   "latency_s": 22.292,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__03:r1",
+   "finish_reason": "stop",
+   "at": 1793800676.3714037
+  }
+ ],
+ "started_at": 1793800611.3410459,
+ "seconds": 78.71
+}

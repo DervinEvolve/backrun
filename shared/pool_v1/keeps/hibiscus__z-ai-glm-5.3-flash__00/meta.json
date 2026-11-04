@@ -1,0 +1,187 @@
+{
+ "id": "hibiscus__z-ai-glm-5.3-flash__00",
+ "prompt_id": "hibiscus",
+ "subject": "a peach hibiscus flower, close up",
+ "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 445,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 32,
+     "dry_ops": 3,
+     "dry_steps": 3600,
+     "coverage": 0.5712,
+     "mean_lightness": 83.22,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0014,
+      0.3126,
+      0.4853,
+      0.1948,
+      0.006,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0014,
+      0.0065,
+      0.026,
+      0.034,
+      0.1666,
+      0.5168,
+      0.2481,
+      0.0006
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 35,
+     "dry_ops": 4,
+     "dry_steps": 4800,
+     "coverage": 0.4802,
+     "mean_lightness": 86.13,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0024,
+      0.2509,
+      0.4946,
+      0.0566,
+      0.1956,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0014,
+      0.0054,
+      0.0225,
+      0.0358,
+      0.1257,
+      0.5081,
+      0.2932,
+      0.008
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the flower more centrally in the frame, shifting it slightly left to avoid the edge and create a balanced composition.  \n2. Use darker, more saturated values in the center and along the petal edges to define the flower\u2019s form and depth.  \n3. Limit the green areas to the background and use less water in those sections to prevent bleeding and keep the petals distinct."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 35,
+   "dry_ops": 4,
+   "dry_steps": 4800,
+   "coverage": 0.4802,
+   "mean_lightness": 86.13,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0024,
+    0.2509,
+    0.4946,
+    0.0566,
+    0.1956,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0014,
+    0.0054,
+    0.0225,
+    0.0358,
+    0.1257,
+    0.5081,
+    0.2932,
+    0.008
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 419,
+   "completion_tokens": 3780,
+   "latency_s": 13.314,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__00:r0",
+   "at": 1793794054.969164
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 79,
+   "latency_s": 2.653,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__00:critic1",
+   "at": 1793794061.6273715
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2506,
+   "completion_tokens": 4096,
+   "latency_s": 12.333,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__00:r1",
+   "at": 1793794073.9609132
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3317,
+   "completion_tokens": 3967,
+   "latency_s": 10.101,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__00:r1:retry",
+   "at": 1793794084.0623734
+  }
+ ],
+ "started_at": 1793794041.654605,
+ "seconds": 44.96
+}

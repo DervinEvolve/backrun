@@ -1,0 +1,184 @@
+{
+ "id": "dunes__google-gemini-3.1-flash-lite__04",
+ "prompt_id": "dunes",
+ "subject": "sand dunes under a hot noon sky",
+ "prompt": "Paint sand dunes under a hot noon sky in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 4,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6713,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.7837,
+     "mean_lightness": 82.65,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.002,
+      0.3398,
+      0.6582,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0005,
+      0.0051,
+      0.0192,
+      0.0301,
+      0.0938,
+      0.3651,
+      0.4135,
+      0.0727
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "normalised": {
+      "width_clamped": 1
+     },
+     "coverage": 0.6515,
+     "mean_lightness": 84.84,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0082,
+      0.3099,
+      0.6784,
+      0.0036,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0029,
+      0.0163,
+      0.0289,
+      0.0125,
+      0.1386,
+      0.1756,
+      0.5905,
+      0.0346
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the sand dunes to the bottom third of the image to establish a stronger horizon and ground the scene.  \n2. Use darker, warmer brown values for the dunes\u2019 shadows and ridges to create contrast and suggest depth under bright sunlight.  \n3. Add subtle, thin washes of pale yellow and orange to the sky near the top, blending into the pale green, to suggest intense heat and a harsh noon light."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 3,
+   "dry_steps": 3000,
+   "normalised": {
+    "width_clamped": 1
+   },
+   "coverage": 0.6515,
+   "mean_lightness": 84.84,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0082,
+    0.3099,
+    0.6784,
+    0.0036,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0029,
+    0.0163,
+    0.0289,
+    0.0125,
+    0.1386,
+    0.1756,
+    0.5905,
+    0.0346
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 716,
+   "latency_s": 2.782,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__google-gemini-3.1-flash-lite__04:r0",
+   "finish_reason": "stop",
+   "at": 1793796399.5506134
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 90,
+   "latency_s": 2.533,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__google-gemini-3.1-flash-lite__04:critic1",
+   "finish_reason": "stop",
+   "at": 1793796414.6896064
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1263,
+   "completion_tokens": 804,
+   "latency_s": 2.096,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dunes__google-gemini-3.1-flash-lite__04:r1",
+   "finish_reason": "stop",
+   "at": 1793796416.7861896
+  }
+ ],
+ "started_at": 1793796396.7689219,
+ "seconds": 32.63
+}

@@ -1,0 +1,158 @@
+{
+ "id": "hibiscus__z-ai-glm-5.3-flash__03",
+ "prompt_id": "hibiscus",
+ "subject": "a peach hibiscus flower, close up",
+ "prompt": "Paint a peach hibiscus flower, close up in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 445,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 28,
+     "dry_ops": 5,
+     "dry_steps": 7100,
+     "coverage": 0.9363,
+     "mean_lightness": 79.72,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0003,
+      0.2006,
+      0.2729,
+      0.1678,
+      0.0118,
+      0.0002,
+      0.0008,
+      0.0068,
+      0.0121,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0004,
+      0.008,
+      0.0461,
+      0.0451,
+      0.1465,
+      0.2139,
+      0.3898,
+      0.1504
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "line 34: not valid JSON"
+    ],
+    "stats": {
+     "strokes": 29,
+     "dry_ops": 4,
+     "dry_steps": 5600,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Place the flower more centrally in the frame to emphasize it as the main subject.  \n2. Use darker, richer values in the center of the flower and on the stamen to create contrast and depth.  \n3. Control water flow to keep edges sharper and prevent the colours from bleeding into the background."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 28,
+   "dry_ops": 5,
+   "dry_steps": 7100,
+   "coverage": 0.9363,
+   "mean_lightness": 79.72,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0003,
+    0.2006,
+    0.2729,
+    0.1678,
+    0.0118,
+    0.0002,
+    0.0008,
+    0.0068,
+    0.0121,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0004,
+    0.008,
+    0.0461,
+    0.0451,
+    0.1465,
+    0.2139,
+    0.3898,
+    0.1504
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 419,
+   "completion_tokens": 2811,
+   "latency_s": 24.937,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__03:r0",
+   "at": 1793794066.6030738
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 146,
+   "completion_tokens": 64,
+   "latency_s": 2.37,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__03:critic1",
+   "at": 1793794074.3595052
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2674,
+   "completion_tokens": 4096,
+   "latency_s": 14.794,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__03:r1",
+   "at": 1793794089.1536179
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2725,
+   "completion_tokens": 4096,
+   "latency_s": 13.443,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hibiscus__z-ai-glm-5.3-flash__03:r1:retry",
+   "at": 1793794102.5968757
+  }
+ ],
+ "started_at": 1793794041.6655345,
+ "seconds": 61.02
+}

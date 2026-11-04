@@ -1,0 +1,178 @@
+{
+ "id": "peonies__z-ai-glm-5.3-flash__01",
+ "prompt_id": "peonies",
+ "subject": "pink peonies, loose and wet",
+ "prompt": "Paint pink peonies, loose and wet in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3839,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 28,
+     "dry_ops": 3,
+     "dry_steps": 2500,
+     "coverage": 0.6531,
+     "mean_lightness": 84.07,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.3683,
+      0.3771,
+      0.0881,
+      0.1281,
+      0.0348,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0036
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0028,
+      0.0131,
+      0.0255,
+      0.0417,
+      0.1124,
+      0.1978,
+      0.5988,
+      0.0079
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 29,
+     "dry_ops": 4,
+     "dry_steps": 3700,
+     "coverage": 0.5215,
+     "mean_lightness": 85.24,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.5073,
+      0.2923,
+      0.0837,
+      0.0589,
+      0.0554,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0023
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0005,
+      0.0049,
+      0.0195,
+      0.0382,
+      0.0589,
+      0.1381,
+      0.2285,
+      0.4998,
+      0.0116
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the largest peonies slightly off-center to create a more natural, clustered arrangement, avoiding a flat, centered layout.  \n2. Use darker, more saturated pink and red values in the centers of the flowers and lighter, diluted washes on the outer edges to enhance depth and form.  \n3. Control water flow to keep edges soft and blended where petals overlap, but allow some areas to dry before re-wetting to maintain distinct, loose shapes."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 29,
+   "dry_ops": 4,
+   "dry_steps": 3700,
+   "coverage": 0.5215,
+   "mean_lightness": 85.24,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.5073,
+    0.2923,
+    0.0837,
+    0.0589,
+    0.0554,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0023
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0005,
+    0.0049,
+    0.0195,
+    0.0382,
+    0.0589,
+    0.1381,
+    0.2285,
+    0.4998,
+    0.0116
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 417,
+   "completion_tokens": 1994,
+   "latency_s": 7.427,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__z-ai-glm-5.3-flash__01:r0",
+   "finish_reason": "stop",
+   "at": 1793802816.9098651
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 95,
+   "latency_s": 4.64,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__z-ai-glm-5.3-flash__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793802824.8773968
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2488,
+   "completion_tokens": 2070,
+   "latency_s": 11.006,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__z-ai-glm-5.3-flash__01:r1",
+   "finish_reason": "stop",
+   "at": 1793802835.8840177
+  }
+ ],
+ "started_at": 1793802809.4828584,
+ "seconds": 41.18
+}

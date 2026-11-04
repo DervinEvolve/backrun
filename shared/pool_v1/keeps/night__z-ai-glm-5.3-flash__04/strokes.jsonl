@@ -1,0 +1,50 @@
+{"op": "canvas", "width": 256, "height": 192, "seed": 3043, "paper": "cold_press"}
+{"op": "stroke", "path": [[10.0, 30.0], [70.0, 20.0], [130.0, 26.0]], "width": 55.0, "water": 0.85, "pigments": {"paynes_grey": 0.3, "french_ultramarine": 0.28}}
+{"op": "stroke", "path": [[180.0, 22.0], [230.0, 28.0], [254.0, 24.0]], "width": 45.0, "water": 0.85, "pigments": {"paynes_grey": 0.28, "french_ultramarine": 0.26}}
+{"op": "stroke", "path": [[0.0, 80.0], [60.0, 72.0], [120.0, 80.0]], "width": 50.0, "water": 0.8, "pigments": {"paynes_grey": 0.34, "french_ultramarine": 0.3}}
+{"op": "stroke", "path": [[170.0, 76.0], [220.0, 82.0], [254.0, 78.0]], "width": 45.0, "water": 0.8, "pigments": {"paynes_grey": 0.34, "french_ultramarine": 0.24}}
+{"op": "stroke", "path": [[10.0, 120.0], [70.0, 114.0], [130.0, 120.0]], "width": 40.0, "water": 0.75, "pigments": {"paynes_grey": 0.36, "french_ultramarine": 0.2}}
+{"op": "dry", "steps": 1700}
+{"op": "stroke", "path": [[4.0, 6.0], [60.0, 10.0], [120.0, 6.0]], "width": 40.0, "water": 0.7, "pigments": {"paynes_grey": 0.5, "french_ultramarine": 0.35}}
+{"op": "stroke", "path": [[170.0, 10.0], [220.0, 12.0], [254.0, 8.0]], "width": 40.0, "water": 0.7, "pigments": {"paynes_grey": 0.48, "french_ultramarine": 0.3}}
+{"op": "stroke", "path": [[2.0, 48.0], [6.0, 88.0], [2.0, 128.0]], "width": 34.0, "water": 0.65, "pigments": {"paynes_grey": 0.45, "french_ultramarine": 0.25}}
+{"op": "stroke", "path": [[254.0, 50.0], [250.0, 90.0], [254.0, 130.0]], "width": 34.0, "water": 0.65, "pigments": {"paynes_grey": 0.45, "french_ultramarine": 0.25}}
+{"op": "dry", "steps": 1300}
+{"op": "stroke", "path": [[4.0, 140.0], [50.0, 136.0], [96.0, 142.0]], "width": 24.0, "water": 0.6, "pigments": {"paynes_grey": 0.55}}
+{"op": "stroke", "path": [[120.0, 144.0], [160.0, 140.0], [200.0, 146.0]], "width": 22.0, "water": 0.6, "pigments": {"paynes_grey": 0.52, "french_ultramarine": 0.2}}
+{"op": "stroke", "path": [[216.0, 148.0], [244.0, 144.0], [254.0, 150.0]], "width": 20.0, "water": 0.6, "pigments": {"paynes_grey": 0.55}}
+{"op": "stroke", "path": [[40.0, 118.0], [84.0, 114.0], [128.0, 120.0]], "width": 16.0, "water": 0.55, "pigments": {"paynes_grey": 0.45}}
+{"op": "dry", "steps": 1200}
+{"op": "stroke", "path": [[112.0, 72.0], [130.0, 54.0], [148.0, 72.0]], "width": 40.0, "water": 0.9, "pigments": {"cadmium_yellow": 0.12}}
+{"op": "stroke", "path": [[118.0, 72.0], [130.0, 60.0], [142.0, 72.0]], "width": 28.0, "water": 0.95, "pigments": {"cadmium_yellow": 0.2}}
+{"op": "stroke", "path": [[122.0, 70.0], [130.0, 62.0], [138.0, 70.0]], "width": 18.0, "water": 0.9, "pigments": {"cadmium_yellow": 0.28}}
+{"op": "dry", "steps": 900}
+{"op": "stroke", "path": [[126.0, 64.0], [134.0, 64.0], [132.0, 74.0], [128.0, 74.0]], "width": 12.0, "water": 0.3, "pigments": {"cadmium_yellow": 0.7}}
+{"op": "dry", "steps": 900}
+{"op": "stroke", "path": [[130.0, 76.0], [130.0, 110.0], [130.0, 150.0]], "width": 5.0, "water": 0.4, "pigments": {"paynes_grey": 0.55}}
+{"op": "stroke", "path": [[108.0, 70.0], [120.0, 68.0], [132.0, 68.0]], "width": 4.0, "water": 0.4, "pigments": {"paynes_grey": 0.5}}
+{"op": "stroke", "path": [[126.0, 50.0], [134.0, 50.0], [130.0, 44.0]], "width": 4.0, "water": 0.4, "pigments": {"paynes_grey": 0.5}}
+{"op": "dry", "steps": 1100}
+{"op": "stroke", "path": [[30.0, 158.0], [90.0, 154.0], [150.0, 160.0]], "width": 40.0, "water": 0.85, "pigments": {"paynes_grey": 0.4, "french_ultramarine": 0.28}}
+{"op": "stroke", "path": [[180.0, 158.0], [230.0, 162.0], [254.0, 156.0]], "width": 36.0, "water": 0.85, "pigments": {"paynes_grey": 0.4, "french_ultramarine": 0.26}}
+{"op": "stroke", "path": [[20.0, 176.0], [80.0, 172.0], [140.0, 178.0]], "width": 30.0, "water": 0.8, "pigments": {"paynes_grey": 0.42}}
+{"op": "stroke", "path": [[170.0, 176.0], [220.0, 180.0], [250.0, 174.0]], "width": 28.0, "water": 0.8, "pigments": {"paynes_grey": 0.42}}
+{"op": "dry", "steps": 1600}
+{"op": "stroke", "path": [[126.0, 158.0], [130.0, 172.0], [129.0, 184.0]], "width": 10.0, "water": 0.8, "pigments": {"cadmium_yellow": 0.35}}
+{"op": "stroke", "path": [[122.0, 160.0], [128.0, 174.0], [126.0, 186.0]], "width": 8.0, "water": 0.85, "pigments": {"cadmium_yellow": 0.2}}
+{"op": "stroke", "path": [[134.0, 158.0], [131.0, 172.0]], "width": 7.0, "water": 0.85, "pigments": {"cadmium_yellow": 0.15}}
+{"op": "dry", "steps": 1000}
+{"op": "stroke", "path": [[129.0, 152.0], [129.0, 166.0], [129.0, 182.0]], "width": 4.0, "water": 0.6, "pigments": {"paynes_grey": 0.4}}
+{"op": "dry", "steps": 1000}
+{"op": "stroke", "path": [[128.0, 156.0], [127.0, 168.0], [128.0, 180.0], [127.0, 190.0]], "width": 5.0, "water": 0.5, "pigments": {"paynes_grey": 0.55, "french_ultramarine": 0.3}}
+{"op": "stroke", "path": [[133.0, 158.0], [134.0, 172.0], [132.0, 184.0]], "width": 4.0, "water": 0.55, "pigments": {"paynes_grey": 0.5, "french_ultramarine": 0.25}}
+{"op": "stroke", "path": [[124.0, 162.0], [123.0, 174.0], [124.0, 186.0]], "width": 3.0, "water": 0.5, "pigments": {"paynes_grey": 0.45, "french_ultramarine": 0.2}}
+{"op": "dry", "steps": 1000}
+{"op": "stroke", "path": [[40.0, 8.0], [38.0, 42.0]], "width": 2.0, "water": 0.6, "pigments": {"cerulean_blue": 0.2}}
+{"op": "stroke", "path": [[90.0, 16.0], [88.0, 52.0]], "width": 2.0, "water": 0.6, "pigments": {"cerulean_blue": 0.18}}
+{"op": "stroke", "path": [[200.0, 14.0], [198.0, 50.0]], "width": 2.0, "water": 0.6, "pigments": {"cerulean_blue": 0.2}}
+{"op": "stroke", "path": [[240.0, 30.0], [238.0, 66.0]], "width": 2.0, "water": 0.6, "pigments": {"cerulean_blue": 0.18}}
+{"op": "stroke", "path": [[20.0, 60.0], [18.0, 96.0]], "width": 2.0, "water": 0.6, "pigments": {"cerulean_blue": 0.18}}
+{"op": "stroke", "path": [[80.0, 66.0], [78.0, 104.0]], "width": 2.0, "water": 0.6, "pigments": {"cerulean_blue": 0.18}}
+{"op": "stroke", "path": [[228.0, 80.0], [226.0, 116.0]], "width": 2.0, "water": 0.6, "pigments": {"cerulean_blue": 0.2}}
+{"op": "dry", "steps": 1200}

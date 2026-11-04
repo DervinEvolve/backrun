@@ -1,0 +1,187 @@
+{
+ "id": "bridge__deepseek-deepseek-v4-flash__05",
+ "prompt_id": "bridge",
+ "subject": "a stone bridge over a slow river",
+ "prompt": "Paint a stone bridge over a slow river in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 5,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 9435,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 17,
+     "dry_ops": 8,
+     "dry_steps": 1950,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.6127,
+     "mean_lightness": 78.66,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.005,
+      0.1166,
+      0.1861,
+      0.2743,
+      0.4058,
+      0.0013,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.001,
+      0.0142,
+      0.0226,
+      0.0498,
+      0.0894,
+      0.053,
+      0.1438,
+      0.3868,
+      0.2391,
+      0.0003
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 21,
+     "dry_ops": 9,
+     "dry_steps": 2050,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.5654,
+     "mean_lightness": 74.0,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0001,
+      0.0666,
+      0.1824,
+      0.1267,
+      0.5545,
+      0.023,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0001,
+      0.0228,
+      0.0381,
+      0.1318,
+      0.115,
+      0.0789,
+      0.4209,
+      0.1471,
+      0.0451,
+      0.0001
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the bridge slightly so it sits more naturally in the river, with the water line cutting through the middle of the arches to show it\u2019s spanning the water, not floating above it.  \n2. Darken the shadowed underside of the bridge and the water beneath it to create contrast and depth, making the structure feel solid and grounded.  \n3. Use cooler, more saturated blues and greens in the water, especially near the bridge, to suggest depth and movement, and add subtle ripples to imply flow."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 21,
+   "dry_ops": 9,
+   "dry_steps": 2050,
+   "normalised": {
+    "path_resampled": 1
+   },
+   "coverage": 0.5654,
+   "mean_lightness": 74.0,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0001,
+    0.0666,
+    0.1824,
+    0.1267,
+    0.5545,
+    0.023,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0001,
+    0.0228,
+    0.0381,
+    0.1318,
+    0.115,
+    0.0789,
+    0.4209,
+    0.1471,
+    0.0451,
+    0.0001
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 409,
+   "completion_tokens": 1397,
+   "latency_s": 29.345,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bridge__deepseek-deepseek-v4-flash__05:r0",
+   "finish_reason": "stop",
+   "at": 1793800810.285884
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 107,
+   "latency_s": 5.635,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bridge__deepseek-deepseek-v4-flash__05:critic1",
+   "finish_reason": "stop",
+   "at": 1793800821.7715993
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1940,
+   "completion_tokens": 1711,
+   "latency_s": 45.856,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bridge__deepseek-deepseek-v4-flash__05:r1",
+   "finish_reason": "stop",
+   "at": 1793800867.6283484
+  }
+ ],
+ "started_at": 1793800780.940989,
+ "seconds": 89.4
+}

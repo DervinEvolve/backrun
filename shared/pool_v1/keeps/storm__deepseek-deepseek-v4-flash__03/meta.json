@@ -1,0 +1,184 @@
+{
+ "id": "storm__deepseek-deepseek-v4-flash__03",
+ "prompt_id": "storm",
+ "subject": "a storm cloud over a wheat field",
+ "prompt": "Paint a storm cloud over a wheat field in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6727,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 12,
+     "dry_steps": 1160,
+     "coverage": 0.9227,
+     "mean_lightness": 59.98,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0791,
+      0.2982,
+      0.4346,
+      0.0086,
+      0.0007,
+      0.0008,
+      0.0166,
+      0.1202,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0115,
+      0.0157,
+      0.0659,
+      0.2128,
+      0.3471,
+      0.1507,
+      0.1112,
+      0.0828,
+      0.0022
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 12,
+     "dry_steps": 1220,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.8339,
+     "mean_lightness": 54.69,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0097,
+      0.1717,
+      0.4566,
+      0.0119,
+      0.0045,
+      0.0055,
+      0.0156,
+      0.3218,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0079,
+      0.0705,
+      0.211,
+      0.0994,
+      0.2047,
+      0.1374,
+      0.102,
+      0.0918,
+      0.0689,
+      0.0063
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the storm cloud higher in the composition to occupy the top third of the image, creating a stronger sense of looming weight and space above the field.  \n2. Use darker, more saturated values in the cloud\u2014especially deep blues and grays\u2014while keeping the lower part of the cloud lighter to suggest depth and light breaking through.  \n3. Apply more controlled water to blend the green field into a consistent, slightly darker tone, and use a lighter, drier brush for the wheat at the bottom to create texture and contrast."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 12,
+   "dry_ops": 12,
+   "dry_steps": 1220,
+   "normalised": {
+    "path_resampled": 1
+   },
+   "coverage": 0.8339,
+   "mean_lightness": 54.69,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0097,
+    0.1717,
+    0.4566,
+    0.0119,
+    0.0045,
+    0.0055,
+    0.0156,
+    0.3218,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0079,
+    0.0705,
+    0.211,
+    0.0994,
+    0.2047,
+    0.1374,
+    0.102,
+    0.0918,
+    0.0689,
+    0.0063
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 409,
+   "completion_tokens": 1117,
+   "latency_s": 21.371,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__03:r0",
+   "finish_reason": "stop",
+   "at": 1793796940.9457867
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 110,
+   "latency_s": 3.284,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793796993.9470005
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1662,
+   "completion_tokens": 1191,
+   "latency_s": 20.081,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__03:r1",
+   "finish_reason": "stop",
+   "at": 1793797014.0302477
+  }
+ ],
+ "started_at": 1793796919.5742092,
+ "seconds": 101.59
+}

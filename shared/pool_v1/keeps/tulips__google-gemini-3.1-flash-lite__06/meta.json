@@ -1,0 +1,178 @@
+{
+ "id": "tulips__google-gemini-3.1-flash-lite__06",
+ "prompt_id": "tulips",
+ "subject": "yellow tulips in a jam jar",
+ "prompt": "Paint yellow tulips in a jam jar in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 6,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 9952,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.1726,
+     "mean_lightness": 93.5,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0815,
+      0.35,
+      0.0282,
+      0.0039,
+      0.0238,
+      0.1062,
+      0.0267,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0002,
+      0.0005,
+      0.0068,
+      0.0352,
+      0.1287,
+      0.6798,
+      0.1487
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 4,
+     "dry_steps": 3000,
+     "coverage": 0.2017,
+     "mean_lightness": 93.47,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.1222,
+      0.3434,
+      0.0609,
+      0.0039,
+      0.0076,
+      0.0452,
+      0.0008,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0003,
+      0.0132,
+      0.1581,
+      0.4451,
+      0.3833
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the jam jar lower in the composition, so it\u2019s clearly visible and centered beneath the tulips, not floating above the base.  \n2. Use darker, more saturated yellow for the tulips and lighter, cooler tones for the stems to create contrast and depth.  \n3. Add a thin, dark line around the rim of the jar and a subtle shadow beneath it to ground the object and define its shape."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 4,
+   "dry_steps": 3000,
+   "coverage": 0.2017,
+   "mean_lightness": 93.47,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.1222,
+    0.3434,
+    0.0609,
+    0.0039,
+    0.0076,
+    0.0452,
+    0.0008,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0003,
+    0.0132,
+    0.1581,
+    0.4451,
+    0.3833
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 740,
+   "latency_s": 2.575,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__google-gemini-3.1-flash-lite__06:r0",
+   "finish_reason": "stop",
+   "at": 1793802724.5763965
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 87,
+   "latency_s": 4.173,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__google-gemini-3.1-flash-lite__06:critic1",
+   "finish_reason": "stop",
+   "at": 1793802729.3380206
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1286,
+   "completion_tokens": 771,
+   "latency_s": 2.975,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__google-gemini-3.1-flash-lite__06:r1",
+   "finish_reason": "stop",
+   "at": 1793802732.3135514
+  }
+ ],
+ "started_at": 1793802722.0008903,
+ "seconds": 12.8
+}

@@ -1,0 +1,191 @@
+{
+ "id": "fern__z-ai-glm-5.3-flash__05",
+ "prompt_id": "fern",
+ "subject": "a fern frond on wet paper",
+ "prompt": "Paint a fern frond on wet paper in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 5,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 1098,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 28,
+     "dry_ops": 2,
+     "dry_steps": 2400,
+     "coverage": 0.2747,
+     "mean_lightness": 93.7,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0834,
+      0.3994,
+      0.0008,
+      0.0004,
+      0.0021,
+      0.0003,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0001,
+      0.0001,
+      0.0008,
+      0.0013,
+      0.004,
+      0.0073,
+      0.0238,
+      0.3127,
+      0.6499
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 37,
+     "dry_ops": 4,
+     "dry_steps": 4300,
+     "coverage": 0.1567,
+     "mean_lightness": 93.62,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.1362,
+      0.0061,
+      0.2557,
+      0.0017,
+      0.003,
+      0.0241,
+      0.0047,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0005,
+      0.009,
+      0.031,
+      0.0687,
+      0.1027,
+      0.176,
+      0.6121
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the fern frond slightly off-center, closer to the top third of the page, to create a more natural and balanced composition.  \n2. Use darker, more saturated green values for the main stem and leaf edges to define the form and contrast against the lighter background.  \n3. Control the water flow to keep the base of the fern and surrounding area drier, preventing the green from bleeding into the lower section and losing definition."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 37,
+   "dry_ops": 4,
+   "dry_steps": 4300,
+   "coverage": 0.1567,
+   "mean_lightness": 93.62,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.1362,
+    0.0061,
+    0.2557,
+    0.0017,
+    0.003,
+    0.0241,
+    0.0047,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0005,
+    0.009,
+    0.031,
+    0.0687,
+    0.1027,
+    0.176,
+    0.6121
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 415,
+   "completion_tokens": 3790,
+   "latency_s": 27.208,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fern__z-ai-glm-5.3-flash__05:r0",
+   "finish_reason": "stop",
+   "at": 1793803119.8017032
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 91,
+   "latency_s": 3.796,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fern__z-ai-glm-5.3-flash__05:critic1",
+   "finish_reason": "stop",
+   "at": 1793803125.6505318
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2092,
+   "completion_tokens": 4096,
+   "latency_s": 58.97,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fern__z-ai-glm-5.3-flash__05:r1",
+   "finish_reason": "length",
+   "at": 1793803184.6208906
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 3738,
+   "completion_tokens": 2283,
+   "latency_s": 39.008,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fern__z-ai-glm-5.3-flash__05:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793803223.6295588
+  }
+ ],
+ "started_at": 1793803092.5937283,
+ "seconds": 132.04
+}

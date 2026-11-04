@@ -1,0 +1,187 @@
+{
+ "id": "dawn__qwen-qwen3-coder-next__00",
+ "prompt_id": "dawn",
+ "subject": "dawn over hills, pale pink and grey",
+ "prompt": "Paint dawn over hills, pale pink and grey in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 5168,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 11,
+     "dry_steps": 12500,
+     "normalised": {
+      "width_clamped": 4
+     },
+     "coverage": 0.8846,
+     "mean_lightness": 65.47,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.2484,
+      0.0034,
+      0.1474,
+      0.068,
+      0.0299,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0417,
+      0.2573,
+      0.1725
+     ],
+     "lightness_hist": [
+      0.0003,
+      0.0076,
+      0.0214,
+      0.0282,
+      0.1144,
+      0.2067,
+      0.3209,
+      0.2752,
+      0.0248,
+      0.0005
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 14,
+     "dry_ops": 13,
+     "dry_steps": 13900,
+     "normalised": {
+      "width_clamped": 5
+     },
+     "coverage": 0.9721,
+     "mean_lightness": 55.66,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0973,
+      0.0151,
+      0.3009,
+      0.1263,
+      0.1087,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0104,
+      0.0629,
+      0.1795
+     ],
+     "lightness_hist": [
+      0.0001,
+      0.0118,
+      0.0371,
+      0.0784,
+      0.2175,
+      0.3258,
+      0.2098,
+      0.1023,
+      0.0163,
+      0.0009
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Shift the pale pink higher in the composition to represent the sky above the hills, making it the dominant top layer.  \n2. Use lighter, more transparent washes in the upper layers and darker, more saturated tones in the lower layers to create a clear value gradient from sky to ground.  \n3. Reduce the amount of water in the lower green and brown areas to avoid muddy blending and improve edge definition between hills."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 14,
+   "dry_ops": 13,
+   "dry_steps": 13900,
+   "normalised": {
+    "width_clamped": 5
+   },
+   "coverage": 0.9721,
+   "mean_lightness": 55.66,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0973,
+    0.0151,
+    0.3009,
+    0.1263,
+    0.1087,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0104,
+    0.0629,
+    0.1795
+   ],
+   "lightness_hist": [
+    0.0001,
+    0.0118,
+    0.0371,
+    0.0784,
+    0.2175,
+    0.3258,
+    0.2098,
+    0.1023,
+    0.0163,
+    0.0009
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 434,
+   "completion_tokens": 1297,
+   "latency_s": 24.553,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__00:r0",
+   "finish_reason": "stop",
+   "at": 1793801712.2083561
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 87,
+   "latency_s": 4.741,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793801788.2221766
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 1850,
+   "completion_tokens": 1634,
+   "latency_s": 21.01,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "dawn__qwen-qwen3-coder-next__00:r1",
+   "finish_reason": "stop",
+   "at": 1793801809.2332485
+  }
+ ],
+ "started_at": 1793801687.6551876,
+ "seconds": 146.64
+}

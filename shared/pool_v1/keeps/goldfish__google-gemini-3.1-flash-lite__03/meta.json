@@ -1,0 +1,178 @@
+{
+ "id": "goldfish__google-gemini-3.1-flash-lite__03",
+ "prompt_id": "goldfish",
+ "subject": "two goldfish in a clear bowl",
+ "prompt": "Paint two goldfish in a clear bowl in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6842,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 9,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.3497,
+     "mean_lightness": 93.41,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0024,
+      0.0087,
+      0.0479,
+      0.0679,
+      0.0002,
+      0.0,
+      0.0033,
+      0.0503,
+      0.0011,
+      0.0001,
+      0.0001,
+      0.0041
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0018,
+      0.005,
+      0.0079,
+      0.0621,
+      0.1334,
+      0.7897
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.1168,
+     "mean_lightness": 93.49,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0369,
+      0.0758,
+      0.2475,
+      0.2127,
+      0.0,
+      0.0,
+      0.0,
+      0.001,
+      0.0,
+      0.0,
+      0.0,
+      0.0387
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0016,
+      0.0111,
+      0.0428,
+      0.1414,
+      0.2244,
+      0.3592,
+      0.2195
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the goldfish more centrally in the bowl, avoiding the edges, to clearly establish them as the main subject.  \n2. Use darker, richer values for the fish to create contrast with the light water, making them stand out.  \n3. Add subtle blue and grey tones in the water to suggest depth and transparency, and include faint reflections of the fish."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 11,
+   "dry_ops": 3,
+   "dry_steps": 3000,
+   "coverage": 0.1168,
+   "mean_lightness": 93.49,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0369,
+    0.0758,
+    0.2475,
+    0.2127,
+    0.0,
+    0.0,
+    0.0,
+    0.001,
+    0.0,
+    0.0,
+    0.0,
+    0.0387
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0016,
+    0.0111,
+    0.0428,
+    0.1414,
+    0.2244,
+    0.3592,
+    0.2195
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 668,
+   "latency_s": 2.024,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__google-gemini-3.1-flash-lite__03:r0",
+   "finish_reason": "stop",
+   "at": 1793799899.9631667
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 76,
+   "latency_s": 2.318,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__google-gemini-3.1-flash-lite__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793799903.0684245
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1203,
+   "completion_tokens": 876,
+   "latency_s": 3.27,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "goldfish__google-gemini-3.1-flash-lite__03:r1",
+   "finish_reason": "stop",
+   "at": 1793799906.338721
+  }
+ ],
+ "started_at": 1793799897.938878,
+ "seconds": 12.22
+}

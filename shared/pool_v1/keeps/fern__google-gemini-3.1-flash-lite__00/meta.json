@@ -1,0 +1,178 @@
+{
+ "id": "fern__google-gemini-3.1-flash-lite__00",
+ "prompt_id": "fern",
+ "subject": "a fern frond on wet paper",
+ "prompt": "Paint a fern frond on wet paper in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 1098,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 2,
+     "dry_steps": 2000,
+     "coverage": 0.2659,
+     "mean_lightness": 89.56,
+     "two_hues": false,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0013,
+      0.9987,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0078,
+      0.0204,
+      0.036,
+      0.0408,
+      0.0448,
+      0.1256,
+      0.3199,
+      0.385,
+      0.0197
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 14,
+     "dry_ops": 2,
+     "dry_steps": 1500,
+     "coverage": 0.3458,
+     "mean_lightness": 89.04,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0984,
+      0.9016,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0054,
+      0.0195,
+      0.0307,
+      0.0295,
+      0.0351,
+      0.0594,
+      0.296,
+      0.3937,
+      0.1307
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the frond slightly off-center to the left to create a more natural, dynamic composition and avoid a stiff, symmetrical look.  \n2. Use darker green values in the central stem and along the edges of the frond to define structure and depth, making the form stand out from the wet paper.  \n3. Let the water flow more evenly across the paper to create soft, blended edges on the frond, avoiding hard lines and ensuring the paint bleeds naturally into the wet surface."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 14,
+   "dry_ops": 2,
+   "dry_steps": 1500,
+   "coverage": 0.3458,
+   "mean_lightness": 89.04,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0984,
+    0.9016,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0054,
+    0.0195,
+    0.0307,
+    0.0295,
+    0.0351,
+    0.0594,
+    0.296,
+    0.3937,
+    0.1307
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 711,
+   "latency_s": 2.967,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fern__google-gemini-3.1-flash-lite__00:r0",
+   "finish_reason": "stop",
+   "at": 1793803113.6462467
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 103,
+   "latency_s": 10.093,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fern__google-gemini-3.1-flash-lite__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793803124.3670242
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1275,
+   "completion_tokens": 939,
+   "latency_s": 3.265,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "fern__google-gemini-3.1-flash-lite__00:r1",
+   "finish_reason": "stop",
+   "at": 1793803127.6322358
+  }
+ ],
+ "started_at": 1793803110.6793966,
+ "seconds": 17.98
+}

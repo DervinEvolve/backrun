@@ -1,0 +1,184 @@
+{
+ "id": "market__deepseek-deepseek-v4-flash__01",
+ "prompt_id": "market",
+ "subject": "a market stall with striped awning",
+ "prompt": "Paint a market stall with striped awning in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7139,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 37,
+     "dry_ops": 7,
+     "dry_steps": 1800,
+     "coverage": 0.7903,
+     "mean_lightness": 78.85,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0551,
+      0.0277,
+      0.4431,
+      0.1467,
+      0.0128,
+      0.0003,
+      0.0,
+      0.0001,
+      0.0118,
+      0.1087,
+      0.0089,
+      0.0085
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0018,
+      0.0089,
+      0.0227,
+      0.0326,
+      0.0726,
+      0.159,
+      0.2063,
+      0.4678,
+      0.0281
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 43,
+     "dry_ops": 8,
+     "dry_steps": 2150,
+     "normalised": {
+      "path_resampled": 1
+     },
+     "coverage": 0.8157,
+     "mean_lightness": 76.74,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0136,
+      0.0704,
+      0.3162,
+      0.1297,
+      0.0166,
+      0.001,
+      0.0003,
+      0.0002,
+      0.0045,
+      0.0593,
+      0.0074,
+      0.0069
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0063,
+      0.0188,
+      0.0336,
+      0.0472,
+      0.0808,
+      0.1854,
+      0.1583,
+      0.4449,
+      0.0248
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Lower the awning so it clearly covers the stall area, placing it just above the horizontal beam to establish a realistic, functional shelter.  \n2. Darken the shadow under the awning and the ground beneath the stall to create stronger contrast and define the space as a covered area.  \n3. Use more saturated, varied colours for the goods on display\u2014like reds, blues, and greens\u2014while keeping the awning stripes consistent and the background muted to draw focus to the market items."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 43,
+   "dry_ops": 8,
+   "dry_steps": 2150,
+   "normalised": {
+    "path_resampled": 1
+   },
+   "coverage": 0.8157,
+   "mean_lightness": 76.74,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0136,
+    0.0704,
+    0.3162,
+    0.1297,
+    0.0166,
+    0.001,
+    0.0003,
+    0.0002,
+    0.0045,
+    0.0593,
+    0.0074,
+    0.0069
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0063,
+    0.0188,
+    0.0336,
+    0.0472,
+    0.0808,
+    0.1854,
+    0.1583,
+    0.4449,
+    0.0248
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 410,
+   "completion_tokens": 2393,
+   "latency_s": 29.354,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__01:r0",
+   "finish_reason": "stop",
+   "at": 1793800633.467844
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 103,
+   "latency_s": 9.433,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793800645.5033314
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2933,
+   "completion_tokens": 3085,
+   "latency_s": 28.466,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "market__deepseek-deepseek-v4-flash__01:r1",
+   "finish_reason": "stop",
+   "at": 1793800673.9708385
+  }
+ ],
+ "started_at": 1793800604.1133258,
+ "seconds": 82.32
+}

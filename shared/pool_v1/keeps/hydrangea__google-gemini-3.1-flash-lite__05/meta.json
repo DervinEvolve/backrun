@@ -1,0 +1,178 @@
+{
+ "id": "hydrangea__google-gemini-3.1-flash-lite__05",
+ "prompt_id": "hydrangea",
+ "subject": "a blue hydrangea head",
+ "prompt": "Paint a blue hydrangea head in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 5,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 8210,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.2239,
+     "mean_lightness": 89.45,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0009,
+      0.1138,
+      0.0027,
+      0.0014,
+      0.0009,
+      0.0006,
+      0.1811,
+      0.6955,
+      0.0019
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0123,
+      0.0197,
+      0.0223,
+      0.0523,
+      0.1427,
+      0.1022,
+      0.4626,
+      0.1844,
+      0.0015
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 13,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.227,
+     "mean_lightness": 91.02,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0002,
+      0.3131,
+      0.0001,
+      0.0001,
+      0.0,
+      0.0002,
+      0.1899,
+      0.1693,
+      0.0014
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0022,
+      0.0148,
+      0.0256,
+      0.0396,
+      0.0488,
+      0.1011,
+      0.1406,
+      0.623,
+      0.0043
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the hydrangea head to the upper center of the page to give it more visual weight and focus.  \n2. Use darker, more saturated blue values in the center of the flower and lighter, diluted blues toward the edges to show depth and form.  \n3. Let the green stem and leaves show more variation in tone and edge\u2014use a stronger, more defined line where the stem meets the flower and allow some water to bleed softly at the edges to suggest natural texture."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 13,
+   "dry_ops": 3,
+   "dry_steps": 3000,
+   "coverage": 0.227,
+   "mean_lightness": 91.02,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0002,
+    0.3131,
+    0.0001,
+    0.0001,
+    0.0,
+    0.0002,
+    0.1899,
+    0.1693,
+    0.0014
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0022,
+    0.0148,
+    0.0256,
+    0.0396,
+    0.0488,
+    0.1011,
+    0.1406,
+    0.623,
+    0.0043
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 431,
+   "completion_tokens": 888,
+   "latency_s": 2.778,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__05:r0",
+   "finish_reason": "stop",
+   "at": 1793795776.8656952
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 100,
+   "latency_s": 2.747,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__05:critic1",
+   "finish_reason": "stop",
+   "at": 1793795780.4579716
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1444,
+   "completion_tokens": 997,
+   "latency_s": 2.937,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__05:r1",
+   "finish_reason": "stop",
+   "at": 1793795783.395149
+  }
+ ],
+ "started_at": 1793795774.087708,
+ "seconds": 10.34
+}

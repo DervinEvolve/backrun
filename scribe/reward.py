@@ -229,24 +229,29 @@ def reward_report(records: list[Any], out: Any = None, terms: list[str] | None =
 
 
 def score_batch(batch_root: str, reward: Reward, out_path: str, seed: int = 0, limit: int | None = None,
-                step: int = 0) -> list[dict[str, Any]]:
+               step: int = 0, workers: int = 1) -> list[dict[str, Any]]:
     """Score every indexed candidate in a generated batch folder and append term lines to ``out_path``.
 
-    The batch is a folder written by ``scribe.generate`` (for example the
-    base model's replies to the training prompts). Candidates the gate
-    rejected score 0 without judge calls. Lines have the same shape as the
-    trainer's ``terms.jsonl``, so ``reward_report`` reads either.
+    The batch is a folder written by ``scribe.generate`` or ``scribe.batch``
+    (for example the base model's replies to the training prompts).
+    Candidates the gate rejected score 0 without judge calls. Lines have the
+    same shape as the trainer's ``terms.jsonl``, so ``reward_report`` reads
+    either. With ``workers`` above 1 the judge calls run in threads; the
+    lines keep index order either way.
     """
+    from concurrent.futures import ThreadPoolExecutor
     from pathlib import Path
 
     from backrun.sim import Watercolor
     from scribe.generate import read_index
 
     root = Path(batch_root)
-    lines = []
-    for i, rec in enumerate(read_index(root)):
-        if limit is not None and i >= limit:
-            break
+    index = read_index(root)
+    if limit is not None:
+        index = index[:limit]
+
+    def one(item: tuple[int, dict[str, Any]]) -> dict[str, Any]:
+        i, rec = item
         folder = root / rec.get("dir", rec["id"])
         meta = json.loads((folder / "meta.json").read_text())
         rng = np.random.default_rng([seed, i])
@@ -255,8 +260,11 @@ def score_batch(batch_root: str, reward: Reward, out_path: str, seed: int = 0, l
             res = reward.score_gated(gate(ops, header), meta.get("subject", ""), rng, meta.get("prompt_id"))
         else:
             res = reward.score_gated(GateResult(ok=False), meta.get("subject", ""), rng)
-        lines.append({"step": step, "kind": "rollout", "id": rec["id"], "prompt_id": meta.get("prompt_id"),
-                      "total": res.total, "terms": res.terms, "excluded": res.total is None, "notes": res.notes})
+        return {"step": step, "kind": "rollout", "id": rec["id"], "prompt_id": meta.get("prompt_id"),
+                "total": res.total, "terms": res.terms, "excluded": res.total is None, "notes": res.notes}
+
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as ex:
+        lines = list(ex.map(one, enumerate(index)))
     with open(out_path, "a") as fh:
         for line in lines:
             fh.write(json.dumps(line) + "\n")

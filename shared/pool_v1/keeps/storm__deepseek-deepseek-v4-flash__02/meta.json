@@ -1,0 +1,203 @@
+{
+ "id": "storm__deepseek-deepseek-v4-flash__02",
+ "prompt_id": "storm",
+ "subject": "a storm cloud over a wheat field",
+ "prompt": "Paint a storm cloud over a wheat field in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6727,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 6,
+     "dry_steps": 1350,
+     "coverage": 0.8695,
+     "mean_lightness": 71.66,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0001,
+      0.0695,
+      0.3679,
+      0.1823,
+      0.0,
+      0.0,
+      0.0,
+      0.0106,
+      0.3191,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0016,
+      0.0098,
+      0.0108,
+      0.0137,
+      0.0571,
+      0.0991,
+      0.3036,
+      0.3198,
+      0.1839,
+      0.0005
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 7,
+     "dry_steps": 1300,
+     "coverage": 0.9779,
+     "mean_lightness": 56.33,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0085,
+      0.0717,
+      0.3112,
+      0.1574,
+      0.0079,
+      0.0003,
+      0.0029,
+      0.0118,
+      0.4032,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0042,
+      0.0212,
+      0.1099,
+      0.1439,
+      0.115,
+      0.0966,
+      0.244,
+      0.1711,
+      0.0897,
+      0.0044
+     ],
+     "retried": true
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the storm cloud lower in the composition so it dominates the upper third, making it feel heavier and more threatening over the field.  \n2. Use darker, more saturated blues and grays for the cloud, with sharp edges where it overlaps the sky, to create contrast and depth.  \n3. Add a thin, wet wash of dark brown or olive green along the bottom edge of the field to ground it and suggest shadow from the cloud."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 7,
+   "dry_steps": 1300,
+   "coverage": 0.9779,
+   "mean_lightness": 56.33,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0085,
+    0.0717,
+    0.3112,
+    0.1574,
+    0.0079,
+    0.0003,
+    0.0029,
+    0.0118,
+    0.4032,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0042,
+    0.0212,
+    0.1099,
+    0.1439,
+    0.115,
+    0.0966,
+    0.244,
+    0.1711,
+    0.0897,
+    0.0044
+   ],
+   "retried": true
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 409,
+   "completion_tokens": 1122,
+   "latency_s": 21.595,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__02:r0",
+   "finish_reason": "stop",
+   "at": 1793796931.8693087
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 1569,
+   "completion_tokens": 1141,
+   "latency_s": 21.624,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__02:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793796982.8566175
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 92,
+   "latency_s": 2.566,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793797017.7592478
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2620,
+   "completion_tokens": 958,
+   "latency_s": 14.839,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__02:r1",
+   "finish_reason": "stop",
+   "at": 1793797032.5991335
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 3616,
+   "completion_tokens": 1047,
+   "latency_s": 22.198,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__deepseek-deepseek-v4-flash__02:r1:retry",
+   "finish_reason": "stop",
+   "at": 1793797060.0114672
+  }
+ ],
+ "started_at": 1793796910.2737937,
+ "seconds": 192.56
+}

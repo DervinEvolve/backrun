@@ -1,0 +1,178 @@
+{
+ "id": "peonies__google-gemini-3.1-flash-lite__02",
+ "prompt_id": "peonies",
+ "subject": "pink peonies, loose and wet",
+ "prompt": "Paint pink peonies, loose and wet in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 2,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3839,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 3,
+     "dry_steps": 2300,
+     "coverage": 0.2214,
+     "mean_lightness": 90.88,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.7979,
+      0.0039,
+      0.0018,
+      0.0085,
+      0.0292,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.1586
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0007,
+      0.0024,
+      0.0142,
+      0.0351,
+      0.0718,
+      0.2451,
+      0.0582,
+      0.5705,
+      0.002
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 4,
+     "dry_steps": 3500,
+     "coverage": 0.3964,
+     "mean_lightness": 86.2,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.6202,
+      0.0075,
+      0.0062,
+      0.0076,
+      0.0039,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.3546
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0015,
+      0.0078,
+      0.0189,
+      0.0467,
+      0.1056,
+      0.2952,
+      0.093,
+      0.4289,
+      0.0025
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the peonies more centrally and allow them to extend toward the edges of the composition to create a more balanced, natural arrangement.  \n2. Use darker pink and magenta values in the center of the blooms and lighter pinks at the edges to suggest depth and form.  \n3. Apply water more evenly to blend the edges of the petals, creating soft, wet transitions that mimic the look of watercolour washes."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 12,
+   "dry_ops": 4,
+   "dry_steps": 3500,
+   "coverage": 0.3964,
+   "mean_lightness": 86.2,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.6202,
+    0.0075,
+    0.0062,
+    0.0076,
+    0.0039,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.3546
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0015,
+    0.0078,
+    0.0189,
+    0.0467,
+    0.1056,
+    0.2952,
+    0.093,
+    0.4289,
+    0.0025
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 768,
+   "latency_s": 4.153,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__google-gemini-3.1-flash-lite__02:r0",
+   "finish_reason": "stop",
+   "at": 1793802914.20443
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 89,
+   "latency_s": 4.266,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__google-gemini-3.1-flash-lite__02:critic1",
+   "finish_reason": "stop",
+   "at": 1793802931.6272216
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1312,
+   "completion_tokens": 966,
+   "latency_s": 3.112,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "peonies__google-gemini-3.1-flash-lite__02:r1",
+   "finish_reason": "stop",
+   "at": 1793802934.740866
+  }
+ ],
+ "started_at": 1793802910.0510645,
+ "seconds": 54.37
+}

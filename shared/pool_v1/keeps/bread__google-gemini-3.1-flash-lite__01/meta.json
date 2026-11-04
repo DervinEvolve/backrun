@@ -1,0 +1,178 @@
+{
+ "id": "bread__google-gemini-3.1-flash-lite__01",
+ "prompt_id": "bread",
+ "subject": "a loaf of bread on a cloth",
+ "prompt": "Paint a loaf of bread on a cloth in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3492,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 7,
+     "dry_ops": 3,
+     "dry_steps": 3000,
+     "coverage": 0.3764,
+     "mean_lightness": 87.04,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0015,
+      0.6262,
+      0.33,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0071,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0006,
+      0.0019,
+      0.0158,
+      0.0287,
+      0.0413,
+      0.3763,
+      0.1059,
+      0.4111,
+      0.0182
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 10,
+     "dry_ops": 5,
+     "dry_steps": 4000,
+     "coverage": 0.305,
+     "mean_lightness": 87.6,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0001,
+      0.0013,
+      0.6089,
+      0.0154,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0753,
+      0.0079,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0006,
+      0.0114,
+      0.0446,
+      0.059,
+      0.0917,
+      0.1433,
+      0.3455,
+      0.2916,
+      0.0123
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the loaf more centrally and slightly lower in the frame to establish it as the clear focal point, avoiding the top-center placement that makes it feel detached.  \n2. Increase the contrast between the bread and the cloth by darkening the shadow areas under the loaf and along the edges of the cloth, using deeper, more saturated browns and grays.  \n3. Use more controlled water flow to create smoother transitions in the cloth\u2019s folds and avoid overly wet, bloated edges\u2014let the paper\u2019s texture show through in lighter areas to suggest fabric without losing definition."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 10,
+   "dry_ops": 5,
+   "dry_steps": 4000,
+   "coverage": 0.305,
+   "mean_lightness": 87.6,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0001,
+    0.0013,
+    0.6089,
+    0.0154,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0753,
+    0.0079,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0006,
+    0.0114,
+    0.0446,
+    0.059,
+    0.0917,
+    0.1433,
+    0.3455,
+    0.2916,
+    0.0123
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 434,
+   "completion_tokens": 569,
+   "latency_s": 2.546,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bread__google-gemini-3.1-flash-lite__01:r0",
+   "finish_reason": "stop",
+   "at": 1793798801.0007548
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 117,
+   "latency_s": 8.43,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bread__google-gemini-3.1-flash-lite__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793798812.0228903
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1147,
+   "completion_tokens": 834,
+   "latency_s": 3.361,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bread__google-gemini-3.1-flash-lite__01:r1",
+   "finish_reason": "stop",
+   "at": 1793798815.3843334
+  }
+ ],
+ "started_at": 1793798798.454328,
+ "seconds": 22.13
+}

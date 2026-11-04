@@ -1,0 +1,170 @@
+{
+ "id": "lemons__moonshotai-kimi-k2.6__03",
+ "prompt_id": "lemons",
+ "subject": "three lemons on a white plate",
+ "prompt": "Paint three lemons on a white plate in watercolour.",
+ "model": "moonshotai/kimi-k2.6",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 7013,
+ "status": "ok",
+ "round": 0,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 23,
+     "dry_ops": 2,
+     "dry_steps": 3400,
+     "normalised": {
+      "path_resampled": 4
+     },
+     "coverage": 0.3754,
+     "mean_lightness": 91.49,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0971,
+      0.9029,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.0002,
+      0.0013,
+      0.0059,
+      0.0425,
+      0.1239,
+      0.6376,
+      0.1885
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": false,
+    "reasons": [
+     "no stroke lines found",
+     "0 strokes; need 6 to 200",
+     "no dry op; add at least one"
+    ],
+    "stats": {
+     "strokes": 0,
+     "dry_ops": 0,
+     "dry_steps": 0,
+     "retried": true
+    },
+    "rendered": false
+   },
+   "critique": "1. Place the lemons more clearly on the white plate, defining the plate\u2019s edge with a light, clean line to separate it from the background.  \n2. Use stronger contrast between the lemon yellows and the white plate\u2014darken the shadows under the lemons and around the plate to show depth.  \n3. Apply water more evenly to avoid blotchy, muddy areas; let the paint dry between layers to keep the lemon shapes sharp and the white plate bright."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 23,
+   "dry_ops": 2,
+   "dry_steps": 3400,
+   "normalised": {
+    "path_resampled": 4
+   },
+   "coverage": 0.3754,
+   "mean_lightness": 91.49,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0971,
+    0.9029,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0,
+    0.0002,
+    0.0013,
+    0.0059,
+    0.0425,
+    0.1239,
+    0.6376,
+    0.1885
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 413,
+   "completion_tokens": 1739,
+   "latency_s": 5.803,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lemons__moonshotai-kimi-k2.6__03:r0",
+   "finish_reason": "stop",
+   "at": 1793795181.2154567
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 97,
+   "latency_s": 2.833,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lemons__moonshotai-kimi-k2.6__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793795191.7251744
+  },
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 2279,
+   "completion_tokens": 2565,
+   "latency_s": 9.136,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lemons__moonshotai-kimi-k2.6__03:r1",
+   "finish_reason": "stop",
+   "at": 1793795200.8618543
+  },
+  {
+   "model": "moonshotai/kimi-k2.6",
+   "prompt_tokens": 4923,
+   "completion_tokens": 4096,
+   "latency_s": 28.285,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "lemons__moonshotai-kimi-k2.6__03:r1:retry",
+   "finish_reason": "length",
+   "at": 1793795229.1477995
+  }
+ ],
+ "started_at": 1793795175.4122665,
+ "seconds": 53.84
+}

@@ -1,0 +1,190 @@
+{
+ "id": "tulips__google-gemini-3.1-flash-lite__05",
+ "prompt_id": "tulips",
+ "subject": "yellow tulips in a jam jar",
+ "prompt": "Paint yellow tulips in a jam jar in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 5,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 9952,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 13,
+     "dry_ops": 4,
+     "dry_steps": 3600,
+     "coverage": 0.3251,
+     "mean_lightness": 90.71,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0018,
+      0.0018,
+      0.0253,
+      0.4294,
+      0.0598,
+      0.0041,
+      0.0013,
+      0.0068,
+      0.3773,
+      0.0298,
+      0.0,
+      0.0041
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0002,
+      0.0049,
+      0.0217,
+      0.036,
+      0.0576,
+      0.0978,
+      0.7291,
+      0.0527
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 4,
+     "dry_steps": 3300,
+     "coverage": 0.2635,
+     "mean_lightness": 92.15,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0749,
+      0.5572,
+      0.0473,
+      0.0124,
+      0.0026,
+      0.0154,
+      0.001,
+      0.018,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0004,
+      0.0008,
+      0.0042,
+      0.0136,
+      0.0191,
+      0.0421,
+      0.146,
+      0.4892,
+      0.2846
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the jam jar lower in the composition so the tulips are clearly inside it, not floating above.  \n2. Use darker values for the jar\u2019s glass to show transparency and thickness, especially around the edges.  \n3. Add a touch of green in the water to suggest liquid, and use more saturated yellow for the tulips to make them stand out."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 12,
+   "dry_ops": 4,
+   "dry_steps": 3300,
+   "coverage": 0.2635,
+   "mean_lightness": 92.15,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.0749,
+    0.5572,
+    0.0473,
+    0.0124,
+    0.0026,
+    0.0154,
+    0.001,
+    0.018,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0004,
+    0.0008,
+    0.0042,
+    0.0136,
+    0.0191,
+    0.0421,
+    0.146,
+    0.4892,
+    0.2846
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 433,
+   "completion_tokens": 863,
+   "latency_s": 2.904,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__google-gemini-3.1-flash-lite__05:r0",
+   "finish_reason": "stop",
+   "at": 1793802716.4722617
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1333,
+   "completion_tokens": 989,
+   "latency_s": 3.061,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__google-gemini-3.1-flash-lite__05:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793802720.1704104
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 76,
+   "latency_s": 3.253,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__google-gemini-3.1-flash-lite__05:critic1",
+   "finish_reason": "stop",
+   "at": 1793802725.2873752
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 2424,
+   "completion_tokens": 933,
+   "latency_s": 3.263,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__google-gemini-3.1-flash-lite__05:r1",
+   "finish_reason": "stop",
+   "at": 1793802728.551201
+  }
+ ],
+ "started_at": 1793802713.5685241,
+ "seconds": 15.67
+}

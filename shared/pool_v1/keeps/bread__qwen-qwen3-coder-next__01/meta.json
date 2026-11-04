@@ -1,0 +1,193 @@
+{
+ "id": "bread__qwen-qwen3-coder-next__01",
+ "prompt_id": "bread",
+ "subject": "a loaf of bread on a cloth",
+ "prompt": "Paint a loaf of bread on a cloth in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 3492,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 21,
+     "dry_ops": 16,
+     "dry_steps": 18600,
+     "normalised": {
+      "path_resampled": 6
+     },
+     "coverage": 0.5147,
+     "mean_lightness": 67.58,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.5568,
+      0.4031,
+      0.0386,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0145,
+      0.1678,
+      0.1747,
+      0.1778,
+      0.1363,
+      0.1104,
+      0.0748,
+      0.0894,
+      0.0543,
+      0.0
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 15,
+     "dry_ops": 13,
+     "dry_steps": 14100,
+     "coverage": 0.4139,
+     "mean_lightness": 78.29,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.002,
+      0.8198,
+      0.1782,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.003,
+      0.0358,
+      0.2524,
+      0.1825,
+      0.1459,
+      0.1514,
+      0.0777,
+      0.1507,
+      0.0005
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the bread shape to the center of the composition to clearly establish it as the focal point.  \n2. Use lighter values (whiter or pale yellow) for the top surface of the loaf to suggest a crust and create contrast with the darker sides.  \n3. Reduce the intensity of the red/purple washes and use more neutral browns and tans to better match the natural colour of bread, and allow the paper to show through for highlights."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 15,
+   "dry_ops": 13,
+   "dry_steps": 14100,
+   "coverage": 0.4139,
+   "mean_lightness": 78.29,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.002,
+    0.8198,
+    0.1782,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.003,
+    0.0358,
+    0.2524,
+    0.1825,
+    0.1459,
+    0.1514,
+    0.0777,
+    0.1507,
+    0.0005
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 433,
+   "completion_tokens": 2898,
+   "latency_s": 38.762,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bread__qwen-qwen3-coder-next__01:r0",
+   "finish_reason": "stop",
+   "at": 1793798700.5722716
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 3537,
+   "completion_tokens": 2898,
+   "latency_s": 33.04,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bread__qwen-qwen3-coder-next__01:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793798733.614017
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 95,
+   "latency_s": 3.404,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bread__qwen-qwen3-coder-next__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793798785.6514182
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 6562,
+   "completion_tokens": 1989,
+   "latency_s": 26.449,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "bread__qwen-qwen3-coder-next__01:r1",
+   "finish_reason": "stop",
+   "at": 1793798812.103091
+  }
+ ],
+ "started_at": 1793798661.8102598,
+ "seconds": 218.46
+}

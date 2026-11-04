@@ -1,0 +1,12 @@
+{"op": "canvas", "width": 256, "height": 192, "seed": 4800, "paper": "cold_press"}
+{"op": "stroke", "path": [[0.0, 0.0], [256.0, 0.0], [256.0, 100.0], [0.0, 100.0]], "width": 60.0, "water": 1.0, "pigments": {"cadmium_yellow": 0.4, "quinacridone_rose": 0.3}}
+{"op": "stroke", "path": [[0.0, 100.0], [256.0, 100.0], [256.0, 192.0], [0.0, 192.0]], "width": 76.8, "water": 0.6, "pigments": {"french_ultramarine": 0.2, "quinacridone_rose": 0.2}}
+{"op": "dry", "steps": 1500}
+{"op": "stroke", "path": [[110.0, 20.0], [130.0, 20.0], [150.0, 20.0]], "width": 25.0, "water": 0.2, "pigments": {"cadmium_yellow": 0.9}}
+{"op": "stroke", "path": [[0.0, 110.0], [256.0, 110.0]], "width": 5.0, "water": 0.3, "pigments": {"quinacridone_rose": 0.6}}
+{"op": "stroke", "path": [[0.0, 140.0], [256.0, 140.0]], "width": 15.0, "water": 0.4, "pigments": {"french_ultramarine": 0.7, "paynes_grey": 0.3}}
+{"op": "stroke", "path": [[0.0, 180.0], [256.0, 180.0]], "width": 20.0, "water": 0.3, "pigments": {"french_ultramarine": 0.9, "paynes_grey": 0.5}}
+{"op": "dry", "steps": 1000}
+{"op": "stroke", "path": [[100.0, 30.0], [160.0, 30.0]], "width": 10.0, "water": 0.1, "pigments": {"cadmium_yellow": 1.0}}
+{"op": "stroke", "path": [[10.0, 170.0], [240.0, 170.0]], "width": 4.0, "water": 0.1, "pigments": {"paynes_grey": 0.9}}
+{"op": "stroke", "path": [[50.0, 150.0], [200.0, 150.0]], "width": 3.0, "water": 0.1, "pigments": {"french_ultramarine": 0.8}}

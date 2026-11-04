@@ -1,0 +1,187 @@
+{
+ "id": "pears__deepseek-deepseek-v4-flash__00",
+ "prompt_id": "pears",
+ "subject": "two green pears on a wooden table",
+ "prompt": "Paint two green pears on a wooden table in watercolour.",
+ "model": "deepseek/deepseek-v4-flash",
+ "k": 0,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 4186,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 22,
+     "dry_ops": 4,
+     "dry_steps": 2200,
+     "normalised": {
+      "path_resampled": 2
+     },
+     "coverage": 0.5194,
+     "mean_lightness": 81.91,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0068,
+      0.4223,
+      0.4716,
+      0.0993,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0012,
+      0.0065,
+      0.0148,
+      0.0328,
+      0.0527,
+      0.1218,
+      0.1693,
+      0.3717,
+      0.2265,
+      0.0027
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 23,
+     "dry_ops": 4,
+     "dry_steps": 2200,
+     "normalised": {
+      "path_resampled": 2
+     },
+     "coverage": 0.4745,
+     "mean_lightness": 80.71,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0093,
+      0.3131,
+      0.5752,
+      0.1025,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0005,
+      0.0276,
+      0.0364,
+      0.0635,
+      0.0564,
+      0.1231,
+      0.2118,
+      0.3002,
+      0.1801,
+      0.0004
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the pears slightly left and lower so they sit more naturally on the table, avoiding the top edge of the frame.  \n2. Darken the shadows inside the pears and under them to create contrast and depth, making them look more solid.  \n3. Use more water to blend the green washes smoothly, reducing hard edges and giving the pears a more natural, rounded shape."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 23,
+   "dry_ops": 4,
+   "dry_steps": 2200,
+   "normalised": {
+    "path_resampled": 2
+   },
+   "coverage": 0.4745,
+   "mean_lightness": 80.71,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0093,
+    0.3131,
+    0.5752,
+    0.1025,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0005,
+    0.0276,
+    0.0364,
+    0.0635,
+    0.0564,
+    0.1231,
+    0.2118,
+    0.3002,
+    0.1801,
+    0.0004
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 411,
+   "completion_tokens": 1684,
+   "latency_s": 14.99,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__deepseek-deepseek-v4-flash__00:r0",
+   "finish_reason": "stop",
+   "at": 1793795511.2200797
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 144,
+   "completion_tokens": 83,
+   "latency_s": 4.141,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__deepseek-deepseek-v4-flash__00:critic1",
+   "finish_reason": "stop",
+   "at": 1793795517.8542774
+  },
+  {
+   "model": "deepseek/deepseek-v4-flash",
+   "prompt_tokens": 2204,
+   "completion_tokens": 1785,
+   "latency_s": 16.542,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "pears__deepseek-deepseek-v4-flash__00:r1",
+   "finish_reason": "stop",
+   "at": 1793795534.3963752
+  }
+ ],
+ "started_at": 1793795496.2303548,
+ "seconds": 50.66
+}

@@ -1,0 +1,15 @@
+{"op": "canvas", "width": 256, "height": 192, "seed": 5168, "paper": "cold_press"}
+{"op": "stroke", "path": [[0.0, 40.0], [64.0, 32.0], [128.0, 36.0], [192.0, 30.0], [256.0, 42.0]], "width": 76.8, "water": 0.85, "pigments": {"quinacridone_rose": 0.25, "paynes_grey": 0.15}}
+{"op": "stroke", "path": [[0.0, 55.0], [64.0, 50.0], [128.0, 54.0], [192.0, 48.0], [256.0, 60.0]], "width": 76.8, "water": 0.8, "pigments": {"paynes_grey": 0.18, "burnt_umber": 0.08}}
+{"op": "stroke", "path": [[0.0, 70.0], [64.0, 64.0], [128.0, 68.0], [192.0, 62.0], [256.0, 74.0]], "width": 76.8, "water": 0.75, "pigments": {"cerulean_blue": 0.12, "paynes_grey": 0.1}}
+{"op": "dry", "steps": 1600}
+{"op": "stroke", "path": [[20.0, 38.0], [80.0, 30.0], [140.0, 34.0], [200.0, 28.0], [240.0, 36.0]], "width": 48.0, "water": 0.55, "pigments": {"quinacridone_rose": 0.35, "cadmium_yellow": 0.08}}
+{"op": "stroke", "path": [[10.0, 58.0], [70.0, 52.0], [130.0, 56.0], [190.0, 50.0], [246.0, 62.0]], "width": 40.0, "water": 0.5, "pigments": {"paynes_grey": 0.22, "burnt_umber": 0.1}}
+{"op": "stroke", "path": [[30.0, 72.0], [90.0, 66.0], [150.0, 70.0], [210.0, 64.0]], "width": 32.0, "water": 0.45, "pigments": {"cerulean_blue": 0.2, "paynes_grey": 0.15}}
+{"op": "dry", "steps": 1800}
+{"op": "stroke", "path": [[48.0, 34.0], [96.0, 30.0], [160.0, 32.0], [224.0, 36.0]], "width": 24.0, "water": 0.4, "pigments": {"quinacridone_rose": 0.45, "cadmium_yellow": 0.12}}
+{"op": "stroke", "path": [[24.0, 60.0], [80.0, 54.0], [136.0, 58.0], [192.0, 52.0]], "width": 20.0, "water": 0.35, "pigments": {"paynes_grey": 0.32, "burnt_umber": 0.18}}
+{"op": "stroke", "path": [[112.0, 74.0], [160.0, 68.0], [208.0, 72.0]], "width": 18.0, "water": 0.3, "pigments": {"cerulean_blue": 0.28, "paynes_grey": 0.2}}
+{"op": "stroke", "path": [[64.0, 32.0], [72.0, 31.0], [80.0, 32.0], [88.0, 31.0]], "width": 8.0, "water": 0.25, "pigments": {"quinacridone_rose": 0.5, "cadmium_yellow": 0.15}}
+{"op": "stroke", "path": [[128.0, 66.0], [136.0, 65.0], [144.0, 66.0], [152.0, 65.0]], "width": 7.0, "water": 0.2, "pigments": {"paynes_grey": 0.4, "burnt_umber": 0.25}}
+{"op": "stroke", "path": [[192.0, 70.0], [200.0, 69.0], [208.0, 70.0]], "width": 6.0, "water": 0.18, "pigments": {"cerulean_blue": 0.35, "paynes_grey": 0.3}}

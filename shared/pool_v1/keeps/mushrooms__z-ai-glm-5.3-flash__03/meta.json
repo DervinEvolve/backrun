@@ -1,0 +1,178 @@
+{
+ "id": "mushrooms__z-ai-glm-5.3-flash__03",
+ "prompt_id": "mushrooms",
+ "subject": "brown mushrooms on a mossy log",
+ "prompt": "Paint brown mushrooms on a mossy log in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6432,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 32,
+     "dry_ops": 4,
+     "dry_steps": 5000,
+     "coverage": 0.3591,
+     "mean_lightness": 83.1,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.1415,
+      0.2723,
+      0.5373,
+      0.0484,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0003,
+      0.0125,
+      0.0402,
+      0.0487,
+      0.0876,
+      0.1642,
+      0.3524,
+      0.2311,
+      0.0623,
+      0.0007
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 39,
+     "dry_ops": 4,
+     "dry_steps": 5000,
+     "coverage": 0.3765,
+     "mean_lightness": 80.74,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.2366,
+      0.183,
+      0.5304,
+      0.0494,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0006,
+      0.0306,
+      0.0575,
+      0.1,
+      0.12,
+      0.1998,
+      0.2714,
+      0.1544,
+      0.0645,
+      0.0012
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the mushrooms more toward the center of the log, slightly overlapping the edges to suggest natural growth and depth.  \n2. Use darker, richer brown values for the mushroom caps and lighter, muted tones for the stems to create contrast and form.  \n3. Apply more water to the moss areas to blend greens smoothly and add subtle variations in tone, making it look damp and textured."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 39,
+   "dry_ops": 4,
+   "dry_steps": 5000,
+   "coverage": 0.3765,
+   "mean_lightness": 80.74,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.2366,
+    0.183,
+    0.5304,
+    0.0494,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0006,
+    0.0306,
+    0.0575,
+    0.1,
+    0.12,
+    0.1998,
+    0.2714,
+    0.1544,
+    0.0645,
+    0.0012
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 434,
+   "completion_tokens": 2264,
+   "latency_s": 31.022,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__z-ai-glm-5.3-flash__03:r0",
+   "finish_reason": "stop",
+   "at": 1793803272.8045065
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 80,
+   "latency_s": 3.464,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__z-ai-glm-5.3-flash__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793803280.752402
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2682,
+   "completion_tokens": 2639,
+   "latency_s": 30.217,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "mushrooms__z-ai-glm-5.3-flash__03:r1",
+   "finish_reason": "stop",
+   "at": 1793803310.9702914
+  }
+ ],
+ "started_at": 1793803241.7820694,
+ "seconds": 81.46
+}

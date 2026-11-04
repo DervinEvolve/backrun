@@ -1,0 +1,178 @@
+{
+ "id": "tulips__z-ai-glm-5.3-flash__07",
+ "prompt_id": "tulips",
+ "subject": "yellow tulips in a jam jar",
+ "prompt": "Paint yellow tulips in a jam jar in watercolour.",
+ "model": "z-ai/glm-5.3-flash",
+ "k": 7,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 9952,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 32,
+     "dry_ops": 5,
+     "dry_steps": 5900,
+     "coverage": 0.6354,
+     "mean_lightness": 89.97,
+     "two_hues": true,
+     "two_levels": false,
+     "hue_hist": [
+      0.0,
+      0.002,
+      0.0303,
+      0.169,
+      0.0665,
+      0.0007,
+      0.0004,
+      0.0036,
+      0.0039,
+      0.0023,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0001,
+      0.0018,
+      0.0044,
+      0.0159,
+      0.0321,
+      0.062,
+      0.2554,
+      0.6283
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 42,
+     "dry_ops": 5,
+     "dry_steps": 5900,
+     "coverage": 0.6921,
+     "mean_lightness": 88.98,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.003,
+      0.1085,
+      0.177,
+      0.0554,
+      0.0001,
+      0.0,
+      0.0034,
+      0.0037,
+      0.0021,
+      0.0,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0,
+      0.0,
+      0.0003,
+      0.0018,
+      0.0043,
+      0.0165,
+      0.0387,
+      0.1179,
+      0.2422,
+      0.5782
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Place the jam jar slightly off-center to the right, allowing more space on the left for the tulips to spread naturally and create a balanced composition.  \n2. Use darker, more saturated yellow for the tulip centers and lighter washes for the petals to create contrast and depth, making the flowers stand out from the background.  \n3. Add a subtle shadow beneath the jar and inside the glass using a diluted grey-blue, and use less water in the jar\u2019s reflection to show clearer, sharper highlights."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 42,
+   "dry_ops": 5,
+   "dry_steps": 5900,
+   "coverage": 0.6921,
+   "mean_lightness": 88.98,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.003,
+    0.1085,
+    0.177,
+    0.0554,
+    0.0001,
+    0.0,
+    0.0034,
+    0.0037,
+    0.0021,
+    0.0,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0,
+    0.0,
+    0.0003,
+    0.0018,
+    0.0043,
+    0.0165,
+    0.0387,
+    0.1179,
+    0.2422,
+    0.5782
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 434,
+   "completion_tokens": 2913,
+   "latency_s": 35.239,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__z-ai-glm-5.3-flash__07:r0",
+   "finish_reason": "stop",
+   "at": 1793802682.2417996
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 105,
+   "latency_s": 4.128,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__z-ai-glm-5.3-flash__07:critic1",
+   "finish_reason": "stop",
+   "at": 1793802689.3289473
+  },
+  {
+   "model": "z-ai/glm-5.3-flash",
+   "prompt_tokens": 2648,
+   "completion_tokens": 3172,
+   "latency_s": 46.708,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "tulips__z-ai-glm-5.3-flash__07:r1",
+   "finish_reason": "stop",
+   "at": 1793802736.0372174
+  }
+ ],
+ "started_at": 1793802647.0025814,
+ "seconds": 116.65
+}

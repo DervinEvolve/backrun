@@ -1,0 +1,22 @@
+{"op": "canvas", "width": 256, "height": 192, "seed": 6727, "paper": "cold_press"}
+{"op": "stroke", "path": [[0.0, 0.0], [256.0, 0.0], [256.0, 64.0], [0.0, 64.0]], "width": 76.8, "water": 0.9, "pigments": {"cerulean_blue": 0.15, "french_ultramarine": 0.05}}
+{"op": "stroke", "path": [[0.0, 64.0], [256.0, 64.0], [256.0, 192.0], [0.0, 192.0]], "width": 76.8, "water": 0.8, "pigments": {"cadmium_yellow": 0.3, "hookers_green": 0.2}}
+{"op": "dry", "steps": 1500}
+{"op": "stroke", "path": [[10.0, 5.0], [80.0, 2.0], [160.0, 8.0], [240.0, 3.0], [256.0, 6.0]], "width": 70.0, "water": 0.85, "pigments": {"french_ultramarine": 0.4, "paynes_grey": 0.3}}
+{"op": "stroke", "path": [[0.0, 20.0], [50.0, 12.0], [120.0, 25.0], [200.0, 18.0], [256.0, 22.0]], "width": 65.0, "water": 0.75, "pigments": {"paynes_grey": 0.6, "french_ultramarine": 0.3}}
+{"op": "stroke", "path": [[20.0, 40.0], [90.0, 30.0], [170.0, 45.0], [230.0, 35.0], [256.0, 42.0]], "width": 55.0, "water": 0.7, "pigments": {"paynes_grey": 0.7, "french_ultramarine": 0.25}}
+{"op": "dry", "steps": 1200}
+{"op": "stroke", "path": [[0.0, 55.0], [60.0, 48.0], [130.0, 60.0], [210.0, 52.0], [256.0, 58.0]], "width": 40.0, "water": 0.65, "pigments": {"paynes_grey": 0.8, "burnt_umber": 0.1}}
+{"op": "stroke", "path": [[10.0, 70.0], [80.0, 62.0], [160.0, 75.0], [220.0, 68.0]], "width": 35.0, "water": 0.6, "pigments": {"paynes_grey": 0.85, "french_ultramarine": 0.15}}
+{"op": "dry", "steps": 1000}
+{"op": "stroke", "path": [[0.0, 65.0], [256.0, 65.0], [256.0, 90.0], [0.0, 90.0]], "width": 25.0, "water": 0.5, "pigments": {"hookers_green": 0.4, "burnt_umber": 0.3, "paynes_grey": 0.2}}
+{"op": "dry", "steps": 800}
+{"op": "stroke", "path": [[30.0, 85.0], [100.0, 78.0], [180.0, 90.0], [240.0, 82.0]], "width": 20.0, "water": 0.4, "pigments": {"hookers_green": 0.5, "burnt_umber": 0.4}}
+{"op": "stroke", "path": [[50.0, 100.0], [120.0, 92.0], [200.0, 105.0], [256.0, 98.0]], "width": 15.0, "water": 0.35, "pigments": {"cadmium_yellow": 0.4, "hookers_green": 0.5, "burnt_umber": 0.2}}
+{"op": "dry", "steps": 600}
+{"op": "stroke", "path": [[70.0, 115.0], [140.0, 108.0], [210.0, 120.0], [256.0, 112.0]], "width": 12.0, "water": 0.3, "pigments": {"burnt_umber": 0.6, "hookers_green": 0.3}}
+{"op": "stroke", "path": [[90.0, 135.0], [160.0, 128.0], [220.0, 140.0], [256.0, 132.0]], "width": 10.0, "water": 0.25, "pigments": {"cadmium_yellow": 0.5, "hookers_green": 0.4, "burnt_umber": 0.2}}
+{"op": "dry", "steps": 400}
+{"op": "stroke", "path": [[110.0, 155.0], [170.0, 148.0], [230.0, 160.0], [256.0, 152.0]], "width": 8.0, "water": 0.2, "pigments": {"burnt_umber": 0.7, "indian_red": 0.2}}
+{"op": "stroke", "path": [[130.0, 172.0], [180.0, 165.0], [240.0, 178.0], [256.0, 170.0]], "width": 6.0, "water": 0.15, "pigments": {"indian_red": 0.6, "burnt_umber": 0.4}}
+{"op": "dry", "steps": 300}

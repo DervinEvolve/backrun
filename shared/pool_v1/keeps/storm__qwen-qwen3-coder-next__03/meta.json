@@ -1,0 +1,199 @@
+{
+ "id": "storm__qwen-qwen3-coder-next__03",
+ "prompt_id": "storm",
+ "subject": "a storm cloud over a wheat field",
+ "prompt": "Paint a storm cloud over a wheat field in watercolour.",
+ "model": "qwen/qwen3-coder-next",
+ "k": 3,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 6727,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 16,
+     "dry_ops": 15,
+     "dry_steps": 18350,
+     "normalised": {
+      "path_resampled": 4
+     },
+     "coverage": 0.6964,
+     "mean_lightness": 65.69,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0001,
+      0.2525,
+      0.1165,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.2391,
+      0.2988,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0145,
+      0.0208,
+      0.0617,
+      0.1771,
+      0.218,
+      0.1831,
+      0.0681,
+      0.1707,
+      0.0826,
+      0.0034
+     ],
+     "retried": true
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 12,
+     "dry_ops": 11,
+     "dry_steps": 15800,
+     "normalised": {
+      "path_resampled": 5
+     },
+     "coverage": 0.6287,
+     "mean_lightness": 59.3,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.2957,
+      0.1093,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.5911,
+      0.0021,
+      0.0
+     ],
+     "lightness_hist": [
+      0.0318,
+      0.2717,
+      0.1508,
+      0.1897,
+      0.094,
+      0.0519,
+      0.0485,
+      0.0915,
+      0.0683,
+      0.0017
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the storm cloud lower in the composition so it dominates the upper third, making it feel heavier and more threatening over the field.  \n2. Use darker, more saturated values in the cloud\u2014especially deep purples and grays\u2014and add subtle gradations to show depth and shadow.  \n3. Apply more water to the wheat field to blend the yellows and browns smoothly, creating a sense of texture and movement in the crop."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 12,
+   "dry_ops": 11,
+   "dry_steps": 15800,
+   "normalised": {
+    "path_resampled": 5
+   },
+   "coverage": 0.6287,
+   "mean_lightness": 59.3,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0,
+    0.0,
+    0.2957,
+    0.1093,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.5911,
+    0.0021,
+    0.0
+   ],
+   "lightness_hist": [
+    0.0318,
+    0.2717,
+    0.1508,
+    0.1897,
+    0.094,
+    0.0519,
+    0.0485,
+    0.0915,
+    0.0683,
+    0.0017
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 433,
+   "completion_tokens": 2055,
+   "latency_s": 23.837,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__qwen-qwen3-coder-next__03:r0",
+   "finish_reason": "stop",
+   "at": 1793797709.0407596
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 2546,
+   "completion_tokens": 2041,
+   "latency_s": 28.49,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__qwen-qwen3-coder-next__03:r0:retry",
+   "finish_reason": "stop",
+   "at": 1793797737.5318918
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 143,
+   "completion_tokens": 92,
+   "latency_s": 3.527,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__qwen-qwen3-coder-next__03:critic1",
+   "finish_reason": "stop",
+   "at": 1793797750.955761
+  },
+  {
+   "model": "qwen/qwen3-coder-next",
+   "prompt_tokens": 4711,
+   "completion_tokens": 1813,
+   "latency_s": 26.807,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "storm__qwen-qwen3-coder-next__03:r1",
+   "finish_reason": "stop",
+   "at": 1793797777.763471
+  }
+ ],
+ "started_at": 1793797685.203838,
+ "seconds": 189.71
+}

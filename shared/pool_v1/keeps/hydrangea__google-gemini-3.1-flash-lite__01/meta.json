@@ -1,0 +1,178 @@
+{
+ "id": "hydrangea__google-gemini-3.1-flash-lite__01",
+ "prompt_id": "hydrangea",
+ "subject": "a blue hydrangea head",
+ "prompt": "Paint a blue hydrangea head in watercolour.",
+ "model": "google/gemini-3.1-flash-lite",
+ "k": 1,
+ "critic": "qwen/qwen3-vl-30b-a3b-instruct",
+ "seed": 8210,
+ "status": "ok",
+ "round": 1,
+ "rounds": [
+  {
+   "round": 0,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 3,
+     "dry_steps": 2300,
+     "coverage": 0.1854,
+     "mean_lightness": 90.22,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0,
+      0.0,
+      0.0,
+      0.001,
+      0.034,
+      0.0001,
+      0.0,
+      0.0,
+      0.0,
+      0.1927,
+      0.769,
+      0.0023
+     ],
+     "lightness_hist": [
+      0.0002,
+      0.0123,
+      0.0325,
+      0.0371,
+      0.0467,
+      0.1579,
+      0.1334,
+      0.2992,
+      0.2795,
+      0.0012
+     ]
+    },
+    "rendered": true
+   }
+  },
+  {
+   "round": 1,
+   "gate": {
+    "ok": true,
+    "reasons": [],
+    "stats": {
+     "strokes": 11,
+     "dry_ops": 4,
+     "dry_steps": 3000,
+     "coverage": 0.2953,
+     "mean_lightness": 87.34,
+     "two_hues": true,
+     "two_levels": true,
+     "hue_hist": [
+      0.0017,
+      0.0,
+      0.0001,
+      0.0144,
+      0.0327,
+      0.0019,
+      0.0004,
+      0.0005,
+      0.0038,
+      0.0542,
+      0.3837,
+      0.506
+     ],
+     "lightness_hist": [
+      0.0055,
+      0.0286,
+      0.042,
+      0.0365,
+      0.0956,
+      0.1589,
+      0.041,
+      0.0286,
+      0.5632,
+      0.0001
+     ]
+    },
+    "rendered": true
+   },
+   "critique": "1. Move the hydrangea head to the center of the composition to make it the clear focal point.  \n2. Use darker blue and purple values in the center and shadows to create depth and contrast with the lighter outer edges.  \n3. Apply more water to the edges of the petals to soften the edges and blend the colors smoothly into the background."
+  }
+ ],
+ "gate": {
+  "ok": true,
+  "reasons": [],
+  "stats": {
+   "strokes": 11,
+   "dry_ops": 4,
+   "dry_steps": 3000,
+   "coverage": 0.2953,
+   "mean_lightness": 87.34,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.0017,
+    0.0,
+    0.0001,
+    0.0144,
+    0.0327,
+    0.0019,
+    0.0004,
+    0.0005,
+    0.0038,
+    0.0542,
+    0.3837,
+    0.506
+   ],
+   "lightness_hist": [
+    0.0055,
+    0.0286,
+    0.042,
+    0.0365,
+    0.0956,
+    0.1589,
+    0.041,
+    0.0286,
+    0.5632,
+    0.0001
+   ]
+  },
+  "rendered": true
+ },
+ "usage": [
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 431,
+   "completion_tokens": 859,
+   "latency_s": 2.674,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__01:r0",
+   "finish_reason": "stop",
+   "at": 1793795747.1611755
+  },
+  {
+   "model": "qwen/qwen3-vl-30b-a3b-instruct",
+   "prompt_tokens": 142,
+   "completion_tokens": 73,
+   "latency_s": 2.429,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__01:critic1",
+   "finish_reason": "stop",
+   "at": 1793795754.728043
+  },
+  {
+   "model": "google/gemini-3.1-flash-lite",
+   "prompt_tokens": 1388,
+   "completion_tokens": 962,
+   "latency_s": 2.804,
+   "attempts": 1,
+   "status": "ok",
+   "tag": "hydrangea__google-gemini-3.1-flash-lite__01:r1",
+   "finish_reason": "stop",
+   "at": 1793795757.532517
+  }
+ ],
+ "started_at": 1793795744.4868622,
+ "seconds": 18.29
+}
