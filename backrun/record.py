@@ -64,6 +64,20 @@ A run folder holds:
     Canvas size, seed, target path, timings and any extra run settings.
 
 ``scripts/make_gif.sh`` turns the frames folder into a GIF.
+
+Recorder fields
+---------------
+
+The recorder itself writes only ``index``, ``t``, ``sim_steps``, ``op`` and
+``score`` on each ledger line; every other key comes from the caller's
+``log_op`` keyword arguments, so the ledger is a superset that older readers
+can ignore. The search painter's extra keys, listed above, make a run
+explainable without replaying it: ``predicted_score`` against ``score``
+shows how far the dry preview was from the real sheet, ``pigment_added`` and
+``wet_pixels`` show how much paint and water each stroke put down,
+``candidates_considered`` and ``search_s`` show the search effort, and
+``rejected`` (the best 8 losing candidates per accepted stroke) shows what
+the painter turned down and by how much.
 """
 
 from __future__ import annotations

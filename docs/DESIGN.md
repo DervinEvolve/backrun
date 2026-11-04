@@ -146,7 +146,12 @@ Given a target image resized to the canvas, build the painting greedily:
    combination. Position is biased toward regions where the current painting
    differs most from the target.
 3. Simulate each candidate on a copy, score, keep the best if it improves the
-   total score, otherwise skip.
+   total score, otherwise skip. Candidates are judged by their dried future,
+   not their wet look: each is scored on the simulator's dry preview
+   (`render(predict_dry=True)`, all fluid pigment treated as deposited where
+   it is), and a stroke is kept only if it lowers the predicted dry score of
+   the whole painting. After each phase's real dry the painting is
+   re-measured, so the ledger records both the prediction and the truth.
 4. Insert `dry` ops between phases so washes set before detail goes on.
 
 This is slow and dumb and it is enough to watch. It also provides the
