@@ -417,8 +417,7 @@ def _require_torch() -> None:
     """Raise a clear error if PyTorch is missing."""
     if torch is None:
         raise ModuleNotFoundError(
-            "PyTorch is needed for the policy network: pip install torch --index-url "
-            "https://download.pytorch.org/whl/cpu (or the 'train' extra)"
+            "PyTorch is needed for the policy network: pip install torch (or the 'train' extra)"
         )
 
 
