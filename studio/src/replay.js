@@ -247,9 +247,10 @@ export class Replay {
     const [A, B] = st.search, D = B - A, n = st.rejected.length;
     const out = [];
     st.rejected.forEach((r, k) => {
-      // appear in the first 35 percent, best first; vanish worst first, the runner-up last
-      const on = A + D * 0.35 * (k / Math.max(1, n));
-      const off = A + D * (0.45 + 0.5 * (n - 1 - k) / Math.max(1, n - 1));
+      // appear in the first quarter, best first; flicker through the search; vanish worst first in the last
+      // third, the runner-up last, just before the kept stroke lands
+      const on = A + D * 0.25 * (k / Math.max(1, n));
+      const off = A + D * (0.68 + 0.3 * (n - 1 - k) / Math.max(1, n - 1));
       if (t < on || t > off) return;
       const life = clamp01((t - on) / 0.12) * clamp01((off - t) / 0.12);
       const flick = 0.7 + 0.3 * Math.sin((t - on) * 23 + k * 1.7);

@@ -20,6 +20,7 @@ import { SheetPainter } from './sheet.js';
 import { makeArmIK } from './ik.js';
 import { buildChoreo } from './choreo.js';
 import { createDashboard, SPEEDS } from './dashboard.js';
+import { measureSubjects } from './frame-guard.js';
 
 const params = new URLSearchParams(location.search);
 const STILL = params.has('still');
@@ -184,11 +185,22 @@ async function main() {
     ScoreCard_Front: scoreFront,
   };
   const shared = new Map();
-  const glassMat = (src, color, opacity) => new THREE.MeshPhysicalMaterial({
-    name: src.name, color, roughness: 0.03, metalness: 0, transparent: true, opacity, ior: 1.5,
-    specularIntensity: 1, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 2.4, depthWrite: false,
-    side: THREE.DoubleSide, sheen: 0, iridescence: 0.08,
-  });
+  // glass: thin and clear face-on, denser and slightly green toward the silhouette, as real glass walls read
+  const glassMat = (src, color, opacity) => {
+    const m = new THREE.MeshPhysicalMaterial({
+      name: src.name, color, roughness: 0.03, metalness: 0, transparent: true, opacity, ior: 1.5,
+      specularIntensity: 1, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 2.6, depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+    m.onBeforeCompile = (sh) => {
+      sh.fragmentShader = sh.fragmentShader.replace('#include <dithering_fragment>', `#include <dithering_fragment>
+        float edge = pow(1.0 - abs(dot(normalize(vNormal), normalize(vViewPosition))), 2.5);
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vec3(0.82, 0.9, 0.86), edge * 0.6);
+        gl_FragColor.a = mix(gl_FragColor.a, 0.62, edge);`);
+    };
+    m.customProgramCacheKey = () => `glass-edge-${src.name}`;
+    return m;
+  };
   function upgrade(m) {
     if (shared.has(m.name)) return shared.get(m.name);
     let out = m;
@@ -586,7 +598,7 @@ async function main() {
     onSpeed: (s) => { clock.speed = s; },
     onStage: (id) => { stopTour(); setView(id); },
     onScrub: (t) => { stopTour(); setTime(t); },
-    onLegend: (i) => { stopTour(); lookAtWell(i); showCard({ kind: 'well', i }); },
+    onLegend: (i) => { stopTour(); follow = false; lookAtWell(i); showCard({ kind: 'well', i }); },
     onTour: () => (tour ? stopTour() : startTour()),
     onFollow: () => { follow = !follow; if (follow && active !== persp) setView('stroke'); if (follow) { follow = true; fly = null; } },
     onGhosts: () => { ui.ghosts = !ui.ghosts; },
@@ -797,6 +809,24 @@ async function main() {
     camera: () => ({ position: active.position.toArray().map((v) => +v.toFixed(3)), target: controls.target.toArray().map((v) => +v.toFixed(3)) }),
     subjects: () => ({ brush: brushes[brushInHand].o, panel, palette: G.palette, jarRinse, score, arm: G.arm }),
     camObj: () => active,
+    // frame guard: where the subjects land on screen, with the dashboard panels counted as cover
+    guard: () => {
+      const w = innerWidth, h = innerHeight;
+      const subs = [{ name: 'brush', object: brushes[brushInHand].o }, { name: 'sheet', object: panel.getObjectByName('Panel_Sheet') },
+        { name: 'scorecard', object: score }];
+      const rep = measureSubjects(active, subs, { width: w, height: h, margin: 4 });
+      const panels = [...document.querySelectorAll('.panel')].filter((p) => p.offsetParent !== null && !p.hidden).map((p) => p.getBoundingClientRect());
+      for (const r of rep) {
+        if (r.hidden || !r.rectangle) continue;
+        const R = r.rectangle;
+        const cl = { left: Math.max(0, R.left), right: Math.min(w, R.right), top: Math.max(0, R.top), bottom: Math.min(h, R.bottom) };
+        const area = Math.max(1, (cl.right - cl.left) * (cl.bottom - cl.top));
+        let cov = 0;
+        for (const p of panels) cov += Math.max(0, Math.min(cl.right, p.right) - Math.max(cl.left, p.left)) * Math.max(0, Math.min(cl.bottom, p.bottom) - Math.max(cl.top, p.top));
+        r.visibleShare = Math.max(0, Math.min(r.visibleShare, 1 - cov / area));
+      }
+      return rep;
+    },
   };
   apply(clock.t);
   document.body.dataset.ready = '1';

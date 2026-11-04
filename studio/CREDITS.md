@@ -35,3 +35,12 @@ procedurally at load time by `src/textures.js`; no scanned texture is downloaded
 - `public/brand/sepia.svg`: the Sepia mark, copied from `docs/brand/sepia.svg` (MIT, like the repository).
 - `public/placeholder/wet_in_wet.png`: an example output of the Backrun simulator, used on the sheet until a run
   folder is loaded. Staging only.
+
+## Libraries added in Pass 2
+
+- `n8ao` 1.10.1 (npm), MIT licence, by N8python: the ambient occlusion pass.
+
+## Run data
+
+`public/runs/horizon_v1/` is a packed copy of the repository's own recorded run `runs/horizon_v1` (built-in synthetic
+target "horizon", search painter `search_v0`, seed 7), under the repository's licence.

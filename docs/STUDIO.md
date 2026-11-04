@@ -422,3 +422,28 @@ What Pass 1 changed against the plan above, and what it could not do:
   the Sepia enamel pin as a separate 3D asset beyond the base-plate badge, and the reference sheets in
   `studio/blender/refs/` (the folder is empty; the hero sizes follow the dimension tables above and were checked
   against a 1.8 m block and a 1 m ruler in `?asset=` previews, not against reference photos).
+
+## Pass 2 notes (replay, dashboard, demo)
+
+What Pass 2 changed against the plan above, and what it could not do:
+
+- **The ledger now carries most of the recorder changes.** `phase`, `phase_index`, `phase_count`, `dry_kind`,
+  `pigment_added`, `wet_pixels`, `candidates_considered`, `search_s` and up to eight `rejected` candidates with their
+  paths are on the ledger lines, so the phase card, the legend amounts, the wet-area KPI and the ghost strokes come
+  from recorded fields, not estimates. Still missing: a frame per stroke (frames stay every 20 steps, so the sheet
+  reveals the next frame under the brush's footprint), the per-frame water and pigment fields, the error map, the
+  calibration colours, skip lines for skipped slots, and cost in money.
+- **Frame steps are rebuilt.** The recorder does not say which op a frame belongs to; `scripts/pack-run.mjs` replays
+  the recorder's frame rule over the ledger (including the blank frame `cli_paint` saves before the first op) and
+  checks it against `sim_steps` and the frame count.
+- **Scores split off at packing.** The app reads `ops.json` (no scores) and fetches `scores.json` only near the end.
+- **On-screen timing.** Each stroke takes the longer of its recorded wall time and its choreography (dips, a rinse
+  when the main pigment changes, the lay at 190 mm/s with a 0.9 s floor), so a 48 s run replays in about 4.6 minutes
+  at 1x; 50x and 150x cover it quickly.
+- **Brush change** happens at the pot during each phase dry, swapped while the collet is over the pot (staging).
+- **Hidden layers.** Only Candidates is built (on by default so the ghosts are seen; the plan has all layers off by
+  default). Water, Pigment and Attention need the per-frame fields and the error map.
+- **Not built in Pass 2:** the three themes, the gallery drawer (one run so far; `?run=` switches), the calibration
+  strip being painted, right-click menus, and the sketchbook and visitor cards. AO is now N8AO instead of GTAO.
+- **The demo's beat 18-24 s** plays the panel's ride to the rack at 1x after a 5x stretch, then 50x through the
+  medium phase, instead of switching to a second gallery painting (there is only one).
