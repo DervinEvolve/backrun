@@ -1,0 +1,119 @@
+{
+ "hand_built": {
+  "arm.glb": {
+   "tris": 6240,
+   "bytes": 161328,
+   "raw_bytes": 329916
+  },
+  "bench.glb": {
+   "tris": 1644,
+   "bytes": 52328,
+   "raw_bytes": 145172
+  },
+  "board.glb": {
+   "tris": 546,
+   "bytes": 21016,
+   "raw_bytes": 42620
+  },
+  "brushes.glb": {
+   "tris": 1408,
+   "bytes": 38572,
+   "raw_bytes": 62932
+  },
+  "corkboards.glb": {
+   "tris": 796,
+   "bytes": 29440,
+   "raw_bytes": 123884
+  },
+  "jar.glb": {
+   "tris": 1336,
+   "bytes": 26292,
+   "raw_bytes": 50660
+  },
+  "lamp.glb": {
+   "tris": 1480,
+   "bytes": 36236,
+   "raw_bytes": 58956
+  },
+  "mannequin.glb": {
+   "tris": 2712,
+   "bytes": 87328,
+   "raw_bytes": 188520
+  },
+  "palette.glb": {
+   "tris": 5672,
+   "bytes": 88420,
+   "raw_bytes": 243492
+  },
+  "props.glb": {
+   "tris": 1850,
+   "bytes": 67984,
+   "raw_bytes": 124024
+  },
+  "rack.glb": {
+   "tris": 792,
+   "bytes": 28300,
+   "raw_bytes": 122388
+  },
+  "room.glb": {
+   "tris": 1180,
+   "bytes": 44128,
+   "raw_bytes": 93772
+  },
+  "shelf.glb": {
+   "tris": 2704,
+   "bytes": 74628,
+   "raw_bytes": 179440
+  },
+  "sidetable.glb": {
+   "tris": 604,
+   "bytes": 17996,
+   "raw_bytes": 52184
+  },
+  "stool.glb": {
+   "tris": 484,
+   "bytes": 16900,
+   "raw_bytes": 22840
+  }
+ },
+ "simready": {
+  "box_cardboard_a01.glb": {
+   "tris": 554,
+   "bytes": 55852,
+   "size_m": [
+    0.699,
+    0.51,
+    0.521
+   ],
+   "min": [
+    -0.35,
+    0,
+    -0.261
+   ],
+   "materials": [
+    "opaque__cardboard__unique_box_cardboard_a"
+   ]
+  },
+  "box_cardboard_b01.glb": {
+   "tris": 560,
+   "bytes": 71052,
+   "size_m": [
+    0.51,
+    0.521,
+    0.51
+   ],
+   "min": [
+    -0.255,
+    0.001,
+    -0.255
+   ],
+   "materials": [
+    "opaque__cardboard__unique_box_cardboard_b"
+   ]
+  }
+ },
+ "total_file": {
+  "tris": 30562,
+  "bytes": 917800
+ }
+}

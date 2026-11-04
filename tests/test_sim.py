@@ -203,3 +203,32 @@ def test_granulating_pigment_collects_in_valleys():
     print(f"\nultramarine in valleys {amount[paper < low].mean():.3f}, "
           f"on peaks {amount[paper > high].mean():.3f}")
     assert amount[paper < low].mean() > 1.2 * amount[paper > high].mean()
+
+
+def test_predict_dry_render():
+    """The dry preview runs no steps, leaves state alone and matches a dry sheet."""
+    sim = Watercolor(width=64, height=48, seed=3)
+    sim.apply({"op": "stroke", "path": [[6.0, 24.0], [58.0, 24.0]], "width": 16.0,
+               "water": 0.9, "pigments": {"french_ultramarine": 0.5}})
+    before = {k: v.copy() for k, v in sim.state.items()}
+    steps = sim.steps_taken
+    wet = sim.render()
+    preview = sim.render(predict_dry=True)
+    assert sim.steps_taken == steps
+    for k, v in sim.state.items():
+        assert np.array_equal(v, before[k]), k
+    assert preview.shape == wet.shape and preview.dtype == np.uint8
+    # Pigment is in the water, so the wet render and the preview differ.
+    assert not np.array_equal(preview, wet)
+    # Treating fluid pigment as deposited is the same as depositing it by hand.
+    twin = sim.copy()
+    twin.pigment_deposited += twin.pigment_fluid
+    twin.pigment_fluid[:] = 0.0
+    assert np.array_equal(twin.render(), preview)
+    # Once the sheet is dry the preview is the normal render.
+    for _ in range(40):
+        if not sim.wet_mask.any():
+            break
+        sim.step(50)
+    assert not sim.wet_mask.any()
+    assert np.array_equal(sim.render(predict_dry=True), sim.render())

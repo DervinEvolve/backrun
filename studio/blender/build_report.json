@@ -1,0 +1,375 @@
+{
+ "arm": {
+  "empties": {
+   "Arm_BadgeCentre": [
+    0.0,
+    0.021,
+    0.036
+   ],
+   "Arm_BrushMount": [
+    0.0,
+    0.855,
+    -0.0
+   ]
+  },
+  "raw_bytes": 329916,
+  "tris": 6812
+ },
+ "bench": {
+  "empties": {
+   "Bench_Drawer_Paper": [
+    0.0,
+    0.645,
+    0.039
+   ],
+   "Bench_TopCentre": [
+    0.0,
+    0.76,
+    -0.0
+   ]
+  },
+  "raw_bytes": 145172,
+  "tris": 2968
+ },
+ "board": {
+  "empties": {
+   "Board_PanelHome": [
+    0.0,
+    0.0665,
+    -0.2261
+   ],
+   "Sheet_Centre": [
+    0.0,
+    0.0714,
+    -0.2251
+   ],
+   "Sheet_Corner_BL": [
+    -0.1525,
+    0.0476,
+    -0.1131
+   ],
+   "Sheet_Corner_BR": [
+    0.1525,
+    0.0476,
+    -0.1131
+   ],
+   "Sheet_Corner_TL": [
+    -0.1525,
+    0.0952,
+    -0.3371
+   ],
+   "Sheet_Corner_TR": [
+    0.1525,
+    0.0952,
+    -0.3371
+   ]
+  },
+  "raw_bytes": 42620,
+  "tris": 722
+ },
+ "brushes": {
+  "empties": {
+   "Brush_Round12_Grip": [
+    0.012,
+    0.13,
+    -0.01
+   ],
+   "Brush_Round12_Tip": [
+    0.012,
+    0.1727,
+    -0.0152
+   ],
+   "Brush_Round4_Grip": [
+    0.002,
+    0.13,
+    0.014
+   ],
+   "Brush_Round4_Tip": [
+    0.002,
+    0.1559,
+    0.0117
+   ],
+   "Brush_Wash_Grip": [
+    -0.012,
+    0.13,
+    -0.004
+   ],
+   "Brush_Wash_Tip": [
+    -0.012,
+    0.181,
+    0.0032
+   ],
+   "Pot_Slot_0": [
+    -0.012,
+    0.13,
+    -0.004
+   ],
+   "Pot_Slot_1": [
+    0.012,
+    0.13,
+    -0.01
+   ],
+   "Pot_Slot_2": [
+    0.002,
+    0.13,
+    0.014
+   ]
+  },
+  "raw_bytes": 62932,
+  "tris": 1408
+ },
+ "corkboards": {
+  "empties": {
+   "CorkStrip_TargetCentre": [
+    -0.17,
+    0.0,
+    0.013
+   ]
+  },
+  "raw_bytes": 123884,
+  "tris": 2498
+ },
+ "jar": {
+  "empties": {
+   "Jar_Rim": [
+    0.0,
+    0.11,
+    -0.0
+   ],
+   "Jar_WaterSurface": [
+    0.0,
+    0.0904,
+    -0.0
+   ]
+  },
+  "raw_bytes": 50660,
+  "tris": 1336
+ },
+ "lamp": {
+  "empties": {
+   "Lamp_Light": [
+    0.0,
+    -0.3084,
+    0.4756
+   ]
+  },
+  "raw_bytes": 58956,
+  "tris": 1480
+ },
+ "mannequin": {
+  "empties": {},
+  "raw_bytes": 188520,
+  "tris": 3776
+ },
+ "palette": {
+  "empties": {
+   "Palette_CakeTop_0": [
+    -0.081,
+    0.0152,
+    -0.046
+   ],
+   "Palette_CakeTop_1": [
+    -0.027,
+    0.0152,
+    -0.046
+   ],
+   "Palette_CakeTop_2": [
+    0.027,
+    0.0152,
+    -0.046
+   ],
+   "Palette_CakeTop_3": [
+    0.081,
+    0.0152,
+    -0.046
+   ],
+   "Palette_CakeTop_4": [
+    -0.081,
+    0.0152,
+    -0.012
+   ],
+   "Palette_CakeTop_5": [
+    -0.027,
+    0.0152,
+    -0.012
+   ],
+   "Palette_CakeTop_6": [
+    0.027,
+    0.0152,
+    -0.012
+   ],
+   "Palette_CakeTop_7": [
+    0.081,
+    0.0152,
+    -0.012
+   ],
+   "Palette_Slant_0": [
+    -0.056,
+    0.0135,
+    0.04
+   ],
+   "Palette_Slant_1": [
+    0.056,
+    0.0135,
+    0.04
+   ],
+   "Palette_Well_0": [
+    -0.081,
+    0.018,
+    -0.046
+   ],
+   "Palette_Well_1": [
+    -0.027,
+    0.018,
+    -0.046
+   ],
+   "Palette_Well_2": [
+    0.027,
+    0.018,
+    -0.046
+   ],
+   "Palette_Well_3": [
+    0.081,
+    0.018,
+    -0.046
+   ],
+   "Palette_Well_4": [
+    -0.081,
+    0.018,
+    -0.012
+   ],
+   "Palette_Well_5": [
+    -0.027,
+    0.018,
+    -0.012
+   ],
+   "Palette_Well_6": [
+    0.027,
+    0.018,
+    -0.012
+   ],
+   "Palette_Well_7": [
+    0.081,
+    0.018,
+    -0.012
+   ]
+  },
+  "raw_bytes": 243492,
+  "tris": 5672
+ },
+ "props": {
+  "empties": {},
+  "raw_bytes": 124024,
+  "tris": 2410
+ },
+ "rack": {
+  "empties": {
+   "Rack_Rail_End": [
+    0.39,
+    0.0935,
+    -0.0
+   ],
+   "Rack_Rail_Start": [
+    0.15,
+    0.0935,
+    -0.0
+   ],
+   "Rack_Slot_0": [
+    -0.08,
+    0.022,
+    -0.0
+   ],
+   "Rack_Slot_1": [
+    0.0,
+    0.022,
+    -0.0
+   ],
+   "Rack_Slot_2": [
+    0.08,
+    0.022,
+    -0.0
+   ]
+  },
+  "raw_bytes": 122388,
+  "tris": 2268
+ },
+ "room": {
+  "empties": {
+   "Room_SunTarget": [
+    0.0,
+    0.76,
+    -1.4
+   ],
+   "Window_SillTop": [
+    -2.44,
+    0.9,
+    -0.8
+   ]
+  },
+  "raw_bytes": 93772,
+  "tris": 1584
+ },
+ "shelf": {
+  "empties": {
+   "Shelf_Level_0": [
+    0.0,
+    0.07,
+    -0.0
+   ],
+   "Shelf_Level_1": [
+    0.0,
+    0.45,
+    -0.0
+   ],
+   "Shelf_Level_2": [
+    0.0,
+    0.83,
+    -0.0
+   ],
+   "Shelf_Level_3": [
+    0.0,
+    1.21,
+    -0.0
+   ],
+   "Shelf_Level_4": [
+    0.0,
+    1.59,
+    -0.0
+   ],
+   "Shelf_Level_5": [
+    0.0,
+    1.79,
+    -0.0
+   ],
+   "Sketchbook_search_v0_SpineBadge": [
+    -0.3,
+    1.05,
+    0.1285
+   ]
+  },
+  "raw_bytes": 179440,
+  "tris": 3828
+ },
+ "sidetable": {
+  "empties": {
+   "SideTable_TopCentre": [
+    0.0,
+    0.7,
+    -0.0
+   ]
+  },
+  "raw_bytes": 52184,
+  "tris": 1060
+ },
+ "stool": {
+  "empties": {
+   "Stool_SeatTop": [
+    0.0,
+    0.646,
+    -0.0
+   ]
+  },
+  "raw_bytes": 22840,
+  "tris": 484
+ }
+}

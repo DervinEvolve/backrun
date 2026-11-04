@@ -8,6 +8,58 @@ A run folder holds:
     strokes with no drying still produce frames.
 ``ledger.jsonl``
     One JSON line per op, in order: the op itself and the score after it.
+    Every line has ``index``, ``t`` (seconds since ``start``), ``sim_steps``
+    (simulator steps counted so far), ``op`` and ``score`` (the score of the
+    simulator's real render after the op). Whatever extra keyword arguments
+    the caller passes to ``log_op`` are added as further keys.
+
+    The search painter (``backrun.painter_search.paint``) adds these:
+
+    On every line:
+
+    ``phase``, ``phase_index``, ``phase_count``
+        Name of the painting phase the op belongs to (``washes``,
+        ``medium``, ``detail``), its position from 0, and how many phases
+        the run has.
+    ``predicted_score``
+        The score of the simulator's dry preview after the op: what the
+        painter expects the sheet to score once it has dried. Equal to
+        ``score`` when the sheet is dry.
+    ``wet_pixels``
+        Number of wet cells after the op, or ``null`` if the simulator does
+        not report a wet mask.
+
+    On ``stroke`` lines (accepted strokes; skipped slots write no line):
+
+    ``pigments_used``
+        Pigment name to the concentration loaded on the brush.
+    ``pigment_added``
+        Pigment name to the amount actually added to the sheet (the change
+        in the simulator's total pigment, in its units), or ``null`` if the
+        simulator cannot report it.
+    ``candidates_considered``
+        How many candidate strokes were simulated and scored for this slot.
+    ``search_s``
+        Wall time spent simulating and scoring those candidates, seconds.
+    ``candidate_score``
+        The score that won the slot, as the painter judged it (dry preview
+        by default).
+    ``rejected``
+        The best of the other candidates, at most 8, best first. Each is
+        ``{"path", "width", "water", "pigments", "score"}`` with the same
+        meanings as in a stroke op and the score as the painter judged it.
+
+    On ``dry`` lines:
+
+    ``dry_kind``
+        ``settle`` for the few steps after each stroke, ``phase`` for the
+        dry between phases, ``final`` for the last one.
+
+    On the ``dry`` line that ends each phase, and the final one:
+
+    ``predicted_before_dry``
+        The predicted score just before the real dry, to compare with
+        ``score``, which is re-measured on the dried sheet.
 ``run.json``
     Canvas size, seed, target path, timings and any extra run settings.
 

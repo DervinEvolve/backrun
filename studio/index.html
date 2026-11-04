@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backrun studio</title>
+  <style>
+    :root { --walnut: rgba(43, 34, 25, 0.88); --paper: #F4F0E6; --brass: #B5A642; }
+    html, body { margin: 0; height: 100%; background: #2A231C; overflow: hidden; }
+    #stage { position: fixed; inset: 0; }
+    .panel { position: fixed; background: var(--walnut); color: var(--paper); border-radius: 8px; padding: 10px 14px;
+      font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
+    .panel h1 { font: 600 17px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 4px; }
+    #hud { left: 16px; bottom: 16px; max-width: 360px; }
+    #hud .keys { opacity: 0.72; font-size: 12px; }
+    #note { right: 16px; bottom: 16px; font-size: 12px; opacity: 0.85; }
+    #preview-label { left: 16px; top: 16px; }
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="hud" class="panel">
+    <h1>Backrun studio</h1>
+    <div id="view-name">loading the room</div>
+    <div class="keys">1 to 8 stage cameras, 0 overview, drag to orbit</div>
+  </div>
+  <div id="note" class="panel">Staging pass: the sheet shows an example painting, not a run</div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -441,14 +441,24 @@ class Watercolor:
         return runs
 
     # ------------------------------------------------------------- outputs
-    def render(self, include_fluid: bool = True) -> np.ndarray:
+    def render(self, include_fluid: bool = True, predict_dry: bool = False) -> np.ndarray:
         """The painting as uint8 (H, W, 3).
 
         Deposited pigment is always drawn. Pigment still in the water is drawn
         on top unless ``include_fluid`` is False; once the sheet is dry there
         is none left and the flag makes no difference.
+
+        ``predict_dry=True`` is a cheap guess at how the sheet will look once
+        it has dried: every cell's fluid pigment is treated as deposited where
+        it is now, in the same layer as the pigment already on the paper. It
+        runs no steps and changes no state, so it ignores whatever the water
+        would still carry before drying (edge darkening, blooms, backruns).
+        On a dry sheet it gives the same image as a normal render.
         """
         idx = np.flatnonzero(self._present)
+        if predict_dry:
+            return render_image(self.pigment_deposited[idx] + self.pigment_fluid[idx], None,
+                                self._k_table[idx], self._s_table[idx], self._shading)
         fluid = self.pigment_fluid[idx] if include_fluid else None
         return render_image(self.pigment_deposited[idx], fluid, self._k_table[idx],
                             self._s_table[idx], self._shading)
