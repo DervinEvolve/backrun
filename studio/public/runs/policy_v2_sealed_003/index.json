@@ -1,0 +1,299 @@
+{
+ "name": "policy_v2_sealed_003",
+ "source": "policy_v2_sealed_003",
+ "packed_at": "2026-11-04T12:39:20.128Z",
+ "run": {
+  "canvas": {
+   "width": 256,
+   "height": 192,
+   "seed": 7,
+   "paper": "cold_press"
+  },
+  "seed": 7,
+  "target_path": "sealed:sealed_003",
+  "strokes_requested": 40,
+  "candidates_per_stroke": 1,
+  "painter": "policy",
+  "checkpoint": "shared/stage_a_v2.pt",
+  "checkpoint_sha256": "f4458eb8724eff9176202ab654026c7dee016ac13059371dc0cc6a681c7e9caa",
+  "policy_format": "discrete-v2",
+  "policy_parameters": 5252619,
+  "decode": "argmax",
+  "temperature": null,
+  "painter_stats": {
+   "strokes_accepted": 40,
+   "slots_skipped": 0,
+   "evaluations": 40,
+   "looks": 40,
+   "look_s": 11.560473084999103,
+   "phase_s": {
+    "washes": 3.9729686439998204,
+    "medium": 5.182646319000469,
+    "detail": 7.815838748000033
+   },
+   "final_dry_steps": 575,
+   "total_s": 20.158692731999963
+  },
+  "status": "finished",
+  "frames_every": 20,
+  "frames": 39,
+  "ops": 81,
+  "sim_steps": 727,
+  "timings": {
+   "started_unix": 1793795929.817,
+   "elapsed_s": 23.158,
+   "look_s": 11.56,
+   "phase_washes_s": 3.973,
+   "phase_medium_s": 5.183,
+   "phase_detail_s": 7.816,
+   "paint_s": 20.159
+  }
+ },
+ "op_count": 81,
+ "stroke_count": 40,
+ "sim_steps": 727,
+ "frames_every": 20,
+ "frames": [
+  {
+   "step": 0,
+   "op": -1,
+   "file": "frames/frame_00000.png"
+  },
+  {
+   "step": 1,
+   "op": 0,
+   "file": "frames/frame_00001.png"
+  },
+  {
+   "step": 21,
+   "op": 13,
+   "file": "frames/frame_00002.png"
+  },
+  {
+   "step": 40,
+   "op": 23,
+   "file": "frames/frame_00003.png"
+  },
+  {
+   "step": 60,
+   "op": 33,
+   "file": "frames/frame_00004.png"
+  },
+  {
+   "step": 80,
+   "op": 43,
+   "file": "frames/frame_00005.png"
+  },
+  {
+   "step": 100,
+   "op": 53,
+   "file": "frames/frame_00006.png"
+  },
+  {
+   "step": 120,
+   "op": 63,
+   "file": "frames/frame_00007.png"
+  },
+  {
+   "step": 140,
+   "op": 73,
+   "file": "frames/frame_00008.png"
+  },
+  {
+   "step": 172,
+   "op": 80,
+   "file": "frames/frame_00009.png"
+  },
+  {
+   "step": 197,
+   "op": 80,
+   "file": "frames/frame_00010.png"
+  },
+  {
+   "step": 202,
+   "op": 80,
+   "file": "frames/frame_00011.png"
+  },
+  {
+   "step": 222,
+   "op": 80,
+   "file": "frames/frame_00012.png"
+  },
+  {
+   "step": 247,
+   "op": 80,
+   "file": "frames/frame_00013.png"
+  },
+  {
+   "step": 272,
+   "op": 80,
+   "file": "frames/frame_00014.png"
+  },
+  {
+   "step": 297,
+   "op": 80,
+   "file": "frames/frame_00015.png"
+  },
+  {
+   "step": 302,
+   "op": 80,
+   "file": "frames/frame_00016.png"
+  },
+  {
+   "step": 322,
+   "op": 80,
+   "file": "frames/frame_00017.png"
+  },
+  {
+   "step": 347,
+   "op": 80,
+   "file": "frames/frame_00018.png"
+  },
+  {
+   "step": 372,
+   "op": 80,
+   "file": "frames/frame_00019.png"
+  },
+  {
+   "step": 397,
+   "op": 80,
+   "file": "frames/frame_00020.png"
+  },
+  {
+   "step": 402,
+   "op": 80,
+   "file": "frames/frame_00021.png"
+  },
+  {
+   "step": 422,
+   "op": 80,
+   "file": "frames/frame_00022.png"
+  },
+  {
+   "step": 447,
+   "op": 80,
+   "file": "frames/frame_00023.png"
+  },
+  {
+   "step": 472,
+   "op": 80,
+   "file": "frames/frame_00024.png"
+  },
+  {
+   "step": 497,
+   "op": 80,
+   "file": "frames/frame_00025.png"
+  },
+  {
+   "step": 502,
+   "op": 80,
+   "file": "frames/frame_00026.png"
+  },
+  {
+   "step": 522,
+   "op": 80,
+   "file": "frames/frame_00027.png"
+  },
+  {
+   "step": 547,
+   "op": 80,
+   "file": "frames/frame_00028.png"
+  },
+  {
+   "step": 572,
+   "op": 80,
+   "file": "frames/frame_00029.png"
+  },
+  {
+   "step": 597,
+   "op": 80,
+   "file": "frames/frame_00030.png"
+  },
+  {
+   "step": 602,
+   "op": 80,
+   "file": "frames/frame_00031.png"
+  },
+  {
+   "step": 622,
+   "op": 80,
+   "file": "frames/frame_00032.png"
+  },
+  {
+   "step": 647,
+   "op": 80,
+   "file": "frames/frame_00033.png"
+  },
+  {
+   "step": 672,
+   "op": 80,
+   "file": "frames/frame_00034.png"
+  },
+  {
+   "step": 697,
+   "op": 80,
+   "file": "frames/frame_00035.png"
+  },
+  {
+   "step": 702,
+   "op": 80,
+   "file": "frames/frame_00036.png"
+  },
+  {
+   "step": 722,
+   "op": 80,
+   "file": "frames/frame_00037.png"
+  },
+  {
+   "step": 727,
+   "op": 80,
+   "final": true,
+   "file": "frames/frame_00038.png"
+  }
+ ],
+ "phases": [
+  {
+   "name": "washes",
+   "index": 0,
+   "first_op": 0,
+   "last_op": 15
+  },
+  {
+   "name": "medium",
+   "index": 1,
+   "first_op": 16,
+   "last_op": 47
+  },
+  {
+   "name": "detail",
+   "index": 2,
+   "first_op": 48,
+   "last_op": 80
+  }
+ ],
+ "pigments_used": [
+  "french_ultramarine",
+  "burnt_umber",
+  "cerulean_blue",
+  "quinacridone_rose",
+  "cadmium_yellow"
+ ],
+ "timings": {
+  "started_unix": 1793795929.817,
+  "elapsed_s": 23.158,
+  "look_s": 11.56,
+  "phase_washes_s": 3.973,
+  "phase_medium_s": 5.183,
+  "phase_detail_s": 7.816,
+  "paint_s": 20.159
+ },
+ "files": {
+  "ops": "ops.json",
+  "scores": "scores.json",
+  "target": "target.png",
+  "final": "final.png",
+  "ledger": "ledger.jsonl",
+  "strokes": "strokes.jsonl",
+  "run": "run.json"
+ }
+}

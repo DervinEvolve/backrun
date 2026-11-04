@@ -1,0 +1,59 @@
+{
+  "canvas": {
+    "width": 256,
+    "height": 192,
+    "seed": 7,
+    "paper": "cold_press"
+  },
+  "seed": 7,
+  "target_path": "sealed:sealed_003",
+  "strokes_requested": 40,
+  "candidates_per_stroke": 1,
+  "painter": "policy",
+  "checkpoint": "shared/stage_a_v2.pt",
+  "checkpoint_sha256": "f4458eb8724eff9176202ab654026c7dee016ac13059371dc0cc6a681c7e9caa",
+  "policy_format": "discrete-v2",
+  "policy_parameters": 5252619,
+  "decode": "argmax",
+  "temperature": null,
+  "final_score": {
+    "lab_l2": 708.812629751614,
+    "ssim": 0.5378206585822577,
+    "strokes": 40,
+    "total": 9.01684366318711
+  },
+  "painter_stats": {
+    "strokes_accepted": 40,
+    "slots_skipped": 0,
+    "evaluations": 40,
+    "looks": 40,
+    "look_s": 11.560473084999103,
+    "phase_s": {
+      "washes": 3.9729686439998204,
+      "medium": 5.182646319000469,
+      "detail": 7.815838748000033
+    },
+    "final_dry_steps": 575,
+    "total_s": 20.158692731999963,
+    "final_score": {
+      "lab_l2": 708.812629751614,
+      "ssim": 0.5378206585822577,
+      "strokes": 40,
+      "total": 9.01684366318711
+    }
+  },
+  "status": "finished",
+  "frames_every": 20,
+  "frames": 39,
+  "ops": 81,
+  "sim_steps": 727,
+  "timings": {
+    "started_unix": 1793795929.817,
+    "elapsed_s": 23.158,
+    "look_s": 11.56,
+    "phase_washes_s": 3.973,
+    "phase_medium_s": 5.183,
+    "phase_detail_s": 7.816,
+    "paint_s": 20.159
+  }
+}
