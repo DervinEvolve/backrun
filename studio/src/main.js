@@ -663,7 +663,10 @@ async function main() {
     const b = renderer.domElement.getBoundingClientRect();
     ray.setFromCamera(new THREE.Vector2(((e.clientX - b.left) / b.width) * 2 - 1, -((e.clientY - b.top) / b.height) * 2 + 1), active);
     const hits = ray.intersectObjects(scene.children, true).filter((h) => h.object.visible && h.object.material?.colorWrite !== false);
-    const what = hits.length ? classify(hits[0].object) : null;
+    // the brush is thin: prefer it when the ray passes it within a few centimetres of the first hit
+    const near = hits.filter((h) => h.distance < hits[0]?.distance + 0.05).map((h) => classify(h.object)).filter(Boolean);
+    const what = near.find((c) => c.kind === 'brush') ?? (hits.length ? classify(hits[0].object) : null);
+    window.__lastPick = { at: [e.clientX, e.clientY], hits: hits.slice(0, 4).map((h) => `${h.object.name}@${h.distance.toFixed(3)}`), what };
     if (what) showCard(what); else hideCard();
   });
   function classify(o) {
@@ -800,7 +803,7 @@ async function main() {
     setSpeed: (s) => { clock.speed = s; }, clock: () => ({ ...clock }), events,
     stats, contactAt, scene,
     screenOf: (what) => {
-      if (what === 'brush') return project(tipW.clone().add(new THREE.Vector3(0, 0.05, 0)));
+      if (what === 'brush') return project(tipW.clone().lerp(brushes[brushInHand].o.getWorldPosition(new THREE.Vector3()), 0.75));
       if (what === 'tip') return project(tipW);
       const m = /^well(\d)$/.exec(what); if (m) return project(wellTops[Number(m[1])]);
       if (what === 'score') return project(score.getWorldPosition(new THREE.Vector3()));

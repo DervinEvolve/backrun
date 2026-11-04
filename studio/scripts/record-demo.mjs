@@ -2,7 +2,8 @@
 // events on a virtual clock, captures one frame per 1/30 s, and encodes review/pass2/demo.mp4 plus a small GIF.
 //
 // Usage: node scripts/record-demo.mjs [--scale 1|0.5] [--out review/pass2] [--from 0 --to 900] [--keep]
-//   --scale 0.5 renders at 960 x 540 physical pixels with the 1920 x 1080 layout (fast preview).
+//   --scale 0.5 renders at 960 x 540 physical pixels with the 1920 x 1080 layout (fast preview, about 17 min).
+// The encode keeps the captured size; the GIF is 360 px, 8 fps, 64 colours (under 4 MB).
 // Progress goes to <out>/record.log. Frames go to <out>/frames/ and are removed after encoding unless --keep.
 //
 // The init script replaces requestAnimationFrame, performance.now and Date.now, so the app (replay clock, camera
@@ -74,7 +75,11 @@ await page.waitForSelector('body[data-ready="1"]', { timeout: 300000 });
 log('app ready');
 
 // ------------------------------------------------------------------ the beats (film seconds)
-const box = async (sel) => { const b = await page.locator(sel).first().boundingBox(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; };
+const box = async (sel) => {
+  const b = await page.locator(sel).first().boundingBox({ timeout: 2000 }).catch(() => null);
+  if (!b) { log(`missing target ${sel}`); return null; }
+  return { x: b.x + b.width / 2, y: b.y + b.height / 2 };
+};
 const speedBtn = (s) => `#speeds .btn[data-speed="${s}"]`;
 const scrubAt = async (t) => {
   const b = await page.locator('#scrub').boundingBox();
@@ -85,7 +90,7 @@ const scrubAt = async (t) => {
 const plan = [
   { at: 0.3, kind: 'move', to: async () => ({ x: 760, y: 470 }), dur: 0.2 },
   { at: 0.5, kind: 'down' },
-  { at: 0.5, kind: 'drag', dx: 260, dy: -18, dur: 4.0 },
+  { at: 0.5, kind: 'drag', dx: 250, dy: -14, dur: 4.0 },
   { at: 4.5, kind: 'up' },
   { at: 4.9, kind: 'move', to: async () => page.evaluate(() => window.__app.screenOf('brush')), dur: 0.6, track: true },
   { at: 5.6, kind: 'click' },
@@ -127,17 +132,17 @@ for (let f = 0; f < to; f++) {
   for (const [i, a] of plan.entries()) {
     if (done.has(i) || ft + 1e-6 < a.at) continue;
     done.add(i);
-    if (a.kind === 'move') glide = { from: { ...cur }, to: await a.to(), a: ft, dur: a.dur, track: a.track ? a.to : null };
+    if (a.kind === 'move') { const to = await a.to(); if (to) glide = { from: { ...cur }, to, a: ft, dur: a.dur, track: a.track ? a.to : null }; }
     else if (a.kind === 'down') await page.mouse.down();
     else if (a.kind === 'up') await page.mouse.up();
     else if (a.kind === 'drag') drag = { from: { ...cur }, dx: a.dx, dy: a.dy, a: ft, dur: a.dur };
-    else if (a.kind === 'click') { await page.mouse.down(); await page.mouse.up(); }
+    else if (a.kind === 'click') { await page.evaluate(() => { window.__lastPick = null; }); await page.mouse.down(); await page.mouse.up(); log(`click at ${cur.x.toFixed(0)},${cur.y.toFixed(0)} pick ${JSON.stringify(await page.evaluate(() => window.__lastPick ?? null))}`); }
     else if (a.kind === 'key') await page.keyboard.press(a.key);
     else if (a.kind === 'type') typing = { text: a.text, a: ft, k: 0 };
     log(`f${f} ${a.kind} ${a.key ?? ''}`);
   }
   if (glide) {
-    if (glide.track) glide.to = await glide.track();
+    if (glide.track) glide.to = (await glide.track()) ?? glide.to;
     const u = Math.min(1, (ft - glide.a) / glide.dur);
     cur = { x: glide.from.x + (glide.to.x - glide.from.x) * ease(u), y: glide.from.y + (glide.to.y - glide.from.y) * ease(u) };
     await page.mouse.move(cur.x, cur.y);
@@ -180,10 +185,10 @@ await browser.close();
 
 if (from === 0 && to === N) {
   const mp4 = path.join(out, 'demo.mp4'), gif = path.join(out, 'demo-preview.gif');
-  const nice = (args) => execFileSync('nice', ['-n', '10', 'ffmpeg', '-y', '-loglevel', 'error', ...args]);
-  nice(['-framerate', String(FPS), '-i', path.join(framesDir, '%05d.jpg'), '-vf', 'scale=1920:1080:flags=lanczos', '-c:v', 'libx264',
-    '-preset', 'slow', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4]);
-  nice(['-i', mp4, '-vf', 'fps=10,scale=480:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=96[p];[b][p]paletteuse=dither=bayer:bayer_scale=4', gif]);
+  const nice = (args) => execFileSync('nice', ['-n', '19', 'ffmpeg', '-y', '-loglevel', 'error', ...args]);
+  nice(['-framerate', String(FPS), '-i', path.join(framesDir, '%05d.jpg'), '-c:v', 'libx264',
+    '-preset', 'medium', '-threads', '2', '-crf', '18', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', mp4]);
+  nice(['-i', mp4, '-vf', 'fps=8,scale=360:-2:flags=lanczos,split[a][b];[a]palettegen=max_colors=64:stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle', gif]);
   log(`encoded ${mp4} and ${gif}`);
   if (!process.argv.includes('--keep')) fs.rmSync(framesDir, { recursive: true, force: true });
 }
