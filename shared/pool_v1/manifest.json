@@ -1,0 +1,56 @@
+{
+ "sha256": "f641308c6593fcc28a696cb849208ce4d2bc4d98b8068fed3ad627f828f667d4",
+ "rated": 921,
+ "tiers": {
+  "love": 10,
+  "okay": 259,
+  "nope": 652
+ },
+ "root": "runs/pool_v1",
+ "ratings_sha256": "1874da0b9d29d0159fbed43a9ee8c05a4d3add9a6dbceddbf5d35341840ffff9",
+ "candidates_indexed": 1175,
+ "models": {
+  "deepseek/deepseek-v4-flash": {
+   "love": 4,
+   "okay": 58,
+   "nope": 181,
+   "unrated": 0
+  },
+  "google/gemini-3.1-flash-lite": {
+   "love": 0,
+   "okay": 73,
+   "nope": 206,
+   "unrated": 0
+  },
+  "moonshotai/kimi-k2.6": {
+   "love": 0,
+   "okay": 5,
+   "nope": 13,
+   "unrated": 0
+  },
+  "qwen/qwen3-coder-next": {
+   "love": 1,
+   "okay": 28,
+   "nope": 189,
+   "unrated": 0
+  },
+  "z-ai/glm-5.3-flash": {
+   "love": 5,
+   "okay": 95,
+   "nope": 63,
+   "unrated": 0
+  }
+ },
+ "rated_by": {
+  "owner_at_the_desk": {
+   "lines": "1-108",
+   "count": 108
+  },
+  "codex_from_contact_sheets": {
+   "lines": "109-921",
+   "count": 813
+  }
+ },
+ "note": "Images are not in the repo; the manifest hash covers each rated candidate's strokes.jsonl and final.png.",
+ "accepted": 921
+}

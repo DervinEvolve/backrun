@@ -34,7 +34,7 @@ One simulator step per stroke, no search, about six seconds. It has learned the 
 | Scorer, kept in its own module the painter never reads | Done |
 | Search painter, coarse to fine, no learning | Done, and weak |
 | Learned painter | Stage A (imitation of the search painter) now paints. The first GPU run scored no better than a blank sheet, because a regression head averaged the search painter's varied strokes into one muddy dab. A head that picks a start cell and a bin for each other number, trained on 1,000 ledgers, scores `total` 8.85 on the sealed set against 24.02 for a blank sheet and 5.26 for the search painter, with 26 times less simulation. One run, five sealed targets, so a direction rather than a result. Numbers in [docs/TRAINING.md](docs/TRAINING.md) |
-| A language model that writes stroke files from a text prompt, rewarded by a judge against a pool I rate | Code built and tested against a fake model: the gate, candidate generation with a critic, the rated pool and its rating desk, the pairwise judge, the reward checklist and the trainer script. No real model called yet, no pool rated, no training run. Plan in [docs/SCRIBE.md](docs/SCRIBE.md) |
+| A language model that writes stroke files from a text prompt, rewarded by a judge against a rated pool | First pool generated and rated: 921 paintings from four cheap models over 36 subjects, $3.74 of API credit. I rated 108 by hand and Codex, an AI agent, rated the other 813 from contact sheets at my request. Next is checking the judge against those ratings, then the first GRPO run. No training yet. Numbers in [docs/SCRIBE.md](docs/SCRIBE.md) |
 | A studio in the browser where you can watch it paint | First pass built: a drafting arm replays a run stroke by stroke with the palette, jars, drying rack and a dashboard. Runs locally from `studio/`, not published yet. See [studio/README.md](studio/README.md) |
 
 ## What it looks like so far
@@ -69,7 +69,7 @@ A painting is a JSON Lines file of strokes and drying periods:
 
 ## A second painter: a language model writes the stroke file
 
-The stroke file is a small language, so a language model can write one from a prompt such as "a harbour at dusk, two boats, low tide", and the simulator paints it in a few seconds. There is no target image to match, so the reward is a judgement: a vision model is shown the painting next to a painting from a pool I rated by hand and asked which is the better watercolour of the subject. A gate throws out files that are broken or that try to game the judge with one wide dark wash. The recipe comes from Surya Narreddi and Cameron Franz, who trained a model to paint by writing p5.brush JavaScript, and from Sergio Paniego's open reproduction; what changes here is the medium, with real water and drying time, and a render that takes seconds instead of a minute. The plan, the gate rules, the reward and what is not done are in [docs/SCRIBE.md](docs/SCRIBE.md).
+The stroke file is a small language, so a language model can write one from a prompt such as "a harbour at dusk, two boats, low tide", and the simulator paints it in a few seconds. There is no target image to match, so the reward is a judgement: a vision model is shown the painting next to a painting from a rated pool and asked which is the better watercolour of the subject. A gate throws out files that are broken or that try to game the judge with one wide dark wash. The recipe comes from Surya Narreddi and Cameron Franz, who trained a model to paint by writing p5.brush JavaScript, and from Sergio Paniego's open reproduction; what changes here is the medium, with real water and drying time, and a render that takes seconds instead of a minute. The plan, the gate rules, the reward and what is not done are in [docs/SCRIBE.md](docs/SCRIBE.md).
 
 ## Try it
 
@@ -104,7 +104,7 @@ total = 0.01 * lab_l2 + 4.0 * (1 - ssim) + 0.002 * strokes
 
 ## Data and consent
 
-Targets are my own photos, public-domain images and the built-in synthetic scenes. Every painting in the judge's pool is a stroke file written by a model and rendered by this simulator, rated by me. No paintings by any artist, living or dead, are used as training data, as targets or as references. The look comes from the physics of water and pigment on paper.
+Targets are my own photos, public-domain images and the built-in synthetic scenes. Every painting in the judge's pool is a stroke file written by a model and rendered by this simulator. I rated the first 108 of the first pool by hand and had Codex, an AI agent, rate the rest from contact sheets; docs/SCRIBE.md says exactly which. No paintings by any artist, living or dead, are used as training data, as targets or as references. The look comes from the physics of water and pigment on paper.
 
 ## The catch
 

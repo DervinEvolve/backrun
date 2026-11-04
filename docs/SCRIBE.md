@@ -5,10 +5,11 @@ text prompt such as "a harbour at dusk, two boats, low tide". The simulator
 paints each file, a gate throws out files that are broken or that try to game
 the judge, and the reward comes from a vision model asked, again and again,
 which of two paintings is the better watercolour of the subject. One of the
-two is always a painting from a pool I rated by hand.
+two is always a painting from a rated pool.
 
-The code lives in `scribe/`. Everything below the trainer has tests. The
-trainer itself has been written and parsed but never run.
+The code lives in `scribe/`. Everything below the trainer has tests. The first
+pool exists and is rated; see "The first pool" below. The trainer itself has
+been written and parsed but never run.
 
 ## Where the recipe comes from
 
@@ -241,15 +242,62 @@ Each reward call appends one line per rollout and one summary line to
 gives the same report on any step of a run. The judge's token usage goes to
 `usage.jsonl`.
 
+## The first pool
+
+Pool v1 was generated on 4 November 2026 from the 36 starter subjects, 8
+candidates per subject from each of four generators, with one critic round
+from `qwen/qwen3-vl-30b-a3b-instruct` and no reference photos. Kimi K2.6 was
+in the first batch and dropped after 23 candidates because it spent its whole
+reply budget on hidden reasoning. The run was resumed five times across
+container restarts; the index is append-only, so nothing was generated twice.
+
+| Generator | Accepted | Rejected by the gate | Pass rate | Median strokes |
+|---|---|---|---|---|
+| Gemini 3.1 Flash Lite | 279 | 9 | 97% | 10 |
+| DeepSeek V4 Flash | 243 | 45 | 84% | 19 |
+| Qwen3 Coder Next | 218 | 70 | 76% | 22 |
+| GLM 5.3 Flash | 163 | 125 | 57% | 34 |
+| Kimi K2.6 | 18 | 5 | 78% | 44 |
+
+921 accepted, 254 rejected, no failed calls. GLM and DeepSeek failed mostly
+on format (no stroke lines, no dry op, too few strokes); Qwen failed on
+substance (too many dry steps, one flat colour, paper fully covered). Gemini
+almost never failed and paints the sparsest files. 847 of the 921 accepted
+files are the revised one after the critic. The whole pool cost $3.74 in
+OpenRouter credit, read from the usage ledger: $3.67 for generation and $0.07
+for the critic, about $0.004 per accepted painting.
+
+Rating. I rated the first 108 at the desk, in about 25 minutes, and kept 15
+of them (1 love, 14 okay). At my request Codex, an AI coding agent, reviewed
+the remaining 813 from contact sheets and recorded a tier for each, keeping
+254 (9 love, 245 okay). So of the 921 ratings, 108 are mine and 813 are an AI
+reviewer's. We ranked the four generators in the same order (GLM 5.3 Flash
+best, Qwen3 Coder Next worst), but Codex kept paintings at about twice my
+rate, so the keep set is mostly its taste rather than mine. I keep that in
+mind when reading anything the judge is calibrated against, and the ratings
+file carries no label of who rated what; the split is by line number, 1 to
+108 and 109 to 921.
+
+Totals: love 10, okay 259, nope 652. Per generator, love and okay together:
+GLM 61%, Gemini 26%, DeepSeek 26%, Qwen 13%. Colour coverage over the 269
+keeps is thin in green and teal (present in fewer than 14 paintings) and in
+dark values below L* 20, so supplement prompts should aim at green subjects
+and night or shadow scenes.
+
+The ratings log, the index, the prompts and a manifest with the pool hash
+(`f641308c…`) are in `shared/pool_v1/`. The images are not in the repo; the
+manifest hash covers each rated candidate's stroke file and render, so a
+training run can record exactly which pool it used.
+
 ## Costs
 
-Round-number estimates only. Nothing has been billed yet.
+Round-number estimates, except the first pool, which was billed.
 
-- Pool generation: 1,600 candidates at about three calls each (generate,
-  sometimes a retry or a critic round), a few thousand tokens per call: on the
-  order of 15 million tokens, roughly 30 to 200 dollars depending on the
-  models.
-- Rating: one to three hours of my time per 1,600 candidates.
+- Pool generation: pool v1, 1,175 candidates with one critic round each,
+  cost $3.74 with the four cheap generators above. The estimate before it ran
+  was 30 to 200 dollars.
+- Rating: my 108 took 25 minutes, so a full pool of this size is three to
+  four hours by hand.
 - Training: 200 steps of 8 rollouts with 4 judge calls each is about 6,400
   judge calls, a few dollars to perhaps 20 with a small vision model. GPU time
   for a 4B model with LoRA on one A100, if a step takes about a minute: three
@@ -258,24 +306,20 @@ Round-number estimates only. Nothing has been billed yet.
 ## Data and consent
 
 Every image in the pool is a stroke file written by a model and rendered by
-this simulator, and every rating is mine. Reference photos shown to
+this simulator. The ratings are mine for the first 108 candidates of pool v1
+and an AI reviewer's for the other 813, as described above. Reference photos shown to
 the critic are my own or in the public domain. No paintings by any
 artist are used, as references, as training data or as targets.
 
 ## What is not done
 
-- No real API call has been made: the client was tested against a local
-  server and a scripted fake. An unauthenticated request to OpenRouter's
-  public model list went through the proxy; the Hugging Face router was
-  refused by the proxy from this machine.
-- Generation, critique, judging and the reward ran only with the scripted
-  fake client.
-- No pool exists yet, so the coverage report and the thresholds of the gate
-  have not met real model output.
+- Generation and the critic have run against real models (pool v1). The
+  judge and the reward have run only with the scripted fake client; the
+  judge has not yet been checked against the ratings.
 - The trainer has never run. The `hf jobs` and `modal run` commands in its
   docstring are unverified, and the Modal wrapper app it mentions is not
   written.
 - The aesthetic scorer's server is not part of this repo, and its score range
   has to be set from real scores before use.
-- The rating page has handler tests and its script passes a syntax check.
-  Nobody has looked at it in a browser yet.
+- The rating page has been used for one pool on a Mac and in a headless
+  browser here; it has no tests beyond its handlers.
