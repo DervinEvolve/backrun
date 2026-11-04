@@ -22,8 +22,11 @@ numbers next to the base sample's, so the two reports read side by side.
 
 The image installs vLLM (which pins its own PyTorch), TRL, PEFT and the
 simulator's dependencies, then copies ``backrun/``, ``scribe/`` and the
-reference pack in. STATUS: written and parsed, not yet run on Modal; the
-first run is a debugging run, and version pins may need adjusting.
+reference pack in. The slim image has no CUDA compiler, so
+``VLLM_USE_FLASHINFER_SAMPLER=0`` keeps vLLM on its PyTorch sampler
+instead of building a FlashInfer kernel on the fly (the first run failed
+there). STATUS: the image builds and the model loads on Modal; sampling
+and training are still being run for the first time.
 
 Two volumes, shared with the painter's app:
 
@@ -79,7 +82,9 @@ image = (
     _modal.Image.debian_slim(python_version="3.11")
     .pip_install("vllm>=0.11", "trl>=0.24", "peft>=0.17", "datasets>=3", "accelerate>=1",
                  "numpy>=1.26", "scipy>=1.11", "pillow>=10")
-    .env({"PYTHONUNBUFFERED": "1", "HF_HOME": "/checkpoints/hf", "VLLM_WORKER_MULTIPROC_METHOD": "spawn"})
+    # the slim image has no CUDA compiler, so vLLM must not ask FlashInfer to build its sampling kernel on the fly
+    .env({"PYTHONUNBUFFERED": "1", "HF_HOME": "/checkpoints/hf", "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+          "VLLM_USE_FLASHINFER_SAMPLER": "0"})
     .add_local_file(REPO / "pyproject.toml", f"{REMOTE_REPO}/pyproject.toml", copy=True)
     .add_local_file(REPO / "README.md", f"{REMOTE_REPO}/README.md", copy=True)
     .add_local_dir(REPO / "backrun", f"{REMOTE_REPO}/backrun", copy=True, ignore=_ignore)
