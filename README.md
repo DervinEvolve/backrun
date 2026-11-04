@@ -25,7 +25,7 @@ Forty stroke slots, sixteen candidates each, seed 7, about fifty seconds on one 
 | Stroke file format, byte-identical replay from file and seed | Done and tested |
 | Scorer, kept in its own module the painter never reads | Done |
 | Search painter, coarse to fine, no learning | Done, and weak |
-| Learned painter | Stage A (imitation of the search painter) is written and ran once on CPU at small scale, where it lost to the search painter by a wide margin. No GPU training yet. Plan and numbers in [docs/TRAINING.md](docs/TRAINING.md) |
+| Learned painter | The first GPU run of Stage A (imitation of the search painter) scored no better than a blank sheet, because the network averaged the search painter's varied strokes into one muddy dab and repeated it. Its head now picks a start cell and a bin for each other number, which a small CPU run shows trains and paints, still no better than blank, and it has not yet run on a GPU. Plan and numbers in [docs/TRAINING.md](docs/TRAINING.md) |
 | A studio in the browser where you can watch it paint | First pass built: a drafting arm replays a run stroke by stroke with the palette, jars, drying rack and a dashboard. Runs locally from `studio/`, not published yet. See [studio/README.md](studio/README.md) |
 
 ## What it looks like so far
