@@ -84,13 +84,13 @@ function ghost(g, c, alpha) {
   const wpx = c.width * S;
   g.save();
   g.lineCap = 'round'; g.lineJoin = 'round';
-  g.globalAlpha = 0.34 * alpha;
+  g.globalAlpha = 0.42 * alpha;
   g.strokeStyle = c.colour;
   g.lineWidth = wpx;
   tracePath(g, c.rs, 1);
   g.stroke();
   // a thin dashed centre line marks it as a candidate, not paint
-  g.globalAlpha = 0.75 * alpha;
+  g.globalAlpha = 0.9 * alpha;
   g.setLineDash([7, 6]);
   g.lineWidth = Math.max(1.5, Math.min(4, wpx * 0.08));
   g.strokeStyle = c.colour;

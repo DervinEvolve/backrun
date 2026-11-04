@@ -171,7 +171,7 @@ async function main() {
   const tp = run.target_path ?? '';
   const promptLines = tp.startsWith('synthetic:') ? [['Built-in test scene:', 30], [tp.split(':')[1], 44, 'Georgia, serif']]
     : run.prompt ? [['Prompt:', 28], [String(run.prompt).slice(0, 28), 34, 'Georgia, serif']] : [['Owner\'s photo', 40, 'Georgia, serif']];
-  const scoreFront = TX.cardTexture([['face down', 28]], { w: 256, h: 176, top: 96 });
+  const scoreFront = TX.cardTexture([['Backrun score sheet', 20]], { w: 256, h: 176, top: 40 });
   const cards = {
     Target_Print: targetTex,
     Prompt_Card: TX.cardTexture(promptLines, { w: 512, h: 352 }),
@@ -202,7 +202,7 @@ async function main() {
     else if (n === 'Glass') { out = glassMat(m, '#EEF2EE', 0.13); }
     else if (n === 'Glass_Amber') { out = glassMat(m, '#8A5524', 0.7); }
     else if (n === 'Water_Clean') {
-      out = new THREE.MeshPhysicalMaterial({ name: n, color: '#C4D6D2', roughness: 0.02, transparent: true, opacity: 0.38,
+      out = new THREE.MeshPhysicalMaterial({ name: n, color: '#A9C2BE', roughness: 0.02, transparent: true, opacity: 0.55,
         clearcoat: 1, ior: 1.33, depthWrite: false, envMapIntensity: 1.6, side: THREE.DoubleSide });
     } else if (n === 'Paper_Sheet') {
       m.map = sheet.texture; m.color.set('#ffffff'); m.normalMap = paperN; m.normalScale.set(0.55, 0.55); m.roughness = 0.9;
@@ -233,8 +233,8 @@ async function main() {
   });
   for (const b of Object.values(brushes)) b.o.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   // the rinse jar's own water material: its murk follows the rinses
-  const rinseMat = new THREE.MeshPhysicalMaterial({ name: 'Water_Rinse', color: '#B9C8C2', roughness: 0.1, transparent: true,
-    opacity: 0.4, depthWrite: false, side: THREE.DoubleSide, clearcoat: 1, ior: 1.33 });
+  const rinseMat = new THREE.MeshPhysicalMaterial({ name: 'Water_Rinse', color: '#A9C2BE', roughness: 0.1, transparent: true,
+    opacity: 0.55, depthWrite: false, side: THREE.DoubleSide, clearcoat: 1, ior: 1.33 });
   jarRinse.getObjectByName('Jar_Water').traverse((o) => { if (o.isMesh) { o.material = rinseMat; o.renderOrder = 1; } });
   jarClean.getObjectByName('Jar_CapRing').visible = false;
   // cakes need their own materials so each can darken as it drains
@@ -322,7 +322,9 @@ async function main() {
   const panelHome = { p: panel.position.clone(), q: panel.quaternion.clone() };
   const panelBox = new THREE.Box3().setFromObject(panel);
   const pSize = new THREE.Vector3();
-  new THREE.Box3().setFromBufferAttribute(panel.getObjectByName('Panel_Carrier').geometry.attributes.position).getSize(pSize);
+  panel.quaternion.identity(); panel.updateMatrixWorld(true);
+  new THREE.Box3().setFromObject(panel.getObjectByName('Panel_Carrier'), true).getSize(pSize);
+  panel.quaternion.copy(panelHome.q); panel.updateMatrixWorld(true);
   const halfX = pSize.x / 2, halfZ = pSize.z / 2;
   const boardN = new THREE.Vector3(0, 1, 0).applyQuaternion(panelHome.q);
   const qVert = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), Math.PI / 2); // face south, painting upright
@@ -424,12 +426,14 @@ async function main() {
     persp.position.clamp(cb[0], cb[1]);
   });
 
+  // a narrow (phone) view widens the preset's field of view so the same subject stays in frame
+  const fovFor = (f) => { const a = viewW() / viewH(); return a >= 1.2 ? f : Math.min(78, (2 * Math.atan(Math.tan((f * D2R) / 2) * (1.5 / a) * 0.8)) / D2R); };
   let current = 'stroke';
   let fly = null; // { p0, t0, p1, t1, a, dur, fov0, fov1 } in UI seconds
   let uiTime = 0;
   function flyTo(pos, target, fov = persp.fov, dur = 1.0) {
     if (active !== persp) { active = persp; controls.enabled = true; orthoControls.enabled = false; }
-    fly = { p0: persp.position.clone(), t0: controls.target.clone(), p1: pos.clone(), t1: target.clone(), a: uiTime, dur, fov0: persp.fov, fov1: fov };
+    fly = { p0: persp.position.clone(), t0: controls.target.clone(), p1: pos.clone(), t1: target.clone(), a: uiTime, dur, fov0: persp.fov, fov1: fovFor(fov) };
     presetHolds = true;
   }
   function setView(id, instant = false) {
@@ -447,7 +451,7 @@ async function main() {
       if (instant || wasOrtho || STILL) {
         fly = null;
         active = persp; controls.enabled = true; orthoControls.enabled = false;
-        persp.fov = s.fov; persp.position.fromArray(s.position); controls.target.fromArray(s.target);
+        persp.fov = fovFor(s.fov); persp.position.fromArray(s.position); controls.target.fromArray(s.target);
         persp.lookAt(controls.target); persp.updateProjectionMatrix(); controls.update();
         presetHolds = true;
       } else flyTo(new THREE.Vector3().fromArray(s.position), new THREE.Vector3().fromArray(s.target), s.fov);
@@ -507,7 +511,7 @@ async function main() {
     }
     return out;
   })();
-  const clearWater = new THREE.Color('#B9C8C2');
+  const clearWater = new THREE.Color('#A9C2BE');
   const tipW = new THREE.Vector3();
   let lastPose = null;
   const scoreCardDrawn = { done: false };
@@ -523,7 +527,7 @@ async function main() {
     }
     levels.clean = 0.88 - 0.42 * am.water / Math.max(1e-6, replay.totals.water);
     jarClean.getObjectByName('Jar_Water').scale.y = levels.clean;
-    levels.rinse = 0.78;
+    levels.rinse = 0.85;
     jarRinse.getObjectByName('Jar_Water').scale.y = levels.rinse;
     const k = Math.floor(am.rinses), f = am.rinses - k;
     const murk = 1 - Math.exp(-am.rinses / 7);
@@ -531,7 +535,7 @@ async function main() {
     const tintB = rinseTint[Math.min(rinseTint.length - 1, k)] ?? tintA;
     const tint = tintA.clone().lerp(tintB, f);
     rinseMat.color.copy(clearWater).lerp(tint, Math.min(0.85, murk * 1.2));
-    rinseMat.opacity = 0.36 + 0.5 * murk;
+    rinseMat.opacity = 0.55 + 0.38 * murk;
     rinseMat.roughness = 0.1 + 0.4 * murk;
 
     // the panel

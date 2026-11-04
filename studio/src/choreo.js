@@ -24,7 +24,7 @@ export function buildChoreo(replay, A) {
           push({ kind: 'rinse', a: st.a, b: st.b, inn: 0, out: 0, above: 0.075, seg: s, pose: (t) => {
             const r = A.rinse(t);
             const u = (t - st.a) / (st.b - st.a);
-            const depth = 0.028 * Math.sin(Math.PI * clamp01(u * 1.25 - 0.12)) ** 0.5;
+            const depth = 0.012 * Math.sin(Math.PI * clamp01(u * 1.25 - 0.12)) ** 0.5;
             const ang = (t - st.a) * Math.PI * 4.2;
             const rad = 0.011 * Math.sin(Math.PI * clamp01(u));
             const p = new THREE.Vector3(r.centre.x + Math.cos(ang) * rad, r.surface - depth + 0.012 * (1 - Math.sin(Math.PI * clamp01(u))), r.centre.z + Math.sin(ang) * rad);
