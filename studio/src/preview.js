@@ -5,6 +5,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 export async function assetPreview(renderer, load, name) {
   const params = new URLSearchParams(location.search);
+  document.querySelectorAll('.panel').forEach((p) => { p.style.display = 'none'; });
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#D9D3C6');
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -28,7 +29,7 @@ export async function assetPreview(renderer, load, name) {
   scene.add(ground);
   // 1.8 m figure block and a 1 m ruler with 10 cm ticks
   const fig = new THREE.Mesh(new THREE.BoxGeometry(0.45, 1.8, 0.25), new THREE.MeshStandardMaterial({ color: '#6C7A89' }));
-  fig.position.set(box.max.x + 0.4, ground.position.y + 0.9, 0);
+  fig.position.set(box.min.x - 0.45, ground.position.y + 0.9, box.min.z - 0.3);
   scene.add(fig);
   for (let i = 0; i < 10; i++) {
     const t = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.004, 0.02),

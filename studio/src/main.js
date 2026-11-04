@@ -27,7 +27,7 @@ renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.0;
+renderer.toneMappingExposure = 0.9;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 document.getElementById('stage').appendChild(renderer.domElement);
 
@@ -90,7 +90,7 @@ async function main() {
   place(take(G.corkboards, 'CorkStrip'), 'corkstrip');
   place(take(G.corkboards, 'QueueBoard'), 'queueboard');
   const cup = place(take(G.props, 'TeaCup'), 'teacup');
-  place(take(G.props, 'Plant'), 'plant');
+  const plant = place(take(G.props, 'Plant'), 'plant');
   place(take(G.props, 'RopeRail'), 'roperail');
   const score = place(take(G.props, 'ScoreCard'), 'scorecard');
   score.rotation.x = Math.PI; // face down: the result side lies on the bench
@@ -101,7 +101,6 @@ async function main() {
   cal.position.y += 0.017 * Math.sin(30 * D2R);
   place(boxA, 'box_a');
   place(boxB, 'box_b');
-  place(boxA.clone(true), 'box_floor');
   for (const [i, x] of layout.stools.x.entries()) {
     const s = G.stool.clone(true);
     s.position.set(x, 0, layout.stools.z);
@@ -178,8 +177,8 @@ async function main() {
     else if (n === 'Glass') { out = glassMat(m, '#F2EFE6', 0.16); }
     else if (n === 'Glass_Amber') { out = glassMat(m, '#8A5524', 0.7); }
     else if (n === 'Water_Clean') {
-      out = new THREE.MeshPhysicalMaterial({ name: n, color: '#D4E2E2', roughness: 0.02, transparent: true, opacity: 0.32,
-        clearcoat: 1, ior: 1.33, depthWrite: false, envMapIntensity: 1.2 });
+      out = new THREE.MeshPhysicalMaterial({ name: n, color: '#B7CBC8', roughness: 0.02, transparent: true, opacity: 0.44,
+        clearcoat: 1, ior: 1.33, depthWrite: false, envMapIntensity: 1.2, side: THREE.DoubleSide }); // lathe sides face inward
     } else if (n === 'Paper_Sheet') {
       m.map = sheetTex; m.color.set('#ffffff'); m.normalMap = paperN; m.normalScale.set(0.25, 0.25); m.roughness = 0.88;
     } else if (['Paper', 'Carrier_Board', 'Kraft_Tape', 'Sketchbook_Cover', 'Rag_Cloth'].includes(n)) {
@@ -202,8 +201,9 @@ async function main() {
     o.receiveShadow = true;
     if (o.material.transparent) o.renderOrder = o.material.name.startsWith('Water') ? 1 : 2;
   });
-  const rinseMat = shared.get('Water_Clean').clone();
-  rinseMat.color.set('#8E8A7C'); rinseMat.opacity = 0.62;
+  const rinseMat = new THREE.MeshStandardMaterial({ name: 'Water_Rinse', color: '#6E6A5A', roughness: 0.15, transparent: true,
+    opacity: 0.84, depthWrite: true, side: THREE.FrontSide });
+  // murk: placeholder tint and opacity until the ledger drives them
   jarRinse.getObjectByName('Jar_Water').traverse((o) => { if (o.isMesh) o.material = rinseMat; });
 
   // outside the window: a late-afternoon sky with a low roofline
@@ -216,7 +216,7 @@ async function main() {
   // ------------------------------------------------------------------ lights
   RectAreaLightUniformsLib.init();
   const benchTarget = new THREE.Vector3(-0.1, 0.76, -1.5);
-  const sun = new THREE.DirectionalLight('#FFC58F', 3.4); // about 3500 K
+  const sun = new THREE.DirectionalLight('#FFCB98', 2.8); // about 3500 K
   const sunDir = new THREE.Vector3(-2.6, 1.05, 0.62).normalize();
   sun.position.copy(benchTarget).addScaledVector(sunDir, 9);
   sun.target.position.copy(benchTarget);
@@ -229,7 +229,7 @@ async function main() {
   scene.add(sun, sun.target);
 
   const lampAnchor = G.lamp.getObjectByName('Lamp_Light');
-  const lamp = new THREE.SpotLight('#FFB06A', 9, 0, 0.78, 0.75, 2); // about 2700 K
+  const lamp = new THREE.SpotLight('#FFB872', 3.2, 0, 0.78, 0.8, 2); // about 2700 K
   scene.updateMatrixWorld(true);
   lampAnchor.getWorldPosition(lamp.position);
   const sheetCentre = new THREE.Vector3();
@@ -255,7 +255,8 @@ async function main() {
   // ------------------------------------------------------------------ cut-room walls
   const shadowOnly = new THREE.MeshBasicMaterial({ colorWrite: false, depthWrite: false });
   const walls = {};
-  const winParts = ['Window_Frame', 'Window_Blind', 'Window_Glass'].map((n) => G.room.getObjectByName(n));
+  // the sill and the plant on it go with the west wall, or they float above its stub
+  const winParts = [...['Window_Frame', 'Window_Blind', 'Window_Glass', 'Window_Sill'].map((n) => G.room.getObjectByName(n)), plant];
   for (const side of ['N', 'S', 'E', 'W']) {
     const full = G.room.getObjectByName(`Wall_${side}`);
     const stub = G.room.getObjectByName(`Wall_${side}_Stub`);
@@ -356,7 +357,7 @@ async function main() {
       ao.blendIntensity = 0.85;
       c.addPass(ao);
     }
-    c.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.32, 0.5, 2.6));
+    c.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 0.22, 0.4, 3.2));
     c.addPass(new OutputPass());
     return c;
   }

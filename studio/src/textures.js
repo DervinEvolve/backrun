@@ -85,10 +85,11 @@ function pack(size, fn) {
 export function woodTexture(seed = 1, size = 512, stain = false) {
   const n = makeNoise(seed, 8), n2 = makeNoise(seed + 7, 64), n3 = makeNoise(seed + 13, 6);
   const { col, h, rough } = pack(size, (u, v) => {
-    const warp = fbm(n, u * 8, v * 8, 3) * 6;
-    const ring = 0.5 + 0.5 * Math.sin((v * 46 + warp) * Math.PI);
+    // long straight grain along U: the warp changes slowly along the board and quickly across it
+    const warp = fbm(n, u * 2, v * 8, 3) * 2.2;
+    const ring = Math.pow(0.5 + 0.5 * Math.sin((v * 90 + warp) * Math.PI), 3);
     const fine = n2(u * 4, v * 64);
-    let t = 0.8 + 0.12 * ring + 0.08 * fine;
+    let t = 0.86 + 0.08 * (1 - ring) + 0.06 * fine;
     let rr = 1.0;
     if (stain) {
       const s = fbm(n3, u * 6, v * 6, 3);
@@ -97,7 +98,7 @@ export function woodTexture(seed = 1, size = 512, stain = false) {
     }
     return [t * 1.0, t * 0.97, t * 0.93, ring * 0.4 + fine * 0.6, rr];
   });
-  return { map: toTexture(size, col), normalMap: normalFromHeight(h, size, 1.2), roughnessMap: toTexture(size, rough, false) };
+  return { map: toTexture(size, col), normalMap: normalFromHeight(h, size, 0.35), roughnessMap: toTexture(size, rough, false) };
 }
 
 // Oiled oak floor planks running along U: 150 mm boards, tile 1.8 m.
@@ -155,10 +156,10 @@ export function brickTexture(seed = 11, size = 1024) {
     }
     const tone = tones[(c % courses) * per + (b % per)];
     // limewash is thin in patches, letting the warm brick read through
-    const thin = Math.max(0, (fbm(n3, u * 24, v * 24, 3) - 0.55) * 2.4) * (0.5 + tone * 0.6);
+    const thin = Math.max(0, (fbm(n3, u * 24, v * 24, 3) - 0.6) * 1.6) * (0.4 + tone * 0.5);
     const base = [0.98 - 0.04 * tone + 0.02 * speck, 0.96 - 0.04 * tone + 0.02 * speck, 0.92 - 0.05 * tone + 0.02 * speck];
-    const brick = [0.78, 0.55, 0.44];
-    const m = Math.min(0.75, thin);
+    const brick = [0.74, 0.6, 0.5];
+    const m = Math.min(0.45, thin);
     const edge = Math.min(1, dj / 0.004);
     const hh = 0.5 + 0.5 * edge + 0.15 * (wash - 0.5) + 0.08 * speck;
     return [base[0] * (1 - m) + brick[0] * m, base[1] * (1 - m) + brick[1] * m, base[2] * (1 - m) + brick[2] * m, hh, 0.95];

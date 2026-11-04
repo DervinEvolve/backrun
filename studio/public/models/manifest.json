@@ -36,9 +36,9 @@
    "raw_bytes": 58956
   },
   "mannequin.glb": {
-   "tris": 2712,
-   "bytes": 87328,
-   "raw_bytes": 188520
+   "tris": 2920,
+   "bytes": 86404,
+   "raw_bytes": 189476
   },
   "palette.glb": {
    "tris": 5672,
@@ -113,7 +113,7 @@
   }
  },
  "total_file": {
-  "tris": 30562,
-  "bytes": 917800
+  "tris": 30770,
+  "bytes": 916876
  }
 }

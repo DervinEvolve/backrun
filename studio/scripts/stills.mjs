@@ -35,7 +35,7 @@ if (assets) {
     }
   }
 } else {
-  await page.goto(`${base}?still`);
+  await page.goto(`${base}?still${arg('--q', '') ? '&' + arg('--q') : ''}`);
   await page.waitForSelector('body[data-ready="1"]', { timeout: 180000 });
   const views = arg('--views', '') ? arg('--views').split(',') : await page.evaluate(() => window.__app.views);
   for (const [i, v] of views.entries()) {

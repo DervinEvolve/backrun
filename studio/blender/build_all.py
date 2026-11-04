@@ -877,25 +877,25 @@ def mannequin(name, seated, M, loc):
     for sx in (-1, 1):
         sh = group(f'{name}_Shoulder_{sx}', (sx * 0.19, 0, 0.47), parent=pel)
         sphere(f'{name}_ShoulderBall_{sx}', 0.04, (0, 0, 0), joint, seg=10, rings=5, parent=sh)
-        sh.rotation_euler = (R(-40 if seated else 0), 0, R(sx * (8 if seated else 6)) * 0)
+        sh.rotation_euler = (R(-22 if seated else 0), 0, 0)
         tube(f'{name}_UpperArm_{sx}', [(0, 0, -0.03), (0, 0, -0.28)], 0.038, wood, res=2, parent=sh)
         el = group(f'{name}_Elbow_{sx}', (0, 0, -0.30), parent=sh)
-        el.rotation_euler = (R(-60 if seated else -5), 0, 0)
+        el.rotation_euler = (R(-48 if seated else -5), 0, 0)
         sphere(f'{name}_ElbowBall_{sx}', 0.032, (0, 0, 0), joint, seg=10, rings=5, parent=el)
         tube(f'{name}_Forearm_{sx}', [(0, 0, -0.03), (0, 0, -0.25)], 0.032, wood, res=2, parent=el)
         sphere(f'{name}_Hand_{sx}', 0.045, (0, 0, -0.31), wood, seg=10, rings=5, scale=(0.6, 0.35, 1.0), parent=el)
         hp = group(f'{name}_Hip_{sx}', (sx * 0.085, 0, -0.04), parent=pel)
-        hp.rotation_euler = (R(90 if seated else 0), 0, 0)
+        hp.rotation_euler = (R(-90 if seated else 0), 0, R(sx * 4 if seated else 0))
         sphere(f'{name}_HipBall_{sx}', 0.05, (0, 0, 0), joint, seg=10, rings=5, parent=hp)
         tube(f'{name}_Thigh_{sx}', [(0, 0, -0.04), (0, 0, -0.38)], 0.058, wood, res=2, parent=hp)
         kn = group(f'{name}_Knee_{sx}', (0, 0, -0.42), parent=hp)
-        kn.rotation_euler = (R(-90 if seated else 0), 0, 0)
+        kn.rotation_euler = (R(118 if seated else 0), 0, 0)
         sphere(f'{name}_KneeBall_{sx}', 0.045, (0, 0, 0), joint, seg=10, rings=5, parent=kn)
         tube(f'{name}_Shin_{sx}', [(0, 0, -0.035), (0, 0, -0.40)], 0.043, wood, res=2, parent=kn)
         box(f'{name}_Foot_{sx}', (0.08, 0.22, 0.05), (0, -0.06, -0.455), wood, 0.012, parent=kn)
     if seated:
-        # sit the pelvis on a 0.646 m stool seat; feet then rest on the floor
-        pel.location = (0, 0.06, 0.646 + 0.07)
+        # sit the pelvis on a 0.646 m stool seat, thighs forward, shins tucked back so the feet rest on the foot ring
+        pel.location = (0, 0.06, 0.646 + 0.075)
     return g
 
 
