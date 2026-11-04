@@ -233,8 +233,8 @@ def render_ops(ops: list[dict[str, Any]], canvas: dict[str, Any], settle: int = 
     return sim.render()
 
 
-def _separated(hist: np.ndarray, share: float, circular: bool) -> bool:
-    """True if two bins at least two apart each hold ``share`` or more."""
+def _separated(hist: np.ndarray, share: float, circular: bool, gap: int = 2) -> bool:
+    """True if two bins at least ``gap`` apart each hold ``share`` or more."""
     idx = np.flatnonzero(hist >= share)
     n = len(hist)
     for a in idx:
@@ -242,7 +242,7 @@ def _separated(hist: np.ndarray, share: float, circular: bool) -> bool:
             d = abs(int(a) - int(b))
             if circular:
                 d = min(d, n - d)
-            if d >= 2:
+            if d >= gap:
                 return True
     return False
 
@@ -261,7 +261,9 @@ def rendered_check(image: np.ndarray, canvas: dict[str, Any]) -> tuple[list[str]
     hue_hist = np.histogram(hue[chroma > CHROMA_FLOOR], bins=HUE_BINS, range=(0.0, 360.0))[0] / total
     l_edges = np.arange(0.0, 100.0 + LIGHTNESS_BIN, LIGHTNESS_BIN)
     l_hist = np.histogram(painted[:, 0], bins=l_edges)[0] / total
-    two_hues = _separated(hue_hist, HUE_BIN_SHARE, circular=True)
+    # Neighbouring 30-degree bins count as two hues (yellow next to yellow-green is a
+    # real palette); lightness levels must be two bins, 20 L*, apart to count.
+    two_hues = _separated(hue_hist, HUE_BIN_SHARE, circular=True, gap=1)
     two_levels = _separated(l_hist, LIGHTNESS_BIN_SHARE, circular=False)
     reasons: list[str] = []
     if coverage < MIN_COVERAGE:

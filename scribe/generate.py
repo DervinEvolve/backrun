@@ -142,6 +142,7 @@ class Generator:
         if res.ok:
             messages.append({"role": "assistant", "content": reply.text})
             return reply.text, res
+        self._last_rejected_reply = reply.text
         messages += [{"role": "assistant", "content": reply.text}, user_message(_fix_message(res))]
         reply = self.client.chat(model, messages, temperature=self.temperature,
                                  max_tokens=self.max_tokens, tag=tag + ":retry")
@@ -220,10 +221,12 @@ class Generator:
             fh.write(json.dumps(line) + "\n")
         return line
 
-    @staticmethod
-    def _keep_round(folder: Path, r: int, res: GateResult, canvas: dict[str, Any],
+    def _keep_round(self, folder: Path, r: int, res: GateResult, canvas: dict[str, Any],
                     log: list[dict[str, Any]], critique: str | None = None) -> None:
         (folder / f"round_{r}.jsonl").write_text(to_jsonl(res.ops, canvas))
+        if not res.ok and getattr(self, "_last_rejected_reply", None):
+            # the raw reply, so a rejection can be read back later
+            (folder / f"round_{r}.reply.txt").write_text(self._last_rejected_reply)
         if res.image is not None:
             _save_png(res.image, folder / f"round_{r}.png")
         entry = {"round": r, "gate": res.to_dict()}
