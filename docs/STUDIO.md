@@ -401,7 +401,7 @@ card and the hidden layers. All are additions; existing fields stay as they are.
 What Pass 1 changed against the plan above, and what it could not do:
 
 - **SimReady props blocked.** Every SimReady file except the small cardboard boxes is stored in Hugging Face's Xet
-  storage and downloads from `us.aws.cdn.hf.co`, which this environment's network policy refuses. The glass jars,
+  storage and downloads from `us.aws.cdn.hf.co`, which my cloud environment's network policy refuses. The glass jars,
   tea cup, mug, bowl, lab bottles, open book and window blind are hand-built stand-ins in `blender/build_all.py`.
   The two boxes (`box_cardboard_a01`, `box_cardboard_b01`) are imported and credited in `studio/CREDITS.md`; the
   third, loose box on the floor was dropped since the plan wants one or two. Allowing that host would let a later
