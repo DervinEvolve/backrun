@@ -287,6 +287,7 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--judge-model", required=True)
     sp.add_argument("--out", required=True)
     sp.add_argument("--refs", type=int, default=2)
+    sp.add_argument("--mix", type=float, default=0.1, help="share of references drawn from love")
     sp.add_argument("--limit", type=int, default=None)
     sp.add_argument("--seed", type=int, default=0)
     args = ap.parse_args(argv)
@@ -300,10 +301,10 @@ def main(argv: list[str] | None = None) -> int:
         except ValueError as exc:
             print(exc, file=sys.stderr)
             return 1
-        refs = args.refs
+        refs, mix = args.refs, args.mix
 
         def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
-            return [r["path"] for r in pool.sample_references(rng, k=refs)]
+            return [r["path"] for r in pool.sample_references(rng, k=refs, mix=mix, prompt_id=prompt_id)]
 
         reward = Reward(PairwiseJudge(client, args.judge_model), references, aesthetic=aesthetic_from_env())
         lines = score_batch(args.batch_root, reward, args.out, seed=args.seed, limit=args.limit)

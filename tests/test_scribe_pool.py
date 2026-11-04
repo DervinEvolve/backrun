@@ -172,3 +172,13 @@ def test_http_round_trip(pool: Pool) -> None:
 def test_page_has_keys_and_drawers() -> None:
     for fragment in ('data-tier="love"', 'data-tier="okay"', 'data-tier="nope"', 'k==="u"', "rated ${fmt"):
         assert fragment in PAGE
+
+
+def test_sample_references_never_returns_the_excluded_painting(pool: Pool) -> None:
+    for c in pool.candidates():
+        pool.rate(c["id"], "okay")
+    ids = [c["id"] for c in pool.candidates() if c["prompt_id"] == "p0"]
+    for _ in range(20):
+        refs = pool.sample_references(np.random.default_rng(_), k=2, prompt_id="p0", exclude=ids[0])
+        assert ids[0] not in {r["id"] for r in refs}
+        assert all(r["prompt_id"] == "p0" for r in refs)

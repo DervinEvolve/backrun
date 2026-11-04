@@ -220,19 +220,22 @@ class Pool:
     # ---------------------------------------------------------- references
     def sample_references(self, rng: np.random.Generator | int, k: int = 2,
                           tiers: tuple[str, ...] = ("love", "okay"), mix: float = 0.5,
-                          prompt_id: str | None = None) -> list[dict[str, Any]]:
+                          prompt_id: str | None = None, exclude: str | None = None) -> list[dict[str, Any]]:
         """Draw ``k`` distinct rated references.
 
         Each draw comes from the first tier with probability ``mix`` and from
         the remaining tiers otherwise, falling back to whichever has paintings
         left. With ``prompt_id``, references are drawn from that prompt's rated
         paintings when it has at least ``k``, else from the whole pool. The
-        same seed and the same ratings give the same draw.
+        candidate named by ``exclude`` is never drawn, so a pool painting is
+        not judged against itself. The same seed and the same ratings give
+        the same draw.
         """
         if isinstance(rng, (int, np.integer)):
             rng = np.random.default_rng(int(rng))
         rated = self.ratings()
-        cands = sorted((c for c in self.candidates() if rated.get(c["id"]) in tiers), key=lambda c: c["id"])
+        cands = sorted((c for c in self.candidates() if rated.get(c["id"]) in tiers and c["id"] != exclude),
+                       key=lambda c: c["id"])
         if prompt_id is not None:
             same = [c for c in cands if c["prompt_id"] == prompt_id]
             if len(same) >= k:

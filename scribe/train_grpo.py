@@ -61,6 +61,7 @@ Commands, UNVERIFIED (neither has been run; flags are from memory of the
 from __future__ import annotations
 
 import argparse
+import hashlib
 import inspect
 import json
 import sys
@@ -101,8 +102,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     ap.add_argument("--lora-r", type=int, default=16)
     ap.add_argument("--lora-alpha", type=int, default=32)
     ap.add_argument("--refs", type=int, default=2, help="references per rollout")
-    ap.add_argument("--mix", type=float, default=0.5, help="share of references drawn from love")
-    ap.add_argument("--min-love", type=int, default=50, help="refuse to train on a pool with fewer love ratings")
+    ap.add_argument("--mix", type=float, default=0.1, help="share of references drawn from love")
+    ap.add_argument("--min-love", type=int, default=0, help="refuse to train on a pool with fewer love ratings")
     ap.add_argument("--reward-workers", type=int, default=8, help="rollouts scored in parallel")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--report-to", default="none", help="trackio, wandb, tensorboard or none")
@@ -162,6 +163,11 @@ def completion_text(completion: Any) -> str:
     return str(completion)
 
 
+def _prompt_seed(prompt_id: str) -> int:
+    """A stable integer for a prompt id, for seeding the reference draw."""
+    return int(hashlib.sha256(str(prompt_id).encode()).hexdigest()[:8], 16)
+
+
 class ScribeReward:
     """A TRL reward function: ``(prompts, completions, **columns) -> list[float | None]``.
 
@@ -186,7 +192,9 @@ class ScribeReward:
         self.calls += 1
 
         def one(i: int) -> dict[str, Any]:
-            rng = np.random.default_rng([self.seed, call, i])
+            # every rollout of one prompt in one call faces the same references,
+            # so the group's rewards differ by the paintings, not by the draw
+            rng = np.random.default_rng([self.seed, call, _prompt_seed(prompt_id[i])])
             res = self.reward(completion_text(completions[i]), subject[i], canvas_header(seed=int(seed[i])),
                               rng, prompt_id=prompt_id[i])
             return {"total": res.total, "terms": res.terms, "notes": res.notes}
@@ -269,7 +277,7 @@ def main(argv: list[str] | None = None) -> int:
     judge = PairwiseJudge(client, args.judge_model)
 
     def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
-        return [r["path"] for r in pool.sample_references(rng, k=args.refs, mix=args.mix)]
+        return [r["path"] for r in pool.sample_references(rng, k=args.refs, mix=args.mix, prompt_id=prompt_id)]
 
     reward = Reward(judge, references, aesthetic=aesthetic_from_env())
     reward_fn = ScribeReward(reward, out / "terms.jsonl", seed=args.seed, workers=args.reward_workers)
