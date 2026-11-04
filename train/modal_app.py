@@ -7,6 +7,8 @@ From a machine that can reach Modal (with ``modal setup`` done)::
     modal run train/modal_app.py --stage imitation
     modal run train/modal_app.py --stage evaluate --painter search
     modal run train/modal_app.py --stage evaluate --painter stage_a/best.pt
+    modal run train/modal_app.py --stage evaluate --painter blank
+    modal run train/modal_app.py --stage evaluate --painter mean
     modal run train/modal_app.py --stage all
 
 The image pins Python 3.11, installs NumPy, SciPy, Pillow and PyTorch, then
@@ -256,11 +258,14 @@ def evaluate(
     painter: str = "search", out_name: str = "", limit: int = 0, seeds: str = "7,8,9", width: int = 256,
     height: int = 192, strokes: int = 40, candidates: int = 16, workers: int = 8,
 ) -> str:
-    """Paint the sealed set with ``search`` or a checkpoint; write the report to ``/data/eval``.
+    """Paint the sealed set and write the report to ``/data/eval``; return the Markdown.
 
-    ``painter`` is ``search``, or a checkpoint path relative to
-    ``/checkpoints`` (``stage_a/best.pt``), or ``policy:`` followed by an
-    absolute path. Returns the Markdown report.
+    ``painter`` is ``search``; ``blank`` (no strokes, one dry); ``mean``
+    (the dataset-mean stroke of ``/data/ledgers`` in every slot); a
+    checkpoint path relative to ``/checkpoints`` (``stage_a/best.pt``); or
+    ``policy:`` followed by an absolute path. When ``blank`` and ``search``
+    reports with the same canvas size and limit are already on the volume,
+    a table placing this painter between them is appended.
     """
     from train import evaluate as ev
 
@@ -268,21 +273,43 @@ def evaluate(
     _reload(checkpoint_volume)
     for var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
         os.environ.setdefault(var, "1")
-    spec = painter
-    if painter != "search" and not painter.startswith("policy:"):
-        spec = f"policy:{Path(CHECKPOINTS) / painter}"
-    name = out_name or ("search" if painter == "search" else painter.replace("policy:", "").strip("/")
-                        .replace("/", "_").removesuffix(".pt"))
-    name += f"_{width}x{height}" + (f"_limit{limit}" if limit else "")
+    spec, name = painter_spec(painter)
+    suffix = f"_{width}x{height}" + (f"_limit{limit}" if limit else "")
+    name = (out_name or name) + suffix
     report = ev.evaluate(
         ev.make_painter(spec, candidates), Path(DATA) / "eval" / name, sealed_dir=Path(DATA) / "sealed",
         seeds=[int(s) for s in seeds.split(",") if s.strip()], n_strokes=strokes, width=width, height=height,
         limit=limit or None, workers=workers,
     )
+    md = ev.markdown_report(report) + comparison_section(Path(DATA) / "eval", name, suffix)
+    (Path(DATA) / "eval" / name / "report.md").write_text(md)
     _commit(data_volume)
-    md = ev.markdown_report(report)
     print(md)
     return md
+
+
+def painter_spec(painter: str) -> tuple[str, str]:
+    """The ``train.evaluate`` painter spec and the report folder name (before its size suffix) for ``--painter``."""
+    if painter in ("search", "blank"):
+        return painter, painter
+    if painter == "mean":
+        return f"mean:{Path(DATA) / 'ledgers'}", "mean"
+    if painter.startswith("policy:"):
+        path = painter.split(":", 1)[1]
+        return painter, path.strip("/").replace("/", "_").removesuffix(".pt")
+    return f"policy:{Path(CHECKPOINTS) / painter}", painter.strip("/").replace("/", "_").removesuffix(".pt")
+
+
+def comparison_section(eval_root: Path, name: str, suffix: str) -> str:
+    """A Markdown table of the blank, search and ``name`` reports under ``eval_root``, or "" if one is missing."""
+    from train import evaluate as ev
+
+    dirs = [eval_root / f"blank{suffix}", eval_root / f"search{suffix}", eval_root / name]
+    if not all((d / "report.json").is_file() for d in dirs):
+        return ""
+    unique = list(dict.fromkeys(d.resolve() for d in dirs))
+    return ("\nWhere this painter stands between a blank sheet and the search painter (same canvas and "
+            "targets):\n\n" + ev.compare_markdown([ev.load_report(d) for d in unique]))
 
 
 # ---------------------------------------------------------------------------
@@ -315,8 +342,8 @@ def main(
     """Run one stage, or all of them in order, on Modal.
 
     ``--limit`` caps the number of training targets painted and trained on
-    (0 is all). ``--painter`` picks what ``evaluate`` paints: ``search`` or a
-    checkpoint relative to the checkpoint volume; with ``--stage all`` the
+    (0 is all). ``--painter`` picks what ``evaluate`` paints: ``search``,
+    ``blank``, ``mean`` or a checkpoint relative to the checkpoint volume; with ``--stage all`` the
     default is the new run's ``best.pt``.
     """
     if stage not in STAGES:

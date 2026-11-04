@@ -26,6 +26,14 @@ the mean and the sample standard deviation over all paintings of:
     final dry (``predicted_before_dry`` in its ledger); for a policy it is
     the dry-preview score after its last stroke.
 
+``start_std_x_px``, ``start_std_y_px`` and ``distinct_strokes``
+    The collapse detector. Per painting, the standard deviation in pixels
+    of the strokes' start points along each axis, and the number of
+    distinct strokes once paths are rounded to 1 px and width and the
+    eight concentrations to 0.05 (width in action units, 0..1). A painter
+    that has collapsed onto one stroke shows a spread near 0 and one
+    distinct stroke whatever its budget.
+
 For the search painter the report also gives the same gap per phase, from
 each phase's dry in the ledger.
 
@@ -35,7 +43,18 @@ Command line::
     python -m train.evaluate policy:runs/ckpt/stage_a.pt runs/eval/stage_a
 
 Painters: ``search`` (``backrun.painter_search.paint``, ``--candidates`` per
-slot) or ``policy:PATH`` (a checkpoint from ``train.policy.save_checkpoint``).
+slot), ``policy:PATH`` (a checkpoint from ``train.policy.save_checkpoint``),
+and two baselines that say where a learned painter stands between doing
+nothing and the search painter: ``blank`` (no strokes, one 2000-step dry)
+and ``mean:LEDGER_ROOT`` (the dataset-mean action of that ledger root's
+strokes, laid in every slot).
+
+Reports from several painters go side by side with::
+
+    python -m train.evaluate compare OUT.md REPORT_DIR [REPORT_DIR ...]
+
+which also places each one between the ``blank`` and ``search`` reports
+when both are among them.
 The sealed set is read from ``runs/data/sealed`` unless ``--sealed`` says
 otherwise, and its manifest is checked before anything is painted.
 """
@@ -80,7 +99,58 @@ METRICS: tuple[tuple[str, str], ...] = (
     ("wall_s", "wall time per painting, s"),
     ("predicted_total", "total the painter predicted while painting"),
     ("dry_gap", "dried total minus predicted total"),
+    ("start_std_x_px", "spread of stroke start points, x, px"),
+    ("start_std_y_px", "spread of stroke start points, y, px"),
+    ("distinct_strokes", "distinct strokes per painting"),
 )
+#: The collapse detector's rounding: paths to this many pixels, width and
+#: concentrations (both 0..1) to this step.
+COLLAPSE_PX = 1.0
+COLLAPSE_STEP = 0.05
+
+
+# ---------------------------------------------------------------------------
+# The collapse detector.
+# ---------------------------------------------------------------------------
+
+
+def collapse_stats(ops: Sequence[dict[str, Any]], width: int, height: int) -> dict[str, float]:
+    """Spread of stroke start points and the number of distinct strokes in one painting.
+
+    ``start_std_x_px`` and ``start_std_y_px``: population standard
+    deviation of the first path point of every stroke, in pixels.
+    ``distinct_strokes``: strokes that still differ once every path point
+    is rounded to ``COLLAPSE_PX`` and width (as a fraction of
+    ``train.policy.WIDTH_RANGE``) and each concentration to
+    ``COLLAPSE_STEP``. A painting with no strokes gets zeros.
+    """
+    from backrun.pigments import PIGMENT_NAMES
+    from train.policy import WIDTH_RANGE
+
+    strokes = [op for op in ops if op.get("op") == "stroke"]
+    if not strokes:
+        return {"start_std_x_px": 0.0, "start_std_y_px": 0.0, "distinct_strokes": 0}
+    starts = np.array([op["path"][0] for op in strokes], dtype=np.float64)
+    short = min(int(width), int(height))
+    lo, hi = WIDTH_RANGE
+    keys = set()
+    for op in strokes:
+        path = tuple(tuple(int(round(float(v) / COLLAPSE_PX)) for v in pt) for pt in op["path"])
+        w = int(round(((float(op["width"]) / short - lo) / (hi - lo)) / COLLAPSE_STEP))
+        conc = tuple(int(round(float(op.get("pigments", {}).get(n, 0.0)) / COLLAPSE_STEP)) for n in PIGMENT_NAMES)
+        keys.add((path, w, conc))
+    return {
+        "start_std_x_px": float(starts[:, 0].std()),
+        "start_std_y_px": float(starts[:, 1].std()),
+        "distinct_strokes": len(keys),
+    }
+
+
+def collapse_stats_of_run(run_dir: str | Path) -> dict[str, float]:
+    """``collapse_stats`` of a painting folder's ``strokes.jsonl`` (for reports written before the detector)."""
+    lines = [json.loads(x) for x in (Path(run_dir) / "strokes.jsonl").read_text().splitlines() if x.strip()]
+    header = lines[0]
+    return collapse_stats(lines[1:], int(header["width"]), int(header["height"]))
 
 
 # ---------------------------------------------------------------------------
@@ -221,16 +291,97 @@ class PolicyPainter:
         return PaintResult(ops, predicted)
 
 
-def make_painter(spec: str, candidates: int = DEFAULT_CANDIDATES) -> SearchPainter | PolicyPainter:
-    """Build a painter from ``search`` or ``policy:PATH``."""
+@dataclass
+class BlankPainter:
+    """A baseline that lays no strokes: the sheet is only dried, ``dry_steps`` steps."""
+
+    dry_steps: int = 2000
+    name: str = "blank"
+
+    def paint(
+        self, target: NDArray[np.uint8], factory: Callable[[], Any], n_strokes: int, seed: int, run_dir: Path
+    ) -> PaintResult:
+        """One dry op and nothing else; the prediction is the dry preview of the blank sheet."""
+        sim = factory()
+        ops = [{"op": "dry", "steps": int(self.dry_steps)}] if self.dry_steps > 0 else []
+        for op in ops:
+            sim.apply(op)
+        return PaintResult(ops, dict(score(sim.render(predict_dry=True), target, strokes=0)))
+
+
+def mean_action(ledger_roots: Sequence[str | Path]) -> NDArray[np.float32]:
+    """The dataset-mean action of every accepted stroke under the ledger roots.
+
+    Reads each finished run's ``strokes.jsonl`` (no replay), encodes every
+    stroke with the wait that follows it, as Stage A does
+    (``train.policy.encode_stroke``), and averages the 17 numbers.
+    """
+    from train.imitation import find_runs
+    from train.policy import encode_stroke
+
+    actions = []
+    for run in find_runs(ledger_roots):
+        lines = [json.loads(x) for x in (run / "strokes.jsonl").read_text().splitlines() if x.strip()]
+        size = (int(lines[0]["width"]), int(lines[0]["height"]))
+        ops = lines[1:]
+        for i, op in enumerate(ops):
+            if op["op"] != "stroke":
+                continue
+            wait = 0
+            for later in ops[i + 1 :]:
+                if later["op"] != "dry":
+                    break
+                wait += int(later["steps"])
+            actions.append(encode_stroke(op, wait, size))
+    if not actions:
+        raise ValueError(f"no strokes found under {list(map(str, ledger_roots))}")
+    return np.mean(np.stack(actions).astype(np.float64), axis=0).astype(np.float32)
+
+
+@dataclass
+class MeanPainter:
+    """A baseline that lays the same stroke, a fixed action, in every slot.
+
+    With ``mean_action`` it is the stroke a regression policy would collapse
+    to if it learned nothing from the observation.
+    """
+
+    action: NDArray[np.float32]
+    name: str = "mean"
+
+    def paint(
+        self, target: NDArray[np.uint8], factory: Callable[[], Any], n_strokes: int, seed: int, run_dir: Path
+    ) -> PaintResult:
+        """Lay ``action`` ``n_strokes`` times (with its wait), then read the dry preview."""
+        from train import policy as pol
+
+        sim = factory()
+        action = np.asarray(self.action, dtype=np.float32)
+        ops = pol.rollout(lambda _obs: action, target, sim, n_strokes)
+        strokes = sum(op["op"] == "stroke" for op in ops)
+        return PaintResult(ops, dict(score(sim.render(predict_dry=True), target, strokes=strokes)))
+
+
+Painter = Any  # SearchPainter | PolicyPainter | BlankPainter | MeanPainter
+
+
+def make_painter(spec: str, candidates: int = DEFAULT_CANDIDATES) -> Painter:
+    """Build a painter from ``search``, ``policy:PATH``, ``blank`` or ``mean:LEDGER_ROOT``."""
     if spec == "search":
         return SearchPainter(candidates=candidates)
+    if spec == "blank":
+        return BlankPainter()
+    if spec.startswith("mean:"):
+        root = Path(spec.split(":", 1)[1])
+        if not root.is_dir():
+            raise FileNotFoundError(f"ledger root not found: {root}")
+        return MeanPainter(mean_action([root]), name=f"mean:{root.name}")
     if spec.startswith("policy:"):
         path = spec.split(":", 1)[1]
         if not Path(path).is_file():
             raise FileNotFoundError(f"checkpoint not found: {path}")
         return PolicyPainter(checkpoint=path, name=f"policy:{Path(path).name}")
-    raise ValueError(f"unknown painter {spec!r}; use 'search' or 'policy:PATH'")
+    raise ValueError(f"unknown painter {spec!r}; use 'search', 'policy:PATH', 'blank' or 'mean:LEDGER_ROOT'")
 
 
 # ---------------------------------------------------------------------------
@@ -295,6 +446,7 @@ def paint_one(job: Job) -> dict[str, Any]:
         "predicted_total": float(result.predicted["total"]),
         "dry_gap": float(final["total"]) - float(result.predicted["total"]),
         "run_dir": str(run_dir),
+        **collapse_stats(result.ops, w, h),
     }
     if result.extra:
         row.update(result.extra)
@@ -305,7 +457,7 @@ def summarise(rows: Sequence[dict[str, Any]]) -> dict[str, dict[str, float]]:
     """Mean and sample standard deviation of each metric over the paintings."""
     out: dict[str, dict[str, float]] = {}
     for key, _ in METRICS:
-        vals = np.array([float(r[key]) for r in rows], dtype=np.float64)
+        vals = np.array([float(r[key]) for r in rows if key in r], dtype=np.float64)
         out[key] = {
             "mean": float(vals.mean()) if vals.size else math.nan,
             "std": float(vals.std(ddof=1)) if vals.size > 1 else 0.0,
@@ -367,8 +519,51 @@ def markdown_report(report: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def load_report(report_dir: str | Path) -> dict[str, Any]:
+    """Read ``report.json`` from an evaluation folder, filling in the collapse detector if it predates it."""
+    report = json.loads((Path(report_dir) / "report.json").read_text())
+    rows = report["paintings"]
+    if rows and "distinct_strokes" not in rows[0]:
+        for r in rows:
+            run = Path(r["run_dir"])
+            if not run.is_absolute() and not run.exists():
+                run = Path(report_dir) / "paintings" / run.name
+            r.update(collapse_stats_of_run(run))
+        report["summary"] = summarise(rows)
+    return report
+
+
+def compare_markdown(reports: Sequence[dict[str, Any]]) -> str:
+    """Several reports side by side, one row per painter.
+
+    When a ``blank`` and a ``search`` report are both present, each row
+    also gets ``gap closed``: how far its mean ``total`` has moved from the
+    blank sheet's toward the search painter's (0 is no better than blank,
+    1 is as good as search, negative is worse than blank).
+    """
+    by_name = {r["painter"]: r for r in reports}
+    blank = by_name.get("blank", {}).get("summary", {}).get("total", {}).get("mean")
+    search = by_name.get("search", {}).get("summary", {}).get("total", {}).get("mean")
+    lines = [
+        "| painter | paintings | total | std | lab_l2 | ssim | strokes | start spread x, y (px) | distinct strokes"
+        + (" | gap closed |" if blank is not None and search is not None else " |"),
+        "|---" * (9 + (blank is not None and search is not None)) + "|",
+    ]
+    for r in reports:
+        m = r["summary"]
+        g = lambda k: m.get(k, {}).get("mean", math.nan)  # noqa: E731
+        row = (f"| {r['painter']} | {r['n_paintings']} | {_fmt(g('total'))} | {_fmt(m['total']['std'])} | "
+               f"{_fmt(g('lab_l2'))} | {_fmt(g('ssim'))} | {_fmt(g('strokes'))} | "
+               f"{_fmt(g('start_std_x_px'))}, {_fmt(g('start_std_y_px'))} | {_fmt(g('distinct_strokes'))} |")
+        if blank is not None and search is not None:
+            closed = (blank - g("total")) / (blank - search) if blank != search else math.nan
+            row += f" {_fmt(closed)} |"
+        lines.append(row)
+    return "\n".join(lines) + "\n"
+
+
 def evaluate(
-    painter: SearchPainter | PolicyPainter,
+    painter: Painter,
     out_dir: str | Path,
     *,
     sealed_dir: str | Path | None = None,
@@ -429,7 +624,7 @@ def evaluate(
 def build_parser() -> argparse.ArgumentParser:
     """Command-line options."""
     ap = argparse.ArgumentParser(prog="python -m train.evaluate", description="Paint the sealed set and report.")
-    ap.add_argument("painter", help="'search' or 'policy:PATH'")
+    ap.add_argument("painter", help="'search', 'policy:PATH', 'blank' or 'mean:LEDGER_ROOT'")
     ap.add_argument("out_dir", help="folder for report.json, report.md and the paintings")
     ap.add_argument("--sealed", default=None, help="sealed set folder (default runs/data/sealed)")
     ap.add_argument("--seeds", type=int, nargs="+", default=list(DEFAULT_SEEDS))
@@ -443,8 +638,23 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Run the command line and print the Markdown table. Returns an exit code."""
-    a = build_parser().parse_args(argv)
+    """Run the command line and print the Markdown table. Returns an exit code.
+
+    ``compare OUT.md REPORT_DIR ...`` writes and prints ``compare_markdown``
+    of existing reports instead of painting.
+    """
+    args = list(argv) if argv is not None else None
+    import sys
+
+    raw = args if args is not None else sys.argv[1:]
+    if raw and raw[0] == "compare":
+        if len(raw) < 3:
+            raise SystemExit("usage: python -m train.evaluate compare OUT.md REPORT_DIR [REPORT_DIR ...]")
+        md = compare_markdown([load_report(d) for d in raw[2:]])
+        Path(raw[1]).write_text(md)
+        print(md)
+        return 0
+    a = build_parser().parse_args(args)
     if a.workers > 1:
         # One thread per worker process, so paintings do not fight over cores.
         for var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):

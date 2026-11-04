@@ -104,3 +104,78 @@ def test_cli_small_run(sealed: Path, tmp_path: Path, capsys: pytest.CaptureFixtu
     assert code == 0
     assert "| total (dried, lower is better) |" in capsys.readouterr().out
     assert (tmp_path / "cli" / "report.md").is_file()
+
+
+def test_collapse_stats() -> None:
+    stroke = {"op": "stroke", "path": [[10.0, 5.0], [12.0, 6.0], [14.0, 7.0]], "width": 3.0, "water": 0.5,
+              "pigments": {"cadmium_yellow": 0.2}}
+    same = [stroke, {"op": "dry", "steps": 3}, dict(stroke, path=[[10.2, 5.1], [12.0, 6.0], [14.0, 7.0]])]
+    st = evaluate.collapse_stats(same, 24, 18)
+    assert st["distinct_strokes"] == 1 and st["start_std_x_px"] == pytest.approx(0.1)
+    moved = same + [dict(stroke, path=[[20.0, 15.0], [12.0, 6.0], [14.0, 7.0]]),
+                    dict(stroke, pigments={"cadmium_yellow": 0.3})]
+    st = evaluate.collapse_stats(moved, 24, 18)
+    assert st["distinct_strokes"] == 3
+    xs = np.array([10.0, 10.2, 20.0, 10.0])
+    assert st["start_std_x_px"] == pytest.approx(xs.std())
+    assert evaluate.collapse_stats([{"op": "dry", "steps": 5}], 24, 18)["distinct_strokes"] == 0
+
+
+def _fake_ledger_root(root: Path) -> Path:
+    """Two finished run folders with hand-written stroke files (no replay is needed for the mean)."""
+    strokes = [
+        {"op": "stroke", "path": [[2.0, 3.0], [8.0, 3.0], [12.0, 9.0]], "width": 2.0, "water": 0.4,
+         "pigments": {"french_ultramarine": 0.3}},
+        {"op": "stroke", "path": [[20.0, 15.0], [18.0, 10.0]], "width": 4.0, "water": 0.8,
+         "pigments": {"cadmium_yellow": 0.1}},
+    ]
+    for i, op in enumerate(strokes):
+        run = root / f"run{i}"
+        run.mkdir(parents=True)
+        (run / "run.json").write_text(json.dumps({"status": "finished"}))
+        header = {"op": "canvas", "width": 24, "height": 18, "seed": 1, "paper": "cold_press"}
+        (run / "strokes.jsonl").write_text("".join(json.dumps(x) + "\n" for x in [header, op,
+                                                                                {"op": "dry", "steps": 9 * (i + 1)}]))
+    return root
+
+
+def test_baseline_painters(sealed: Path, tmp_path: Path) -> None:
+    blank = evaluate.make_painter("blank")
+    report = evaluate.evaluate(blank, tmp_path / "blank", sealed_dir=sealed, **SMALL)
+    _check_report(report, tmp_path / "blank", "blank")
+    for r in report["paintings"]:
+        assert r["strokes"] == 0 and r["distinct_strokes"] == 0 and r["sheet_steps"] >= 2000
+    root = _fake_ledger_root(tmp_path / "ledgers")
+    mean = evaluate.mean_action([root])
+    a = policy.encode_stroke(json.loads((root / "run0" / "strokes.jsonl").read_text().splitlines()[1]), 9, (24, 18))
+    b = policy.encode_stroke(json.loads((root / "run1" / "strokes.jsonl").read_text().splitlines()[1]), 18, (24, 18))
+    assert np.allclose(mean, (a + b) / 2, atol=1e-6)
+    painter = evaluate.make_painter(f"mean:{root}")
+    assert painter.name == "mean:ledgers"
+    report = evaluate.evaluate(painter, tmp_path / "mean", sealed_dir=sealed, **SMALL)
+    _check_report(report, tmp_path / "mean", "mean:ledgers")
+    for r in report["paintings"]:
+        assert r["strokes"] == 4 and r["distinct_strokes"] == 1
+        assert r["start_std_x_px"] == 0 and r["start_std_y_px"] == 0
+    with pytest.raises(FileNotFoundError):
+        evaluate.make_painter(f"mean:{tmp_path / 'nowhere'}")
+    # Side by side, with the share of the blank-to-search gap closed.
+    search = dict(report, painter="search", summary={k: dict(v) for k, v in report["summary"].items()})
+    search["summary"]["total"]["mean"] = report["summary"]["total"]["mean"] - 10
+    blank_report = evaluate.load_report(tmp_path / "blank")
+    md = evaluate.compare_markdown([blank_report, report, search])
+    assert "gap closed" in md and md.count("\n") == 5
+    code = evaluate.main(["compare", str(tmp_path / "cmp.md"), str(tmp_path / "blank"), str(tmp_path / "mean")])
+    assert code == 0 and "distinct strokes" in (tmp_path / "cmp.md").read_text()
+
+
+def test_load_report_fills_in_the_collapse_detector(sealed: Path, tmp_path: Path) -> None:
+    painter = evaluate.PolicyPainter(policy_fn=_fixed_policy, name="fixed")
+    report = evaluate.evaluate(painter, tmp_path / "old", sealed_dir=sealed, **SMALL)
+    old = json.loads((tmp_path / "old" / "report.json").read_text())
+    for r in old["paintings"]:
+        for k in ("start_std_x_px", "start_std_y_px", "distinct_strokes"):
+            r.pop(k)
+    (tmp_path / "old" / "report.json").write_text(json.dumps(old))
+    again = evaluate.load_report(tmp_path / "old")
+    assert again["summary"]["distinct_strokes"] == report["summary"]["distinct_strokes"]
