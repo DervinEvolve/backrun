@@ -4,8 +4,10 @@ From a machine that can reach Modal (``modal setup`` done) and holds this
 repo with ``shared/pool_v1/keeps`` in it::
 
     modal secret create openrouter SCRIBE_API_KEY=...   # the API base is set in the image
+    modal run scribe/modal_app.py --stage judge-check
     modal run scribe/modal_app.py --stage sample
     modal run scribe/modal_app.py --stage warmup --run-name warm_v1
+    modal run scribe/modal_app.py --stage score --name warm_v1_sample
     modal run scribe/modal_app.py --stage train --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged --max-steps 30
     modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged
 
@@ -20,6 +22,9 @@ token limit, and how many prompt groups have any reward spread. GRPO only
 learns from groups whose rollouts score differently, so a batch of flat
 groups means warm the model up first rather than train.
 
+``judge-check`` makes one judge call on a CPU container and prints the
+answer or the error, so a bad key shows up before any GPU time is spent.
+``score`` re-scores a batch already on the volume, also without a GPU.
 ``warmup`` runs ``scribe.sft`` on the keeps (three epochs of LoRA, then the
 adapter merged into the base model on the checkpoint volume) and samples the
 merged model the same way, with the base sample's numbers in the next column.
@@ -68,7 +73,7 @@ CHECKPOINTS = "/checkpoints"
 POOL = f"{REMOTE_REPO}/pool"
 DEFAULT_GPU = "A100-40GB"
 DEFAULT_MODEL = "Qwen/Qwen3-4B-Instruct-2507"
-STAGES = ("sample", "warmup", "train", "evaluate")
+STAGES = ("sample", "warmup", "train", "evaluate", "score", "judge-check")
 
 
 class _Absent:
@@ -231,6 +236,10 @@ def render_report(title: str, stats: dict[str, Any], reward_text: str, compare_t
     rej = "\n".join(f"- {n}: {r}" for r, n in stats.get("top_rejections", [])) or "- none"
     if stats.get("judge_first_error"):
         rej += f"\n\nFirst judge error: `{stats['judge_first_error']}`"
+    ex = stats.get("truncated_example")
+    if ex:
+        rej += (f"\n\nOne cut-off reply, `{ex['id']}`, {ex['chars']} characters over {ex['lines']} lines; its last 240 "
+                f"characters:\n\n```\n{ex['tail']}\n```")
     return (f"# {title}\n\nModel `{stats.get('model', '?')}`, judge `{stats.get('judge_model')}`, pool manifest "
             f"`{str(stats.get('pool_manifest', ''))[:12]}`.\n\n{head}\n" + "\n".join(rows)
             + f"\n\n**{stats.get('verdict', '')}**\n\nTop gate rejections:\n{rej}\n\n## Reward terms\n\n```\n{reward_text}```\n")
@@ -283,6 +292,43 @@ def sample(name: str, model: str, per: int, max_tokens: int, temperature: float,
     (batch_root / "stats.json").write_text(json.dumps(stats, indent=1) + "\n")
     _commit(data_volume)
     return (batch_root / "report.md").read_text()
+
+
+@app.function(image=image, volumes=VOLUMES, secrets=SECRETS, cpu=8, memory=16384, timeout=2 * 3600)
+def score(name: str, judge_model: str, judge_no_reasoning: bool, judge_effort: str | None, judge_max_tokens: int,
+          refs: int, mix: float, workers: int, compare_to: str | None = None) -> str:
+    """Score a batch already on the data volume, without a GPU, and return its report."""
+    batch_root = Path(DATA) / "scribe" / "samples" / name
+    if not (batch_root / "index.jsonl").is_file():
+        raise FileNotFoundError(f"no batch at {batch_root}")
+    old = json.loads((batch_root / "stats.json").read_text()) if (batch_root / "stats.json").is_file() else {}
+    model = old.get("model", "?")
+    if (batch_root / "usage.jsonl").exists():
+        (batch_root / "usage.jsonl").unlink()
+    stats = score_and_report(batch_root, POOL, judge_model, judge_extra(judge_no_reasoning, judge_effort),
+                             judge_max_tokens, refs, mix, workers, f"Sample: {name}", model,
+                             compare_to=Path(DATA) / "scribe" / "samples" / compare_to if compare_to else None)
+    stats.update({k: old[k] for k in ("generation_s", "per", "max_tokens") if k in old})
+    (batch_root / "stats.json").write_text(json.dumps(stats, indent=1) + "\n")
+    _commit(data_volume)
+    return (batch_root / "report.md").read_text()
+
+
+@app.function(image=image, volumes=VOLUMES, secrets=SECRETS, cpu=2, memory=4096, timeout=600)
+def judge_check(judge_model: str, judge_no_reasoning: bool, judge_effort: str | None, judge_max_tokens: int) -> str:
+    """One judge call between two pool keeps, to prove the key and the model settings before any GPU run."""
+    from scribe.client import ChatClient
+    from scribe.judge import PairwiseJudge
+    from scribe.pool import Pool
+
+    pool = Pool(POOL)
+    a, b = [pool.folder(c["id"]) / "final.png" for c in pool.candidates()[:2]]
+    client = ChatClient(ledger=Path(DATA) / "scribe" / "judge_check.jsonl")
+    judge = PairwiseJudge(client, judge_model, max_tokens=judge_max_tokens, extra=judge_extra(judge_no_reasoning, judge_effort))
+    answer = judge.compare(a, b, "a watercolour")
+    last = json.loads((Path(DATA) / "scribe" / "judge_check.jsonl").read_text().splitlines()[-1])
+    return json.dumps({"judge": judge_model, "answer": answer, "status": last.get("status"), "error": last.get("error"),
+                       "cost_usd": last.get("cost"), "plain_fallback": judge._plain}, indent=1)
 
 
 @app.function(image=image, volumes=VOLUMES, secrets=SECRETS, gpu=DEFAULT_GPU, cpu=8, memory=65536,
@@ -387,6 +433,13 @@ def main(
                                   max_tokens, temperature, top_p, top_k, seed, judge_model, judge_no_reasoning,
                                   effort, judge_max_tokens, refs, mix, limit, workers,
                                   model_path=model_path or None, compare_to=compare_to if model_path else None))
+    elif stage == "judge-check":
+        print(judge_check.remote(judge_model, judge_no_reasoning, effort, judge_max_tokens))
+    elif stage == "score":
+        if not name:
+            raise SystemExit("--stage score needs --name, the batch to score, for example warm_v1_sample")
+        print(score.remote(name, judge_model, judge_no_reasoning, effort, judge_max_tokens, refs, mix, workers,
+                           compare_to=compare_to if name != compare_to else None))
     elif stage == "warmup":
         argv = ["--model", model, "--epochs", str(epochs), "--seed", str(seed), *extra.split()]
         if learning_rate:

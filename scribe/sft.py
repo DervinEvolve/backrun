@@ -96,7 +96,7 @@ def sft_config_kwargs(args: argparse.Namespace) -> dict[str, Any]:
             "lr_scheduler_type": "cosine", "warmup_steps": 5, "bf16": True, "gradient_checkpointing": True,
             "per_device_train_batch_size": args.per_device_batch, "gradient_accumulation_steps": args.grad_accum,
             "max_length": args.max_length, "completion_only_loss": True, "logging_steps": 1, "save_strategy": "no",
-            "report_to": "none", "seed": args.seed}
+            "report_to": "none", "seed": args.seed, "model_init_kwargs": {"dtype": "bfloat16"}}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -134,7 +134,9 @@ def main(argv: list[str] | None = None) -> int:
     summary: dict[str, Any] = {"examples": len(rows), "steps": trainer.state.global_step, "wall_s": round(time.time() - t0, 1),
                                "losses": [rec["loss"] for rec in trainer.state.log_history if "loss" in rec]}
     if not args.no_merge:
-        merged = trainer.model.merge_and_unload()
+        import torch
+
+        merged = trainer.model.merge_and_unload().to(torch.bfloat16)
         merged.save_pretrained(str(out / "merged"))
         trainer.processing_class.save_pretrained(str(out / "merged"))
         summary["merged"] = str(out / "merged")

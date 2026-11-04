@@ -363,12 +363,20 @@ modal secret create openrouter SCRIBE_API_KEY=...
 The OpenRouter address is set in the image, so the secret only needs the key.
 
 ```bash
+modal run scribe/modal_app.py --stage judge-check
+```
+
+```bash
 modal run scribe/modal_app.py --stage sample
 ```
 
 ```bash
 modal run scribe/modal_app.py --stage warmup --run-name warm_v1
 ```
+
+`judge-check` makes one judge call on a CPU container and prints the answer
+or the error, so a bad key shows up before GPU time is spent; `score --name
+BATCH` re-scores a batch already on the volume the same way.
 
 ```bash
 modal run scribe/modal_app.py --stage train --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged --max-steps 30
@@ -412,10 +420,16 @@ from the warm-up's merged model. Output goes to `/checkpoints/scribe/<run>/`. `e
 base model, samples it exactly as `sample` did, and writes a report whose
 table has the base sample's numbers in the next column.
 
-Status: `sample` has run on Modal (the image builds, the model loads from
-the volume in ten seconds, vLLM writes 288 files in half a minute). The
-warm-up and the trainer have not run yet; their first runs are debugging
-runs.
+The first warm-up, `warm_v1`, lifted the gate pass rate from 15% to 66% on
+the same 36 prompts. It also made 22% of replies run to the 4,096-token
+limit, where the base model never did, and generation took four and a half
+minutes instead of half a minute, so some replies ramble or loop instead of
+closing the file; the report now quotes the tail of one such reply. The
+judge calls in both runs failed on the key (OpenRouter answered "User not
+found"), so neither batch has reward numbers yet.
+
+Status: `sample` and `warmup` have run on Modal. The trainer has not run
+yet; its first run is a debugging run.
 
 ## Showing it in the studio
 

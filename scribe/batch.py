@@ -68,6 +68,13 @@ def batch_stats(root: str | Path, terms: list[dict[str, Any]] | None = None) -> 
     out: dict[str, Any] = {"completions": n, "gate_pass": ok, "gate_pass_rate": (ok / n) if n else None,
                            "truncated": truncated, "truncation_rate": (truncated / n) if n else None,
                            "top_rejections": sorted(reasons.items(), key=lambda kv: -kv[1])[:6]}
+    for ln in lines:  # the tail of one cut-off reply, so the report shows what the model does when it runs on
+        m = metas[ln["id"]]
+        if m.get("finish_reason") == "length" and (root / ln["dir"] / "reply.txt").is_file():
+            text = (root / ln["dir"] / "reply.txt").read_text()
+            out["truncated_example"] = {"id": ln["id"], "chars": len(text), "lines": text.count("\n") + 1,
+                                        "tail": text[-240:]}
+            break
     if terms:
         by_prompt: dict[str, list[float]] = defaultdict(list)
         for t in terms:
