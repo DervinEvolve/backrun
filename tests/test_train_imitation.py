@@ -114,8 +114,11 @@ def test_two_epochs_lower_the_training_loss(trained: tuple[Path, dict]) -> None:
     rows = [json.loads(x) for x in (out / "train.jsonl").read_text().splitlines()]
     assert [r["epoch"] for r in rows] == [1, 2]
     for r in rows:
-        assert {"points", "width", "water", "wait", "conc_bce", "sparsity", "total"} <= set(r["train"])
-        assert set(r["val"]) >= {"total", "conc_bce"}
+        assert {"cell", "offset", "bins", "sparsity", "total", "cell_top1", "cell_top5", "bins_within1"} <= set(
+            r["train"])
+        assert {f"bin_{n}" for n in policy.BIN_NAMES} <= set(r["train"])
+        assert set(r["val"]) >= {"total", "cell", "bins", "cell_top5"}
+        assert 0 <= r["val"]["cell_top1"] <= r["val"]["cell_top5"] <= 1
         assert r["lr"] >= 0 and r["examples_per_s"] > 0 and r["wall_s"] > 0
     assert (out / "last.pt").is_file() and (out / "best.pt").is_file()
     assert "Training loss went from" in imitation.describe(summary)

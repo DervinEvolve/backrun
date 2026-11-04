@@ -38,6 +38,17 @@ The network returns ``ACTION_DIM`` = 17 numbers in 0..1:
 * 16: the wait, the number of drying steps after the stroke, on a log scale
   up to ``MAX_WAIT``.
 
+The network does not regress these numbers directly. Regressing them
+under smooth L1 and per-pigment cross-entropy averaged the many strokes the
+search painter might pick from a given state into one muddy dab at the
+sheet's centre. Its head is discrete instead (``PolicyNet``): logits over
+the 24 x 32 cells of its second-stage feature map for the start point,
+plus a sub-cell offset; then, given the start cell, logits over
+``PolicyConfig.bins`` equal bins for each of the other 15 numbers, with the
+two further path points expressed relative to the start point
+(``action_to_bins``, ``bins_to_action``). ``PolicyNet.decode`` returns the
+17 numbers above from bin centres, so the stroke format is unchanged.
+
 ``policy_output_to_ops`` turns those numbers into ordinary stroke-file ops,
 rounded so that they survive JSON exactly; ``encode_stroke`` goes the other
 way for the search painter's strokes, which is what Stage A trains on
@@ -363,20 +374,118 @@ def ledger_to_examples(run_dir: str | Path, strict: bool = True) -> list[Example
 
 
 # ---------------------------------------------------------------------------
+# Discretising actions for the policy head (NumPy and PyTorch alike).
+# ---------------------------------------------------------------------------
+
+#: The start-point grid: the network's feature map after its second stage,
+#: a quarter of the observation size in each direction (24 x 32 cells).
+GRID_H = OBS_HEIGHT // 4
+GRID_W = OBS_WIDTH // 4
+N_CELLS = GRID_H * GRID_W
+#: Names of the 15 binned numbers, in the order the head emits them: the
+#: two further path points relative to the start point, then width, water,
+#: the eight concentrations and the wait.
+BIN_NAMES: tuple[str, ...] = (
+    "dx1", "dy1", "dx2", "dy2", "width", "water", *(f"conc_{n}" for n in PIGMENT_NAMES), "wait"
+)
+N_BINNED = len(BIN_NAMES)
+#: Positions of the concentrations among the binned numbers.
+BIN_CONC = slice(6, 6 + len(PIGMENT_NAMES))
+#: Format tag written into every checkpoint of this network.
+CHECKPOINT_FORMAT = "discrete-v2"
+
+
+@dataclass
+class ActionBins:
+    """An action in the head's discrete form.
+
+    ``cell`` (...,) is the grid cell holding the first path point (row-major
+    over ``GRID_H`` x ``GRID_W``), ``offset`` (..., 2) where the point sits
+    inside that cell as (x, y) in 0..1, and ``bins`` (..., 15) the bin of each
+    of the other numbers, in ``BIN_NAMES`` order. Arrays may be NumPy or
+    PyTorch.
+    """
+
+    cell: Any
+    offset: Any
+    bins: Any
+
+
+def _is_torch(x: Any) -> bool:
+    """True if ``x`` is a PyTorch tensor."""
+    return torch is not None and isinstance(x, torch.Tensor)
+
+
+def _stack(xs: Sequence[Any], axis: int) -> Any:
+    """Stack NumPy arrays or PyTorch tensors along ``axis``."""
+    return torch.stack(list(xs), dim=axis) if _is_torch(xs[0]) else np.stack(xs, axis=axis)
+
+
+def action_to_bins(action: Any, config: "PolicyConfig") -> ActionBins:
+    """Express actions (..., 17) in 0..1 as the head's cell, offset and bins.
+
+    NumPy only. The start point's cell and sub-cell offset come from the
+    first path point; the two further points become (dx, dy) relative to it,
+    mapped from plus or minus ``config.rel_range`` of the canvas to 0..1 and
+    clipped; every binned number falls into one of ``config.bins`` equal bins
+    on 0..1.
+    """
+    a = np.clip(np.asarray(action, dtype=np.float64), 0.0, 1.0)
+    if a.shape[-1] != ACTION_DIM:
+        raise ValueError(f"expected actions of {ACTION_DIM} numbers, got shape {a.shape}")
+    k, r = int(config.bins), float(config.rel_range)
+    gx, gy = a[..., 0] * GRID_W, a[..., 1] * GRID_H
+    col = np.clip(np.floor(gx), 0, GRID_W - 1)
+    row = np.clip(np.floor(gy), 0, GRID_H - 1)
+    offset = np.stack([np.clip(gx - col, 0.0, 1.0), np.clip(gy - row, 0.0, 1.0)], axis=-1)
+    rel = np.clip(0.5 + (a[..., 2:6] - np.concatenate([a[..., 0:2], a[..., 0:2]], axis=-1)) / (2 * r), 0.0, 1.0)
+    u = np.concatenate([rel, a[..., WIDTH : WAIT + 1]], axis=-1)
+    bins = np.clip(np.floor(u * k), 0, k - 1).astype(np.int64)
+    return ActionBins((row * GRID_W + col).astype(np.int64), offset.astype(np.float32), bins)
+
+
+def bins_to_action(cell: Any, offset: Any, bins: Any, config: "PolicyConfig") -> Any:
+    """Inverse of ``action_to_bins``: (..., 17) actions in 0..1 from bin centres.
+
+    Works on NumPy arrays or PyTorch tensors. Each binned number decodes to
+    its bin's centre, except that a concentration in the lowest bin decodes
+    to 0, so a pigment the head leaves out stays out of the stroke instead
+    of adding a trace of every colour.
+    """
+    k, r = int(config.bins), float(config.rel_range)
+    col, row = cell % GRID_W, cell // GRID_W
+    x0 = (col + offset[..., 0]) / GRID_W
+    y0 = (row + offset[..., 1]) / GRID_H
+    v = (bins + 0.5) / k
+    conc = v[..., BIN_CONC] * (bins[..., BIN_CONC] > 0)
+    d = (v[..., 0:4] - 0.5) * (2 * r)
+    cols = [x0, y0, (x0 + d[..., 0]).clip(0.0, 1.0), (y0 + d[..., 1]).clip(0.0, 1.0),
+            (x0 + d[..., 2]).clip(0.0, 1.0), (y0 + d[..., 3]).clip(0.0, 1.0), v[..., 4], v[..., 5]]
+    cols += [conc[..., i] for i in range(conc.shape[-1])] + [v[..., N_BINNED - 1]]
+    return _stack([c.clip(0.0, 1.0) for c in cols], axis=-1)
+
+
+# ---------------------------------------------------------------------------
 # The network.
 # ---------------------------------------------------------------------------
 
 
 @dataclass(frozen=True)
 class PolicyConfig:
-    """Shape of the policy network."""
+    """Shape of the policy network and of its discrete head.
+
+    ``bins`` is the number of equal bins on 0..1 for each of the 15 binned
+    numbers; ``rel_range`` is how far, as a fraction of the canvas, the two
+    further path points may sit from the start point in each axis.
+    """
 
     in_channels: int = OBS_CHANNELS
     widths: tuple[int, ...] = (40, 80, 160, 256)
     blocks: tuple[int, ...] = (1, 2, 2, 2)
-    hidden: int = 768
+    hidden: int = 640
     groups: int = 8
-    action_dim: int = ACTION_DIM
+    bins: int = 32
+    rel_range: float = 0.5
 
     def to_json(self) -> dict[str, Any]:
         """The config as plain JSON types."""
@@ -395,9 +504,13 @@ class PolicyConfig:
 def parameter_count(config: PolicyConfig = PolicyConfig()) -> int:
     """Number of trainable parameters ``PolicyNet(config)`` has, worked out by hand.
 
-    Convolutions carry no bias (GroupNorm follows each); GroupNorm has a
-    scale and a shift per channel; two coordinate planes are added to the
-    input; the head sees average and max pooling side by side.
+    Convolutions in the encoder carry no bias (GroupNorm follows each);
+    GroupNorm has a scale and a shift per channel; two coordinate planes are
+    added to the input. The lateral path adds two bias-free 1 x 1
+    convolutions and one 3 x 3 convolution with GroupNorm; the cell and
+    offset heads are 1 x 1 convolutions with bias; the conditional MLP sees
+    the start cell's features, average and max pooling, and the cell's
+    position.
     """
     w = config.widths
     cin = config.in_channels + 2
@@ -408,8 +521,11 @@ def parameter_count(config: PolicyConfig = PolicyConfig()) -> int:
             n += 9 * prev * c + 2 * c
         n += b * 2 * (9 * c * c + 2 * c)
         prev = c
-    hd = config.hidden
-    n += 2 * prev * hd + hd + hd * hd + hd + hd * config.action_dim + config.action_dim
+    f = w[1]
+    n += w[2] * f + w[3] * f + 9 * f * f + 2 * f  # lateral path
+    n += (f + 1) + (2 * f + 2)  # cell logits and offsets
+    hd, out = config.hidden, N_BINNED * config.bins
+    n += (f + 2 * w[3] + 2) * hd + hd + hd * hd + hd + hd * out + out
     return n
 
 
@@ -419,6 +535,27 @@ def _require_torch() -> None:
         raise ModuleNotFoundError(
             "PyTorch is needed for the policy network: pip install torch (or the 'train' extra)"
         )
+
+
+@dataclass
+class PolicyOutput:
+    """What ``PolicyNet.forward`` returns, all PyTorch tensors.
+
+    ``cell_logits`` (B, ``N_CELLS``) over start cells; ``offsets``
+    (B, ``N_CELLS``, 2) the sub-cell position of the start point in each
+    cell, 0..1; ``bin_logits`` (B, 15, bins) for the other numbers given the
+    start cell ``cell`` (B,). ``features`` (B, C, ``N_CELLS``) and
+    ``pooled`` (B, P) are kept so the conditional head can be run again at
+    another cell (sampling, ``log_prob``); they may be ``None`` when the
+    output was built by hand.
+    """
+
+    cell_logits: Any
+    offsets: Any
+    bin_logits: Any
+    cell: Any
+    features: Any = None
+    pooled: Any = None
 
 
 if torch is not None:
@@ -450,15 +587,20 @@ if torch is not None:
             return F.silu(x + y)
 
     class PolicyNet(nn.Module):
-        """A small convolutional encoder with a global pooling head.
+        """A small convolutional encoder with a discrete, spatial head.
 
         Input: (B, ``OBS_CHANNELS``, 96, 128). Two coordinate planes (x and y
-        from -1 to 1) are appended so pooled features can still say where
-        things are. A stride-2 stem, then four stages (the first at the
-        stem's resolution, each later one halving it) of residual blocks,
-        then average and max pooling, then a three-layer MLP. Output:
-        (B, ``ACTION_DIM``) in 0..1 (a sigmoid), laid out as described in
-        the module docstring.
+        from -1 to 1) are appended. A stride-2 stem, then four stages (the
+        first at the stem's resolution, each later one halving it) of
+        residual blocks. The second stage's 24 x 32 map, plus the third and
+        fourth stages' maps brought to its size (1 x 1 convolution, bilinear
+        upsampling, sum, then a 3 x 3 convolution), feeds two 1 x 1 heads:
+        logits over the 768 start cells and a sub-cell offset per cell. The
+        conditional head takes the feature vector at the start cell, the
+        average and max pooled final stage and the cell's position, and an
+        MLP gives logits over ``config.bins`` bins for each of the other 15
+        numbers (``BIN_NAMES``). ``decode`` turns an output into the 17
+        numbers of the action layout.
         """
 
         def __init__(self, config: PolicyConfig = PolicyConfig()) -> None:
@@ -475,21 +617,120 @@ if torch is not None:
                 layers += [_ResBlock(c, g) for _ in range(b)]
                 stages.append(nn.Sequential(*layers))
                 prev = c
-            self.stages = nn.Sequential(*stages)
+            self.stages = nn.ModuleList(stages)
+            f = w[1]
+            self.lateral3 = nn.Conv2d(w[2], f, 1, bias=False)
+            self.lateral4 = nn.Conv2d(w[3], f, 1, bias=False)
+            self.fuse = _ConvNorm(f, f, 1, g)
+            self.cell_head = nn.Conv2d(f, 1, 1)
+            self.offset_head = nn.Conv2d(f, 2, 1)
             hd = config.hidden
             self.head = nn.Sequential(
-                nn.Linear(2 * prev, hd), nn.SiLU(), nn.Linear(hd, hd), nn.SiLU(), nn.Linear(hd, config.action_dim)
+                nn.Linear(f + 2 * prev + 2, hd), nn.SiLU(), nn.Linear(hd, hd), nn.SiLU(),
+                nn.Linear(hd, N_BINNED * config.bins),
             )
 
-        def forward(self, obs: "torch.Tensor") -> "torch.Tensor":
+        def encode(self, obs: "torch.Tensor") -> tuple["torch.Tensor", "torch.Tensor", "torch.Tensor"]:
+            """Run the encoder: (spatial map (B, C, 24, 32), pooled (B, P), flattened map (B, C, 768))."""
             b, _, h, w = obs.shape
             ys = torch.linspace(-1.0, 1.0, h, dtype=obs.dtype, device=obs.device)
             xs = torch.linspace(-1.0, 1.0, w, dtype=obs.dtype, device=obs.device)
             gy, gx = torch.meshgrid(ys, xs, indexing="ij")
             coords = torch.stack([gx, gy]).unsqueeze(0).expand(b, -1, -1, -1)
-            x = self.stages(self.stem(torch.cat([obs, coords], dim=1)))
-            pooled = torch.cat([x.mean(dim=(2, 3)), x.amax(dim=(2, 3))], dim=1)
-            return torch.sigmoid(self.head(pooled))
+            x = self.stem(torch.cat([obs, coords], dim=1))
+            maps = []
+            for stage in self.stages:
+                x = stage(x)
+                maps.append(x)
+            s2, s3, s4 = maps[1], maps[2], maps[3]
+            size = s2.shape[-2:]
+            up = lambda t: F.interpolate(t, size=size, mode="bilinear", align_corners=False)  # noqa: E731
+            fused = self.fuse(s2 + up(self.lateral3(s3)) + up(self.lateral4(s4)))
+            pooled = torch.cat([s4.mean(dim=(2, 3)), s4.amax(dim=(2, 3))], dim=1)
+            return fused, pooled, fused.flatten(2)
+
+        def head_at(self, features: "torch.Tensor", pooled: "torch.Tensor", cell: "torch.Tensor") -> "torch.Tensor":
+            """Bin logits (B, 15, bins) for start cells ``cell`` (B,), from ``encode``'s outputs."""
+            cell = cell.to(features.device).long()
+            idx = cell.view(-1, 1, 1).expand(-1, features.shape[1], 1)
+            local = features.gather(2, idx).squeeze(2)
+            row = (cell // GRID_W).to(features.dtype)
+            col = (cell % GRID_W).to(features.dtype)
+            pos = torch.stack([(col + 0.5) / GRID_W * 2 - 1, (row + 0.5) / GRID_H * 2 - 1], dim=1)
+            out = self.head(torch.cat([local, pooled, pos], dim=1))
+            return out.view(-1, N_BINNED, self.config.bins)
+
+        def forward(self, obs: "torch.Tensor", cell: "torch.Tensor | None" = None) -> PolicyOutput:
+            """Logits for a batch of observations.
+
+            The conditional head is run at ``cell`` (the true start cell in
+            training) or, if ``None``, at the most likely cell.
+            """
+            fused, pooled, flat = self.encode(obs)
+            cell_logits = self.cell_head(fused).flatten(1)
+            offsets = torch.sigmoid(self.offset_head(fused).flatten(2).transpose(1, 2))
+            if cell is None:
+                cell = cell_logits.argmax(dim=1)
+            return PolicyOutput(cell_logits, offsets, self.head_at(flat, pooled, cell), cell, flat, pooled)
+
+        def _bins_at(self, output: PolicyOutput, cell: "torch.Tensor") -> "torch.Tensor":
+            """Bin logits at ``cell``, rerunning the conditional head only where it differs."""
+            cell = cell.to(output.cell.device).long()
+            if torch.equal(cell, output.cell.long()):
+                return output.bin_logits
+            if output.features is None or output.pooled is None:
+                raise ValueError("this output keeps no features, so its head cannot be run at another cell")
+            return self.head_at(output.features, output.pooled, cell)
+
+        def decode(self, output: PolicyOutput, mode: str = "argmax", temperature: float = 1.0,
+                   generator: "torch.Generator | None" = None) -> "torch.Tensor":
+            """Turn an output into actions (B, 17) in 0..1, using bin centres.
+
+            ``argmax`` takes the most likely cell, then the most likely bin of
+            each number given that cell. ``sample`` draws the cell, then each
+            bin, from the softmax of the logits divided by ``temperature``.
+            The sub-cell offset is used as predicted in both modes.
+            """
+            if mode not in ("argmax", "sample"):
+                raise ValueError(f"mode must be 'argmax' or 'sample', not {mode!r}")
+            if mode == "argmax":
+                cell = output.cell_logits.argmax(dim=1)
+                bins = self._bins_at(output, cell).argmax(dim=-1)
+            else:
+                t = max(float(temperature), 1e-6)
+                probs = torch.softmax(output.cell_logits.float() / t, dim=1)
+                cell = torch.multinomial(probs, 1, generator=generator).squeeze(1)
+                logits = self._bins_at(output, cell).float()
+                p = torch.softmax(logits / t, dim=-1).reshape(-1, logits.shape[-1])
+                bins = torch.multinomial(p, 1, generator=generator).view(logits.shape[:-1])
+            offset = output.offsets[torch.arange(cell.shape[0], device=cell.device), cell]
+            return bins_to_action(cell, offset.float(), bins, self.config).float()
+
+        def log_prob(self, output: PolicyOutput, action_bins: ActionBins) -> "torch.Tensor":
+            """Log probability (B,) of discrete actions: start cell plus the 15 bins given it.
+
+            The sub-cell offset is a regression, not part of the
+            distribution, and adds nothing here.
+            """
+            dev = output.cell_logits.device
+            cell = torch.as_tensor(action_bins.cell, device=dev).long()
+            bins = torch.as_tensor(action_bins.bins, device=dev).long()
+            lp_cell = torch.log_softmax(output.cell_logits.float(), dim=1).gather(1, cell[:, None]).squeeze(1)
+            lp_bins = torch.log_softmax(self._bins_at(output, cell).float(), dim=-1)
+            return lp_cell + lp_bins.gather(2, bins[..., None]).squeeze(2).sum(dim=1)
+
+        def entropy(self, output: PolicyOutput) -> "torch.Tensor":
+            """Entropy (B,) of the start cell plus that of each bin at ``output.cell``.
+
+            The bins' entropy is conditional on the one cell the head was run
+            at, so this is the joint entropy only when the bins depend little
+            on the cell; it is what a policy-gradient entropy bonus needs.
+            """
+            def h(logits: "torch.Tensor") -> "torch.Tensor":
+                lp = torch.log_softmax(logits.float(), dim=-1)
+                return -(lp.exp() * lp).sum(dim=-1)
+
+            return h(output.cell_logits) + h(output.bin_logits).sum(dim=1)
 
 else:  # pragma: no cover
 
@@ -508,30 +749,50 @@ def make_policy(config: PolicyConfig = PolicyConfig(), seed: int = 0) -> "Policy
 
 
 def save_checkpoint(path: str | Path, model: "PolicyNet", **extra: Any) -> Path:
-    """Save weights, config and any extra JSON-able fields to ``path``."""
+    """Save weights, config, the format tag and any extra JSON-able fields to ``path``."""
     _require_torch()
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"config": model.config.to_json(), "state_dict": model.state_dict(), "extra": extra}, path)
+    torch.save({"format": CHECKPOINT_FORMAT, "config": model.config.to_json(), "state_dict": model.state_dict(),
+                "extra": extra}, path)
     return path
 
 
+def check_checkpoint_format(blob: Mapping[str, Any], path: str | Path) -> None:
+    """Raise ``ValueError`` unless a loaded checkpoint carries this network's format tag."""
+    fmt = blob.get("format")
+    if fmt != CHECKPOINT_FORMAT:
+        if fmt is None:
+            raise ValueError(
+                f"{path} is from the earlier regression head (no format field); that network no longer exists "
+                f"and the checkpoint must be retrained with the {CHECKPOINT_FORMAT} head"
+            )
+        raise ValueError(f"{path} has checkpoint format {fmt!r}; this code reads {CHECKPOINT_FORMAT!r} only")
+
+
 def load_checkpoint(path: str | Path) -> "PolicyNet":
-    """Load a policy saved by ``save_checkpoint``, in evaluation mode."""
+    """Load a policy saved by ``save_checkpoint``, in evaluation mode.
+
+    Refuses checkpoints from the earlier regression head with a plain
+    message: they must be retrained.
+    """
     _require_torch()
     blob = torch.load(Path(path), map_location="cpu", weights_only=True)
+    check_checkpoint_format(blob, path)
     model = PolicyNet(PolicyConfig.from_json(blob["config"]))
     model.load_state_dict(blob["state_dict"])
     model.eval()
     return model
 
 
-def act(model: "PolicyNet", observation: NDArray[np.float32]) -> NDArray[np.float32]:
-    """Run the policy on one observation and return its 17 numbers."""
+def act(model: "PolicyNet", observation: NDArray[np.float32], mode: str = "argmax", temperature: float = 1.0,
+        generator: "torch.Generator | None" = None) -> NDArray[np.float32]:
+    """Run the policy on one observation and return its 17 numbers (see ``PolicyNet.decode``)."""
     _require_torch()
     with torch.no_grad():
         out = model(torch.from_numpy(np.ascontiguousarray(observation, dtype=np.float32))[None])
-    return out[0].numpy()
+        action = model.decode(out, mode=mode, temperature=temperature, generator=generator)
+    return action[0].cpu().numpy().astype(np.float32)
 
 
 def phase_schedule(n_strokes: int) -> list[str]:

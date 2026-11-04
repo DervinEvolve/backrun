@@ -362,7 +362,8 @@ class TrainSettings:
     warmup_fraction: float = 0.05
     clip: float = 1.0
     ema_decay: float = 0.999
-    sparsity_weight: float = 0.1
+    sparsity_weight: float = 0.0
+    label_smoothing: float = 0.05
     val_fraction: float = 0.1
     seed: int = 0
     workers: int = 1
@@ -377,25 +378,46 @@ class TrainSettings:
         return asdict(self)
 
 
-def loss_parts(pred: "torch.Tensor", target: "torch.Tensor", sparsity_weight: float) -> dict[str, "torch.Tensor"]:
-    """The loss of a batch, by part, plus ``total``. Computed in float32.
+def loss_parts(out: "pol.PolicyOutput", target: dict[str, "torch.Tensor"], sparsity_weight: float,
+               label_smoothing: float = 0.0) -> dict[str, "torch.Tensor"]:
+    """The loss of a batch, by part, plus ``total``, and the head accuracies. Computed in float32.
 
-    Parts: one smooth L1 term per ``REGRESSION_PARTS`` entry (summed into
-    the total), ``conc_bce`` and ``sparsity`` (weighted into the total).
+    ``out`` is the network's output with its conditional head run at the
+    true start cells; ``target`` holds the true ``cell`` (B,), ``offset``
+    (B, 2) and ``bins`` (B, 15) from ``train.policy.action_to_bins``.
+
+    Parts: ``cell`` (cross-entropy over the start cells), ``offset``
+    (smooth L1 on the sub-cell offset at the true cell), one
+    ``bin_<name>`` cross-entropy per binned number and their mean
+    ``bins``, and ``sparsity`` (``train.policy.concentration_sparsity`` on
+    the expected decoded concentrations). ``total`` = cell + offset + bins +
+    ``sparsity_weight`` x sparsity. Accuracies (no gradient): ``cell_top1``,
+    ``cell_top5`` and ``bins_within1``, the share of binned numbers whose
+    most likely bin is within one bin of the true one.
     """
-    pred = pred.float()
-    target = target.float()
+    cell_logits = out.cell_logits.float()
+    bin_logits = out.bin_logits.float()
+    cell, offset, tb = target["cell"], target["offset"].float(), target["bins"]
+    b, n, k = bin_logits.shape
     parts: dict[str, torch.Tensor] = {}
-    total = pred.new_zeros(())
-    for name, sl in REGRESSION_PARTS:
-        parts[name] = F.smooth_l1_loss(pred[:, sl], target[:, sl], beta=SMOOTH_L1_BETA)
-        total = total + parts[name] * (sl.stop - sl.start)
-    total = total / sum(sl.stop - sl.start for _, sl in REGRESSION_PARTS)
-    p = pred[:, pol.CONC].clamp(1e-6, 1 - 1e-6)
-    t = target[:, pol.CONC]
-    parts["conc_bce"] = -(t * torch.log(p) + (1 - t) * torch.log1p(-p)).mean()
-    parts["sparsity"] = pol.concentration_sparsity(pred[:, pol.CONC])
-    parts["total"] = total + parts["conc_bce"] + sparsity_weight * parts["sparsity"]
+    parts["cell"] = F.cross_entropy(cell_logits, cell, label_smoothing=label_smoothing)
+    pred_off = out.offsets.float()[torch.arange(b, device=cell.device), cell]
+    parts["offset"] = F.smooth_l1_loss(pred_off, offset, beta=SMOOTH_L1_BETA)
+    per = F.cross_entropy(bin_logits.reshape(b * n, k), tb.reshape(-1), label_smoothing=label_smoothing,
+                          reduction="none").view(b, n).mean(dim=0)
+    for i, name in enumerate(pol.BIN_NAMES):
+        parts[f"bin_{name}"] = per[i]
+    parts["bins"] = per.mean()
+    centres = (torch.arange(k, device=bin_logits.device, dtype=torch.float32) + 0.5) / k
+    centres[0] = 0.0  # the lowest concentration bin decodes to no pigment
+    conc = (torch.softmax(bin_logits[:, pol.BIN_CONC], dim=-1) * centres).sum(dim=-1)
+    parts["sparsity"] = pol.concentration_sparsity(conc)
+    parts["total"] = parts["cell"] + parts["offset"] + parts["bins"] + sparsity_weight * parts["sparsity"]
+    with torch.no_grad():
+        top5 = cell_logits.topk(min(5, cell_logits.shape[1]), dim=1).indices
+        parts["cell_top1"] = (top5[:, 0] == cell).float().mean()
+        parts["cell_top5"] = (top5 == cell[:, None]).any(dim=1).float().mean()
+        parts["bins_within1"] = ((bin_logits.argmax(dim=-1) - tb).abs() <= 1).float().mean()
     return parts
 
 
@@ -463,8 +485,13 @@ def _batches(n: int, batch: int, rng: np.random.Generator | None) -> Iterator[ND
         yield order[i : i + batch]
 
 
-def _to_device(examples: ExampleSet, idx: NDArray[np.int64], device: "torch.device") -> tuple["torch.Tensor", "torch.Tensor"]:
-    """Decode a batch on the device: uint8 goes over, float32 is made there."""
+def _to_device(examples: ExampleSet, idx: NDArray[np.int64], device: "torch.device",
+               config: "pol.PolicyConfig") -> tuple["torch.Tensor", dict[str, "torch.Tensor"]]:
+    """Decode a batch on the device: uint8 goes over, float32 is made there.
+
+    The actions are discretised here (``train.policy.action_to_bins``), so
+    the cache keeps the plain 17 numbers.
+    """
     b = len(idx)
     tgt = torch.from_numpy(examples.targets[examples.painting[idx]]).to(device, non_blocking=True)
     planes = torch.from_numpy(examples.planes[idx]).to(device, non_blocking=True)
@@ -474,8 +501,10 @@ def _to_device(examples: ExampleSet, idx: NDArray[np.int64], device: "torch.devi
     obs[:, 0:3] = tgt.float() / 255.0
     obs[:, 3 : 3 + EXAMPLE_PLANES] = planes.float() / 255.0
     obs[torch.arange(b, device=device), 3 + EXAMPLE_PLANES + phase] = 1.0
-    act = torch.from_numpy(examples.action[idx]).to(device)
-    return obs, act
+    ab = pol.action_to_bins(examples.action[idx], config)
+    target = {"cell": torch.from_numpy(ab.cell).to(device), "offset": torch.from_numpy(ab.offset).to(device),
+              "bins": torch.from_numpy(ab.bins).to(device)}
+    return obs, target
 
 
 def evaluate_loss(model: Any, examples: ExampleSet, settings: TrainSettings, device: "torch.device",
@@ -488,10 +517,10 @@ def evaluate_loss(model: Any, examples: ExampleSet, settings: TrainSettings, dev
     model.eval()
     with torch.no_grad():
         for idx in _batches(n, settings.batch, None):
-            obs, act = _to_device(examples, idx, device)
+            obs, tgt = _to_device(examples, idx, device, model.config)
             with _autocast(device):
-                pred = model(obs)
-            for k, v in loss_parts(pred, act, settings.sparsity_weight).items():
+                pred = model(obs, tgt["cell"])
+            for k, v in loss_parts(pred, tgt, settings.sparsity_weight, settings.label_smoothing).items():
                 sums[k] = sums.get(k, 0.0) + float(v) * len(idx)
     return {k: v / n for k, v in sums.items()}
 
@@ -580,6 +609,7 @@ def train_imitation(
     last_path, best_path, log_path = out / "last.pt", out / "best.pt", out / "train.jsonl"
     if s.resume and last_path.is_file():
         blob = torch.load(last_path, map_location=device, weights_only=True)
+        pol.check_checkpoint_format(blob, last_path)
         if pol.PolicyConfig.from_json(blob["config"]) != config:
             raise ValueError(f"{last_path} was trained with a different network config; use a new OUT_DIR")
         st = blob["extra"]["state"]
@@ -605,10 +635,10 @@ def train_imitation(
         sums: dict[str, float] = {}
         seen = 0
         for idx in _batches(len(train_set), s.batch, rng):
-            obs, act = _to_device(train_set, idx, device)
+            obs, tgt = _to_device(train_set, idx, device, config)
             with _autocast(device):
-                pred = model(obs)
-            parts = loss_parts(pred, act, s.sparsity_weight)
+                pred = model(obs, tgt["cell"])
+            parts = loss_parts(pred, tgt, s.sparsity_weight, s.label_smoothing)
             opt.zero_grad(set_to_none=True)
             scaler.scale(parts["total"]).backward()
             scaler.unscale_(opt)

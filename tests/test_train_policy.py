@@ -158,14 +158,129 @@ def test_parameter_count_is_about_five_million() -> None:
     assert 4_500_000 <= policy.parameter_count() <= 5_500_000
 
 
+SMALL = policy.PolicyConfig(widths=(8, 16, 16, 32), blocks=(1, 1, 1, 1), hidden=64, groups=4)
+
+
 def test_network_matches_parameter_count_and_shapes() -> None:
     torch = pytest.importorskip("torch")
+    for config in (policy.PolicyConfig(), SMALL):
+        model = policy.make_policy(config, seed=0)
+        assert sum(p.numel() for p in model.parameters()) == policy.parameter_count(config)
     model = policy.make_policy(seed=0)
-    assert sum(p.numel() for p in model.parameters()) == policy.parameter_count()
-    out = model(torch.zeros(2, OBS_CHANNELS, OBS_HEIGHT, OBS_WIDTH))
-    assert out.shape == (2, ACTION_DIM) and float(out.min()) >= 0 and float(out.max()) <= 1
-    conc = out[:, policy.CONC]
-    assert float(policy.concentration_sparsity(conc)) >= 0
+    with torch.no_grad():
+        out = model(torch.zeros(2, OBS_CHANNELS, OBS_HEIGHT, OBS_WIDTH))
+    assert out.cell_logits.shape == (2, policy.N_CELLS) == (2, 24 * 32)
+    assert out.offsets.shape == (2, policy.N_CELLS, 2)
+    assert float(out.offsets.min()) >= 0 and float(out.offsets.max()) <= 1
+    assert out.bin_logits.shape == (2, policy.N_BINNED, 32) and policy.N_BINNED == 15
+    assert torch.equal(out.cell, out.cell_logits.argmax(dim=1))
+    for mode in ("argmax", "sample"):
+        a = model.decode(out, mode=mode, generator=torch.Generator().manual_seed(0))
+        assert a.shape == (2, ACTION_DIM) and float(a.min()) >= 0 and float(a.max()) <= 1
+    with pytest.raises(ValueError):
+        model.decode(out, mode="mean")
+
+
+def _random_actions(n: int, seed: int) -> np.ndarray:
+    """Random actions whose further path points stay within the relative range."""
+    rng = np.random.default_rng(seed)
+    a = rng.uniform(0, 1, (n, ACTION_DIM))
+    a[:, 2:6] = np.clip(np.tile(a[:, 0:2], 2) + rng.uniform(-0.45, 0.45, (n, 4)), 0, 1)
+    a[:, policy.CONC] *= rng.uniform(0, 1, (n, 8)) < 0.3  # mostly unloaded pigments
+    return a
+
+
+def test_action_bins_round_trip() -> None:
+    config = policy.PolicyConfig()
+    half = 0.5 / config.bins
+    a = _random_actions(500, 0)
+    ab = policy.action_to_bins(a, config)
+    assert ab.cell.shape == (500,) and ab.offset.shape == (500, 2) and ab.bins.shape == (500, 15)
+    assert ab.cell.min() >= 0 and ab.cell.max() < policy.N_CELLS
+    assert ab.bins.min() >= 0 and ab.bins.max() < config.bins
+    back = policy.bins_to_action(ab.cell, ab.offset, ab.bins, config)
+    assert back.shape == a.shape
+    assert np.allclose(back[:, 0:2], a[:, 0:2], atol=1e-6)  # the start point is exact
+    err = np.abs(back - a)
+    conc = a[:, policy.CONC]
+    small = conc < 1.0 / config.bins  # the lowest concentration bin decodes to no pigment
+    assert np.all(back[:, policy.CONC][small] == 0)
+    assert np.all(err[:, policy.CONC][~small] <= half + 1e-6)
+    keep = [i for i in range(ACTION_DIM) if i not in range(policy.CONC.start, policy.CONC.stop)]
+    assert np.all(err[:, keep] <= half + 1e-6)
+    # The same arithmetic on tensors gives the same numbers.
+    torch = pytest.importorskip("torch")
+    tb = policy.bins_to_action(torch.from_numpy(ab.cell), torch.from_numpy(ab.offset).double(),
+                               torch.from_numpy(ab.bins), config)
+    assert np.allclose(tb.numpy(), back, atol=1e-6)
+
+
+def _one_hot_output(ab: policy.ActionBins, config: policy.PolicyConfig) -> policy.PolicyOutput:
+    """A hand-built output that puts all its weight on the given discrete action."""
+    torch = pytest.importorskip("torch")
+    b = len(ab.cell)
+    cell_logits = torch.full((b, policy.N_CELLS), -50.0)
+    cell_logits[torch.arange(b), torch.from_numpy(ab.cell)] = 50.0
+    offsets = torch.full((b, policy.N_CELLS, 2), 0.5)
+    offsets[torch.arange(b), torch.from_numpy(ab.cell)] = torch.from_numpy(ab.offset)
+    bins = torch.full((b, policy.N_BINNED, config.bins), -50.0)
+    bins.scatter_(2, torch.from_numpy(ab.bins)[..., None], 50.0)
+    return policy.PolicyOutput(cell_logits, offsets, bins, torch.from_numpy(ab.cell))
+
+
+def test_one_hot_search_strokes_decode_and_replay(tiny_run: Path, tmp_path: Path) -> None:
+    pytest.importorskip("torch")
+    config = SMALL
+    model = policy.make_policy(config).eval()
+    examples = policy.ledger_to_examples(tiny_run)
+    size = (24, 18)
+    actions = np.stack([e.action for e in examples]).astype(np.float64)
+    ab = policy.action_to_bins(actions, config)
+    out = _one_hot_output(ab, config)
+    decoded = model.decode(out).numpy()
+    expect = policy.bins_to_action(ab.cell, ab.offset, ab.bins, config)
+    assert np.allclose(decoded, expect, atol=1e-6)
+    assert np.allclose(model.log_prob(out, ab).numpy(), 0.0, atol=1e-6)
+    assert np.all(model.entropy(out).numpy() < 1e-6)
+    ops: list[dict] = []
+    px_half = 0.5 / config.bins * (size[0] - 1)  # half a relative-point bin in pixels, x axis
+    for ex, a in zip(examples, decoded):
+        stroke_ops = policy.policy_output_to_ops(a, size)
+        stroke = stroke_ops[0]
+        orig = policy.policy_output_to_ops(ex.action, size)[0]
+        assert np.allclose(stroke["path"][0], orig["path"][0], atol=0.011)
+        rel = np.abs(np.asarray(orig["path"][1:]) - np.asarray(orig["path"][0]))
+        inside = np.all(rel < 0.5 * np.array([size[0] - 1, size[1] - 1]), axis=1)
+        err = np.abs(np.asarray(stroke["path"][1:]) - np.asarray(orig["path"][1:]))
+        assert np.all(err[inside] <= px_half + 0.011)
+        lo, hi = policy.WIDTH_RANGE
+        assert abs(stroke["width"] - orig["width"]) <= max(1.0, 0.5 / config.bins * min(size) * (hi - lo)) + 1e-3
+        for name, c in orig["pigments"].items():
+            assert abs(stroke["pigments"].get(name, 0.0) - c) <= 1.0 / config.bins + 1e-3
+        ops += stroke_ops
+    _replays_unchanged(ops, size[0], size[1], 3, tmp_path)
+
+
+def test_log_prob_and_entropy_match_sampling() -> None:
+    torch = pytest.importorskip("torch")
+    model = policy.make_policy(SMALL, seed=2).eval()
+    obs = torch.rand(3, OBS_CHANNELS, OBS_HEIGHT, OBS_WIDTH, generator=torch.Generator().manual_seed(1))
+    with torch.no_grad():
+        out = model(obs)
+        a1 = model.decode(out, mode="sample", generator=torch.Generator().manual_seed(5))
+        a2 = model.decode(out, mode="sample", generator=torch.Generator().manual_seed(5))
+        assert torch.equal(a1, a2)
+        ab = policy.action_to_bins(a1.numpy(), SMALL)
+        lp = model.log_prob(out, ab)
+        assert lp.shape == (3,) and torch.all(lp < 0)
+        # At the argmax cell, the argmax bins are the most likely ones there.
+        bins = out.bin_logits.argmax(dim=-1)
+        best = model.log_prob(out, policy.ActionBins(out.cell, None, bins))
+        other = model.log_prob(out, policy.ActionBins(out.cell, None, (bins + 1) % SMALL.bins))
+        assert torch.all(best > other)
+        ent = model.entropy(out)
+        assert ent.shape == (3,) and torch.all(ent > 0)
+        assert float(ent.max()) <= np.log(policy.N_CELLS) + 15 * np.log(SMALL.bins) + 1e-3
 
 
 def test_network_output_replays_through_simulator(tmp_path: Path) -> None:
@@ -183,9 +298,21 @@ def test_network_output_replays_through_simulator(tmp_path: Path) -> None:
 
 def test_checkpoint_round_trip(tmp_path: Path) -> None:
     torch = pytest.importorskip("torch")
-    model = policy.make_policy(seed=1).eval()
+    model = policy.make_policy(SMALL, seed=1).eval()
     path = policy.save_checkpoint(tmp_path / "p.pt", model, note="test")
+    assert torch.load(path, weights_only=True)["format"] == "discrete-v2"
     loaded = policy.load_checkpoint(path)
     x = torch.rand(1, OBS_CHANNELS, OBS_HEIGHT, OBS_WIDTH, generator=torch.Generator().manual_seed(0))
     with torch.no_grad():
-        assert torch.equal(model(x), loaded(x))
+        a, b = model(x), loaded(x)
+        assert torch.equal(a.cell_logits, b.cell_logits) and torch.equal(a.bin_logits, b.bin_logits)
+        assert torch.equal(model.decode(a), loaded.decode(b))
+
+
+def test_old_regression_checkpoint_is_refused(tmp_path: Path) -> None:
+    torch = pytest.importorskip("torch")
+    old = tmp_path / "old.pt"
+    torch.save({"config": {"in_channels": 11, "widths": [8, 16, 16, 32], "blocks": [1, 1, 1, 1], "hidden": 64,
+                           "groups": 4, "action_dim": 17}, "state_dict": {}, "extra": {}}, old)
+    with pytest.raises(ValueError, match="earlier regression head.*retrained"):
+        policy.load_checkpoint(old)
