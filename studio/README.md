@@ -11,7 +11,16 @@ npm install          # once
 npm run dev          # http://127.0.0.1:5426/
 ```
 
-The app opens on the Stroke camera and plays the gallery's first run (`public/runs/gallery.json`) at 1x.
+The app opens on the Stroke camera and plays the gallery's first run (`public/runs/gallery.json`) at 1x. The gallery
+has two runs, picked from the selector under the painting card (switching reloads the page on `?run=`):
+
+- `horizon_v1`, "Search painter, horizon target": the search painter, 16 candidates per slot, on the synthetic
+  horizon;
+- `policy_v2_sealed_003`, "Learned painter, sealed target 3": the trained policy (`../shared/stage_a_v2.pt`, likeliest
+  stroke each slot) on sealed target 3. It looks once per slot and lays that one stroke, so there are no candidates
+  or ghost strokes: the slot line says "one look, one stroke, no candidates", the candidates KPI reads Looks, "1 per
+  stroke", and the Candidates button is greyed out. It has no dry between phases, so the brush is swapped at the pot
+  at the start of each new phase.
 
 - Space plays and pauses, `-` and `+` step through the speeds (0.25x, 1x, 2x, 5x, 10x, 50x, 150x), Step advances one
   1/60 s step while paused, the scrubber jumps anywhere (phase bands, a tick per stroke, a blue tick per rack dry).
@@ -31,11 +40,30 @@ The app opens on the Stroke camera and plays the gallery's first run (`public/ru
 On a phone width (under 760 px) the room takes the top half and the panels stack below it, scrolling vertically;
 the stage cameras widen their field of view on a narrow screen.
 
-## Pack a run
+## Record and pack a run
+
+The search painter records with `cli_paint`, the learned painter with `train.record_policy` (from the repository
+root; `TARGET` also takes `sealed:NAME`, and `--decode sample --temperature T` draws strokes instead of taking the
+likeliest):
 
 ```
-node scripts/pack-run.mjs ../runs/horizon_v1 horizon_v1
+python -m backrun.cli_paint synthetic:horizon:1 runs/horizon_v1 --strokes 40 --candidates 16
+python -m train.record_policy shared/stage_a_v2.pt sealed:sealed_003 runs/policy_v2_sealed_003 --strokes 40 --frames-every 20
 ```
+
+Then pack each into the gallery (from `studio/`; `--label` sets the selector's text, and a repack keeps the label
+already in `gallery.json`):
+
+```
+node scripts/pack-run.mjs ../runs/horizon_v1 horizon_v1 --label "Search painter, horizon target"
+node scripts/pack-run.mjs ../runs/policy_v2_sealed_003 policy_v2_sealed_003 --label "Learned painter, sealed target 3"
+```
+
+The policy run folder has the same files: a ledger line per op with `score`, `predicted_score`, `phase`,
+`wet_pixels`, and on strokes `pigments_used`, `pigment_added`, `candidates_considered` 1, `search_s` (the time to look
+and act) and an empty `rejected`; its waits are `settle` dries and the dry until the sheet is set is `final`.
+`run.json` adds `painter: "policy"`, `checkpoint`, `checkpoint_sha256`, `policy_format`, `policy_parameters`,
+`decode` and `temperature`.
 
 copies `ledger.jsonl`, `run.json`, `strokes.jsonl`, `target.png`, `final.png` and `frames/` unchanged into
 `public/runs/<name>/`, adds the run to `public/runs/gallery.json`, and writes three derived files:
@@ -52,7 +80,7 @@ copies `ledger.jsonl`, `run.json`, `strokes.jsonl`, `target.png`, `final.png` an
   holds in the app. The raw `ledger.jsonl` and `run.json` are still in the folder for anyone reading the files.
 
 The root `.gitignore` ignores `runs/` and `frames/`; `studio/.gitignore` re-includes `public/runs/` so packed gallery
-runs are committed with the studio. horizon_v1 is 3.8 MB.
+runs are committed with the studio. horizon_v1 is 3.8 MB (50 frames); policy_v2_sealed_003 is 2.6 MB (39 frames).
 
 ## What moves, and from which recorded field
 
@@ -122,7 +150,7 @@ Staging (choreography derived from the ledger, stated in the app's About panel):
   painter's error map (Attention), calibration colours (the calibration strip keeps its fixed stripes and is not
   painted on screen), where the one skipped slot fell (the KPI says "1 slot skipped in the run"), per-op cost in
   money.
-- One gallery run; the gallery drawer and switching runs from the UI are not built (`?run=` works).
+- The gallery is a selector of two runs; the gallery drawer of the plan is not built.
 - Themes (Late afternoon, Evening, North light) are not built; only Late afternoon.
 - Right-click menus, the sketchbook card, visitor figures sitting down and the queue board are Pass 1 set dressing.
 - Textures are still procedural canvas textures (no CC0 scans: those hosts are not reachable from the build
@@ -215,7 +243,7 @@ After round 3:
 - `src/sheet.js`: the sheet canvas (frames, reveal mask, ghosts, grain).
 - `src/choreo.js`: the brush stops and travel arcs.
 - `src/ik.js`: damped least squares IK for the arm.
-- `src/dashboard.js`, `src/dashboard.css`: the panels.
+- `src/dashboard.js`, `src/dashboard.css`: the panels and the gallery selector.
 - `src/frame-guard.js`: copied from the skill's frame guard.
 - `scripts/pack-run.mjs`, `scripts/record-demo.mjs`, `scripts/probe.mjs`, `scripts/measure.mjs`, `scripts/stills.mjs`, `scripts/count.mjs`,
   `scripts/compress.mjs`; `blender/` as in Pass 1.

@@ -470,3 +470,24 @@ What Pass 2 changed against the plan above, and what it could not do:
   calls with shadow passes, 358 meshes; JS heap 11.9 MB. Draw calls are the next thing to cut.
 - **Still open:** the full-size take, a GPU frame rate, the plan's Water layer and second-painting beats (no data and
   one run), and the Reveal camera leaving the brush at the frame's left edge.
+
+## Pass 3 notes (the learned painter in the gallery)
+
+The gallery has a second run: the learned painter (the Stage A v2 discrete-head policy, `shared/stage_a_v2.pt`,
+5,252,619 parameters, likeliest stroke each slot) on sealed target 3, recorded with `python -m train.record_policy`
+at 256 x 192, 40 slots, frames every 20 steps as horizon_v1 was, and packed as `policy_v2_sealed_003` (2.6 MB, 39
+frames). The recorder rolls the policy out the way `train.policy.rollout` does and then dries the sheet until it is
+set, as the evaluation does; its final total, 9.02 (lab_l2 708.8, ssim 0.538), and its strokes match the same
+painting in the Modal evaluation exactly. Each stroke line says one candidate and an empty rejected list. A selector
+under the painting card switches runs (it reloads on `?run=`), with a plain label per run kept in `gallery.json`.
+For the learned painter the dashboard says so, the slot line reads "one look, one stroke, no candidates", the
+candidates KPI becomes Looks ("1 per stroke, no candidates"), Candidates is greyed out and About explains why. The
+policy has no dry between phases, so the brush is now swapped at the pot at the start of a phase's first stroke when
+no phase dry came before it; the search painter's run is unchanged (its swaps stay in the phase dries).
+
+What I saw in the browser at 50x (`studio/review/pass3/`): the arm lays the first wash with the tip on the sheet, the
+brush changes at the pot as the medium and detail phases start, the sheet fills in with the blue sea, the pale sky
+band and the yellow ring the policy makes of the sun, and the score sheet turns at the end with total 9.02, the
+ledger's final total, and the kept guess compared against it. The learned painter's replay is short (2 min 56 s at
+1x against 4 min 35 s), since a stroke takes only its choreography: the policy's recorded time to look and act is under
+a third of a second per stroke. Its waits of 2 or 3 steps show as "waiting" between strokes, and the last dry is 575 steps.
