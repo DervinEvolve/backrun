@@ -549,41 +549,41 @@ def build_jar():
 # =============================================================== drying rack with brass rail
 
 def build_rack():
+    """Panel drying rack: a dowel rack 0.56 wide (x) by 0.30 deep (y) by 0.45 tall, closed at the west end and open
+    at the east end toward the board. Three slots run along x, so a panel standing in a slot (its width along x)
+    slides in and out along the brass rail, the way it rides off the board."""
     lib.reset()
     M = palette_mats()
     root = group('Rack')
-    D, W, H = 0.30, 0.60, 0.45
-    box('Rack_Base', (D, W, 0.02), (0, 0, 0.01), M['wood'], 0.003, parent=root)
-    for sx in (-1, 1):
-        for sy in (-1, 1):
-            box(f'Rack_Post_{sx}_{sy}', (0.024, 0.024, H - 0.02), (sx * (D / 2 - 0.012), sy * (W / 2 - 0.012),
-                                                                    0.02 + (H - 0.02) / 2), M['wood'], 0.003,
-                parent=root)
-        box(f'Rack_TopRail_{sx}', (0.024, W, 0.024), (sx * (D / 2 - 0.012), 0, H - 0.012), M['wood'], 0.003,
-            parent=root)
+    W, D, H = 0.56, 0.30, 0.45
+    box('Rack_Base', (W, D, 0.022), (0, 0, 0.011), M['wood'], 0.003, parent=root)
+    box('Rack_Foot_W', (0.04, D, 0.012), (-W / 2 + 0.03, 0, -0.0), M['wood_dark'], 0.002, parent=root)
+    # closed west end board and one back post; a back top rail joins them
+    box('Rack_EndBoard', (0.02, D, H), (-W / 2 + 0.01, 0, H / 2), M['wood'], 0.003, parent=root)
+    box('Rack_BackPost', (0.024, 0.024, H - 0.022), (W / 2 - 0.012, D / 2 - 0.012, 0.022 + (H - 0.022) / 2), M['wood'],
+        0.003, parent=root)
+    box('Rack_BackRail', (W - 0.02, 0.024, 0.024), (0.01, D / 2 - 0.012, H - 0.012), M['wood'], 0.003, parent=root)
+    # slots at y = -0.08, 0, 0.08: a groove in the base for each, dowel dividers between them
+    slot_y = [-0.08, 0.0, 0.08]
+    for i, y in enumerate(slot_y):
+        box(f'Rack_Groove_{i}', (W - 0.05, 0.010, 0.004), (0.005, y, 0.0225), M['wood_dark'], 0.001, parent=root)
+        empty(f'Rack_Slot_{i}', (0.0, y, 0.022), parent=root)
+    for k, y in enumerate((-0.12, -0.04, 0.04, 0.12)):
+        for m, x in enumerate((-0.17, 0.02, 0.21)):
+            cyl(f'Rack_Dowel_{k}_{m}', 0.0055, 0.24, (x, y, 0.02), M['wood_dark'], n=10, parent=root)
+    # brass rail: a two-rod channel along slot 1 from inside the rack out past the open east end toward the board
+    zr, x0, x1 = 0.06, -0.05, W / 2 + 0.09
     for sy in (-1, 1):
-        box(f'Rack_EndRail_{sy}', (D, 0.024, 0.024), (0, sy * (W / 2 - 0.012), H - 0.012), M['wood'], 0.003,
+        cyl(f'Rack_Rail_{sy}', 0.003, x1 - x0, (x0, sy * 0.008, zr), M['brass'], n=10, rot=(0, R(90), 0), parent=root)
+    for j, x in enumerate((W / 2 - 0.03, x1 - 0.01)):
+        cyl(f'Rack_RailPost_{j}', 0.0045, zr - (0.022 if j == 0 else 0.0), (x, 0, 0.022 if j == 0 else 0.0),
+            M['brass_dark'], n=8, parent=root)
+        cyl(f'Rack_RailBridge_{j}', 0.0035, 0.024, (x, -0.012, zr), M['brass_dark'], n=8, rot=(R(-90), 0, 0),
             parent=root)
-        box(f'Rack_EndRailLow_{sy}', (D, 0.02, 0.02), (0, sy * (W / 2 - 0.012), 0.12), M['wood'], 0.003, parent=root)
-    # three vertical slots: dowel pegs in the base and the top rails on both end frames
-    slot_x = [-0.08, 0.0, 0.08]
-    peg_x = [-0.12, -0.04, 0.04, 0.12]
-    for i, x in enumerate(peg_x):
-        for sy in (-1, 1):
-            cyl(f'Rack_Peg_{i}_{sy}', 0.006, 0.30, (x, sy * (W / 2 - 0.04), 0.02), M['wood_dark'], n=10, parent=root)
-        box(f'Rack_Groove_{i}', (0.012, W - 0.06, 0.008), (x, 0, 0.024), M['wood_dark'], 0.002, parent=root)
-    for i, x in enumerate(slot_x):
-        e = empty(f'Rack_Slot_{i}', (x, 0, 0.022), parent=root)
-    # brass rail from the rack's east side toward the board's left edge
-    for sy in (-1, 1):
-        cyl(f'Rack_Rail_{sy}', 0.0035, 0.24, (D / 2, sy * 0.12, 0.09), M['brass'], n=10, rot=(0, R(90), 0),
-            parent=root)
-        for j, x in enumerate((D / 2 + 0.02, D / 2 + 0.22)):
-            cyl(f'Rack_RailPost_{sy}_{j}', 0.004, 0.088, (x, sy * 0.12, 0.0), M['brass_dark'], n=8, parent=root)
-            cyl(f'Rack_RailFoot_{sy}_{j}', 0.009, 0.003, (x, sy * 0.12, 0.0), M['brass_dark'], n=12, parent=root)
-    empty('Rack_Rail_Start', (D / 2, 0, 0.0935), parent=root)
-    empty('Rack_Rail_End', (D / 2 + 0.24, 0, 0.0935), parent=root)
-    finish('rack')
+    cyl('Rack_RailFoot', 0.01, 0.003, (x1 - 0.01, 0, 0.0), M['brass_dark'], n=12, parent=root)
+    empty('Rack_Rail_Start', (x0, 0, zr + 0.003), parent=root)
+    empty('Rack_Rail_End', (x1, 0, zr + 0.003), parent=root)
+    finish('rack', extras=dict(size_m=[W, D, H], slots_y=slot_y))
 
 
 # =============================================================== stool, side table, shelf

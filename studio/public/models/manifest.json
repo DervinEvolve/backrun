@@ -51,9 +51,9 @@
    "raw_bytes": 124024
   },
   "rack.glb": {
-   "tris": 792,
-   "bytes": 28300,
-   "raw_bytes": 122388
+   "tris": 848,
+   "bytes": 29840,
+   "raw_bytes": 93920
   },
   "room.glb": {
    "tris": 1180,
@@ -113,7 +113,7 @@
   }
  },
  "total_file": {
-  "tris": 30770,
-  "bytes": 916876
+  "tris": 30826,
+  "bytes": 918416
  }
 }

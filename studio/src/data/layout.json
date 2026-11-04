@@ -1,27 +1,175 @@
 {
-  "note": "Where each asset family stands, three.js world metres; rot is yaw in degrees about +y. The bench top is at y = 0.76.",
-  "room": { "pos": [0, 0, 0] },
-  "bench": { "pos": [0, 0, -1.55] },
-  "board": { "pos": [-0.03, 0.76, -1.24] },
-  "arm": { "pos": [0.4, 0.76, -1.85] },
-  "palette": { "pos": [0.6, 0.76, -1.4], "rot": -6 },
-  "jar_clean": { "pos": [0.79, 0.76, -1.72] },
-  "jar_rinse": { "pos": [0.81, 0.76, -1.575] },
-  "brushes": { "pos": [0.6, 0.76, -1.8] },
-  "rack": { "pos": [-0.73, 0.76, -1.55] },
-  "calstrip": { "pos": [0.6, 0.762, -1.305], "rot": -6, "lean_deg": 62 },
-  "scorecard": { "pos": [0.36, 0.7605, -1.225], "rot": 9 },
-  "teacup": { "pos": [-0.46, 0.76, -1.23], "rot": 30 },
-  "lamp": { "pos": [0.0, 1.8, -2.0] },
-  "corkstrip": { "pos": [-0.05, 1.22, -2.0] },
-  "queueboard": { "pos": [2.5, 1.38, 0.15], "rot": -90 },
-  "shelf": { "pos": [1.75, 0, -1.84] },
-  "sidetable": { "pos": [-2.12, 0, 0.55], "rot": 90 },
-  "plant": { "pos": [-2.43, 0.9, -1.2] },
-  "roperail": { "pos": [0, 0, -0.62] },
-  "stools": { "z": -0.18, "x": [-1.25, -0.75, -0.25, 0.25, 0.75, 1.25] },
-  "visitor": { "stool": 3 },
-  "box_a": { "pos": [-0.42, 0.183, -1.56], "scale": 0.6, "rot": 3 },
-  "box_b": { "pos": [0.44, 0.183, -1.52], "scale": 0.58, "rot": -6 },
-  "box_floor": { "pos": [2.05, 0, -0.95], "scale": 0.62, "rot": 18 }
+ "note": "Where each asset family stands, three.js world metres; rot is yaw in degrees about +y. The bench top is at y = 0.76.",
+ "room": {
+  "pos": [
+   0,
+   0,
+   0
+  ]
+ },
+ "bench": {
+  "pos": [
+   0,
+   0,
+   -1.55
+  ]
+ },
+ "board": {
+  "pos": [
+   0.07,
+   0.76,
+   -1.24
+  ]
+ },
+ "arm": {
+  "pos": [
+   0.4,
+   0.76,
+   -1.85
+  ]
+ },
+ "palette": {
+  "pos": [
+   0.6,
+   0.76,
+   -1.4
+  ],
+  "rot": -6
+ },
+ "jar_clean": {
+  "pos": [
+   0.79,
+   0.76,
+   -1.72
+  ]
+ },
+ "jar_rinse": {
+  "pos": [
+   0.81,
+   0.76,
+   -1.575
+  ]
+ },
+ "brushes": {
+  "pos": [
+   0.6,
+   0.76,
+   -1.8
+  ]
+ },
+ "rack": {
+  "pos": [
+   -0.6,
+   0.76,
+   -1.55
+  ]
+ },
+ "calstrip": {
+  "pos": [
+   0.6,
+   0.762,
+   -1.305
+  ],
+  "rot": -6,
+  "lean_deg": 62
+ },
+ "scorecard": {
+  "pos": [
+   0.47,
+   0.7605,
+   -1.17
+  ],
+  "rot": 9
+ },
+ "teacup": {
+  "pos": [
+   -0.46,
+   0.76,
+   -1.23
+  ],
+  "rot": 30
+ },
+ "lamp": {
+  "pos": [
+   0.1,
+   1.8,
+   -2.0
+  ]
+ },
+ "corkstrip": {
+  "pos": [
+   0.05,
+   1.22,
+   -2.0
+  ]
+ },
+ "queueboard": {
+  "pos": [
+   2.5,
+   1.38,
+   0.15
+  ],
+  "rot": -90
+ },
+ "shelf": {
+  "pos": [
+   1.75,
+   0,
+   -1.84
+  ]
+ },
+ "sidetable": {
+  "pos": [
+   -2.12,
+   0,
+   0.55
+  ],
+  "rot": 90
+ },
+ "plant": {
+  "pos": [
+   -2.43,
+   0.9,
+   -1.2
+  ]
+ },
+ "roperail": {
+  "pos": [
+   0,
+   0,
+   -0.62
+  ]
+ },
+ "stools": {
+  "z": -0.18,
+  "x": [
+   -1.25,
+   -0.75,
+   -0.25,
+   0.25,
+   0.75,
+   1.25
+  ]
+ },
+ "visitor": {
+  "stool": 3
+ },
+ "box_a": {
+  "pos": [
+   -0.42,
+   0.183,
+   -1.56
+  ],
+  "scale": 0.6,
+  "rot": 3
+ },
+ "box_b": {
+  "pos": [
+   0.44,
+   0.183,
+   -1.52
+  ],
+  "scale": 0.58,
+  "rot": -6
+ }
 }
