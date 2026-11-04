@@ -228,10 +228,48 @@ def reward_report(records: list[Any], out: Any = None, terms: list[str] | None =
             "flags": flags}
 
 
-def main(argv: list[str] | None = None) -> int:
-    """``python -m scribe.reward report FILE.jsonl [--step N]``: report on logged term values.
+def score_batch(batch_root: str, reward: Reward, out_path: str, seed: int = 0, limit: int | None = None,
+                step: int = 0) -> list[dict[str, Any]]:
+    """Score every indexed candidate in a generated batch folder and append term lines to ``out_path``.
 
-    Each line of FILE is a dict of term values, or a dict with a ``terms``
+    The batch is a folder written by ``scribe.generate`` (for example the
+    base model's replies to the training prompts). Candidates the gate
+    rejected score 0 without judge calls. Lines have the same shape as the
+    trainer's ``terms.jsonl``, so ``reward_report`` reads either.
+    """
+    from pathlib import Path
+
+    from backrun.sim import Watercolor
+    from scribe.generate import read_index
+
+    root = Path(batch_root)
+    lines = []
+    for i, rec in enumerate(read_index(root)):
+        if limit is not None and i >= limit:
+            break
+        folder = root / rec.get("dir", rec["id"])
+        meta = json.loads((folder / "meta.json").read_text())
+        rng = np.random.default_rng([seed, i])
+        if rec.get("status") == "ok":
+            header, ops = Watercolor.read_jsonl(folder / "strokes.jsonl")
+            res = reward.score_gated(gate(ops, header), meta.get("subject", ""), rng, meta.get("prompt_id"))
+        else:
+            res = reward.score_gated(GateResult(ok=False), meta.get("subject", ""), rng)
+        lines.append({"step": step, "kind": "rollout", "id": rec["id"], "prompt_id": meta.get("prompt_id"),
+                      "total": res.total, "terms": res.terms, "excluded": res.total is None, "notes": res.notes})
+    with open(out_path, "a") as fh:
+        for line in lines:
+            fh.write(json.dumps(line) + "\n")
+    return lines
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Two commands.
+
+    ``python -m scribe.reward score BATCH_ROOT --pool POOL_ROOT --judge-model M --out terms.jsonl``
+    scores a generated batch against the rated pool and then prints the
+    report. ``python -m scribe.reward report FILE.jsonl [--step N]`` reports
+    on logged term values. Each line of FILE is a dict of term values, or a dict with a ``terms``
     key. Lines with ``"kind": "summary"`` are skipped. With ``--step``, only
     lines whose ``step`` equals N are used (the trainer's log writes one line
     per rollout with its step).
@@ -243,7 +281,35 @@ def main(argv: list[str] | None = None) -> int:
     rp = sub.add_parser("report")
     rp.add_argument("file")
     rp.add_argument("--step", type=int, default=None)
+    sp = sub.add_parser("score")
+    sp.add_argument("batch_root")
+    sp.add_argument("--pool", required=True)
+    sp.add_argument("--judge-model", required=True)
+    sp.add_argument("--out", required=True)
+    sp.add_argument("--refs", type=int, default=2)
+    sp.add_argument("--limit", type=int, default=None)
+    sp.add_argument("--seed", type=int, default=0)
     args = ap.parse_args(argv)
+    if args.cmd == "score":
+        from scribe.client import ChatClient
+        from scribe.pool import Pool
+
+        pool = Pool(args.pool)
+        try:
+            client = ChatClient(ledger=args.out + ".usage.jsonl")
+        except ValueError as exc:
+            print(exc, file=sys.stderr)
+            return 1
+        refs = args.refs
+
+        def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
+            return [r["path"] for r in pool.sample_references(rng, k=refs)]
+
+        reward = Reward(PairwiseJudge(client, args.judge_model), references, aesthetic=aesthetic_from_env())
+        lines = score_batch(args.batch_root, reward, args.out, seed=args.seed, limit=args.limit)
+        reward_report(lines)
+        print(f"pool manifest {pool.manifest()['sha256'][:12]}")
+        return 0
     recs = []
     with open(args.file) as fh:
         for line in fh:

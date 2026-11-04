@@ -131,3 +131,27 @@ def test_report_command_filters_by_step(tmp_path, capsys) -> None:
     assert main(["report", str(log), "--step", "2"]) == 0
     out = capsys.readouterr().out
     assert out.startswith("3 rollouts used") and "gate barely varies" in out
+
+
+def test_score_batch_on_a_generated_folder(tmp_path) -> None:
+    import json
+
+    from scribe.generate import run
+    from scribe.reward import score_batch
+    from scribe_fixtures import as_reply, valid_painting
+
+    prompts = tmp_path / "prompts.jsonl"
+    prompts.write_text(json.dumps({"id": "sea", "subject": "a calm sea", "prompt": "Paint a sea."}) + "\n")
+    replies = iter([as_reply(valid_painting()), "no file", "still no file"])
+    run(FakeClient(lambda m, msgs: next(replies)), prompts, tmp_path / "batch", ["base"], per=2)
+    reward = Reward(PairwiseJudge(FakeClient(prefers_candidate_any), "j"), lambda rng, pid: [REF1, REF2])
+    lines = score_batch(str(tmp_path / "batch"), reward, str(tmp_path / "terms.jsonl"))
+    # the fixture has 9 strokes, under the economy floor of 10: 0.05 gate + 0.9 pairwise
+    assert sorted(x["total"] for x in lines) == [0.0, pytest.approx(0.95)]
+    assert len((tmp_path / "terms.jsonl").read_text().splitlines()) == 2
+
+
+def prefers_candidate_any(model, messages):
+    """Prefers whichever image is not one of the flat references."""
+    first, _ = _images(messages)
+    return "B" if first in (png_data_url(REF1), png_data_url(REF2)) else "A"
