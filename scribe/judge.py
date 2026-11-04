@@ -37,15 +37,16 @@ _ANSWER = re.compile(r"(?i:\b(?:answer|choice|better one|better image|better)\s*
 def judge_prompt(subject: str) -> str:
     """The question put to the vision model for one pair."""
     return (f"Image A is shown first and image B second. Which of these is the better watercolour of "
-            f"{subject}? {CRITERION} Answer with one letter: A or B.")
+            f"{subject}? {CRITERION} Reply with the letter only, A or B, and nothing else.")
 
 
 def parse_ab(text: str) -> str | None:
     """Read 'A' or 'B' from a judge reply; None if the reply names neither or is ambiguous.
 
-    A reply that starts with the letter counts, unless the other letter also
-    appears later (other than in "better than B"). Otherwise a single
-    "answer: X" or "the better one is X" phrase counts.
+    A reply that starts with the letter counts when the letter stands alone on
+    its first line, or when the other letter never appears later (other than
+    in "better than B"). Otherwise a single "answer: X" or "the better one is
+    X" phrase counts.
     """
     t = (text or "").strip()
     m = _LEAD.match(t)
@@ -53,6 +54,8 @@ def parse_ab(text: str) -> str | None:
         letter = m.group(1)
         other = "B" if letter == "A" else "A"
         rest = t[m.end():]
+        if re.match(r"[\s*_`\"'.)\]]*(\n|$)", rest):  # the letter alone on the first line
+            return letter
         if not re.search(rf"(?<![A-Za-z]){other}(?![A-Za-z])", rest):
             return letter
         if re.search(rf"(?i:than)\s+(?i:image\s+)?{other}(?![A-Za-z])", rest):
