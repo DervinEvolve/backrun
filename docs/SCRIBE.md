@@ -289,9 +289,66 @@ The ratings log, the index, the prompts and a manifest with the pool hash
 manifest hash covers each rated candidate's stroke file and render, so a
 training run can record exactly which pool it used.
 
+## Judge calibration
+
+Before any GPU time, the judge has to agree with the ratings, because GRPO
+pushes the model toward whatever the judge rewards. `scribe/calibrate.py`
+scores rated pool paintings the way the reward does: two references of the
+same subject, never the painting itself, each shown in both orders. It
+reports the AUC, the chance a random keep (love or okay) outscores a random
+nope, with a bootstrap interval; the order-flip rate, how often swapping A and
+B changes the answer; and direct same-subject pairs of one keep against one
+nope, where a good judge should pick the keep well above half the time.
+
+The ground truth is my 108 ratings, which hold only 15 keeps, so every
+interval is wide. Twelve judges were tried on the same 108 paintings and 40
+direct pairs on 4 November 2026, about $9 of credit in all, including three
+first attempts that had to be discarded. The reports, rows and pairs are in
+`shared/judge_calibration/`.
+
+| judge | scored of 108 | AUC [95%] | order flips | direct pairs valid of 40 | keep picked | cost, 512 calls |
+|---|---|---|---|---|---|---|
+| Qwen3-VL-235B | 108 | 0.66 [0.51, 0.82] | 0.20 | 40 | 0.74 | about $0.03 |
+| Claude Opus 5.5, low reasoning | 108 | 0.66 [0.52, 0.79] | 0.07 | 40 | 0.79 | $1.55 |
+| Claude Sonnet 5.5, low reasoning | 108 | 0.63 [0.48, 0.78] | 0.10 | 37 | 0.80 | $0.32 |
+| Gemini 3.1 Pro, low reasoning | 99 | 0.62 [0.49, 0.75] | 0.11 | 26 | 0.81 | $3.20 |
+| Kimi K2.6, reasoning off | 108 | 0.59 [0.45, 0.74] | 0.26 | 40 | 0.76 | $0.05 |
+| GPT-5 mini, minimal reasoning | 108 | 0.59 [0.44, 0.73] | 0.32 | 40 | 0.70 | $0.04 |
+| GPT-5.2, minimal reasoning | 106 | 0.57 [0.41, 0.73] | 0.20 | 25 | 0.84 | $0.52 |
+| Claude Haiku 5.5, reasoning off | 108 | 0.56 [0.40, 0.74] | 0.26 | 40 | 0.71 | $0.01 |
+| Grok 4.7, low reasoning | 108 | 0.55 [0.40, 0.72] | 0.21 | 40 | 0.69 | $1.18 |
+| Qwen3.5 397B, low reasoning | 37 | 0.51 [0.24, 0.80] | 0.15 | 7 | 0.93 | $1.03 |
+| Qwen3-VL-30B | 108 | 0.50 [0.38, 0.63] | 0.74 | 2 | - | about $0.02 |
+| Gemini 3.1 Flash Lite | 108 | 0.47 [0.31, 0.63] | 0.45 | 40 | 0.60 | about $0.05 |
+| GLM-4.6V | 0 | - | - | 0 | - | - |
+
+What I take from it:
+
+- The judge I had wired in, Qwen3-VL-30B, is a coin flip with a strong
+  position bias: swapping the order changed its answer three times in four.
+  It is out.
+- Four judges show a real but modest signal: Qwen3-VL-235B, Opus 5.5, Sonnet
+  5.5 and Gemini 3.1 Pro, all near AUC 0.65 and all picking my keep in about
+  four direct pairs of five. No lower bound clears 0.5 by much, and that is a
+  limit of 15 keeps as much as of the judges.
+- Opus 5.5 is the most consistent, with 7% order flips and 2.5% on direct
+  pairs. Qwen3-VL-235B matches its AUC at about a fiftieth of the price but
+  flips one answer in five. Asking both orders averages flips out, so for
+  training the two are closer than the flip rate suggests.
+- Models that reason by default answer with nothing unless the request
+  turns reasoning off or caps the effort, and the Claude, Grok and Qwen3.5
+  endpoints refuse to turn it off, so the judge takes extra request fields
+  and the calibration command has `--no-reasoning`, `--reasoning-effort`
+  and `--max-tokens`. The prompt now asks for the letter alone, and a letter
+  standing alone on the first line counts even when prose follows.
+- Within one generator the signal is weaker, and for Qwen3 Coder Next it is
+  strongest, so part of what the judges pick up is a generator's style
+  rather than quality. More of my own ratings, especially keeps, would
+  sharpen all of this; the 813 reviewer ratings are not used as truth here.
+
 ## Costs
 
-Round-number estimates, except the first pool, which was billed.
+Round-number estimates, except the first pool and the judge calibration, which were billed.
 
 - Pool generation: pool v1, 1,175 candidates with one critic round each,
   cost $3.74 with the four cheap generators above. The estimate before it ran
@@ -313,9 +370,9 @@ artist are used, as references, as training data or as targets.
 
 ## What is not done
 
-- Generation and the critic have run against real models (pool v1). The
-  judge and the reward have run only with the scripted fake client; the
-  judge has not yet been checked against the ratings.
+- Generation, the critic and the judge have run against real models (pool
+  v1 and the calibration above). The reward as a whole has run only with
+  the scripted fake client.
 - The trainer has never run. The `hf jobs` and `modal run` commands in its
   docstring are unverified, and the Modal wrapper app it mentions is not
   written.

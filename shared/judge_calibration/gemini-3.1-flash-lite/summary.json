@@ -1,0 +1,161 @@
+{
+ "all": {
+  "n": 108,
+  "scored": 108,
+  "keeps": 15,
+  "nopes": 93,
+  "auc": 0.47025089605734766,
+  "auc_95": [
+   0.3136111111111111,
+   0.633100358422939
+  ],
+  "mean_win_share": {
+   "keep": 0.4166666666666667,
+   "nope": 0.4543010752688172
+  },
+  "agreement": 0.5540540540540541,
+  "decided": 74,
+  "order_flip_rate": 0.4537037037037037
+ },
+ "by_rater": {
+  "owner": {
+   "n": 108,
+   "scored": 108,
+   "keeps": 15,
+   "nopes": 93,
+   "auc": 0.47025089605734766,
+   "auc_95": [
+    0.30141577060931896,
+    0.6405286738351255
+   ],
+   "mean_win_share": {
+    "keep": 0.4166666666666667,
+    "nope": 0.4543010752688172
+   },
+   "agreement": 0.5540540540540541,
+   "decided": 74,
+   "order_flip_rate": 0.4537037037037037
+  }
+ },
+ "by_model": {
+  "deepseek/deepseek-v4-flash": {
+   "n": 29,
+   "scored": 29,
+   "keeps": 3,
+   "nopes": 26,
+   "auc": 0.3141025641025641,
+   "auc_95": [
+    0.038461538461538464,
+    0.7697115384615381
+   ],
+   "mean_win_share": {
+    "keep": 0.25,
+    "nope": 0.49038461538461536
+   },
+   "agreement": 0.47368421052631576,
+   "decided": 19,
+   "order_flip_rate": 0.4827586206896552
+  },
+  "google/gemini-3.1-flash-lite": {
+   "n": 35,
+   "scored": 35,
+   "keeps": 3,
+   "nopes": 32,
+   "auc": 0.5625,
+   "auc_95": [
+    0.28125,
+    0.828125
+   ],
+   "mean_win_share": {
+    "keep": 0.5,
+    "nope": 0.453125
+   },
+   "agreement": 0.625,
+   "decided": 24,
+   "order_flip_rate": 0.42857142857142855
+  },
+  "moonshotai/kimi-k2.6": {
+   "n": 5,
+   "scored": 5,
+   "keeps": 2,
+   "nopes": 3,
+   "auc": 0.0,
+   "auc_95": [
+    0.0,
+    0.0
+   ],
+   "mean_win_share": {
+    "keep": 0.125,
+    "nope": 0.8333333333333334
+   },
+   "agreement": 0.0,
+   "decided": 5,
+   "order_flip_rate": 0.3
+  },
+  "qwen/qwen3-coder-next": {
+   "n": 24,
+   "scored": 24,
+   "keeps": 3,
+   "nopes": 21,
+   "auc": 0.6428571428571429,
+   "auc_95": [
+    0.21428571428571427,
+    0.9761904761904762
+   ],
+   "mean_win_share": {
+    "keep": 0.4166666666666667,
+    "nope": 0.27380952380952384
+   },
+   "agreement": 0.8666666666666667,
+   "decided": 15,
+   "order_flip_rate": 0.4583333333333333
+  },
+  "z-ai/glm-5.3-flash": {
+   "n": 15,
+   "scored": 15,
+   "keeps": 4,
+   "nopes": 11,
+   "auc": 0.5113636363636364,
+   "auc_95": [
+    0.14772727272727273,
+    0.8639204545454543
+   ],
+   "mean_win_share": {
+    "keep": 0.625,
+    "nope": 0.6136363636363636
+   },
+   "agreement": 0.36363636363636365,
+   "decided": 11,
+   "order_flip_rate": 0.5
+  }
+ },
+ "direct_pairs": {
+  "asked": 40,
+  "valid": 40,
+  "keep_picked": 0.6,
+  "order_flip_rate": 0.45,
+  "by_rater": {
+   "mixed": {
+    "valid": 6,
+    "keep_picked": 0.5833333333333334
+   },
+   "owner": {
+    "valid": 1,
+    "keep_picked": 0.5
+   },
+   "reviewer": {
+    "valid": 33,
+    "keep_picked": 0.6060606060606061
+   }
+  }
+ },
+ "judge_model": "google/gemini-3.1-flash-lite",
+ "refs": 2,
+ "same_subject_share": 0.9074074074074074,
+ "pool_manifest": "f641308c6593fcc28a696cb849208ce4d2bc4d98b8068fed3ad627f828f667d4",
+ "tiers_in_pool": {
+  "love": 10,
+  "okay": 259,
+  "nope": 652
+ }
+}

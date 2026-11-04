@@ -1,0 +1,161 @@
+{
+ "all": {
+  "n": 108,
+  "scored": 108,
+  "keeps": 15,
+  "nopes": 93,
+  "auc": 0.5630824372759856,
+  "auc_95": [
+   0.39783154121863795,
+   0.7444534050179211
+  ],
+  "mean_win_share": {
+   "keep": 0.5,
+   "nope": 0.4041218637992831
+  },
+  "agreement": 0.6292134831460674,
+  "decided": 89,
+  "order_flip_rate": 0.25943396226415094
+ },
+ "by_rater": {
+  "owner": {
+   "n": 108,
+   "scored": 108,
+   "keeps": 15,
+   "nopes": 93,
+   "auc": 0.5630824372759856,
+   "auc_95": [
+    0.37557347670250896,
+    0.7301344086021505
+   ],
+   "mean_win_share": {
+    "keep": 0.5,
+    "nope": 0.4041218637992831
+   },
+   "agreement": 0.6292134831460674,
+   "decided": 89,
+   "order_flip_rate": 0.25943396226415094
+  }
+ },
+ "by_model": {
+  "deepseek/deepseek-v4-flash": {
+   "n": 29,
+   "scored": 29,
+   "keeps": 3,
+   "nopes": 26,
+   "auc": 0.30128205128205127,
+   "auc_95": [
+    0.0,
+    0.7884615384615384
+   ],
+   "mean_win_share": {
+    "keep": 0.25,
+    "nope": 0.45512820512820507
+   },
+   "agreement": 0.5909090909090909,
+   "decided": 22,
+   "order_flip_rate": 0.375
+  },
+  "google/gemini-3.1-flash-lite": {
+   "n": 35,
+   "scored": 35,
+   "keeps": 3,
+   "nopes": 32,
+   "auc": 0.5260416666666666,
+   "auc_95": [
+    0.15625,
+    0.953125
+   ],
+   "mean_win_share": {
+    "keep": 0.4166666666666667,
+    "nope": 0.3671875
+   },
+   "agreement": 0.6333333333333333,
+   "decided": 30,
+   "order_flip_rate": 0.2571428571428571
+  },
+  "moonshotai/kimi-k2.6": {
+   "n": 5,
+   "scored": 5,
+   "keeps": 2,
+   "nopes": 3,
+   "auc": 0.16666666666666666,
+   "auc_95": [
+    0.0,
+    0.5
+   ],
+   "mean_win_share": {
+    "keep": 0.25,
+    "nope": 0.6666666666666666
+   },
+   "agreement": 0.0,
+   "decided": 2,
+   "order_flip_rate": 0.2
+  },
+  "qwen/qwen3-coder-next": {
+   "n": 24,
+   "scored": 24,
+   "keeps": 3,
+   "nopes": 21,
+   "auc": 0.7063492063492064,
+   "auc_95": [
+    0.30952380952380953,
+    0.9761904761904762
+   ],
+   "mean_win_share": {
+    "keep": 0.5,
+    "nope": 0.19047619047619047
+   },
+   "agreement": 0.8571428571428571,
+   "decided": 21,
+   "order_flip_rate": 0.17391304347826086
+  },
+  "z-ai/glm-5.3-flash": {
+   "n": 15,
+   "scored": 15,
+   "keeps": 4,
+   "nopes": 11,
+   "auc": 0.5909090909090909,
+   "auc_95": [
+    0.3068181818181818,
+    0.8181818181818182
+   ],
+   "mean_win_share": {
+    "keep": 0.875,
+    "nope": 0.7272727272727273
+   },
+   "agreement": 0.42857142857142855,
+   "decided": 14,
+   "order_flip_rate": 0.2
+  }
+ },
+ "direct_pairs": {
+  "asked": 40,
+  "valid": 40,
+  "keep_picked": 0.7125,
+  "order_flip_rate": 0.175,
+  "by_rater": {
+   "mixed": {
+    "valid": 6,
+    "keep_picked": 0.8333333333333334
+   },
+   "owner": {
+    "valid": 1,
+    "keep_picked": 1.0
+   },
+   "reviewer": {
+    "valid": 33,
+    "keep_picked": 0.6818181818181818
+   }
+  }
+ },
+ "judge_model": "anthropic/claude-haiku-5.5",
+ "refs": 2,
+ "same_subject_share": 0.9074074074074074,
+ "pool_manifest": "f641308c6593fcc28a696cb849208ce4d2bc4d98b8068fed3ad627f828f667d4",
+ "tiers_in_pool": {
+  "love": 10,
+  "okay": 259,
+  "nope": 652
+ }
+}
