@@ -10,7 +10,13 @@ I do these experiments for fun.
 
 ## Status
 
-Early. The simulator works and is tested. The first painter is a search with no learning, and its first painting is far from its target: the sky came out three times too dark, the horizon is a ragged band and the sun is a smudge. That is written down here because it is the starting line the learned painters have to beat.
+Early. The simulator works and is tested. The first painter is a search with no learning. Its very first painting had a sky three times too dark, a ragged horizon and a sun like a smudge, because it judged each stroke while the paper was still wet. It now judges strokes on a prediction of how they will dry, and the same target comes out with a horizon line, a dark sea and a sky that lightens toward it. It is still a long way from the target, and that is the starting line the learned painters have to beat.
+
+| Target on the left, painting on the right | The same run, stroke by stroke |
+|---|---|
+| ![A synthetic horizon scene: lavender sky, orange sun, dark teal sea, next to its watercolor: a pale sky with blue washes, an orange sun blob in place, a dark slate sea under a clean horizon](docs/assets/horizon-side-by-side.png) | ![The horizon painting appearing over forty strokes: washes first, the sea, then the sun](docs/assets/horizon-run.gif) |
+
+Forty stroke slots, sixteen candidates each, seed 7, about fifty seconds on one CPU core. Score `total` 5.61, lower is better; the first painter scored 6.48 on the same target. One seed on one target, so a direction rather than a result.
 
 | Part | State |
 |---|---|
@@ -65,7 +71,7 @@ Replay a stroke file to a PNG:
 python -m backrun.cli render examples/wet_in_wet.jsonl out.png
 ```
 
-Let the search painter paint a built-in test target (no downloads, about two minutes on a laptop):
+Let the search painter paint a built-in test target (no downloads, about a minute on a laptop):
 
 ```bash
 python -m backrun.cli_paint synthetic:horizon:1 runs/horizon --strokes 40 --candidates 16 --seed 7
