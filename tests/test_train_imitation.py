@@ -122,6 +122,41 @@ def test_two_epochs_lower_the_training_loss(trained: tuple[Path, dict]) -> None:
         assert r["lr"] >= 0 and r["examples_per_s"] > 0 and r["wall_s"] > 0
     assert (out / "last.pt").is_file() and (out / "best.pt").is_file()
     assert "Training loss went from" in imitation.describe(summary)
+    assert "top-5" in imitation.describe(summary)
+    assert summary["final_val_parts"]["cell_top5"] == rows[-1]["val"]["cell_top5"]
+    assert summary["settings"]["label_smoothing"] == 0.05 and summary["settings"]["sparsity_weight"] == 0.0
+
+
+def test_loss_parts_flags() -> None:
+    torch = pytest.importorskip("torch")
+    config = imitation.CONFIGS["small"]
+    model = policy.make_policy(config, seed=0)
+    rng = np.random.default_rng(0)
+    actions = rng.uniform(0, 1, (6, policy.ACTION_DIM)).astype(np.float32)
+    ab = policy.action_to_bins(actions, config)
+    tgt = {"cell": torch.from_numpy(ab.cell), "offset": torch.from_numpy(ab.offset), "bins": torch.from_numpy(ab.bins)}
+    obs = torch.rand(6, policy.OBS_CHANNELS, policy.OBS_HEIGHT, policy.OBS_WIDTH)
+    with torch.no_grad():
+        out = model(obs, tgt["cell"])
+        plain = imitation.loss_parts(out, tgt, 0.0, 0.0)
+        smooth = imitation.loss_parts(out, tgt, 0.0, 0.05)
+        sparse = imitation.loss_parts(out, tgt, 2.0, 0.0)
+    assert float(plain["sparsity"]) > 0  # an untrained head spreads weight over all pigments
+    assert float(sparse["total"]) == pytest.approx(float(plain["total"] + 2.0 * plain["sparsity"]), rel=1e-5)
+    assert float(smooth["cell"]) != pytest.approx(float(plain["cell"]))
+    assert float(plain["bins"]) == pytest.approx(np.mean([float(plain[f"bin_{n}"]) for n in policy.BIN_NAMES]))
+    # A correct, confident head scores perfect accuracies.
+    perfect = policy.PolicyOutput(out.cell_logits.clone(), out.offsets, out.bin_logits.clone(), out.cell)
+    perfect.cell_logits[torch.arange(6), tgt["cell"]] = 1e3
+    perfect.bin_logits.scatter_(2, tgt["bins"][..., None], 1e3)
+    acc = imitation.loss_parts(perfect, tgt, 0.0, 0.0)
+    assert float(acc["cell_top1"]) == 1.0 and float(acc["bins_within1"]) == 1.0
+    assert float(acc["cell"]) == pytest.approx(0.0, abs=1e-4)
+
+
+def test_cli_flags() -> None:
+    a = imitation.build_parser().parse_args(["r", "o", "--label-smoothing", "0.1", "--sparsity-weight", "0.2"])
+    assert a.label_smoothing == 0.1 and a.sparsity_weight == 0.2
 
 
 def test_best_checkpoint_loads_and_paints(trained: tuple[Path, dict], tmp_path: Path) -> None:

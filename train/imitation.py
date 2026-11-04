@@ -34,20 +34,32 @@ Paintings, never single strokes, are split between training and
 validation, deterministically from the seed, so no validation painting
 shares a target with a training one.
 
-The loss has three parts, logged separately:
+The network's head is discrete (``train.policy.PolicyNet``), and so is the
+loss. Each batch's actions are discretised as it is loaded
+(``train.policy.action_to_bins``); the cache keeps the plain 17 numbers.
+The conditional head is run at the true start cell (teacher forcing). The
+parts, logged separately in ``train.jsonl``:
 
-* a smooth L1 loss (``beta`` = ``SMOOTH_L1_BETA``) on the six path numbers,
-  width, water and wait. Smooth L1 rather than MSE because the target is
-  noisy: several candidate strokes score almost the same, the search
-  painter keeps one of them at random, so the same state can map to quite
-  different strokes. Squared error lets such far-off targets dominate the
-  gradient; smooth L1 grows only linearly for them and stays quadratic,
-  and so smooth, near the answer.
-* binary cross-entropy on the eight concentrations, which are fractions in
-  0..1 (soft targets). Its floor is the entropy of the targets, so it does
-  not go to zero even for a perfect fit.
-* ``train.policy.concentration_sparsity`` on the predicted concentrations,
-  times ``sparsity_weight``.
+* ``cell``: cross-entropy over the 768 start cells;
+* ``offset``: smooth L1 (``beta`` = ``SMOOTH_L1_BETA``) on the sub-cell
+  offset, at the true cell only;
+* ``bin_<name>``: cross-entropy over the bins of each of the 15 other
+  numbers, and ``bins``, their mean;
+* ``sparsity``: ``train.policy.concentration_sparsity`` on the expected
+  decoded concentrations, times ``sparsity_weight`` (0 by default).
+
+``total`` is cell + offset + bins (+ the weighted sparsity). Both
+cross-entropies use label smoothing (``label_smoothing``, 0.05 by default).
+A regression loss on these targets (smooth L1 and per-pigment
+cross-entropy, as the first version of this module had) averages the
+several quite different strokes the search painter might accept from the
+same state into one stroke in the middle of them; a softmax over bins can
+keep them apart and pick one.
+
+Accuracies are logged beside the losses: ``cell_top1`` and ``cell_top5``
+(the true start cell is the most likely, or among the five most likely),
+and ``bins_within1`` (share of binned numbers whose most likely bin is
+within one bin of the true one).
 
 Optimisation: AdamW (no weight decay on norms and biases), a cosine
 learning-rate schedule after a linear warmup, gradient clipping, and an
@@ -65,6 +77,7 @@ Command line::
     python -m train.imitation LEDGER_ROOT [LEDGER_ROOT ...] OUT_DIR --cache DIR
         [--epochs N] [--batch N] [--lr X] [--val-fraction X] [--seed N]
         [--workers N] [--device auto|cpu|cuda] [--limit N] [--config small|default]
+        [--label-smoothing X] [--sparsity-weight X]
 """
 
 from __future__ import annotations
@@ -706,6 +719,8 @@ def train_imitation(
         "final_train_loss": final["train"].get("total") if final else None,
         "final_val_loss": final["val"].get("total") if final else None,
         "best_val_loss": best_val if math.isfinite(best_val) else None,
+        "final_train_parts": final["train"] if final else None,
+        "final_val_parts": final["val"] if final else None,
         "best": str(best_path) if best_path.is_file() else None,
         "last": str(last_path) if last_path.is_file() else None,
         "cache": {k: v for k, v in cache_summary.items() if k != "shards"},
@@ -729,7 +744,19 @@ def describe(summary: dict[str, Any]) -> str:
         f"Training loss went from {f(summary['train_loss_start'])} to {f(summary['train_loss_end'])} "
         f"(measured on up to 4096 training strokes). Last validation loss {f(summary['final_val_loss'])}, "
         f"best {f(summary['best_val_loss'])}.\n"
-        f"Best weights: {summary['best']}. Took {summary['wall_s']:.1f} s."
+        + _describe_heads(summary.get("final_val_parts") or summary.get("final_train_parts"))
+        + f"Best weights: {summary['best']}. Took {summary['wall_s']:.1f} s."
+    )
+
+
+def _describe_heads(parts: dict[str, Any] | None) -> str:
+    """One line on the head losses and accuracies of the last epoch (validation if any), or nothing."""
+    if not parts or "cell" not in parts:
+        return ""
+    return (
+        f"Last epoch by head: cell {parts['cell']:.3f} (top-1 {parts['cell_top1']:.1%}, top-5 "
+        f"{parts['cell_top5']:.1%}), offset {parts['offset']:.4f}, bins {parts['bins']:.3f} "
+        f"(within one bin {parts['bins_within1']:.1%}).\n"
     )
 
 
@@ -747,7 +774,10 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--warmup-fraction", type=float, default=d.warmup_fraction)
     ap.add_argument("--clip", type=float, default=d.clip, help="gradient norm clip")
     ap.add_argument("--ema-decay", type=float, default=d.ema_decay)
-    ap.add_argument("--sparsity-weight", type=float, default=d.sparsity_weight)
+    ap.add_argument("--sparsity-weight", type=float, default=d.sparsity_weight,
+                    help="weight of the two-pigment penalty on decoded concentrations (default 0)")
+    ap.add_argument("--label-smoothing", type=float, default=d.label_smoothing,
+                    help="label smoothing of the cell and bin cross-entropies")
     ap.add_argument("--val-fraction", type=float, default=d.val_fraction)
     ap.add_argument("--seed", type=int, default=d.seed)
     ap.add_argument("--workers", type=int, default=d.workers, help="processes for building the cache")
@@ -768,7 +798,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     *roots, out_dir = a.paths
     settings = TrainSettings(
         epochs=a.epochs, batch=a.batch, lr=a.lr, weight_decay=a.weight_decay, warmup_fraction=a.warmup_fraction,
-        clip=a.clip, ema_decay=a.ema_decay, sparsity_weight=a.sparsity_weight, val_fraction=a.val_fraction,
+        clip=a.clip, ema_decay=a.ema_decay, sparsity_weight=a.sparsity_weight,
+        label_smoothing=a.label_smoothing, val_fraction=a.val_fraction,
         seed=a.seed, workers=a.workers, device=a.device, limit=a.limit, config=a.config, threads=a.threads,
         resume=not a.no_resume,
     )

@@ -214,7 +214,8 @@ def generate_ledgers(
 @app.function(image=image, volumes=VOLUMES, gpu=DEFAULT_GPU, cpu=8, memory=32768, timeout=8 * 3600)
 def train_imitation(
     run_name: str = "stage_a", epochs: int = 20, batch: int = 256, lr: float = 1e-3, val_fraction: float = 0.1,
-    seed: int = 0, config: str = "default", limit: int = 0, sparsity_weight: float = 0.1,
+    seed: int = 0, config: str = "default", limit: int = 0, sparsity_weight: float = 0.0,
+    label_smoothing: float = 0.05,
 ) -> dict[str, Any]:
     """Stage A on one GPU: cache on the data volume, checkpoints in ``/checkpoints/RUN_NAME``.
 
@@ -226,7 +227,8 @@ def train_imitation(
     _reload(data_volume)
     settings = imitation.TrainSettings(
         epochs=epochs, batch=batch, lr=lr, val_fraction=val_fraction, seed=seed, config=config,
-        limit=limit or None, sparsity_weight=sparsity_weight, workers=8, device="auto",
+        limit=limit or None, sparsity_weight=sparsity_weight,
+        label_smoothing=label_smoothing, workers=8, device="auto",
     )
     summary = imitation.train_imitation(
         [Path(DATA) / "ledgers"], Path(CHECKPOINTS) / run_name, Path(DATA) / "cache", settings,
