@@ -5,7 +5,7 @@ text prompt such as "a harbour at dusk, two boats, low tide". The simulator
 paints each file, a gate throws out files that are broken or that try to game
 the judge, and the reward comes from a vision model asked, again and again,
 which of two paintings is the better watercolour of the subject. One of the
-two is always a painting from a pool the owner rated by hand.
+two is always a painting from a pool I rated by hand.
 
 The code lives in `scribe/`. Everything below the trainer has tests. The
 trainer itself has been written and parsed but never run.
@@ -249,7 +249,7 @@ Round-number estimates only. Nothing has been billed yet.
   sometimes a retry or a critic round), a few thousand tokens per call: on the
   order of 15 million tokens, roughly 30 to 200 dollars depending on the
   models.
-- Rating: one to three hours of the owner's time per 1,600 candidates.
+- Rating: one to three hours of my time per 1,600 candidates.
 - Training: 200 steps of 8 rollouts with 4 judge calls each is about 6,400
   judge calls, a few dollars to perhaps 20 with a small vision model. GPU time
   for a 4B model with LoRA on one A100, if a step takes about a minute: three
@@ -258,8 +258,8 @@ Round-number estimates only. Nothing has been billed yet.
 ## Data and consent
 
 Every image in the pool is a stroke file written by a model and rendered by
-this simulator, and every rating is the owner's. Reference photos shown to
-the critic are the owner's own or in the public domain. No paintings by any
+this simulator, and every rating is mine. Reference photos shown to
+the critic are my own or in the public domain. No paintings by any
 artist are used, as references, as training data or as targets.
 
 ## What is not done

@@ -401,9 +401,8 @@ Useful knobs: `--seeds-per-kind` (targets), `--limit`, `--chunk`,
 `--eval-limit`, `--seeds` (evaluation). A first cheap pass is
 `--stage all --limit 100 --epochs 10 --eval-limit 5`.
 
-Modal's client speaks gRPC, which the cloud session that wrote this cannot
-carry, so `modal run` is launched from the owner's machine or by another
-operator. The app was checked here only as far as importing it: the
+Modal's client speaks gRPC, which the cloud environment my agents work in
+cannot carry, so I launch `modal run` from my own machine. The app was checked here only as far as importing it: the
 module loads with Modal 1.6.3 installed, and also without Modal, and a
 test checks it exposes the five functions. It has since been run on Modal
 for the first GPU run (section "First GPU run").
@@ -431,7 +430,7 @@ For the studio's prompt gallery, a text-to-image model turns a prompt into
 a target before the painter starts. The painter neither knows nor cares
 where the target came from. The model is a dependency and is credited by
 name, version and licence in `run.json` and on the prompt card, as a font
-or a dataset would be. The choice is the owner's; the plan needs one under
+or a dataset would be. The choice is mine; the plan needs one under
 a licence that allows this use and that fits the GPU in hand.
 
 ## Cost, in round numbers

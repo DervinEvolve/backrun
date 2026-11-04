@@ -161,7 +161,7 @@ baseline every learned painter must beat.
 
 A small policy network that looks at the target and the current canvas and
 outputs the next stroke's parameters. Train with the simulator in the loop.
-Two routes, both documented when we get there: reinforcement learning
+Two routes, both to be documented when the time comes: reinforcement learning
 against the scorer, or supervised learning on search-painter stroke lists
 followed by fine-tuning. A differentiable version of the simulator would
 allow gradient training and is a contribution in its own right; it is not
@@ -176,7 +176,7 @@ seed and its ledger.
 
 ## Data and consent
 
-Targets are the owner's own photos and public-domain images. No paintings by
+Targets are my own photos and public-domain images. No paintings by
 living or dead artists are used as training data or as targets. Style comes
 from the simulator's physics. The README states this plainly.
 
