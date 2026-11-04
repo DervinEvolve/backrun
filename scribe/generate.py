@@ -5,7 +5,9 @@ For every prompt, every generator model and ``per`` candidates each:
 1. ask the generator with the system prompt from ``scribe.format``;
 2. extract the stroke lines and run the gate;
 3. if the gate fails, retry once with the gate's reasons in the conversation;
-4. if a critic model is set and the prompt has a reference photo, show the
+4. if a critic model is set, show the critic the render (and the reference photo
+   when the prompt has one) and ask for three improvements; without a photo the
+   critic judges against the subject words alone. Then show the
    critic the render and the photo, ask for three short improvements, and ask
    the generator to revise, for up to ``rounds`` rounds. Every round's render
    and stroke file are kept.
@@ -46,6 +48,13 @@ CRITIC_PROMPT = (
     "reference photo of the same subject. Give exactly three short, concrete improvements the painter "
     "could make to the painting, as a numbered list. Talk about placement, values, colour and water, "
     "in plain words. No praise, no preamble."
+)
+
+#: The critic's prompt when the subject has no reference photo: it judges against the words alone.
+CRITIC_PROMPT_NO_REF = (
+    "This is a watercolour painted from a text prompt: {subject}. Give exactly three short, concrete "
+    "improvements the painter could make so it reads better as that subject, as a numbered list. Talk "
+    "about placement, values, colour and water, in plain words. No praise, no preamble."
 )
 
 
@@ -163,18 +172,24 @@ class Generator:
                 final = (0, res)
             ref = prompt.get("reference")
             ref_path = (reference_dir / ref) if (ref and reference_dir) else (Path(ref) if ref else None)
-            if critic and ref_path is not None and ref_path.is_file():
+            has_ref = ref_path is not None and ref_path.is_file()
+            if critic:
                 for r in range(1, rounds + 1):
                     if final is None:
                         break
-                    critique = self.critic_client.chat(
-                        critic, [user_message(CRITIC_PROMPT.format(subject=prompt["subject"]),
-                                              images=[folder / f"round_{final[0]}.png", ref_path])],
-                        temperature=0.3, max_tokens=400, tag=f"{cid}:critic{r}")
+                    if has_ref:
+                        ask = user_message(CRITIC_PROMPT.format(subject=prompt["subject"]),
+                                           images=[folder / f"round_{final[0]}.png", ref_path])
+                        intro = "A critic compared your painting with a reference photo and suggests:"
+                    else:
+                        ask = user_message(CRITIC_PROMPT_NO_REF.format(subject=prompt["subject"]),
+                                           images=[folder / f"round_{final[0]}.png"])
+                        intro = "A critic looked at your painting and suggests:"
+                    critique = self.critic_client.chat(critic, [ask], temperature=0.3, max_tokens=400,
+                                                       tag=f"{cid}:critic{r}")
                     usage.append(asdict(critique.usage))
                     messages.append(user_message(
-                        "A critic compared your painting with a reference photo and suggests:\n"
-                        f"{critique.text.strip()}\nRevise the whole file with these in mind, in one fenced block."))
+                        f"{intro}\n{critique.text.strip()}\nRevise the whole file with these in mind, in one fenced block."))
                     _, res = self._ask_and_gate(model, messages, canvas, usage, f"{cid}:r{r}")
                     self._keep_round(folder, r, res, canvas, round_log, critique=critique.text.strip())
                     if res.ok:

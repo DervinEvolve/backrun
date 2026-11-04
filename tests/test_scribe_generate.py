@@ -35,7 +35,10 @@ class Script:
     def __call__(self, model, messages):
         if model == "c":
             assert isinstance(messages[0]["content"], list)  # text plus two images
-            assert sum(p["type"] == "image_url" for p in messages[0]["content"]) == 2
+            images = sum(p["type"] == "image_url" for p in messages[0]["content"])
+            text = next(p["text"] for p in messages[0]["content"] if p["type"] == "text")
+            # the field prompt has a reference photo (render + photo); the sea prompt has none (render only)
+            assert images == (2 if "field" in text else 1)
             return "1. Lower the horizon.\n2. Darken the field.\n3. Leave more sky bare."
         if model == "b":
             self.b_calls += 1
@@ -68,7 +71,8 @@ def test_generate_end_to_end_and_resume(tmp_path: Path) -> None:
     assert header["op"] == "canvas" and header["seed"] == meta["seed"]
 
     sea_b = json.loads((pool / candidate_id("sea", "b", 0) / "meta.json").read_text())
-    assert sea_b["round"] == 0 and not (pool / candidate_id("sea", "b", 0) / "round_1.png").exists()
+    # without a reference photo the critic still runs, judging against the subject words alone
+    assert sea_b["round"] == 1 and (pool / candidate_id("sea", "b", 0) / "round_1.png").exists()
     # model b's very first reply was junk, so its first candidate needed the retry
     field_b = json.loads((pool / candidate_id("field", "b", 0) / "meta.json").read_text())
     assert field_b["rounds"][0]["gate"]["stats"].get("retried") is True
