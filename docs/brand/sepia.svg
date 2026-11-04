@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Sepia, a small cuttlefish holding a round brush, on a pale blue watercolor blot">
+  <title>Sepia</title>
+  <desc>The Backrun mark: a round-bodied cuttlefish in Payne's grey with an ochre underside, a big calm eye with a W-shaped pupil, arms in front of its face, one of them holding a round brush, on a soft blue watercolor blot.</desc>
+  <defs>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.4"/>
+    </filter>
+    <filter id="rim" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.0"/>
+    </filter>
+  </defs>
+
+  <!-- watercolor blot with a slightly darker dried rim -->
+  <path filter="url(#soft)" fill="#BFD0EA" d="M40 136c-8-36 20-72 60-80 34-6 70 2 96 26 22 20 30 52 16 80-12 24-40 38-72 42-36 4-74-6-90-30-8-12-9-24-10-38z"/>
+  <path filter="url(#rim)" fill="none" stroke="#8FA8D1" stroke-width="2.4" stroke-opacity="0.8" d="M42 136c-8-36 20-72 60-80 34-6 70 2 96 26 22 20 30 52 16 80-12 24-40 38-72 42-36 4-74-6-90-30-8-12-9-24-10-38z"/>
+
+  <!-- fin skirt: a wavy rim around the mantle -->
+  <path fill="#3F4A5C" d="M52 134c0-34 32-62 72-62 30 0 54 12 66 34 4 8 4 18 0 28-8 24-34 40-68 40-38 0-70-16-70-40z"/>
+  <!-- mantle -->
+  <path fill="#536878" d="M62 134c0-28 28-52 62-52 26 0 46 10 56 28 4 8 4 16 0 24-8 20-30 32-58 32-34 0-60-14-60-32z"/>
+  <!-- ochre underside -->
+  <path fill="#D9A441" d="M70 150c12 12 34 18 56 18 22 0 40-6 50-16-8 14-28 24-52 24-26 0-46-10-54-26z"/>
+  <!-- skin spots, the colour cells -->
+  <circle cx="96" cy="118" r="3.4" fill="#6F8499"/>
+  <circle cx="118" cy="104" r="2.8" fill="#6F8499"/>
+  <circle cx="142" cy="112" r="3.2" fill="#6F8499"/>
+  <circle cx="128" cy="134" r="2.4" fill="#6F8499"/>
+  <circle cx="106" cy="140" r="2.6" fill="#6F8499"/>
+
+  <!-- head, merging into the front of the mantle -->
+  <path fill="#536878" d="M160 108c20-2 36 8 42 26 4 12 0 24-10 32-10 8-24 8-34 2l-8-40c2-12 6-18 10-20z"/>
+
+  <!-- big calm eye with a W-shaped pupil -->
+  <circle cx="186" cy="138" r="16" fill="#F5F2EB"/>
+  <path fill="none" stroke="#1F2630" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" d="M176 134l4 7 4-7 4 7 4-7"/>
+  <circle cx="180" cy="130" r="2.4" fill="#F5F2EB"/>
+
+  <!-- arms, in front of the face, pointing forward and curling down -->
+  <path fill="none" stroke="#536878" stroke-width="8" stroke-linecap="round" d="M200 150c12 0 22 4 28 12"/>
+  <path fill="none" stroke="#536878" stroke-width="8" stroke-linecap="round" d="M198 158c10 2 18 8 20 18"/>
+  <path fill="none" stroke="#3F4A5C" stroke-width="7" stroke-linecap="round" d="M192 164c6 6 8 14 4 22"/>
+  <path fill="none" stroke="#3F4A5C" stroke-width="6" stroke-linecap="round" d="M204 144c14-2 26 2 34 10"/>
+  <!-- the arm that holds the brush: it reaches up and grips the ferrule -->
+  <path fill="none" stroke="#536878" stroke-width="8" stroke-linecap="round" d="M204 142c10-6 18-16 20-30"/>
+  <path fill="none" stroke="#536878" stroke-width="6" stroke-linecap="round" d="M224 112c3-3 6-5 9-5"/>
+
+  <!-- round brush, gripped at the ferrule, handle pointing up and back -->
+  <g transform="translate(228 108) rotate(28)">
+    <rect x="-4" y="-58" width="8" height="50" rx="4" fill="#8B7355"/>
+    <rect x="-5" y="-9" width="10" height="10" rx="2" fill="#B5A642"/>
+    <path fill="#1F2630" d="M-5 1h10c0 8-3 14-5 18-2-4-5-10-5-18z"/>
+    <path fill="#536878" d="M-2.5 12c1 3 2 5 2.5 7 .5-2 1.5-4 2.5-7-1.5 1-3.5 1-5 0z"/>
+  </g>
+</svg>
