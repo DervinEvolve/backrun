@@ -88,6 +88,7 @@ const scrubAt = async (t) => {
 };
 // each action: { at, kind, ... }; move actions glide the cursor from where it is to the target over `dur` seconds
 const plan = [
+  { at: 0.0, kind: 'wheel', dy: 100, n: 7 }, // pull back a little so the raised arm and the trips to the palette stay in frame
   { at: 0.3, kind: 'move', to: async () => ({ x: 760, y: 470 }), dur: 0.2 },
   { at: 0.5, kind: 'down' },
   { at: 0.5, kind: 'drag', dx: 250, dy: -14, dur: 4.0 },
@@ -121,7 +122,7 @@ const plan = [
   { at: 26.8, kind: 'move', to: async () => ({ x: 1250, y: 640 }), dur: 1.2 },
 ];
 
-let cur = { x: 960, y: 540 }, glide = null, drag = null, typing = null;
+let cur = { x: 960, y: 540 }, glide = null, drag = null, typing = null, wheel = null;
 const guardLog = [];
 const ease = (u) => (u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2);
 const done = new Set();
@@ -139,6 +140,7 @@ for (let f = 0; f < to; f++) {
     else if (a.kind === 'click') { await page.evaluate(() => { window.__lastPick = null; }); await page.mouse.down(); await page.mouse.up(); log(`click at ${cur.x.toFixed(0)},${cur.y.toFixed(0)} pick ${JSON.stringify(await page.evaluate(() => window.__lastPick ?? null))}`); }
     else if (a.kind === 'key') await page.keyboard.press(a.key);
     else if (a.kind === 'type') typing = { text: a.text, a: ft, k: 0 };
+    else if (a.kind === 'wheel') wheel = { dy: a.dy, left: a.n };
     log(`f${f} ${a.kind} ${a.key ?? ''}`);
   }
   if (glide) {
@@ -154,6 +156,7 @@ for (let f = 0; f < to; f++) {
     await page.mouse.move(cur.x, cur.y);
     if (u >= 1) drag = null;
   }
+  if (wheel && wheel.left > 0) { await page.mouse.wheel(0, wheel.dy); wheel.left--; }
   if (typing && typing.k < typing.text.length && ft >= typing.a + typing.k * 0.12) {
     await page.keyboard.type(typing.text[typing.k]); typing.k++;
   }

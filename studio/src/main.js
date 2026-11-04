@@ -346,20 +346,63 @@ async function main() {
   const railTop = railStart.y + 0.002; // the panel's lower edge rides between the two rods
   const rackZ = railStart.z;
   const inRackX = railStart.x + 0.02 + halfX;
-  const carryKeys = [
-    { u: 0, p: panelHome.p.clone(), q: panelHome.q.clone() },
-    { u: 0.2, p: panelHome.p.clone().addScaledVector(boardN, 0.06), q: panelHome.q.clone() },
-    { u: 0.55, p: new THREE.Vector3(railEnd.x + halfX - 0.02, Math.max(0.905, panelBox.max.y + 0.02) + halfZ, rackZ), q: qVert },
-    { u: 0.8, p: new THREE.Vector3(railEnd.x - halfX - 0.03, railTop + halfZ, rackZ), q: qVert },
-    { u: 1, p: new THREE.Vector3(inRackX, railTop + halfZ, rackZ), q: qVert },
-  ];
+  // The carry keeps the panel on something the whole way (staging, no carrier in the run): it pivots upright on its
+  // front edge, which stays on the board, slides back upright with its lower edge on the board to the rail's line,
+  // slides west along that line and steps down about 2 cm onto the rail as its east end leaves the board's left edge.
+  // Heights come from the carrier's own vertices against the board plane and the rail, so nothing sinks or floats.
+  const tHalf = pSize.y / 2;
+  const q0 = panelHome.q.clone();
+  const tilt0 = 2 * Math.asin(Math.min(1, Math.abs(q0.x))) * Math.sign(q0.x || 1);
+  const xAxis = new THREE.Vector3(1, 0, 0);
+  const pivotLocal = new THREE.Vector3(0, -tHalf, halfZ); // front edge, underside
+  const pivotW = pivotLocal.clone().applyQuaternion(q0).add(panelHome.p);
+  const boardWest = railEnd.x;
+  const carrier = panel.getObjectByName('Panel_Carrier');
+  panel.updateMatrixWorld(true);
+  const toPanel = panel.matrixWorld.clone().invert().multiply(carrier.matrixWorld);
+  const carrierPts = [];
+  {
+    const pos = carrier.geometry.attributes.position, seen = new Set();
+    for (let k = 0; k < pos.count; k++) {
+      const v = new THREE.Vector3().fromBufferAttribute(pos, k).applyMatrix4(toPanel);
+      const key = v.toArray().map((x) => x.toFixed(4)).join(',');
+      if (!seen.has(key)) { seen.add(key); carrierPts.push(v); }
+    }
+  }
+  const planeD = Math.min(...carrierPts.map((v) => boardN.dot(v.clone().applyQuaternion(q0).add(panelHome.p))));
+  const qTmp = new THREE.Quaternion(), vTmp = new THREE.Vector3();
+  // vertical lift that puts the lowest vertex on its support: the board plane east of its left edge, the rail west of it
+  function seat(q, x, y, z, blendBoard) {
+    let dB = -Infinity, dR = -Infinity, east = -Infinity;
+    for (const v of carrierPts) {
+      vTmp.copy(v).applyQuaternion(q); vTmp.x += x; vTmp.y += y; vTmp.z += z;
+      east = Math.max(east, vTmp.x);
+      if (vTmp.x >= boardWest) dB = Math.max(dB, (planeD - boardN.dot(vTmp)) / boardN.y);
+      else dR = Math.max(dR, railTop - vTmp.y);
+    }
+    if (dR === -Infinity) return dB;
+    if (dB === -Infinity) return dR;
+    const k = blendBoard ? smooth((east - boardWest) / 0.03) : 1;
+    return dR + Math.max(0, dB - dR) * k;
+  }
   function placePanel(out) {
-    let k = 0;
-    while (k < carryKeys.length - 2 && out > carryKeys[k + 1].u) k++;
-    const A = carryKeys[k], B = carryKeys[k + 1];
-    const u = smooth((out - A.u) / (B.u - A.u));
-    panel.position.lerpVectors(A.p, B.p, u);
-    panel.quaternion.slerpQuaternions(A.q, B.q, u);
+    out = Math.min(1, Math.max(0, out));
+    if (out <= 0) { panel.position.copy(panelHome.p); panel.quaternion.copy(q0); return; }
+    if (out < 0.3) {
+      const phi = tilt0 + (Math.PI / 2 - tilt0) * smooth(out / 0.3);
+      qTmp.setFromAxisAngle(xAxis, phi);
+      panel.quaternion.copy(qTmp);
+      panel.position.copy(pivotW).sub(vTmp.copy(pivotLocal).applyQuaternion(qTmp));
+      panel.position.y += Math.max(0, seat(qTmp, panel.position.x, panel.position.y, panel.position.z, false));
+      return;
+    }
+    panel.quaternion.copy(qVert);
+    const zA = pivotW.z - tHalf, x0 = panelHome.p.x;
+    let x = x0, z = zA;
+    if (out < 0.45) z = zA + (rackZ - zA) * smooth((out - 0.3) / 0.15);
+    else { z = rackZ; x = x0 + (inRackX - x0) * smooth((out - 0.45) / 0.55); }
+    panel.position.set(x, 0, z);
+    panel.position.y = seat(qVert, x, 0, z, true);
   }
 
   // ------------------------------------------------------------------ anchors for the brush
@@ -443,9 +486,11 @@ async function main() {
   let current = 'stroke';
   let fly = null; // { p0, t0, p1, t1, a, dur, fov0, fov1 } in UI seconds
   let uiTime = 0;
-  function flyTo(pos, target, fov = persp.fov, dur = 1.0) {
+  function flyTo(pos, target, fov = persp.fov, dur = 1.0, up = [0, 1, 0]) {
     if (active !== persp) { active = persp; controls.enabled = true; orthoControls.enabled = false; }
-    fly = { p0: persp.position.clone(), t0: controls.target.clone(), p1: pos.clone(), t1: target.clone(), a: uiTime, dur, fov0: persp.fov, fov1: fovFor(fov) };
+    // the up vector turns with the flight (a preset's own up set at once rolled the view in one frame)
+    fly = { p0: persp.position.clone(), t0: controls.target.clone(), p1: pos.clone(), t1: target.clone(), a: uiTime, dur, fov0: persp.fov, fov1: fovFor(fov),
+      up0: persp.up.clone(), up1: new THREE.Vector3().fromArray(up).normalize() };
     presetHolds = true;
   }
   function setView(id, instant = false) {
@@ -458,15 +503,15 @@ async function main() {
       ortho.position.copy(ovTarget).addScaledVector(ovDir, 20);
     } else {
       const s = cameras.stages.find((c) => c.id === id);
-      persp.up.fromArray(s.up ?? [0, 1, 0]);
       const wasOrtho = active === ortho;
       if (instant || wasOrtho || STILL) {
         fly = null;
+        persp.up.fromArray(s.up ?? [0, 1, 0]);
         active = persp; controls.enabled = true; orthoControls.enabled = false;
         persp.fov = fovFor(s.fov); persp.position.fromArray(s.position); controls.target.fromArray(s.target);
         persp.lookAt(controls.target); persp.updateProjectionMatrix(); controls.update();
         presetHolds = true;
-      } else flyTo(new THREE.Vector3().fromArray(s.position), new THREE.Vector3().fromArray(s.target), s.fov);
+      } else flyTo(new THREE.Vector3().fromArray(s.position), new THREE.Vector3().fromArray(s.target), s.fov, 1.0, s.up ?? [0, 1, 0]);
     }
     updateCut(active);
     current = id;
@@ -590,6 +635,7 @@ async function main() {
   // ------------------------------------------------------------------ dashboard, picking, cards, tour
   const ui = { playing: clock.playing, speed: 1, view: current, touring: false, follow: false, ghosts: true, scores: null };
   let follow = false;
+  const followAim = new THREE.Vector3(), followAim2 = new THREE.Vector3();
   let tour = null;
   function stopTour() { if (tour) { const sp = tour.savedSpeed ?? 1; tour = null; clock.speed = sp; } }
   const dash = createDashboard(replay, cameras.stages, {
@@ -734,14 +780,16 @@ async function main() {
       persp.position.y += Math.sin(Math.PI * u) * 0.04 * fly.p0.distanceTo(fly.p1);
       controls.target.lerpVectors(fly.t0, fly.t1, u);
       persp.fov = fly.fov0 + (fly.fov1 - fly.fov0) * u; persp.updateProjectionMatrix();
+      persp.up.copy(fly.up0).lerp(fly.up1, u).normalize();
       persp.lookAt(controls.target);
       if (u >= 1) fly = null;
     }
     if (follow && active === persp && !fly) {
+      // ease toward the follow distance and aim between the tip and the ferrule, so the whole brush stays in frame
       const off = persp.position.clone().sub(controls.target);
-      const len = Math.min(0.75, Math.max(0.32, off.length()));
-      off.setLength(len);
-      controls.target.lerp(tipW, 0.18);
+      const d = off.length();
+      off.setLength(d + (Math.min(0.75, Math.max(0.32, d)) - d) * 0.08);
+      controls.target.lerp(followAim.copy(tipW).lerp(brushes[brushInHand].o.getWorldPosition(followAim2), 0.35), 0.24);
       persp.position.copy(controls.target).add(off);
     }
     (active === persp ? controls : orthoControls).update();
