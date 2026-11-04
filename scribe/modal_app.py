@@ -3,7 +3,7 @@
 From a machine that can reach Modal (``modal setup`` done) and holds this
 repo with ``shared/pool_v1/keeps`` in it::
 
-    modal secret create openrouter SCRIBE_API_KEY=... SCRIBE_API_BASE=https://openrouter.ai/api/v1
+    modal secret create openrouter SCRIBE_API_KEY=...   # the API base is set in the image
     modal run scribe/modal_app.py --stage sample --judge-model anthropic/claude-opus-5.5 --judge-reasoning-effort low --judge-max-tokens 400
     modal run scribe/modal_app.py --stage train --run-name grpo_v1 --judge-model anthropic/claude-opus-5.5 --judge-reasoning-effort low --judge-max-tokens 400 --max-steps 30
     modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1 --judge-model anthropic/claude-opus-5.5 --judge-reasoning-effort low --judge-max-tokens 400
@@ -84,7 +84,7 @@ image = (
                  "numpy>=1.26", "scipy>=1.11", "pillow>=10")
     # the slim image has no CUDA compiler, so vLLM must not ask FlashInfer to build its sampling kernel on the fly
     .env({"PYTHONUNBUFFERED": "1", "HF_HOME": "/checkpoints/hf", "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
-          "VLLM_USE_FLASHINFER_SAMPLER": "0"})
+          "VLLM_USE_FLASHINFER_SAMPLER": "0", "SCRIBE_API_BASE": "https://openrouter.ai/api/v1"})
     .add_local_file(REPO / "pyproject.toml", f"{REMOTE_REPO}/pyproject.toml", copy=True)
     .add_local_file(REPO / "README.md", f"{REMOTE_REPO}/README.md", copy=True)
     .add_local_dir(REPO / "backrun", f"{REMOTE_REPO}/backrun", copy=True, ignore=_ignore)

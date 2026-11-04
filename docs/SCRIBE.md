@@ -357,8 +357,10 @@ to a volume first. The OpenRouter key comes from a Modal secret. From the
 Mac:
 
 ```bash
-modal secret create openrouter SCRIBE_API_KEY=... SCRIBE_API_BASE=https://openrouter.ai/api/v1
+modal secret create openrouter SCRIBE_API_KEY=...
 ```
+
+The OpenRouter address is set in the image, so the secret only needs the key.
 
 ```bash
 modal run scribe/modal_app.py --stage sample
