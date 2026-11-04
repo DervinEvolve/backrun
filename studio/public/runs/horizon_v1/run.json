@@ -1,0 +1,54 @@
+{
+  "canvas": {
+    "width": 256,
+    "height": 192,
+    "seed": 7,
+    "paper": "cold_press"
+  },
+  "seed": 7,
+  "target_path": "synthetic:horizon:1",
+  "strokes_requested": 40,
+  "candidates_per_stroke": 16,
+  "painter": "search_v0",
+  "final_score": {
+    "lab_l2": 331.2812615247665,
+    "ssim": 0.44463534586627146,
+    "strokes": 39,
+    "total": 5.61227123178258
+  },
+  "painter_stats": {
+    "strokes_accepted": 39,
+    "slots_skipped": 1,
+    "evaluations": 640,
+    "calibration_s": 1.6529502140001568,
+    "phase_s": {
+      "washes": 10.43644484399988,
+      "medium": 21.01679389800006,
+      "detail": 15.271529979999968
+    },
+    "total_s": 48.42396004499983,
+    "final_score": {
+      "lab_l2": 331.2812615247665,
+      "ssim": 0.44463534586627146,
+      "strokes": 39,
+      "total": 5.61227123178258
+    },
+    "calibrated": true,
+    "preview": "dry",
+    "accept": "dry"
+  },
+  "status": "finished",
+  "frames_every": 20,
+  "frames": 50,
+  "ops": 81,
+  "sim_steps": 948,
+  "timings": {
+    "started_unix": 1793760018.262,
+    "elapsed_s": 53.481,
+    "calibration_s": 1.653,
+    "phase_washes_s": 10.436,
+    "phase_medium_s": 21.017,
+    "phase_detail_s": 15.272,
+    "paint_s": 48.424
+  }
+}

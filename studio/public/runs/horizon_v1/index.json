@@ -1,0 +1,352 @@
+{
+ "name": "horizon_v1",
+ "source": "horizon_v1",
+ "packed_at": "2026-11-04T03:10:25.566Z",
+ "run": {
+  "canvas": {
+   "width": 256,
+   "height": 192,
+   "seed": 7,
+   "paper": "cold_press"
+  },
+  "seed": 7,
+  "target_path": "synthetic:horizon:1",
+  "strokes_requested": 40,
+  "candidates_per_stroke": 16,
+  "painter": "search_v0",
+  "painter_stats": {
+   "strokes_accepted": 39,
+   "slots_skipped": 1,
+   "evaluations": 640,
+   "calibration_s": 1.6529502140001568,
+   "phase_s": {
+    "washes": 10.43644484399988,
+    "medium": 21.01679389800006,
+    "detail": 15.271529979999968
+   },
+   "total_s": 48.42396004499983,
+   "calibrated": true,
+   "preview": "dry",
+   "accept": "dry"
+  },
+  "status": "finished",
+  "frames_every": 20,
+  "frames": 50,
+  "ops": 81,
+  "sim_steps": 948,
+  "timings": {
+   "started_unix": 1793760018.262,
+   "elapsed_s": 53.481,
+   "calibration_s": 1.653,
+   "phase_washes_s": 10.436,
+   "phase_medium_s": 21.017,
+   "phase_detail_s": 15.272,
+   "paint_s": 48.424
+  }
+ },
+ "op_count": 81,
+ "stroke_count": 39,
+ "sim_steps": 948,
+ "frames_every": 20,
+ "frames": [
+  {
+   "step": 0,
+   "op": -1,
+   "file": "frames/frame_00000.png"
+  },
+  {
+   "step": 1,
+   "op": 0,
+   "file": "frames/frame_00001.png"
+  },
+  {
+   "step": 21,
+   "op": 13,
+   "file": "frames/frame_00002.png"
+  },
+  {
+   "step": 44,
+   "op": 16,
+   "file": "frames/frame_00003.png"
+  },
+  {
+   "step": 69,
+   "op": 16,
+   "file": "frames/frame_00004.png"
+  },
+  {
+   "step": 94,
+   "op": 16,
+   "file": "frames/frame_00005.png"
+  },
+  {
+   "step": 119,
+   "op": 16,
+   "file": "frames/frame_00006.png"
+  },
+  {
+   "step": 124,
+   "op": 16,
+   "file": "frames/frame_00007.png"
+  },
+  {
+   "step": 144,
+   "op": 16,
+   "file": "frames/frame_00008.png"
+  },
+  {
+   "step": 169,
+   "op": 16,
+   "file": "frames/frame_00009.png"
+  },
+  {
+   "step": 194,
+   "op": 16,
+   "file": "frames/frame_00010.png"
+  },
+  {
+   "step": 219,
+   "op": 16,
+   "file": "frames/frame_00011.png"
+  },
+  {
+   "step": 224,
+   "op": 16,
+   "file": "frames/frame_00012.png"
+  },
+  {
+   "step": 244,
+   "op": 16,
+   "file": "frames/frame_00013.png"
+  },
+  {
+   "step": 269,
+   "op": 16,
+   "file": "frames/frame_00014.png"
+  },
+  {
+   "step": 294,
+   "op": 16,
+   "file": "frames/frame_00015.png"
+  },
+  {
+   "step": 319,
+   "op": 16,
+   "file": "frames/frame_00016.png"
+  },
+  {
+   "step": 324,
+   "op": 16,
+   "file": "frames/frame_00017.png"
+  },
+  {
+   "step": 344,
+   "op": 16,
+   "file": "frames/frame_00018.png"
+  },
+  {
+   "step": 369,
+   "op": 16,
+   "file": "frames/frame_00019.png"
+  },
+  {
+   "step": 394,
+   "op": 16,
+   "file": "frames/frame_00020.png"
+  },
+  {
+   "step": 419,
+   "op": 16,
+   "file": "frames/frame_00021.png"
+  },
+  {
+   "step": 424,
+   "op": 16,
+   "file": "frames/frame_00022.png"
+  },
+  {
+   "step": 444,
+   "op": 16,
+   "file": "frames/frame_00023.png"
+  },
+  {
+   "step": 469,
+   "op": 16,
+   "file": "frames/frame_00024.png"
+  },
+  {
+   "step": 494,
+   "op": 16,
+   "file": "frames/frame_00025.png"
+  },
+  {
+   "step": 500,
+   "op": 17,
+   "file": "frames/frame_00026.png"
+  },
+  {
+   "step": 520,
+   "op": 27,
+   "file": "frames/frame_00027.png"
+  },
+  {
+   "step": 540,
+   "op": 37,
+   "file": "frames/frame_00028.png"
+  },
+  {
+   "step": 560,
+   "op": 47,
+   "file": "frames/frame_00029.png"
+  },
+  {
+   "step": 583,
+   "op": 49,
+   "file": "frames/frame_00030.png"
+  },
+  {
+   "step": 608,
+   "op": 49,
+   "file": "frames/frame_00031.png"
+  },
+  {
+   "step": 633,
+   "op": 49,
+   "file": "frames/frame_00032.png"
+  },
+  {
+   "step": 658,
+   "op": 49,
+   "file": "frames/frame_00033.png"
+  },
+  {
+   "step": 663,
+   "op": 49,
+   "file": "frames/frame_00034.png"
+  },
+  {
+   "step": 683,
+   "op": 49,
+   "file": "frames/frame_00035.png"
+  },
+  {
+   "step": 708,
+   "op": 49,
+   "file": "frames/frame_00036.png"
+  },
+  {
+   "step": 733,
+   "op": 49,
+   "file": "frames/frame_00037.png"
+  },
+  {
+   "step": 758,
+   "op": 49,
+   "file": "frames/frame_00038.png"
+  },
+  {
+   "step": 763,
+   "op": 49,
+   "file": "frames/frame_00039.png"
+  },
+  {
+   "step": 783,
+   "op": 49,
+   "file": "frames/frame_00040.png"
+  },
+  {
+   "step": 808,
+   "op": 49,
+   "file": "frames/frame_00041.png"
+  },
+  {
+   "step": 821,
+   "op": 53,
+   "file": "frames/frame_00042.png"
+  },
+  {
+   "step": 841,
+   "op": 63,
+   "file": "frames/frame_00043.png"
+  },
+  {
+   "step": 861,
+   "op": 73,
+   "file": "frames/frame_00044.png"
+  },
+  {
+   "step": 893,
+   "op": 80,
+   "file": "frames/frame_00045.png"
+  },
+  {
+   "step": 918,
+   "op": 80,
+   "file": "frames/frame_00046.png"
+  },
+  {
+   "step": 923,
+   "op": 80,
+   "file": "frames/frame_00047.png"
+  },
+  {
+   "step": 943,
+   "op": 80,
+   "file": "frames/frame_00048.png"
+  },
+  {
+   "step": 948,
+   "op": 80,
+   "final": true,
+   "file": "frames/frame_00049.png"
+  }
+ ],
+ "phases": [
+  {
+   "name": "washes",
+   "index": 0,
+   "first_op": 0,
+   "last_op": 16
+  },
+  {
+   "name": "medium",
+   "index": 1,
+   "first_op": 17,
+   "last_op": 49
+  },
+  {
+   "name": "detail",
+   "index": 2,
+   "first_op": 50,
+   "last_op": 80
+  }
+ ],
+ "pigments_used": [
+  "french_ultramarine",
+  "burnt_umber",
+  "cerulean_blue",
+  "paynes_grey",
+  "quinacridone_rose",
+  "indian_red",
+  "hookers_green",
+  "cadmium_yellow"
+ ],
+ "timings": {
+  "started_unix": 1793760018.262,
+  "elapsed_s": 53.481,
+  "calibration_s": 1.653,
+  "phase_washes_s": 10.436,
+  "phase_medium_s": 21.017,
+  "phase_detail_s": 15.272,
+  "paint_s": 48.424
+ },
+ "files": {
+  "ops": "ops.json",
+  "scores": "scores.json",
+  "target": "target.png",
+  "final": "final.png",
+  "ledger": "ledger.jsonl",
+  "strokes": "strokes.jsonl",
+  "run": "run.json"
+ }
+}

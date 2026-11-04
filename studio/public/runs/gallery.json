@@ -1,0 +1,10 @@
+{
+ "runs": [
+  {
+   "name": "horizon_v1",
+   "painter": "search_v0",
+   "target": "synthetic:horizon:1",
+   "strokes": 39
+  }
+ ]
+}

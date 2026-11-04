@@ -1,3 +1,6 @@
+# The repo ignores runs/ and frames/ for raw recordings; packed gallery runs ship with the studio.
+!/public/runs/
+!/public/runs/**/frames/
 node_modules/
 dist/
 review/
