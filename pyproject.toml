@@ -19,7 +19,8 @@ train = ["torch>=2.3"]
 backrun = "backrun.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["backrun*"]
+include = ["backrun*", "train*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
