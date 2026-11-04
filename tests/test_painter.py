@@ -350,3 +350,26 @@ def test_light_quantile_keeps_a_stroke_as_pale_as_its_palest_part() -> None:
     assert mean_l(free) < mean_l(capped)
     # Overshoot weighting also pushes the choice lighter.
     assert mean_l(model.ranked(under, target, top=1, overshoot=6.0)[0]) > mean_l(free)
+
+
+def test_accept_view_can_differ_from_preview(tmp_path: Path) -> None:
+    """With ``preview="dry", accept="wet"`` a stroke must lower the real (wet) score."""
+    sim_mod = pytest.importorskip("backrun.sim")
+    w, h = 64, 48
+    target = synthetic_target("horizon", w, h, 1)
+
+    def factory():
+        return sim_mod.Watercolor(width=w, height=h, seed=7)
+
+    rec = Recorder(tmp_path, frames_every=50)
+    rec.start(canvas={"width": w, "height": h}, seed=7)
+    stats: dict = {}
+    paint(target, factory, 6, 3, seed=7, recorder=rec, stats=stats, preview="dry", accept="wet")
+    assert stats["accept"] == "wet"
+    lines = _ledger(tmp_path)
+    prev = score(factory().render(), target)["total"]
+    for i, x in enumerate(lines):
+        if x["op"]["op"] == "stroke":
+            after = lines[i + 1] if i + 1 < len(lines) and lines[i + 1].get("dry_kind") == "settle" else x
+            assert after["score"]["total"] < prev + 1e-9
+        prev = x["score"]["total"]

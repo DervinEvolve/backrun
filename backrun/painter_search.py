@@ -810,6 +810,16 @@ def paint(
                 continue
             tried.sort(key=lambda t: (t[0], t[1]))
             best_total, _, best_op, best_s = tried[0]
+            if accept != preview:
+                # The winner was judged in the preview's view; the acceptance
+                # test must compare like with like, so re-score it in the
+                # acceptance view (same copy, same op, same settle steps).
+                check = sim.copy()
+                check.apply(best_op)
+                if phase.settle_steps:
+                    check.step(phase.settle_steps)
+                accept_view = dry_preview if accept == "dry" else (lambda s: s.render())
+                best_total = float(score_fn(accept_view(check), tgt, strokes=accepted + 1)["total"])
             if best_total >= reference["total"]:
                 skipped += 1
                 continue
