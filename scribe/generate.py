@@ -35,6 +35,9 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 import numpy as np
 
 from scribe.client import ChatClient, ClientError, user_message
@@ -127,6 +130,8 @@ class Generator:
         self.root = Path(pool_root)
         self.temperature = temperature
         self.max_tokens = max_tokens
+        #: Candidates may run in threads; the index file takes one line at a time.
+        self._index_lock = threading.Lock()
 
     def _ask_and_gate(self, model: str, messages: list[dict[str, Any]], canvas: dict[str, Any],
                       usage: list[dict[str, Any]], tag: str) -> tuple[str, GateResult]:
@@ -211,7 +216,7 @@ class Generator:
         (folder / "meta.json").write_text(json.dumps(meta, indent=1))
         line = {"id": cid, "prompt_id": prompt["id"], "model": model, "status": status,
                 "round": meta["round"], "dir": cid}
-        with (self.root / "index.jsonl").open("a") as fh:
+        with self._index_lock, (self.root / "index.jsonl").open("a") as fh:
             fh.write(json.dumps(line) + "\n")
         return line
 
@@ -229,8 +234,13 @@ class Generator:
 
 def run(client: Any, prompts_path: str | Path, pool_root: str | Path, models: list[str], per: int,
         critic: str | None = None, rounds: int = 0, temperature: float = 0.9, max_tokens: int = 4096,
-        log=sys.stderr) -> dict[str, int]:
-    """Generate every missing candidate. Returns counts of ok, rejected, failed and skipped."""
+        log=sys.stderr, concurrency: int = 1) -> dict[str, int]:
+    """Generate every missing candidate. Returns counts of ok, rejected, failed and skipped.
+
+    ``concurrency`` candidates run at once in threads (the work is waiting on
+    the API; the simulator's share is small). Each candidate writes only its
+    own folder, and the index takes one line at a time.
+    """
     root = Path(pool_root)
     root.mkdir(parents=True, exist_ok=True)
     prompts_path = Path(prompts_path)
@@ -241,22 +251,29 @@ def run(client: Any, prompts_path: str | Path, pool_root: str | Path, models: li
     done = {line["id"] for line in read_index(root)}
     gen = Generator(client, root, temperature=temperature, max_tokens=max_tokens)
     counts = {"ok": 0, "rejected": 0, "failed": 0, "skipped": 0}
+    jobs = []
     for prompt in prompts:
         for model in models:
             for k in range(per):
                 cid = candidate_id(prompt["id"], model, k)
                 if cid in done:
                     counts["skipped"] += 1
-                    continue
-                try:
-                    line = gen.candidate(prompt, model, k, critic=critic, rounds=rounds,
-                                         reference_dir=prompts_path.parent)
-                except ClientError as exc:
-                    counts["failed"] += 1
-                    print(f"{cid}: API failure, will retry on the next run ({exc})", file=log)
-                    continue
-                counts[line["status"]] += 1
-                print(f"{cid}: {line['status']}", file=log)
+                else:
+                    jobs.append((cid, prompt, model, k))
+
+    def one(job: tuple[str, dict[str, Any], str, int]) -> tuple[str, str]:
+        cid, prompt, model, k = job
+        try:
+            line = gen.candidate(prompt, model, k, critic=critic, rounds=rounds, reference_dir=prompts_path.parent)
+        except ClientError as exc:
+            return cid, f"failed: API failure, will retry on the next run ({exc})"
+        return cid, line["status"]
+
+    with ThreadPoolExecutor(max_workers=max(1, int(concurrency))) as pool:
+        for future in as_completed([pool.submit(one, job) for job in jobs]):
+            cid, status = future.result()
+            counts["failed" if status.startswith("failed") else status] += 1
+            print(f"{cid}: {status}", file=log)
     return counts
 
 
@@ -271,6 +288,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--rounds", type=int, default=0, help="critic rounds")
     ap.add_argument("--temperature", type=float, default=0.9)
     ap.add_argument("--max-tokens", type=int, default=4096)
+    ap.add_argument("--concurrency", type=int, default=1, help="candidates in flight at once")
     args = ap.parse_args(argv)
     root = Path(args.pool_root)
     root.mkdir(parents=True, exist_ok=True)
@@ -281,7 +299,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     models = [m.strip() for m in args.models.split(",") if m.strip()]
     counts = run(client, args.prompts, root, models, args.per, critic=args.critic, rounds=args.rounds,
-                 temperature=args.temperature, max_tokens=args.max_tokens)
+                 temperature=args.temperature, max_tokens=args.max_tokens, concurrency=args.concurrency)
     print(json.dumps(counts))
     return 0 if counts["failed"] == 0 else 2
 

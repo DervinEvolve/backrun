@@ -100,3 +100,14 @@ def test_rejected_candidate_is_indexed_without_final(tmp_path: Path) -> None:
     folder = pool / candidate_id("sea", "a", 0)
     assert not (folder / "final.png").exists()
     assert json.loads((folder / "meta.json").read_text())["status"] == "rejected"
+
+
+def test_concurrent_candidates_write_one_index_line_each(tmp_path: Path) -> None:
+    prompts = _prompts(tmp_path)
+    pool = tmp_path / "pool"
+    fake = FakeClient(lambda model, messages: as_reply(valid_painting()))
+    counts = run(fake, prompts, pool, ["a", "b"], per=3, concurrency=4)
+    assert counts == {"ok": 12, "rejected": 0, "failed": 0, "skipped": 0}
+    ids = [line["id"] for line in read_index(pool)]
+    assert len(ids) == 12 and len(set(ids)) == 12
+    assert all((pool / cid / "final.png").is_file() for cid in ids)
