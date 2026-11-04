@@ -38,6 +38,7 @@ from __future__ import annotations
 import hashlib
 import inspect
 import json
+import os
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
@@ -252,8 +253,15 @@ def _calling_module(depth: int = 2) -> str | None:
 # ---------------------------------------------------------------------------
 
 
+#: Environment variable that moves the default data folder (the Modal image sets it to the data volume).
+DATA_ROOT_ENV = "BACKRUN_DATA"
+
+
 def default_data_root() -> Path:
-    """``runs/data`` under the repository, where targets live by default."""
+    """Where targets live by default: ``$BACKRUN_DATA`` if set, else ``runs/data`` under the repository."""
+    env = os.environ.get(DATA_ROOT_ENV)
+    if env:
+        return Path(env)
     return Path(__file__).resolve().parent.parent / "runs" / "data"
 
 
