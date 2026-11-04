@@ -31,7 +31,8 @@ and know.
 
 **Input, downsampled to 128 x 96:** the target; the current sheet as it
 would look dry (`render(predict_dry=True)`); the wet mask; the per-pixel
-error between the two renders; and the phase as a one-hot. Nine channels.
+error between the two renders; and the phase as a one-hot over the three
+phases. Eleven channels in all (`OBS_CHANNELS` in `train/policy.py`).
 
 **Network:** a small convolutional encoder, about five million parameters,
 with a global pooling head. Nothing exotic; the simulator is the hard part.
@@ -90,6 +91,13 @@ self-improving systems kept coming back to: gains are real only where the
 check is outside the loop.
 
 ## What gets reported
+
+`train/evaluate.py` produces this report. Its first run on the search
+painter (five sealed targets, three seeds, 128 x 96, 40 strokes, 16
+candidates) gave a mean dried `total` of 6.45 with a standard deviation of
+1.29, about 2,600 simulator steps per painting counting every candidate,
+and a washes-phase prediction gap of about 1.15. The full table is in
+`runs/eval/` when the command is run.
 
 For the search painter and each learned painter, on the sealed set:
 `total`, `lab_l2`, `ssim`, strokes used, simulator steps per painting,
