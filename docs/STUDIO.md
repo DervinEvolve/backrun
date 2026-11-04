@@ -11,7 +11,7 @@ from the painter. Everything the studio shows comes from a run folder or is mark
 Shape: live app with a dashboard (`references/brief.md`), recorded as a 30 s demo film. There is no separate film
 deliverable.
 
-Quality bar: the owner's reference is a recorded live browser app of a robot arm painting an impasto seascape in a
+Quality bar: my reference is a recorded live browser app of a robot arm painting an impasto seascape in a
 dark studio, with PBR brick, bench and window light, and a dense dashboard (strokes laid, colours mixed, paint used,
 painting time, pigment legend with per-colour counts, speed buttons, a card naming the painting and the current
 pass). The studio reaches that level live, in real time, with PBR materials and baked plus real-time lighting, but
@@ -30,7 +30,7 @@ Changed for this subject: one room, so no floor switcher; the overview is orthog
 perspective (field of view 30 to 40) and close, because the subject is a 30 cm sheet; no crisis and no weather, the
 "state" the light tells is the painting's phase.
 
-The warm variation, from the owner's Observable-Lab "quiet science" palette:
+The warm variation, from my Observable-Lab "quiet science" palette:
 
 - Structure: wood `#8B7355` (bench, board, shelves, floor in a darker oiled oak), brass `#B5A642` (arm, lamp, rail,
   jar rings, pins), glass `#E8E4D9` (jars, window), warm walls `#F5F2EB` (limewash plaster; one wall of limewashed
@@ -256,7 +256,7 @@ target at the canvas's 4:3 size; the trained painter paints it with the recorder
 happens. This needs a small backend: a queue, moderation, a GPU worker, storage for run folders, and a live stream.
 
 Who did what, stated plainly in the app: the picture's content comes from a separate open text-to-image model,
-credited by name and licence on the prompt card and in the credits (the owner picks the model; its name, licence,
+credited by name and licence on the prompt card and in the credits (I pick the model; its name, licence,
 version and generation seed go into `run.json`); the watercolor handling is the painter's. Both the prompt and the
 generated target hang above the board so nobody mistakes which model did what.
 
@@ -264,7 +264,7 @@ Presence (tier (b) only, since it needs shared state): other visitors appear as 
 stools, at most eight shown, the rest as a count. The queue board lists waiting prompts as slips with a position
 number; a slip moves to the cork strip above the board when its run starts.
 
-Open questions for the owner:
+Open questions:
 
 1. Per-prompt GPU cost (image generation plus painting) and a budget cap per day and per visitor; what the studio
    shows when the cap is hit (the rinse jar reaches its etched ring and the queue pauses).
@@ -272,7 +272,7 @@ Open questions for the owner:
    or "in the style of" a named artist are refused, as the project's data-and-consent rule suggests.
 3. Tier (b) needs a small backend; tier (a) is a static site. Who runs and pays for the backend, and when.
 4. Which open text-to-image model, under a licence that allows this use, and its credit line.
-5. Generated targets are neither the owner's photos nor public-domain images, so the README's "Data and consent"
+5. Generated targets are neither my photos nor public-domain images, so the README's "Data and consent"
    section needs a line about them before the gallery ships. Visitors choosing prompts also moves "taste" from the
    owner to visitors, which the README's "The catch" should mention.
 6. Whether shared guesses for the prediction game are wanted in tier (b).
@@ -284,7 +284,7 @@ Small props come from the NVIDIA SimReady props in their web GLB conversion on H
 NVIDIA, source `nvidia/simready-assets`). The catalog is industrial, hospital, office and food props: it has no stool,
 wooden table, open shelf, lamp, easel, drawing board, plant or rug, and its chairs are office and hospital models that
 look wrong in a studio. So SimReady supplies small glassware, a window blind, a book and boxes; everything wooden or
-painterly is built by hand. Fetch only the files listed (about 5 to 7 MB before recompression), after the owner's yes; rescale each to the size
+painterly is built by hand. Fetch only the files listed (about 5 to 7 MB before recompression), once I say yes; rescale each to the size
 below, restyle its materials to the warm palette, and record it in `CREDITS.md`.
 
 | SimReady file | Use | Size in metres (W x D x H) | File size |
