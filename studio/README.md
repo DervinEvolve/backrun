@@ -40,6 +40,13 @@ has two runs, picked from the selector under the painting card (switching reload
 On a phone width (under 760 px) the room takes the top half and the panels stack below it, scrolling vertically;
 the stage cameras widen their field of view on a narrow screen.
 
+## Publishing
+
+`.github/workflows/studio-pages.yml` builds the studio with a relative base (`vite build --base ./`) on every push
+to `main` that touches `studio/` and deploys `studio/dist` to GitHub Pages. It needs Pages enabled once in the
+repository settings with "GitHub Actions" as the source; on a private repository that needs a paid plan, so it
+waits for the public switch. The build is about 14 MB, most of it the packed runs and the models.
+
 ## Record and pack a run
 
 The search painter records with `cli_paint`, the learned painter with `train.record_policy`, and a scribe painting

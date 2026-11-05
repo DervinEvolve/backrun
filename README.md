@@ -1,30 +1,23 @@
 # Backrun
 
-**A watercolor simulator where the water is in charge, and a painter that learns to use it.**
+**A watercolour simulator where the water is in charge, and three painters that learn to use it.**
 
-A backrun is what happens when fresh water touches a wash that has started to dry. The new water pushes the pigment outward and leaves a hard, cauliflower-shaped edge. Beginners get them by accident. Painters learn to cause them on purpose.
-
-This project builds a small watercolor physics model on a grid, gives a painter a brush, a target image and a score, and lets it get the water wrong until it stops. Everything a painter does is saved as a stroke file, so any painting can be replayed exactly, stroke by stroke, bloom by bloom.
+A backrun is what happens when fresh water touches a wash that has started to dry: the new water pushes the pigment outward and leaves a hard, cauliflower-shaped edge. Beginners get them by accident. Painters learn to cause them on purpose. This project is a small watercolour physics model on a grid, a stroke file that any painting can be replayed from exactly, and three painters that try to use the water well: a search, a network that imitates the search, and a language model that writes the stroke file from a text prompt and is trained by a judge.
 
 I do these experiments for fun.
 
+## Three painters
+
+| The search painter | The learned painter | The scribe |
+|---|---|---|
+| ![A synthetic horizon scene: lavender sky, orange sun, dark teal sea, next to its watercolor: a pale sky with blue washes, an orange sun blob in place, a dark slate sea under a clean horizon](docs/assets/horizon-side-by-side.png) | ![A synthetic horizon target with a lavender sky, orange sun and dark sea, next to the learned painter's version: a cerulean band of sky, bare paper where the gradient should be, a small yellow mark for the sun, and a dark ultramarine sea with a ragged top edge](docs/assets/learned-sealed-003.png) | ![Four rows of small watercolours by the trained scribe, hydrangea, sunset, peonies and lemons, soft colour masses in the subject's hues, beside three paintings from the rated pool with more drawn structure](docs/assets/scribe-grpo-v2-strip.jpg) |
+| Tries sixteen strokes per slot, keeps the one whose predicted dry result scores best. Forty slots, about fifty seconds. No learning. | A network trained to imitate the search painter. Looks at the target and the sheet once per stroke, no search, about six seconds. Scores 8.85 on sealed targets against 24.02 for a blank sheet and 5.26 for the search. | A 4B language model writes the whole stroke file from "paint pink peonies, loose and wet". Warmed up on 269 rated paintings, then 30 steps of GRPO with a vision judge. Valid files 91% of the time; the judge prefers it to its warm-up self in 58 comparisons of 100. It places the subject's colours and does not yet draw. |
+
+The search painter's run, stroke by stroke:
+
+![The horizon painting appearing over forty strokes: washes first, the sea, then the sun](docs/assets/horizon-run.gif)
+
 ## Status
-
-Early. The simulator works and is tested. The first painter is a search with no learning. Its very first painting had a sky three times too dark, a ragged horizon and a sun like a smudge, because it judged each stroke while the paper was still wet. It now judges strokes on a prediction of how they will dry, and the same target comes out with a horizon line, a dark sea and a sky that lightens toward it. It is still a long way from the target, and that is the starting line the learned painters have to beat.
-
-| Target on the left, painting on the right | The same run, stroke by stroke |
-|---|---|
-| ![A synthetic horizon scene: lavender sky, orange sun, dark teal sea, next to its watercolor: a pale sky with blue washes, an orange sun blob in place, a dark slate sea under a clean horizon](docs/assets/horizon-side-by-side.png) | ![The horizon painting appearing over forty strokes: washes first, the sea, then the sun](docs/assets/horizon-run.gif) |
-
-Forty stroke slots, sixteen candidates each, seed 7, about fifty seconds on one CPU core. Score `total` 5.61, lower is better; the first painter scored 6.48 on the same target. One seed on one target, so a direction rather than a result.
-
-The learned painter, after one run of imitation training on 1,000 of the search painter's paintings, on a sealed target it never saw:
-
-| Sealed target on the left, the learned painter on the right |
-|---|
-| ![A synthetic horizon target with a lavender sky, orange sun and dark sea, next to the learned painter's version: a cerulean band of sky, bare paper where the gradient should be, a small yellow mark for the sun, and a dark ultramarine sea with a ragged top edge](docs/assets/learned-sealed-003.png) |
-
-One simulator step per stroke, no search, about six seconds. It has learned the layout: sky above, sea below, the sun about where it belongs. It has not learned the pale gradient, which it leaves as bare paper, nor the sun as a disc. Score `total` 8.85 averaged over five sealed targets and three paper seeds, between a blank sheet at 24.02 and the search painter at 5.26.
 
 | Part | State |
 |---|---|
@@ -32,14 +25,10 @@ One simulator step per stroke, no search, about six seconds. It has learned the 
 | Pigment rendering with the Kubelka-Munk model, eight pigments | Done. The pigment numbers are design choices, not measurements |
 | Stroke file format, byte-identical replay from file and seed | Done and tested |
 | Scorer, kept in its own module the painter never reads | Done |
-| Search painter, coarse to fine, no learning | Done, and weak |
-| Learned painter | Stage A (imitation of the search painter) now paints. The first GPU run scored no better than a blank sheet, because a regression head averaged the search painter's varied strokes into one muddy dab. A head that picks a start cell and a bin for each other number, trained on 1,000 ledgers, scores `total` 8.85 on the sealed set against 24.02 for a blank sheet and 5.26 for the search painter, with 26 times less simulation. One run, five sealed targets, so a direction rather than a result. Numbers in [docs/TRAINING.md](docs/TRAINING.md) |
-| A language model that writes stroke files from a text prompt, rewarded by a judge | Trained. A 4B model warmed up on 269 rated paintings, then 30 steps of GRPO with Claude Opus 5.5 judging each painting against the warm model's own: valid files went from 77% to 91% of attempts, and the judge prefers the trained model's painting in 58 comparisons of 100 against the warm one. It paints the subject's colours in the right places and does not yet draw. About $60 of API and GPU credit end to end. Numbers and pictures in [docs/SCRIBE.md](docs/SCRIBE.md) |
-| A studio in the browser where you can watch it paint | Built: a drafting arm replays a run stroke by stroke with the palette, jars, drying rack and a dashboard, and the gallery holds the search painter, the learned painter and two scribe paintings. Runs locally from `studio/`, not published yet. See [studio/README.md](studio/README.md) |
-
-The trained scribe, after 30 GRPO steps: for each subject its five best paintings by the judge, then three paintings from the rated pool in green frames.
-
-![Rows of small watercolours. For each subject, five paintings by the trained model, mostly soft colour masses in the subject's hues, then three pool paintings with more drawn structure: a hydrangea on a stem, a church tower over rooftops, a teacup with a handle](docs/assets/scribe-grpo-v2-sheet.jpg)
+| Search painter, coarse to fine, no learning | Done, and weak. Its first painting had a sky three times too dark because it judged each stroke while the paper was wet; it now judges on a prediction of how the stroke will dry |
+| Learned painter | Stage A, imitation of the search painter. The first GPU run scored no better than a blank sheet, because a regression head averaged the search painter's varied strokes into one muddy dab. A head that picks a start cell and a bin for each other number, trained on 1,000 ledgers, scores `total` 8.85 on the sealed set with 26 times less simulation than the search. One run, five sealed targets, so a direction rather than a result. Numbers in [docs/TRAINING.md](docs/TRAINING.md) |
+| The scribe: a language model that writes stroke files from a text prompt, rewarded by a judge | Trained. A pool of 921 paintings from four cheap models, rated; a judge calibrated against my ratings; a warm-up on the 269 keeps; a 10-step pilot that found the judge had nothing to compare because the pool was too strong; then 30 steps against the warm model's own paintings, which worked. About $60 of API and GPU credit end to end. Numbers, pictures and what went wrong in [docs/SCRIBE.md](docs/SCRIBE.md) |
+| A studio in the browser where you can watch it paint | Built: a drafting arm replays any run stroke by stroke with the palette, jars, drying rack and a dashboard, and the gallery holds all three painters. Runs locally from `studio/`; a workflow publishes it to GitHub Pages. See [studio/README.md](studio/README.md) |
 
 ## What it looks like so far
 
@@ -76,6 +65,15 @@ A painting is a JSON Lines file of strokes and drying periods:
 The stroke file is a small language, so a language model can write one from a prompt such as "a harbour at dusk, two boats, low tide", and the simulator paints it in a few seconds. There is no target image to match, so the reward is a judgement: a vision model is shown the painting next to a painting from a rated pool and asked which is the better watercolour of the subject. A gate throws out files that are broken or that try to game the judge with one wide dark wash. The recipe comes from Surya Narreddi and Cameron Franz, who trained a model to paint by writing p5.brush JavaScript, and from Sergio Paniego's open reproduction; what changes here is the medium, with real water and drying time, and a render that takes seconds instead of a minute. The plan, the gate rules, the reward and what is not done are in [docs/SCRIBE.md](docs/SCRIBE.md).
 
 ## Try it
+
+The studio runs in the browser with no server. Once the repository is public and Pages is enabled, the workflow in `.github/workflows/studio-pages.yml` publishes it at `https://dervinevolve.github.io/backrun/`; until then:
+
+```bash
+cd studio && npm install && npm run dev
+```
+
+Open the printed address, pick a run from the menu at the top left, and press play.
+
 
 ```bash
 pip install -e ".[dev]"
