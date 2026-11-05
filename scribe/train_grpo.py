@@ -111,6 +111,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     ap.add_argument("--vllm", default="none", choices=["none", "colocate"],
                     help="colocate runs generation with vLLM on the training GPU")
     ap.add_argument("--vllm-gpu-memory", type=float, default=0.3, help="share of GPU memory vLLM may take")
+    ap.add_argument("--vllm-max-model-length", type=int, default=0,
+                    help="context the colocated engine reserves cache for; 0 means completion length plus 1024")
     ap.add_argument("--judge-no-reasoning", action="store_true", help="ask the judge not to think first")
     ap.add_argument("--judge-reasoning-effort", default=None, help="minimal, low, medium or high")
     ap.add_argument("--judge-max-tokens", type=int, default=8, help="reply budget per comparison")
@@ -140,7 +142,9 @@ def grpo_config_kwargs(args: argparse.Namespace) -> dict[str, Any]:
         "log_completions": True,
         "seed": args.seed,
         "report_to": args.report_to,
-        **({"use_vllm": True, "vllm_mode": "colocate", "vllm_gpu_memory_utilization": args.vllm_gpu_memory}
+        **({"use_vllm": True, "vllm_mode": "colocate", "vllm_gpu_memory_utilization": args.vllm_gpu_memory,
+            # the model's own context is 262,144 tokens; reserving cache for that needs more than the GPU has
+            "vllm_max_model_length": args.vllm_max_model_length or args.max_completion_length + 1024}
            if args.vllm == "colocate" else {}),
     }
 

@@ -95,3 +95,15 @@ def test_references_come_from_a_batch_when_asked(tmp_path) -> None:
                                                                   for k in range(2))
     plain, info = make_references(parse_args(["--pool", "p", "--judge-model", "j"]), Pool(tmp_path / "nopool"))
     assert info == {"source": "pool", "tiers": ["love", "okay"], "mix": 0.1} and callable(plain)
+
+
+def test_colocated_vllm_reserves_cache_for_the_completion_not_the_model_context() -> None:
+    from scribe.train_grpo import grpo_config_kwargs, parse_args
+
+    cfg = grpo_config_kwargs(parse_args(["--pool", "p", "--judge-model", "j", "--vllm", "colocate",
+                                         "--max-completion-length", "6144"]))
+    assert cfg["use_vllm"] and cfg["vllm_mode"] == "colocate" and cfg["vllm_max_model_length"] == 7168
+    cfg = grpo_config_kwargs(parse_args(["--pool", "p", "--judge-model", "j", "--vllm", "colocate",
+                                         "--vllm-max-model-length", "8192"]))
+    assert cfg["vllm_max_model_length"] == 8192
+    assert "vllm_max_model_length" not in grpo_config_kwargs(parse_args(["--pool", "p", "--judge-model", "j"]))
