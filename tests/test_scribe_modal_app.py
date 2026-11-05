@@ -117,7 +117,8 @@ def test_entrypoint_evaluate_branch_uses_the_plan(monkeypatch) -> None:
     assert calls["merge"][0] == ("grpo_v1", "/checkpoints/scribe/warm_v1/merged", "final")
     args, kwargs = calls["sample"]
     assert args[0] == "grpo_v1_final" and args[3] == 6144
-    assert kwargs == {"model_path": "/checkpoints/scribe/grpo_v1/final_merged", "compare_to": "warm_v1_6144_control"}
+    assert kwargs == {"model_path": "/checkpoints/scribe/grpo_v1/final_merged", "compare_to": "warm_v1_6144_control",
+                      "ref_batch": None}
 
 
 def test_score_against_another_batch_with_a_tag_keeps_both_results(tmp_path: Path) -> None:
@@ -148,3 +149,27 @@ def test_score_against_another_batch_with_a_tag_keeps_both_results(tmp_path: Pat
     nope = score_and_report(batch, str(pool.root), "j", None, 8, refs=2, mix=0.0, workers=1, title="nope rung",
                             model="ckpt", client=judge, tiers=("nope",), tag="vs_nope")
     assert nope["references"]["tiers"] == ["nope"] and (batch / "report_vs_nope.md").is_file()
+
+
+def test_entrypoint_train_and_evaluate_pass_the_reference_batch(monkeypatch) -> None:
+    import scribe.modal_app as m
+
+    calls: dict[str, tuple] = {}
+
+    class _Fn:
+        def __init__(self, key):
+            self.key = key
+
+        def remote(self, *args, **kwargs):
+            calls[self.key] = (args, kwargs)
+            return "/checkpoints/scribe/r/final_merged" if self.key == "merge" else "ok"
+
+    monkeypatch.setattr(m, "train", _Fn("train"))
+    monkeypatch.setattr(m, "merge_adapter", _Fn("merge"))
+    monkeypatch.setattr(m, "sample", _Fn("sample"))
+    m.main(stage="train", run_name="r", model_path="/checkpoints/scribe/warm_v1/merged", ref_batch="warm_v1_6144_control")
+    argv = calls["train"][0][1]
+    assert argv[argv.index("--ref-batch") + 1] == "/data/scribe/samples/warm_v1_6144_control"
+    m.main(stage="evaluate", run_name="r", model_path="/checkpoints/scribe/warm_v1/merged",
+           ref_batch="warm_v1_6144_control", compare_to="warm_v1_6144_control")
+    assert calls["sample"][1]["ref_batch"] == "warm_v1_6144_control"

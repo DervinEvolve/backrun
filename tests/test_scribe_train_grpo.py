@@ -75,3 +75,23 @@ def test_main_without_trl_fails_cleanly(capsys) -> None:
     except ImportError:
         assert T.main(["--pool", "p", "--judge-model", "j"]) == 1
         assert "needs trl" in capsys.readouterr().err
+
+
+def test_references_come_from_a_batch_when_asked(tmp_path) -> None:
+    import numpy as np
+
+    from scribe.batch import write_candidate
+    from scribe.pool import Pool
+    from scribe.train_grpo import make_references, parse_args
+    from scribe_fixtures import as_reply, valid_painting
+
+    for k in range(2):
+        write_candidate(tmp_path / "warm", {"id": "sea", "subject": "sea", "prompt": "Paint sea."}, "m", k,
+                        as_reply(valid_painting()))
+    args = parse_args(["--pool", str(tmp_path / "nopool"), "--judge-model", "j", "--ref-batch", str(tmp_path / "warm")])
+    refs, info = make_references(args, Pool(tmp_path / "nopool"))
+    assert info["source"] == "batch" and info["valid_paintings"] == 2
+    assert sorted(refs(np.random.default_rng(0), "sea")) == sorted(str(tmp_path / "warm" / f"sea__m__0{k}" / "final.png")
+                                                                  for k in range(2))
+    plain, info = make_references(parse_args(["--pool", "p", "--judge-model", "j"]), Pool(tmp_path / "nopool"))
+    assert info == {"source": "pool", "tiers": ["love", "okay"], "mix": 0.1} and callable(plain)

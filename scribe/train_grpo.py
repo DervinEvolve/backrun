@@ -101,6 +101,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     ap.add_argument("--lora-r", type=int, default=16)
     ap.add_argument("--lora-alpha", type=int, default=32)
     ap.add_argument("--refs", type=int, default=2, help="references per rollout")
+    ap.add_argument("--ref-batch", default=None,
+                    help="a batch folder whose valid paintings are the references instead of the pool's keeps")
     ap.add_argument("--mix", type=float, default=0.1, help="share of references drawn from love")
     ap.add_argument("--min-love", type=int, default=0, help="refuse to train on a pool with fewer love ratings")
     ap.add_argument("--reward-workers", type=int, default=8, help="rollouts scored in parallel")
@@ -156,6 +158,26 @@ def judge_extra(args: argparse.Namespace) -> dict[str, Any] | None:
     if args.judge_no_reasoning:
         return {"reasoning": {"enabled": False}}
     return None
+
+
+def make_references(args: argparse.Namespace, pool: Pool) -> tuple[Any, dict[str, Any]]:
+    """The reference draw for the reward, and a description of it for ``run_config.json``.
+
+    With ``--ref-batch`` the references are another batch's gate-passing
+    paintings, same subject when it has enough: a rung the model can
+    sometimes beat, so a group's rewards differ by the paintings. Without it
+    they are the pool's keeps, which a fresh model loses to almost always.
+    """
+    if args.ref_batch:
+        from scribe.batch import BatchReferences
+
+        refs = BatchReferences(args.ref_batch, k=args.refs)
+        return refs, refs.describe()
+
+    def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
+        return [r["path"] for r in pool.sample_references(rng, k=args.refs, mix=args.mix, prompt_id=prompt_id)]
+
+    return references, {"source": "pool", "tiers": ["love", "okay"], "mix": args.mix}
 
 
 def dataset_rows(prompts: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -285,16 +307,13 @@ def main(argv: list[str] | None = None) -> int:
     out.mkdir(parents=True, exist_ok=True)
     cfg = grpo_config_kwargs(args)
     lora = lora_kwargs(args)
+    references, ref_info = make_references(args, pool)
     (out / "run_config.json").write_text(json.dumps(
-        {"args": vars(args), "grpo": cfg, "lora": lora, "pool_manifest": manifest,
+        {"args": vars(args), "grpo": cfg, "lora": lora, "pool_manifest": manifest, "references": ref_info,
          "prompts": len(prompts), "started_at": time.time()}, indent=1))
 
     client = ChatClient(ledger=out / "usage.jsonl")
     judge = PairwiseJudge(client, args.judge_model, max_tokens=args.judge_max_tokens, extra=judge_extra(args))
-
-    def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
-        return [r["path"] for r in pool.sample_references(rng, k=args.refs, mix=args.mix, prompt_id=prompt_id)]
-
     reward = Reward(judge, references, aesthetic=aesthetic_from_env())
     reward_fn = ScribeReward(reward, out / "terms.jsonl", seed=args.seed, workers=args.reward_workers)
     trainer = GRPOTrainer(model=args.model, reward_funcs=[reward_fn], args=GRPOConfig(**cfg),

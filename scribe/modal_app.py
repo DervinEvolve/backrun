@@ -300,8 +300,12 @@ def write_batch(batch_root: Path, prompts: list[dict[str, Any]], model_name: str
 def sample(name: str, model: str, per: int, max_tokens: int, temperature: float, top_p: float, top_k: int,
            seed: int, judge_model: str, judge_no_reasoning: bool, judge_effort: str | None,
            judge_max_tokens: int, refs: int, mix: float, limit: int, workers: int,
-           model_path: str | None = None, compare_to: str | None = None) -> str:
-    """Sample a model on the pool's prompts, score the batch, and return the report."""
+           model_path: str | None = None, compare_to: str | None = None, ref_batch: str | None = None) -> str:
+    """Sample a model on the pool's prompts, score the batch, and return the report.
+
+    ``ref_batch`` names a batch on the data volume whose valid paintings are
+    the references, instead of the pool's keeps.
+    """
     from scribe.pool import Pool
 
     prompts = Pool(POOL).prompts()
@@ -318,9 +322,11 @@ def sample(name: str, model: str, per: int, max_tokens: int, temperature: float,
                                      top_p, top_k, seed)
     gen_s = time.time() - t0
     write_batch(batch_root, prompts, model.split("/")[-1], completions)
+    samples = Path(DATA) / "scribe" / "samples"
     stats = score_and_report(batch_root, POOL, judge_model, judge_extra(judge_no_reasoning, judge_effort),
                              judge_max_tokens, refs, mix, workers, f"Sample: {name}", model_path or model,
-                             compare_to=Path(DATA) / "scribe" / "samples" / compare_to if compare_to else None)
+                             compare_to=samples / compare_to if compare_to else None,
+                             ref_batch=samples / ref_batch if ref_batch else None)
     stats.update({"generation_s": round(gen_s, 1), "per": per, "max_tokens": max_tokens})
     (batch_root / "stats.json").write_text(json.dumps(stats, indent=1) + "\n")
     _commit(data_volume)
@@ -471,10 +477,11 @@ def main(
     ``evaluate`` merges the run's adapter into that folder's weights, which
     are the ones it was trained on. ``--model`` stays the base id the folder
     was made from. ``--compare-to`` names the batch shown in the report's
-    second column, for ``evaluate`` as for ``sample``. For ``score``,
-    ``--ref-batch`` draws the references from another batch's valid
-    paintings and ``--ref-tiers`` from chosen pool tiers; ``--tag`` keeps
-    the results beside the batch's earlier scoring. ``--extra`` passes further
+    second column, for ``evaluate`` as for ``sample``. ``--ref-batch`` draws
+    the judge's references from another batch's valid paintings instead of
+    the pool's keeps, for ``sample``, ``train``, ``evaluate`` and ``score``;
+    for ``score``, ``--ref-tiers`` picks pool tiers instead and ``--tag``
+    keeps the results beside the batch's earlier scoring. ``--extra`` passes further
     arguments to the trainer or the warm-up, space separated.
     """
     if stage not in STAGES:
@@ -485,7 +492,8 @@ def main(
         print(pick(sample).remote(name or ("base" if not model_path else Path(model_path).parent.name), model, per,
                                   max_tokens, temperature, top_p, top_k, seed, judge_model, judge_no_reasoning,
                                   effort, judge_max_tokens, refs, mix, limit, workers,
-                                  model_path=model_path or None, compare_to=compare_to if model_path else None))
+                                  model_path=model_path or None, compare_to=compare_to if model_path else None,
+                                  ref_batch=ref_batch or None))
     elif stage == "judge-check":
         print(judge_check.remote(judge_model, judge_no_reasoning, effort, judge_max_tokens))
     elif stage == "score":
@@ -509,10 +517,12 @@ def main(
                 str(max_tokens), "--temperature", str(temperature), "--top-p", str(top_p), "--top-k", str(top_k),
                 "--refs", str(refs), "--mix", str(mix), "--seed", str(seed), "--reward-workers", str(workers),
                 *judge_argv(judge_model, judge_no_reasoning, effort, judge_max_tokens), *extra.split()]
+        if ref_batch:
+            argv += ["--ref-batch", f"{DATA}/scribe/samples/{ref_batch}"]
         print(pick(train).remote(run_name, argv))
     else:
         plan = evaluate_plan(run_name, model, model_path, checkpoint, compare_to, name)
         merged = pick(merge_adapter).remote(run_name, plan["merge_base"], checkpoint)
         print(pick(sample).remote(plan["batch"], model, per, max_tokens, temperature, top_p, top_k, seed, judge_model,
                                   judge_no_reasoning, effort, judge_max_tokens, refs, mix, limit, workers,
-                                  model_path=merged, compare_to=plan["compare_to"]))
+                                  model_path=merged, compare_to=plan["compare_to"], ref_batch=ref_batch or None))
