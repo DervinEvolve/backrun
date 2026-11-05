@@ -2,6 +2,10 @@
 
 **A watercolour simulator where the water is in charge, and three painters that learn to use it.**
 
+![Thirty seconds of the studio: a slow orbit over the room as the arm lays washes, a close pass along the brush, the palette from above, the sheet on the drying rack, and the score card turning over to show total 5.61](docs/assets/studio-demo.gif)
+
+Every painting in this repository can be replayed stroke by stroke in [the studio](https://dervinevolve.github.io/backrun/); the recording above is the search painter's horizon run, from the first washes to the score sheet turning over.
+
 A backrun is what happens when fresh water touches a wash that has started to dry: the new water pushes the pigment outward and leaves a hard, cauliflower-shaped edge. Beginners get them by accident. Painters learn to cause them on purpose. This project is a small watercolour physics model on a grid, a stroke file that any painting can be replayed from exactly, and three painters that try to use the water well: a search, a network that imitates the search, and a language model that writes the stroke file from a text prompt and is trained by a judge.
 
 I do these experiments for fun.
@@ -19,7 +23,7 @@ The search painter's run, stroke by stroke:
 
 ## The studio
 
-Every run replays in a small painting room in the browser: a drafting arm lays each recorded stroke, the jars and the palette empty by the recorded amounts, the sheet goes to the drying rack between phases, and the score sheet stays face down until the end so you can guess first. It is live at **[dervinevolve.github.io/backrun](https://dervinevolve.github.io/backrun/)**; pick a run from the menu at the top left and press play. Orbit with the mouse, or use the numbered stage cameras along the bottom.
+Every run replays in a small painting room in the browser: a drafting arm lays each recorded stroke, the jars and the palette empty by the recorded amounts, the sheet goes to the drying rack between phases, and the score sheet stays face down until the end so you can guess first. Pick a run from the menu at the top left and press play. Orbit with the mouse, or use the numbered stage cameras along the bottom.
 
 | | |
 |---|---|
@@ -27,9 +31,6 @@ Every run replays in a small painting room in the browser: a drafting arm lays e
 
 ![The brush tip on the sheet at stroke 10, the palette and water jars in front, the coffee cooling on the bench](docs/assets/studio-brush-on-sheet.jpg)
 
-Thirty seconds of it, recorded from the app: the washes going down, the brush card, a flight to the ultramarine well as it drops a step, the sheet carried to the drying rack, and the score sheet turning over.
-
-![Thirty seconds of the studio: a slow orbit over the room as the arm lays washes, a close pass along the brush, the palette from above, the sheet on the drying rack, and the score card turning over to show total 5.61](docs/assets/studio-demo.gif)
 
 ## Status
 
