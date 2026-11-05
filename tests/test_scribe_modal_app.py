@@ -185,8 +185,8 @@ def test_gpu_choice_survives_an_old_client(monkeypatch, capsys) -> None:
             seen["args"] = args
             return "ok"
 
-    monkeypatch.setattr(m, "judge_check", _Plain())
-    m.main(stage="judge-check", gpu="A10G")
-    assert seen["args"][0] == "anthropic/claude-opus-5.5"
+    monkeypatch.setattr(m, "sample", _Plain())
+    m.main(stage="sample", name="x", gpu="A10G")
+    assert seen["args"][0] == "x"
     assert "cannot pick a GPU" in capsys.readouterr().out
     assert m.DEFAULT_GPU == "A100-80GB"
