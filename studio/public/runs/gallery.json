@@ -20,6 +20,13 @@
    "painter": "scribe",
    "target": "prompt:hibiscus",
    "strokes": 42
+  },
+  {
+   "name": "scribe_grpo_sunset",
+   "label": "Trained scribe, sunset, after 30 GRPO steps",
+   "painter": "scribe",
+   "target": "prompt:sunset",
+   "strokes": 22
   }
  ]
 }

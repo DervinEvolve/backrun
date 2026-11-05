@@ -1,0 +1,75 @@
+{
+  "canvas": {
+    "width": 256,
+    "height": 192,
+    "paper": "cold_press"
+  },
+  "seed": 4800,
+  "target_path": "prompt:sunset",
+  "strokes_requested": 22,
+  "candidates_per_stroke": 1,
+  "painter": "scribe",
+  "model": "Qwen3-4B-Instruct-2507 after warm-up and 30 GRPO steps",
+  "subject": "a sunset over a calm sea",
+  "prompt": "Paint a sunset over a calm sea in watercolour.",
+  "candidate": "grpo_v2_sunset_src",
+  "rating": null,
+  "judge": {
+    "score": 1.0,
+    "valid": 4,
+    "against": "warm_v1_6144_control"
+  },
+  "gate_stats": {
+    "strokes": 22,
+    "dry_ops": 13,
+    "dry_steps": 1360,
+    "coverage": 0.8509,
+    "mean_lightness": 68.93,
+    "two_hues": true,
+    "two_levels": true,
+    "hue_hist": [
+      0.156,
+      0.1984,
+      0.1821,
+      0.0743,
+      0.0,
+      0.0,
+      0.0055,
+      0.0854,
+      0.1952,
+      0.0273,
+      0.0282,
+      0.0205
+    ],
+    "lightness_hist": [
+      0.0,
+      0.0,
+      0.0021,
+      0.0384,
+      0.1189,
+      0.2277,
+      0.2099,
+      0.3094,
+      0.09,
+      0.0035
+    ]
+  },
+  "painter_stats": {
+    "strokes_accepted": 22,
+    "slots_skipped": 0,
+    "evaluations": 0,
+    "looks": 0,
+    "final_dry_steps": 25,
+    "total_s": 4.155994064000026
+  },
+  "status": "finished",
+  "frames_every": 60,
+  "frames": 26,
+  "ops": 36,
+  "sim_steps": 1407,
+  "timings": {
+    "started_unix": 1793888561.14,
+    "elapsed_s": 4.29,
+    "paint_s": 4.156
+  }
+}

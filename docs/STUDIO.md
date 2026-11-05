@@ -506,3 +506,10 @@ a third of a second per stroke. Its waits of 2 or 3 steps show as "waiting" betw
 - Checked in a headless browser: title, painter line, about text and the reveal all read from the run; no page
   errors. The replay itself is unchanged, since the ledger has the same shape as the learned painter's (one
   phase, no candidates, settle dries between strokes).
+
+## Pass 5 notes (the trained scribe)
+
+- A fourth run: the sunset the trained scribe wrote after 30 GRPO steps, the one with the most strokes among
+  its paintings the judge scored 1.0 against the warm model. 22 strokes, 1,407 simulator steps, 26 frames. Its
+  `run.json` carries the judge's score and what it was judged against, and the reveal shows that instead of a
+  rating, since this painting is not in the rated pool.

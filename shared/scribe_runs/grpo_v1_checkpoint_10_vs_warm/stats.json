@@ -1,0 +1,126 @@
+{
+ "completions": 288,
+ "gate_pass": 220,
+ "gate_pass_rate": 0.7638888888888888,
+ "truncated": 22,
+ "truncation_rate": 0.0763888888888889,
+ "top_rejections": [
+  [
+   "not valid JSON",
+   24
+  ],
+  [
+   "only one flat colour; use at least two hues or two clearly d",
+   11
+  ],
+  [
+   "unknown pigment 'cadmium_yellow_1'",
+   8
+  ],
+  [
+   "point [256, 194] is outside the 256 x 192 paper",
+   2
+  ],
+  [
+   "point [260, 114] is outside the 256 x 192 paper",
+   2
+  ],
+  [
+   "point [260, 146] is outside the 256 x 192 paper",
+   2
+  ]
+ ],
+ "truncated_example": {
+  "id": "hibiscus__Qwen3-4B-Instruct-2507__04",
+  "chars": 9954,
+  "lines": 47,
+  "tail": "r\": 0.16}}\n{\"op\": \"stroke\", \"path\": [[207.0, 126.0], [214.0, 136.0], [222.0, 140.0], [214.0, 146.0], [207.0, 136.0]], \"width\": 4.0, \"water\": 0.35, \"pigments\": {\"cadmium_yellow\": 0.48, \"quinacridone_rose\": 0.36, \"burnt_umber\": 0.2}}\n{\"op\": \""
+ },
+ "groups": 36,
+ "groups_with_spread": 36,
+ "mean_group_sd": 0.3539708380924431,
+ "reward_mean": 0.42265624999999996,
+ "pairwise_mean": 0.3862847222222222,
+ "excluded": 0,
+ "model": "/checkpoints/scribe/grpo_v1_retry1/checkpoint-10_merged",
+ "judge_model": "anthropic/claude-opus-5.5",
+ "judge_calls": 880,
+ "judge_failed_calls": 0,
+ "judge_first_error": null,
+ "judge_cost_usd": 3.2406,
+ "scoring_s": 829.1,
+ "pool_manifest": "7cfed21d28484553dd78acea667c05a21e05a123d5252aae803467cb91b1473d",
+ "references": {
+  "source": "batch",
+  "root": "/data/scribe/samples/warm_v1_6144_control",
+  "valid_paintings": 221,
+  "subjects": 36
+ },
+ "tag": "vs_warm",
+ "verdict": "76% pass the gate and 100% of prompt groups have reward spread (mean within-group sd 0.354): GRPO has something to push on.",
+ "reward_report": {
+  "used": 288,
+  "excluded": 0,
+  "terms": [
+   "gate",
+   "economy",
+   "aesthetic",
+   "pairwise"
+  ],
+  "stats": {
+   "gate": {
+    "mean": 0.7638888888888888,
+    "sd": 0.424691245872796,
+    "saturated": 1.0
+   },
+   "economy": {
+    "mean": 0.7361111111111112,
+    "sd": 0.4407397681284008,
+    "saturated": 1.0
+   },
+   "aesthetic": {
+    "mean": 0.0,
+    "sd": 0.0,
+    "saturated": 1.0
+   },
+   "pairwise": {
+    "mean": 0.3862847222222222,
+    "sd": 0.4048890651084162,
+    "saturated": 0.6736111111111112
+   }
+  },
+  "correlation": [
+   [
+    1.0,
+    0.9285477677199991,
+    null,
+    0.5304135376472826
+   ],
+   [
+    0.9285477677199991,
+    1.0,
+    null,
+    0.4885343431325163
+   ],
+   [
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    0.5304135376472826,
+    0.48853434313251637,
+    null,
+    0.9999999999999999
+   ]
+  ],
+  "flags": [
+   "aesthetic barely varies (sd 0.000): it gives the trainer no gradient on this batch",
+   "gate and economy are correlated at 0.93: the same signal counted twice"
+  ]
+ },
+ "generation_s": 368.1,
+ "per": 8,
+ "max_tokens": 6144
+}

@@ -34,8 +34,12 @@ One simulator step per stroke, no search, about six seconds. It has learned the 
 | Scorer, kept in its own module the painter never reads | Done |
 | Search painter, coarse to fine, no learning | Done, and weak |
 | Learned painter | Stage A (imitation of the search painter) now paints. The first GPU run scored no better than a blank sheet, because a regression head averaged the search painter's varied strokes into one muddy dab. A head that picks a start cell and a bin for each other number, trained on 1,000 ledgers, scores `total` 8.85 on the sealed set against 24.02 for a blank sheet and 5.26 for the search painter, with 26 times less simulation. One run, five sealed targets, so a direction rather than a result. Numbers in [docs/TRAINING.md](docs/TRAINING.md) |
-| A language model that writes stroke files from a text prompt, rewarded by a judge against a rated pool | First pool generated and rated: 921 paintings from four cheap models over 36 subjects, $3.74 of API credit. I rated 108 by hand and Codex, an AI agent, rated the other 813 from contact sheets at my request. Next is checking the judge against those ratings, then the first GRPO run. No training yet. Numbers in [docs/SCRIBE.md](docs/SCRIBE.md) |
-| A studio in the browser where you can watch it paint | First pass built: a drafting arm replays a run stroke by stroke with the palette, jars, drying rack and a dashboard. Runs locally from `studio/`, not published yet. See [studio/README.md](studio/README.md) |
+| A language model that writes stroke files from a text prompt, rewarded by a judge | Trained. A 4B model warmed up on 269 rated paintings, then 30 steps of GRPO with Claude Opus 5.5 judging each painting against the warm model's own: valid files went from 77% to 91% of attempts, and the judge prefers the trained model's painting in 58 comparisons of 100 against the warm one. It paints the subject's colours in the right places and does not yet draw. About $60 of API and GPU credit end to end. Numbers and pictures in [docs/SCRIBE.md](docs/SCRIBE.md) |
+| A studio in the browser where you can watch it paint | Built: a drafting arm replays a run stroke by stroke with the palette, jars, drying rack and a dashboard, and the gallery holds the search painter, the learned painter and two scribe paintings. Runs locally from `studio/`, not published yet. See [studio/README.md](studio/README.md) |
+
+The trained scribe, after 30 GRPO steps: for each subject its five best paintings by the judge, then three paintings from the rated pool in green frames.
+
+![Rows of small watercolours. For each subject, five paintings by the trained model, mostly soft colour masses in the subject's hues, then three pool paintings with more drawn structure: a hydrangea on a stem, a church tower over rooftops, a teacup with a handle](docs/assets/scribe-grpo-v2-sheet.jpg)
 
 ## What it looks like so far
 

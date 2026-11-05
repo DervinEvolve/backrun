@@ -470,8 +470,9 @@ artist are used, as references, as training data or as targets.
 - Generation, the critic and the judge have run against real models (pool
   v1 and the calibration above). The reward as a whole has run only with
   the scripted fake client.
-- The trainer has never run. The Modal wrapper is written but has not been
-  run; its image pins are a first guess.
+- The trainer has run twice (a 10-step pilot and a 30-step run); the image
+  pins vLLM 0.33, one minor version above what TRL says it supports, and
+  nothing has broken on it yet.
 - The aesthetic scorer's server is not part of this repo, and its score range
   has to be set from real scores before use.
 - The rating page has been used for one pool on a Mac and in a headless

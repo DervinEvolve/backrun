@@ -1,0 +1,247 @@
+{
+ "name": "scribe_grpo_sunset",
+ "source": "scribe_grpo_sunset",
+ "packed_at": "2026-11-05T14:22:45.534Z",
+ "run": {
+  "canvas": {
+   "width": 256,
+   "height": 192,
+   "paper": "cold_press"
+  },
+  "seed": 4800,
+  "target_path": "prompt:sunset",
+  "strokes_requested": 22,
+  "candidates_per_stroke": 1,
+  "painter": "scribe",
+  "model": "Qwen3-4B-Instruct-2507 after warm-up and 30 GRPO steps",
+  "subject": "a sunset over a calm sea",
+  "prompt": "Paint a sunset over a calm sea in watercolour.",
+  "candidate": "grpo_v2_sunset_src",
+  "rating": null,
+  "judge": {
+   "score": 1,
+   "valid": 4,
+   "against": "warm_v1_6144_control"
+  },
+  "gate_stats": {
+   "strokes": 22,
+   "dry_ops": 13,
+   "dry_steps": 1360,
+   "coverage": 0.8509,
+   "mean_lightness": 68.93,
+   "two_hues": true,
+   "two_levels": true,
+   "hue_hist": [
+    0.156,
+    0.1984,
+    0.1821,
+    0.0743,
+    0,
+    0,
+    0.0055,
+    0.0854,
+    0.1952,
+    0.0273,
+    0.0282,
+    0.0205
+   ],
+   "lightness_hist": [
+    0,
+    0,
+    0.0021,
+    0.0384,
+    0.1189,
+    0.2277,
+    0.2099,
+    0.3094,
+    0.09,
+    0.0035
+   ]
+  },
+  "painter_stats": {
+   "strokes_accepted": 22,
+   "slots_skipped": 0,
+   "evaluations": 0,
+   "looks": 0,
+   "final_dry_steps": 25,
+   "total_s": 4.155994064000026
+  },
+  "status": "finished",
+  "frames_every": 60,
+  "frames": 26,
+  "ops": 36,
+  "sim_steps": 1407,
+  "timings": {
+   "started_unix": 1793888561.14,
+   "elapsed_s": 4.29,
+   "paint_s": 4.156
+  }
+ },
+ "op_count": 36,
+ "stroke_count": 22,
+ "sim_steps": 1407,
+ "frames_every": 60,
+ "frames": [
+  {
+   "step": 0,
+   "op": -1,
+   "file": "frames/frame_00000.png"
+  },
+  {
+   "step": 1,
+   "op": 0,
+   "file": "frames/frame_00001.png"
+  },
+  {
+   "step": 61,
+   "op": 1,
+   "file": "frames/frame_00002.png"
+  },
+  {
+   "step": 121,
+   "op": 1,
+   "file": "frames/frame_00003.png"
+  },
+  {
+   "step": 181,
+   "op": 1,
+   "file": "frames/frame_00004.png"
+  },
+  {
+   "step": 262,
+   "op": 3,
+   "file": "frames/frame_00005.png"
+  },
+  {
+   "step": 322,
+   "op": 3,
+   "file": "frames/frame_00006.png"
+  },
+  {
+   "step": 362,
+   "op": 3,
+   "file": "frames/frame_00007.png"
+  },
+  {
+   "step": 423,
+   "op": 5,
+   "file": "frames/frame_00008.png"
+  },
+  {
+   "step": 483,
+   "op": 5,
+   "file": "frames/frame_00009.png"
+  },
+  {
+   "step": 565,
+   "op": 8,
+   "file": "frames/frame_00010.png"
+  },
+  {
+   "step": 615,
+   "op": 8,
+   "file": "frames/frame_00011.png"
+  },
+  {
+   "step": 677,
+   "op": 11,
+   "file": "frames/frame_00012.png"
+  },
+  {
+   "step": 758,
+   "op": 13,
+   "file": "frames/frame_00013.png"
+  },
+  {
+   "step": 839,
+   "op": 15,
+   "file": "frames/frame_00014.png"
+  },
+  {
+   "step": 840,
+   "op": 16,
+   "file": "frames/frame_00015.png"
+  },
+  {
+   "step": 953,
+   "op": 21,
+   "file": "frames/frame_00016.png"
+  },
+  {
+   "step": 1013,
+   "op": 21,
+   "file": "frames/frame_00017.png"
+  },
+  {
+   "step": 1033,
+   "op": 21,
+   "file": "frames/frame_00018.png"
+  },
+  {
+   "step": 1095,
+   "op": 24,
+   "file": "frames/frame_00019.png"
+  },
+  {
+   "step": 1145,
+   "op": 24,
+   "file": "frames/frame_00020.png"
+  },
+  {
+   "step": 1207,
+   "op": 27,
+   "file": "frames/frame_00021.png"
+  },
+  {
+   "step": 1299,
+   "op": 30,
+   "file": "frames/frame_00022.png"
+  },
+  {
+   "step": 1320,
+   "op": 31,
+   "file": "frames/frame_00023.png"
+  },
+  {
+   "step": 1381,
+   "op": 33,
+   "file": "frames/frame_00024.png"
+  },
+  {
+   "step": 1407,
+   "op": 35,
+   "final": true,
+   "file": "frames/frame_00025.png"
+  }
+ ],
+ "phases": [
+  {
+   "name": "scribe",
+   "index": 0,
+   "first_op": 0,
+   "last_op": 35
+  }
+ ],
+ "pigments_used": [
+  "cerulean_blue",
+  "quinacridone_rose",
+  "cadmium_yellow",
+  "french_ultramarine",
+  "burnt_umber",
+  "paynes_grey"
+ ],
+ "timings": {
+  "started_unix": 1793888561.14,
+  "elapsed_s": 4.29,
+  "paint_s": 4.156
+ },
+ "files": {
+  "ops": "ops.json",
+  "scores": "scores.json",
+  "target": "target.png",
+  "final": "final.png",
+  "ledger": "ledger.jsonl",
+  "strokes": "strokes.jsonl",
+  "run": "run.json"
+ }
+}
