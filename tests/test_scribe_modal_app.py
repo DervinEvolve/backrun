@@ -173,3 +173,20 @@ def test_entrypoint_train_and_evaluate_pass_the_reference_batch(monkeypatch) -> 
     m.main(stage="evaluate", run_name="r", model_path="/checkpoints/scribe/warm_v1/merged",
            ref_batch="warm_v1_6144_control", compare_to="warm_v1_6144_control")
     assert calls["sample"][1]["ref_batch"] == "warm_v1_6144_control"
+
+
+def test_gpu_choice_survives_an_old_client(monkeypatch, capsys) -> None:
+    import scribe.modal_app as m
+
+    seen = {}
+
+    class _Plain:  # a Function without with_options, as older Modal clients expose
+        def remote(self, *args, **kwargs):
+            seen["args"] = args
+            return "ok"
+
+    monkeypatch.setattr(m, "judge_check", _Plain())
+    m.main(stage="judge-check", gpu="A10G")
+    assert seen["args"][0] == "anthropic/claude-opus-5.5"
+    assert "cannot pick a GPU" in capsys.readouterr().out
+    assert m.DEFAULT_GPU == "A100-80GB"

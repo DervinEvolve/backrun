@@ -72,7 +72,7 @@ REMOTE_REPO = "/root/backrun"
 DATA = "/data"
 CHECKPOINTS = "/checkpoints"
 POOL = f"{REMOTE_REPO}/pool"
-DEFAULT_GPU = "A100-40GB"
+DEFAULT_GPU = "A100-80GB"
 DEFAULT_MODEL = "Qwen/Qwen3-4B-Instruct-2507"
 STAGES = ("sample", "warmup", "train", "evaluate", "score", "judge-check")
 
@@ -487,7 +487,15 @@ def main(
     if stage not in STAGES:
         raise SystemExit(f"--stage must be one of {', '.join(STAGES)}")
     effort = judge_reasoning_effort or None
-    pick = lambda fn: fn if gpu == DEFAULT_GPU else fn.with_options(gpu=gpu)  # noqa: E731
+
+    def pick(fn: Any) -> Any:
+        """The function on the requested GPU; older Modal clients cannot change it and keep the default."""
+        if gpu == DEFAULT_GPU:
+            return fn
+        if not hasattr(fn, "with_options"):
+            print(f"this Modal client cannot pick a GPU per run; using the default {DEFAULT_GPU} instead of {gpu}")
+            return fn
+        return fn.with_options(gpu=gpu)
     if stage == "sample":
         print(pick(sample).remote(name or ("base" if not model_path else Path(model_path).parent.name), model, per,
                                   max_tokens, temperature, top_p, top_k, seed, judge_model, judge_no_reasoning,
