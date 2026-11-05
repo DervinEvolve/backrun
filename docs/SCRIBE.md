@@ -8,8 +8,8 @@ which of two paintings is the better watercolour of the subject. One of the
 two is always a painting from a rated pool.
 
 The code lives in `scribe/`. Everything below the trainer has tests. The first
-pool exists and is rated; see "The first pool" below. The trainer itself has
-been written and parsed but never run.
+pool exists and is rated, the judge is calibrated, and the trainer has run
+twice; the results are under "The first training runs" below.
 
 ## Where the recipe comes from
 
@@ -425,11 +425,61 @@ the same 36 prompts. It also made 22% of replies run to the 4,096-token
 limit, where the base model never did, and generation took four and a half
 minutes instead of half a minute, so some replies ramble or loop instead of
 closing the file; the report now quotes the tail of one such reply. The
-judge calls in both runs failed on the key (OpenRouter answered "User not
-found"), so neither batch has reward numbers yet.
+judge calls in both runs failed on the key (the base address had been glued
+onto the end of the key in the secret), so the warm sample was scored again
+from the volume once the key was fixed.
 
-Status: `sample` and `warmup` have run on Modal. The trainer has not run
-yet; its first run is a debugging run.
+## The first training runs
+
+Everything below is on the same 36 prompts, 8 completions each, with Opus
+5.5 as the judge, and the reports, stats and per-rollout terms are in
+`shared/scribe_runs/`.
+
+**The warm model at 6,144 tokens** (`warm_v1_6144_control`): 77% through
+the gate, 7% cut off, against 66% and 22% at 4,096 tokens. Every one of the
+61 invalid-JSON rejections at 4,096 had been a cut-off. Against the pool's
+keeps the warm model wins 6.6% of comparisons over all 288 files, and
+1.5% on the 32 subjects that have at least two keeps; the rest of the wins
+come from bottle, cat, fox and oranges, which have fewer than two keeps, so
+the judge was shown a reference of another subject and the sample won on
+subject alone.
+
+**A 10-step pilot against the keeps** (`grpo_v1`, stopped by a provider
+credit error at step 12, checkpoint-10 evaluated, about $12): no measurable
+change. Covered-subject win share 0.021 against 0.015, paired interval
+including zero. The reason was in the terms file: 188 of 220 valid rollouts
+scored exactly zero against the keeps, which came from frontier models, so
+most groups of eight had nothing to compare. Narreddi and Franz's pool was
+their own model's rated output, which put the references at the model's own
+level by construction.
+
+**The reference rung.** Scoring the pilot's checkpoint against the warm
+model's own paintings instead (`--ref-batch`) put its win share at 0.506
+among valid files, with scores on all five values and spread in every group.
+That is the rung the next run trained on.
+
+**30 GRPO steps against the warm batch** (`grpo_v2`, 2 h 20 min on an A100,
+about $20 with the evaluation): gate pass 91%, cut-offs 1.4%, and a win share
+of 0.579 among the 262 valid paintings against the warm model, 0.527 over all
+288 counting rejected files as losses, where the untrained checkpoint had
+scored 0.506. The margin of error on 288 rollouts is about 0.05. Stroke
+counts and widths match the pool keeps (median 21 strokes), and the judge's
+preference is flat across stroke counts, so the gain is not a texture the
+judge happens to like. Training reward rose from 0.50 to about 0.6 over the
+last ten steps.
+
+What the pictures say (`docs/assets/scribe-grpo-v2-sheet.jpg`): the trained
+model puts the subject's colours in the right place as washes, a blue mass
+for hydrangea, bands of orange over blue for a sunset, pink masses for
+peonies, yellow lumps for lemons. It does not draw. Subjects that need a
+line, fern, heron, teacup, are where it loses to the warm model as well as
+to the keeps, and the keeps' stems, towers and cups are nowhere in its
+output. So: valid files nearly every time, a measurable but modest
+preference from the judge, and a clear next lesson. The sunset with the most
+strokes among its winners is in the studio gallery.
+
+Status: `sample`, `warmup`, `train`, `evaluate` and `score` have all run on
+Modal.
 
 ## Showing it in the studio
 
@@ -467,9 +517,8 @@ artist are used, as references, as training data or as targets.
 
 ## What is not done
 
-- Generation, the critic and the judge have run against real models (pool
-  v1 and the calibration above). The reward as a whole has run only with
-  the scripted fake client.
+- The aesthetic term of the reward has never been switched on; every run so
+  far used gate, economy and the pairwise judge.
 - The trainer has run twice (a 10-step pilot and a 30-step run); the image
   pins vLLM 0.33, one minor version above what TRL says it supports, and
   nothing has broken on it yet.
