@@ -17,6 +17,16 @@ The search painter's run, stroke by stroke:
 
 ![The horizon painting appearing over forty strokes: washes first, the sea, then the sun](docs/assets/horizon-run.gif)
 
+## The studio
+
+Every run replays in a small painting room in the browser: a drafting arm lays each recorded stroke, the jars and the palette empty by the recorded amounts, the sheet goes to the drying rack between phases, and the score sheet stays face down until the end so you can guess first. It is live at **[dervinevolve.github.io/backrun](https://dervinevolve.github.io/backrun/)**; pick a run from the menu at the top left and press play. Orbit with the mouse, or use the numbered stage cameras along the bottom.
+
+| | |
+|---|---|
+| ![The studio from the window side: the brass arm lowering a brush onto the sheet, the first washes down, the target pinned to the corkboard behind](docs/assets/studio-washes.jpg) | ![Mid-painting at stroke 11 of 39: the sea and sky on the sheet, the pigment ledger on the left counting what has gone onto the paper, the candidate counter at 160 of 640](docs/assets/studio-stroke-11.jpg) |
+
+![The brush tip on the sheet at stroke 10, the palette and water jars in front, the coffee cooling on the bench](docs/assets/studio-brush-on-sheet.jpg)
+
 ## Status
 
 | Part | State |
