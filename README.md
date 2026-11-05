@@ -1,8 +1,8 @@
-# Backrun
+<h1 align="center">Backrun</h1>
 
-**A watercolour simulator where the water is in charge, and three painters that learn to use it.**
-
-![Thirty seconds of the studio: a slow orbit over the room as the arm lays washes, a close pass along the brush, the palette from above, the sheet on the drying rack, and the score card turning over to show total 5.61](docs/assets/studio-demo.gif)
+<p align="center">
+  <img src="docs/assets/studio-demo.gif" width="720" alt="Thirty seconds of the studio: a slow orbit over the room as the arm lays washes, a close pass along the brush, the palette from above, the sheet on the drying rack, and the score card turning over to show total 5.61">
+</p>
 
 Every painting in this repository can be replayed stroke by stroke in [the studio](https://dervinevolve.github.io/backrun/); the recording above is the search painter's horizon run, from the first washes to the score sheet turning over.
 
