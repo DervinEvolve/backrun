@@ -27,6 +27,10 @@ Every run replays in a small painting room in the browser: a drafting arm lays e
 
 ![The brush tip on the sheet at stroke 10, the palette and water jars in front, the coffee cooling on the bench](docs/assets/studio-brush-on-sheet.jpg)
 
+Thirty seconds of it, recorded from the app: the washes going down, the brush card, a flight to the ultramarine well as it drops a step, the sheet carried to the drying rack, and the score sheet turning over.
+
+![Thirty seconds of the studio: a slow orbit over the room as the arm lays washes, a close pass along the brush, the palette from above, the sheet on the drying rack, and the score card turning over to show total 5.61](docs/assets/studio-demo.gif)
+
 ## Status
 
 | Part | State |
