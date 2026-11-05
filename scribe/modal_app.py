@@ -8,8 +8,9 @@ repo with ``shared/pool_v1/keeps`` in it::
     modal run scribe/modal_app.py --stage sample
     modal run scribe/modal_app.py --stage warmup --run-name warm_v1
     modal run scribe/modal_app.py --stage score --name warm_v1_sample
+    modal run scribe/modal_app.py --stage score --name grpo_v1_retry1_checkpoint_10 --ref-batch warm_v1_6144_control --tag vs_warm
     modal run scribe/modal_app.py --stage train --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged --max-steps 30
-    modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged
+    modal run scribe/modal_app.py --stage evaluate --run-name grpo_v1 --model-path /checkpoints/scribe/warm_v1/merged --compare-to warm_v1_6144_control
 
 The judge defaults to Claude Opus 5.5 at low reasoning effort with a 400-token
 budget; ``--judge-model``, ``--judge-no-reasoning``, ``--judge-reasoning-effort``
@@ -145,6 +146,19 @@ def judge_argv(judge_model: str, no_reasoning: bool, effort: str | None, max_tok
     return argv
 
 
+def evaluate_plan(run_name: str, model: str, model_path: str, checkpoint: str, compare_to: str,
+                  name: str = "") -> dict[str, str]:
+    """What the evaluate stage does: the base the adapter is merged into, the batch name, the comparison.
+
+    The adapter must be merged into the weights it was trained on, so the
+    base is ``model_path`` (for example a warm-up's merged model) when one
+    is given and the Hub id otherwise. The comparison batch is whatever
+    ``--compare-to`` names, which after a warm-up is that model's own sample.
+    """
+    return {"merge_base": model_path or model, "batch": name or f"{run_name}_{checkpoint}",
+            "compare_to": compare_to}
+
+
 def judge_extra(no_reasoning: bool, effort: str | None) -> dict[str, Any] | None:
     if effort:
         return {"reasoning": {"effort": effort}}
@@ -169,49 +183,65 @@ def generate_with_vllm(model_path: str, conversations: list[list[dict[str, str]]
 
 def score_and_report(batch_root: Path, pool_root: str, judge_model: str, extra: dict[str, Any] | None,
                      judge_max_tokens: int, refs: int, mix: float, workers: int, title: str, model: str,
-                     compare_to: Path | None = None, client: Any = None) -> dict[str, Any]:
-    """Score a batch against the pool and write ``terms.jsonl``, ``stats.json`` and ``report.md``.
+                     compare_to: Path | None = None, client: Any = None, tiers: tuple[str, ...] = ("love", "okay"),
+                     ref_batch: Path | None = None, tag: str = "") -> dict[str, Any]:
+    """Score a batch and write ``terms.jsonl``, ``stats.json`` and ``report.md``.
 
-    ``client`` defaults to a ``ChatClient`` from the environment; tests pass a
-    scripted one.
+    References come from the pool's ``tiers`` (love and okay by default), or
+    from the gate-passing paintings of ``ref_batch`` when given. With a
+    ``tag`` the four output files are named ``terms_TAG.jsonl`` and so on,
+    so a second scoring of the same batch sits beside the first instead of
+    replacing it. ``client`` defaults to a ``ChatClient`` from the
+    environment; tests pass a scripted one.
     """
     import io
 
     import numpy as np
 
-    from scribe.batch import batch_stats, verdict
+    from scribe.batch import BatchReferences, batch_stats, verdict
     from scribe.judge import PairwiseJudge
     from scribe.pool import Pool
     from scribe.reward import Reward, reward_report, score_batch
 
+    suffix = f"_{tag}" if tag else ""
     pool = Pool(pool_root)
+    usage_path = batch_root / f"usage{suffix}.jsonl"
     if client is None:
         from scribe.client import ChatClient
 
-        client = ChatClient(ledger=batch_root / "usage.jsonl")
+        client = ChatClient(ledger=usage_path)
     judge = PairwiseJudge(client, judge_model, max_tokens=judge_max_tokens, extra=extra)
 
-    def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
-        return [r["path"] for r in pool.sample_references(rng, k=refs, mix=mix, prompt_id=prompt_id)]
+    if ref_batch is not None:
+        references: Any = BatchReferences(ref_batch, k=refs)
+        ref_info = references.describe()
+    else:
+        rated = sum(t in tiers for t in pool.ratings().values())
+        if rated < refs:
+            raise ValueError(f"pool has {rated} paintings rated {', '.join(tiers)}; need at least {refs} for references")
+
+        def references(rng: np.random.Generator, prompt_id: str | None) -> list[str]:
+            return [r["path"] for r in pool.sample_references(rng, k=refs, mix=mix, prompt_id=prompt_id, tiers=tiers)]
+        ref_info = {"source": "pool", "tiers": list(tiers), "mix": mix}
 
     t0 = time.time()
-    terms_path = batch_root / "terms.jsonl"
+    terms_path = batch_root / f"terms{suffix}.jsonl"
     if terms_path.exists():
         terms_path.unlink()
     lines = score_batch(str(batch_root), Reward(judge, references), str(terms_path), workers=workers)
-    usage_path = batch_root / "usage.jsonl"
     usage = [json.loads(x) for x in usage_path.read_text().splitlines() if x.strip()] if usage_path.is_file() else []
     stats = batch_stats(batch_root, lines)
     failed = [u for u in usage if u.get("status") != "ok"]
     stats.update({"model": model, "judge_model": judge_model, "judge_calls": len(usage),
                   "judge_failed_calls": len(failed), "judge_first_error": failed[0].get("error") if failed else None,
                   "judge_cost_usd": round(sum(u.get("cost") or 0 for u in usage), 4),
-                  "scoring_s": round(time.time() - t0, 1), "pool_manifest": pool.manifest()["sha256"]})
+                  "scoring_s": round(time.time() - t0, 1), "pool_manifest": pool.manifest()["sha256"],
+                  "references": ref_info, "tag": tag})
     stats["verdict"] = verdict(stats)
     buf = io.StringIO()
     stats["reward_report"] = reward_report(lines, out=buf)
-    (batch_root / "stats.json").write_text(json.dumps(stats, indent=1) + "\n")
-    (batch_root / "report.md").write_text(render_report(title, stats, buf.getvalue(), compare_to))
+    (batch_root / f"stats{suffix}.json").write_text(json.dumps(stats, indent=1) + "\n")
+    (batch_root / f"report{suffix}.md").write_text(render_report(title, stats, buf.getvalue(), compare_to))
     return stats
 
 
@@ -240,8 +270,11 @@ def render_report(title: str, stats: dict[str, Any], reward_text: str, compare_t
     if ex:
         rej += (f"\n\nOne cut-off reply, `{ex['id']}`, {ex['chars']} characters over {ex['lines']} lines; its last 240 "
                 f"characters:\n\n```\n{ex['tail']}\n```")
+    ref = stats.get("references") or {}
+    ref_line = (f"References: valid paintings of batch `{Path(ref['root']).name}`." if ref.get("source") == "batch"
+                else f"References: pool tiers {', '.join(ref.get('tiers', ['love', 'okay']))}.")
     return (f"# {title}\n\nModel `{stats.get('model', '?')}`, judge `{stats.get('judge_model')}`, pool manifest "
-            f"`{str(stats.get('pool_manifest', ''))[:12]}`.\n\n{head}\n" + "\n".join(rows)
+            f"`{str(stats.get('pool_manifest', ''))[:12]}`. {ref_line}\n\n{head}\n" + "\n".join(rows)
             + f"\n\n**{stats.get('verdict', '')}**\n\nTop gate rejections:\n{rej}\n\n## Reward terms\n\n```\n{reward_text}```\n")
 
 
@@ -296,22 +329,33 @@ def sample(name: str, model: str, per: int, max_tokens: int, temperature: float,
 
 @app.function(image=image, volumes=VOLUMES, secrets=SECRETS, cpu=8, memory=16384, timeout=2 * 3600)
 def score(name: str, judge_model: str, judge_no_reasoning: bool, judge_effort: str | None, judge_max_tokens: int,
-          refs: int, mix: float, workers: int, compare_to: str | None = None) -> str:
-    """Score a batch already on the data volume, without a GPU, and return its report."""
-    batch_root = Path(DATA) / "scribe" / "samples" / name
+          refs: int, mix: float, workers: int, compare_to: str | None = None, ref_batch: str | None = None,
+          ref_tiers: str = "", tag: str = "") -> str:
+    """Score a batch already on the data volume, without a GPU, and return its report.
+
+    ``ref_batch`` names another batch whose valid paintings serve as the
+    references; ``ref_tiers`` picks pool tiers instead (``nope`` for the
+    weakest rung). With a ``tag`` the results sit beside the batch's earlier
+    scoring instead of replacing it.
+    """
+    samples = Path(DATA) / "scribe" / "samples"
+    batch_root = samples / name
     if not (batch_root / "index.jsonl").is_file():
         raise FileNotFoundError(f"no batch at {batch_root}")
+    suffix = f"_{tag}" if tag else ""
     old = json.loads((batch_root / "stats.json").read_text()) if (batch_root / "stats.json").is_file() else {}
     model = old.get("model", "?")
-    if (batch_root / "usage.jsonl").exists():
-        (batch_root / "usage.jsonl").unlink()
+    if (batch_root / f"usage{suffix}.jsonl").exists():
+        (batch_root / f"usage{suffix}.jsonl").unlink()
+    tiers = tuple(x.strip() for x in ref_tiers.split(",") if x.strip()) or ("love", "okay")
     stats = score_and_report(batch_root, POOL, judge_model, judge_extra(judge_no_reasoning, judge_effort),
-                             judge_max_tokens, refs, mix, workers, f"Sample: {name}", model,
-                             compare_to=Path(DATA) / "scribe" / "samples" / compare_to if compare_to else None)
+                             judge_max_tokens, refs, mix, workers, f"Sample: {name}" + (f" [{tag}]" if tag else ""),
+                             model, compare_to=samples / compare_to if compare_to else None, tiers=tiers,
+                             ref_batch=samples / ref_batch if ref_batch else None, tag=tag)
     stats.update({k: old[k] for k in ("generation_s", "per", "max_tokens") if k in old})
-    (batch_root / "stats.json").write_text(json.dumps(stats, indent=1) + "\n")
+    (batch_root / f"stats{suffix}.json").write_text(json.dumps(stats, indent=1) + "\n")
     _commit(data_volume)
-    return (batch_root / "report.md").read_text()
+    return (batch_root / f"report{suffix}.md").read_text()
 
 
 @app.function(image=image, volumes=VOLUMES, secrets=SECRETS, cpu=2, memory=4096, timeout=600)
@@ -416,12 +460,21 @@ def main(
     gpu: str = DEFAULT_GPU,
     checkpoint: str = "final",
     extra: str = "",
+    ref_batch: str = "",
+    ref_tiers: str = "",
+    tag: str = "",
 ) -> None:
     """Run one stage.
 
-    ``--model-path`` points ``sample`` or ``train`` at a folder on the
-    checkpoint volume, such as a warm-up's ``merged`` model; ``--model``
-    stays the base id the folder was made from. ``--extra`` passes further
+    ``--model-path`` points ``sample``, ``train`` or ``evaluate`` at a folder
+    on the checkpoint volume, such as a warm-up's ``merged`` model;
+    ``evaluate`` merges the run's adapter into that folder's weights, which
+    are the ones it was trained on. ``--model`` stays the base id the folder
+    was made from. ``--compare-to`` names the batch shown in the report's
+    second column, for ``evaluate`` as for ``sample``. For ``score``,
+    ``--ref-batch`` draws the references from another batch's valid
+    paintings and ``--ref-tiers`` from chosen pool tiers; ``--tag`` keeps
+    the results beside the batch's earlier scoring. ``--extra`` passes further
     arguments to the trainer or the warm-up, space separated.
     """
     if stage not in STAGES:
@@ -439,7 +492,8 @@ def main(
         if not name:
             raise SystemExit("--stage score needs --name, the batch to score, for example warm_v1_sample")
         print(score.remote(name, judge_model, judge_no_reasoning, effort, judge_max_tokens, refs, mix, workers,
-                           compare_to=compare_to if name != compare_to else None))
+                           compare_to=compare_to if name != compare_to else None, ref_batch=ref_batch or None,
+                           ref_tiers=ref_tiers, tag=tag))
     elif stage == "warmup":
         argv = ["--model", model, "--epochs", str(epochs), "--seed", str(seed), *extra.split()]
         if learning_rate:
@@ -457,7 +511,8 @@ def main(
                 *judge_argv(judge_model, judge_no_reasoning, effort, judge_max_tokens), *extra.split()]
         print(pick(train).remote(run_name, argv))
     else:
-        merged = pick(merge_adapter).remote(run_name, model, checkpoint)
-        print(pick(sample).remote(name or f"{run_name}_{checkpoint}", model, per, max_tokens, temperature, top_p,
-                                  top_k, seed, judge_model, judge_no_reasoning, effort, judge_max_tokens, refs,
-                                  mix, limit, workers, model_path=merged, compare_to="base"))
+        plan = evaluate_plan(run_name, model, model_path, checkpoint, compare_to, name)
+        merged = pick(merge_adapter).remote(run_name, plan["merge_base"], checkpoint)
+        print(pick(sample).remote(plan["batch"], model, per, max_tokens, temperature, top_p, top_k, seed, judge_model,
+                                  judge_no_reasoning, effort, judge_max_tokens, refs, mix, limit, workers,
+                                  model_path=merged, compare_to=plan["compare_to"]))

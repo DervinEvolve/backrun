@@ -80,3 +80,71 @@ def test_write_score_and_report_end_to_end(tmp_path: Path) -> None:
     assert stats2["gate_pass_rate"] == 1.0
     assert "| batch |" in (other / "report.md").read_text()
     assert render_report("x", {"verdict": "v", "top_rejections": []}, "", None).startswith("# x")
+
+
+def test_evaluate_merges_into_the_trained_base_and_compares_as_asked() -> None:
+    from scribe.modal_app import evaluate_plan
+
+    # trained from a warm-up's merged model: the adapter goes back onto those weights, not the Hub base
+    plan = evaluate_plan("grpo_v1", "Qwen/Qwen3-4B-Instruct-2507", "/checkpoints/scribe/warm_v1/merged", "final",
+                         "warm_v1_6144_control")
+    assert plan == {"merge_base": "/checkpoints/scribe/warm_v1/merged", "batch": "grpo_v1_final",
+                    "compare_to": "warm_v1_6144_control"}
+    # trained from the Hub base: merge into it, default batch name, comparison still forwarded
+    plan = evaluate_plan("grpo_v2", "Qwen/Qwen3-4B-Instruct-2507", "", "checkpoint-20", "base", name="custom")
+    assert plan["merge_base"] == "Qwen/Qwen3-4B-Instruct-2507" and plan["batch"] == "custom"
+    assert plan["compare_to"] == "base"
+
+
+def test_entrypoint_evaluate_branch_uses_the_plan(monkeypatch) -> None:
+    """Without Modal, stand in for the two remote functions and check what the evaluate branch hands them."""
+    import scribe.modal_app as m
+
+    calls: dict[str, tuple] = {}
+
+    class _Fn:
+        def __init__(self, key):
+            self.key = key
+
+        def remote(self, *args, **kwargs):
+            calls[self.key] = (args, kwargs)
+            return "/checkpoints/scribe/grpo_v1/final_merged" if self.key == "merge" else "report"
+
+    monkeypatch.setattr(m, "merge_adapter", _Fn("merge"))
+    monkeypatch.setattr(m, "sample", _Fn("sample"))
+    m.main(stage="evaluate", run_name="grpo_v1", model_path="/checkpoints/scribe/warm_v1/merged",
+           compare_to="warm_v1_6144_control", max_tokens=6144)
+    assert calls["merge"][0] == ("grpo_v1", "/checkpoints/scribe/warm_v1/merged", "final")
+    args, kwargs = calls["sample"]
+    assert args[0] == "grpo_v1_final" and args[3] == 6144
+    assert kwargs == {"model_path": "/checkpoints/scribe/grpo_v1/final_merged", "compare_to": "warm_v1_6144_control"}
+
+
+def test_score_against_another_batch_with_a_tag_keeps_both_results(tmp_path: Path) -> None:
+    pool = _pool(tmp_path / "pool")
+    good = as_reply(valid_painting())
+    batch, other = tmp_path / "batch", tmp_path / "other"
+    batch.mkdir(), other.mkdir()
+    write_batch(batch, PROMPTS, "ckpt", [[(good, "stop"), (good, "stop")], [(good, "stop"), ("bad", "stop")]])
+    write_batch(other, PROMPTS, "warm", [[(good, "stop"), (good, "stop")], [(good, "stop"), (good, "stop")]])
+    judge = FakeClient(lambda m, msgs: "A")  # always the first image: wins as A, loses as B, so every score is 0.5
+    first = score_and_report(batch, str(pool.root), "j", None, 8, refs=2, mix=0.0, workers=1, title="pool",
+                             model="ckpt", client=judge)
+    second = score_and_report(batch, str(pool.root), "j", None, 8, refs=2, mix=0.0, workers=1, title="vs warm",
+                              model="ckpt", client=judge, ref_batch=other, tag="vs_warm")
+    assert first["references"]["source"] == "pool" and second["references"] == {
+        "source": "batch", "root": str(other), "valid_paintings": 4, "subjects": 2}
+    assert second["pairwise_mean"] == 0.5 * 3 / 4 and second["tag"] == "vs_warm"
+    for name in ("terms.jsonl", "stats.json", "report.md", "terms_vs_warm.jsonl", "stats_vs_warm.json", "report_vs_warm.md"):
+        assert (batch / name).is_file(), name
+    assert "valid paintings of batch `other`" in (batch / "report_vs_warm.md").read_text()
+    import pytest
+
+    with pytest.raises(ValueError, match="rated nope"):  # the fixture pool has no nope paintings to draw from
+        score_and_report(batch, str(pool.root), "j", None, 8, refs=2, mix=0.0, workers=1, title="nope rung",
+                         model="ckpt", client=judge, tiers=("nope",), tag="vs_nope")
+    pool.rate([c["id"] for c in pool.candidates()][0], "nope")
+    pool.rate([c["id"] for c in pool.candidates()][1], "nope")
+    nope = score_and_report(batch, str(pool.root), "j", None, 8, refs=2, mix=0.0, workers=1, title="nope rung",
+                            model="ckpt", client=judge, tiers=("nope",), tag="vs_nope")
+    assert nope["references"]["tiers"] == ["nope"] and (batch / "report_vs_nope.md").is_file()

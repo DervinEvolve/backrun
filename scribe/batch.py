@@ -47,6 +47,42 @@ def write_candidate(root: str | Path, prompt: dict[str, Any], model: str, k: int
     return line
 
 
+class BatchReferences:
+    """References drawn from a batch's gate-passing paintings instead of the rated pool.
+
+    A rung the model can sometimes beat: scoring a checkpoint's batch against
+    the warm model's own batch puts the win share near one half by
+    construction, so the judge's ordering carries gradient. Same-subject
+    paintings are drawn when the batch has at least ``k`` of them, else any.
+    The same seed gives the same draw.
+    """
+
+    def __init__(self, root: str | Path, k: int = 2) -> None:
+        self.root = Path(root)
+        self.k = k
+        self.by_prompt: dict[str, list[Path]] = defaultdict(list)
+        for line in (self.root / "index.jsonl").read_text().splitlines():
+            if line.strip():
+                rec = json.loads(line)
+                if rec.get("status") == "ok":
+                    self.by_prompt[str(rec["prompt_id"])].append(self.root / rec.get("dir", rec["id"]) / "final.png")
+        self.all = [p for v in self.by_prompt.values() for p in v]
+        if len(self.all) < k:
+            raise ValueError(f"{self.root} has {len(self.all)} valid paintings; need at least {k}")
+
+    def describe(self) -> dict[str, Any]:
+        """What the references are, for the stats file."""
+        return {"source": "batch", "root": str(self.root), "valid_paintings": len(self.all),
+                "subjects": len(self.by_prompt)}
+
+    def __call__(self, rng: np.random.Generator, prompt_id: str | None) -> list[str]:
+        """``k`` distinct reference paths for one rollout."""
+        same = self.by_prompt.get(str(prompt_id), [])
+        group = same if len(same) >= self.k else self.all
+        picks = rng.choice(len(group), size=self.k, replace=False)
+        return [str(group[int(i)]) for i in picks]
+
+
 def batch_stats(root: str | Path, terms: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     """Pass rate, truncation and per-prompt reward spread for a batch.
 

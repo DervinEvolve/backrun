@@ -39,3 +39,29 @@ def test_batch_stats_and_verdict(tmp_path: Path) -> None:
     flat = batch_stats(tmp_path, [{"prompt_id": "sea", "total": 0.5, "terms": {"pairwise": 0.5}}] * 4)
     assert "flat" in verdict(flat)
     assert "warm the model up" in verdict({"gate_pass_rate": 0.1})
+
+
+def test_batch_references_draw_same_subject_valid_paintings(tmp_path: Path) -> None:
+    import numpy as np
+
+    from scribe.batch import BatchReferences
+
+    good = as_reply(valid_painting())
+    for pid in ("sea", "sky"):
+        for k in range(3):
+            write_candidate(tmp_path, {"id": pid, "subject": pid, "prompt": f"Paint {pid}."}, "m", k, good)
+    write_candidate(tmp_path, {"id": "sea", "subject": "sea", "prompt": "Paint sea."}, "m", 9, "nothing valid")
+    refs = BatchReferences(tmp_path, k=2)
+    assert refs.describe() == {"source": "batch", "root": str(tmp_path), "valid_paintings": 6, "subjects": 2}
+    a = refs(np.random.default_rng(1), "sea")
+    assert len(a) == 2 and len(set(a)) == 2 and all("/sea__" in p and p.endswith("final.png") for p in a)
+    assert a == refs(np.random.default_rng(1), "sea")  # same seed, same draw
+    # an unknown subject falls back to the whole batch; the rejected file is never a reference
+    b = refs(np.random.default_rng(2), "moon")
+    assert len(b) == 2 and all("__09" not in p for p in b)
+    import pytest
+
+    small = tmp_path / "small"
+    write_candidate(small, {"id": "sea", "subject": "sea", "prompt": "Paint sea."}, "m", 0, good)
+    with pytest.raises(ValueError):
+        BatchReferences(small, k=2)  # one valid painting cannot supply two references
